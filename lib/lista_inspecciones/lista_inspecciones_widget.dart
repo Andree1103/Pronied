@@ -167,15 +167,15 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
             elevation: 0,
           ),
         ),
-        body: SafeArea(
-          top: true,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
+                child: Container(
                   width: double.infinity,
-                  height: 700,
+                  height: MediaQuery.sizeOf(context).height * 1,
                   decoration: BoxDecoration(
                     color: Color(0xFF0E1C27),
                     border: Border.all(
@@ -186,7 +186,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Padding(
@@ -226,7 +226,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                       10, 0, 10, 0),
                                   buttonMargin: EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 0),
-                                  padding: EdgeInsets.all(2),
                                   tabs: [
                                     Row(
                                       mainAxisAlignment:
@@ -270,6 +269,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                               Expanded(
                                 child: TabBarView(
                                   controller: _model.tabBarController,
+                                  physics: const NeverScrollableScrollPhysics(),
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -281,56 +281,47 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 15, 15, 0),
-                                                child: FutureBuilder<
-                                                    List<
-                                                        ListarInspeccionesRow>>(
-                                                  future: SQLiteManager.instance
-                                                      .listarInspecciones(),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                          CircularProgressIndicator(
-                                                            valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                              FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final listViewListarInspeccionesRowList =
-                                                    snapshot.data!;
-                                                    return ListView.separated(
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      scrollDirection:
-                                                      Axis.vertical,
-                                                      itemCount:
-                                                      listViewListarInspeccionesRowList
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              15, 15, 15, 25),
+                                          child: FutureBuilder<
+                                              List<ListarInspeccionesRow>>(
+                                            future: SQLiteManager.instance
+                                                .listarInspecciones(),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                    CircularProgressIndicator(
+                                                      valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final columnListarInspeccionesRowList =
+                                              snapshot.data!;
+                                              return SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.min,
+                                                  children: List.generate(
+                                                      columnListarInspeccionesRowList
                                                           .length,
-                                                      separatorBuilder: (_,
-                                                          __) =>
-                                                          SizedBox(height: 15),
-                                                      itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewListarInspeccionesRow =
-                                                        listViewListarInspeccionesRowList[
-                                                        listViewIndex];
+                                                          (columnIndex) {
+                                                        final columnListarInspeccionesRow =
+                                                        columnListarInspeccionesRowList[
+                                                        columnIndex];
                                                         return Card(
                                                           clipBehavior: Clip
                                                               .antiAliasWithSaveLayer,
@@ -342,40 +333,38 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                           RoundedRectangleBorder(
                                                             borderRadius:
                                                             BorderRadius
-                                                                .circular(
-                                                                8),
+                                                                .circular(8),
                                                           ),
                                                           child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
+                                                            splashColor:
+                                                            Colors.transparent,
+                                                            focusColor:
+                                                            Colors.transparent,
+                                                            hoverColor:
+                                                            Colors.transparent,
                                                             highlightColor:
-                                                            Colors
-                                                                .transparent,
+                                                            Colors.transparent,
                                                             onTap: () async {
                                                               setState(() {
                                                                 FFAppState()
                                                                     .IdFicha =
-                                                                listViewListarInspeccionesRow
+                                                                columnListarInspeccionesRow
                                                                     .idFicha!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccionPadre =
-                                                                listViewListarInspeccionesRow
+                                                                columnListarInspeccionesRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idpregunta =
-                                                                listViewListarInspeccionesRow
+                                                                columnListarInspeccionesRow
                                                                     .idInspeccion!;
                                                                 FFAppState()
                                                                     .IdPlantilla =
-                                                                listViewListarInspeccionesRow
+                                                                columnListarInspeccionesRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccion =
-                                                                listViewListarInspeccionesRow
+                                                                columnListarInspeccionesRow
                                                                     .idPlantilla!;
                                                               });
 
@@ -383,34 +372,30 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   'DatosGenerales');
                                                             },
                                                             child: Container(
-                                                              width: double
-                                                                  .infinity,
+                                                              width:
+                                                              double.infinity,
                                                               decoration:
                                                               BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                    context)
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
                                                                     .secondaryBackground,
                                                                 boxShadow: [
                                                                   BoxShadow(
-                                                                    blurRadius:
-                                                                    0,
+                                                                    blurRadius: 0,
                                                                     color: FlutterFlowTheme.of(
                                                                         context)
                                                                         .secondaryBackground,
-                                                                    offset:
-                                                                    Offset(
-                                                                        0,
-                                                                        1),
+                                                                    offset: Offset(
+                                                                        0, 1),
                                                                   )
                                                                 ],
                                                                 borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                     8),
-                                                                border:
-                                                                Border.all(
-                                                                  color: FlutterFlowTheme.of(
-                                                                      context)
+                                                                border: Border.all(
+                                                                  color: FlutterFlowTheme
+                                                                      .of(context)
                                                                       .secondaryBackground,
                                                                 ),
                                                               ),
@@ -431,10 +416,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                         Icon(
                                                                           Icons
                                                                               .school,
-                                                                          color:
-                                                                          Color(0xFF086D82),
-                                                                          size:
-                                                                          35,
+                                                                          color: Color(
+                                                                              0xFF086D82),
+                                                                          size: 35,
                                                                         ),
                                                                         Expanded(
                                                                           child:
@@ -446,8 +430,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 0),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                              crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -465,7 +451,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                             child: Text(
                                                                                               valueOrDefault<String>(
-                                                                                                listViewListarInspeccionesRow.codigoLocalColegio,
+                                                                                                columnListarInspeccionesRow.codigoLocalColegio,
                                                                                                 's',
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -477,7 +463,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                           ),
                                                                                           Text(
                                                                                             valueOrDefault<String>(
-                                                                                              listViewListarInspeccionesRow.nombreLocalColegio,
+                                                                                              columnListarInspeccionesRow.nombreLocalColegio,
                                                                                               's',
                                                                                             ),
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -496,7 +482,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                   children: [
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRow.departamentoColegio,
+                                                                                        columnListarInspeccionesRow.departamentoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -511,7 +497,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRow.provinciaColegio,
+                                                                                        columnListarInspeccionesRow.provinciaColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -526,7 +512,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRow.distritoColegio,
+                                                                                        columnListarInspeccionesRow.distritoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -547,33 +533,35 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
-                                                                        -1,
-                                                                        0),
+                                                                        -1, 0),
                                                                     child:
                                                                     Container(
                                                                       width: double
                                                                           .infinity,
                                                                       decoration:
                                                                       BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
+                                                                        color: FlutterFlowTheme.of(
+                                                                            context)
                                                                             .lineColor,
                                                                       ),
                                                                       child:
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             55,
                                                                             10,
                                                                             10,
                                                                             10),
-                                                                        child:
-                                                                        Text(
+                                                                        child: Text(
                                                                           valueOrDefault<
                                                                               String>(
-                                                                            listViewListarInspeccionesRow.nombreEvento,
+                                                                            columnListarInspeccionesRow
+                                                                                .nombreEvento,
                                                                             'ssss',
                                                                           ),
-                                                                          style:
-                                                                          FlutterFlowTheme.of(context).bodyMedium,
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -588,23 +576,24 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           context)
                                                                           .secondaryBackground,
                                                                       borderRadius:
-                                                                      BorderRadius.circular(
+                                                                      BorderRadius
+                                                                          .circular(
                                                                           12),
                                                                     ),
-                                                                    child:
-                                                                    Padding(
+                                                                    child: Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           25,
                                                                           10,
                                                                           25,
                                                                           10),
-                                                                      child:
-                                                                      Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
-                                                                        MainAxisSize.max,
+                                                                        MainAxisSize
+                                                                            .max,
                                                                         mainAxisAlignment:
-                                                                        MainAxisAlignment.spaceBetween,
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                         children: [
                                                                           Container(
                                                                             width:
@@ -613,11 +602,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -629,11 +620,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         child: Icon(
                                                                                           Icons.sd_card_alert,
                                                                                           color: () {
-                                                                                            if (listViewListarInspeccionesRow.idEstado == 3) {
+                                                                                            if (columnListarInspeccionesRow.idEstado == 3) {
                                                                                               return FlutterFlowTheme.of(context).darkSeaGreen;
-                                                                                            } else if (listViewListarInspeccionesRow.idEstado == 2) {
+                                                                                            } else if (columnListarInspeccionesRow.idEstado == 2) {
                                                                                               return FlutterFlowTheme.of(context).gray600;
-                                                                                            } else if (listViewListarInspeccionesRow.idEstado == 4) {
+                                                                                            } else if (columnListarInspeccionesRow.idEstado == 4) {
                                                                                               return FlutterFlowTheme.of(context).warning;
                                                                                             } else {
                                                                                               return FlutterFlowTheme.of(context).secondary;
@@ -644,7 +635,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       ),
                                                                                       Text(
                                                                                         valueOrDefault<String>(
-                                                                                          listViewListarInspeccionesRow.estado,
+                                                                                          columnListarInspeccionesRow.estado,
                                                                                           'estado',
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium,
@@ -672,11 +663,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -720,13 +713,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                             ),
                                                           ),
                                                         );
-                                                      },
-                                                    );
-                                                  },
+                                                      }),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -740,56 +731,48 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 15, 15, 0),
-                                                child: FutureBuilder<
-                                                    List<
-                                                        ListarInspeccionesProcessRow>>(
-                                                  future: SQLiteManager.instance
-                                                      .listarInspeccionesProcess(),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                          CircularProgressIndicator(
-                                                            valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                              FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final listViewListarInspeccionesProcessRowList =
-                                                    snapshot.data!;
-                                                    return ListView.separated(
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      scrollDirection:
-                                                      Axis.vertical,
-                                                      itemCount:
-                                                      listViewListarInspeccionesProcessRowList
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              15, 15, 15, 25),
+                                          child: FutureBuilder<
+                                              List<
+                                                  ListarInspeccionesProcessRow>>(
+                                            future: SQLiteManager.instance
+                                                .listarInspeccionesProcess(),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                    CircularProgressIndicator(
+                                                      valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final columnListarInspeccionesProcessRowList =
+                                              snapshot.data!;
+                                              return SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.min,
+                                                  children: List.generate(
+                                                      columnListarInspeccionesProcessRowList
                                                           .length,
-                                                      separatorBuilder: (_,
-                                                          __) =>
-                                                          SizedBox(height: 15),
-                                                      itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewListarInspeccionesProcessRow =
-                                                        listViewListarInspeccionesProcessRowList[
-                                                        listViewIndex];
+                                                          (columnIndex) {
+                                                        final columnListarInspeccionesProcessRow =
+                                                        columnListarInspeccionesProcessRowList[
+                                                        columnIndex];
                                                         return Card(
                                                           clipBehavior: Clip
                                                               .antiAliasWithSaveLayer,
@@ -801,40 +784,38 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                           RoundedRectangleBorder(
                                                             borderRadius:
                                                             BorderRadius
-                                                                .circular(
-                                                                8),
+                                                                .circular(8),
                                                           ),
                                                           child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
+                                                            splashColor:
+                                                            Colors.transparent,
+                                                            focusColor:
+                                                            Colors.transparent,
+                                                            hoverColor:
+                                                            Colors.transparent,
                                                             highlightColor:
-                                                            Colors
-                                                                .transparent,
+                                                            Colors.transparent,
                                                             onTap: () async {
                                                               setState(() {
                                                                 FFAppState()
                                                                     .IdFicha =
-                                                                listViewListarInspeccionesProcessRow
+                                                                columnListarInspeccionesProcessRow
                                                                     .idFicha!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccionPadre =
-                                                                listViewListarInspeccionesProcessRow
+                                                                columnListarInspeccionesProcessRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idpregunta =
-                                                                listViewListarInspeccionesProcessRow
+                                                                columnListarInspeccionesProcessRow
                                                                     .idInspeccion!;
                                                                 FFAppState()
                                                                     .IdPlantilla =
-                                                                listViewListarInspeccionesProcessRow
+                                                                columnListarInspeccionesProcessRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccion =
-                                                                listViewListarInspeccionesProcessRow
+                                                                columnListarInspeccionesProcessRow
                                                                     .idPlantilla!;
                                                               });
 
@@ -842,34 +823,30 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   'DatosGenerales');
                                                             },
                                                             child: Container(
-                                                              width: double
-                                                                  .infinity,
+                                                              width:
+                                                              double.infinity,
                                                               decoration:
                                                               BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                    context)
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
                                                                     .secondaryBackground,
                                                                 boxShadow: [
                                                                   BoxShadow(
-                                                                    blurRadius:
-                                                                    0,
+                                                                    blurRadius: 0,
                                                                     color: FlutterFlowTheme.of(
                                                                         context)
                                                                         .secondaryBackground,
-                                                                    offset:
-                                                                    Offset(
-                                                                        0,
-                                                                        1),
+                                                                    offset: Offset(
+                                                                        0, 1),
                                                                   )
                                                                 ],
                                                                 borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                     8),
-                                                                border:
-                                                                Border.all(
-                                                                  color: FlutterFlowTheme.of(
-                                                                      context)
+                                                                border: Border.all(
+                                                                  color: FlutterFlowTheme
+                                                                      .of(context)
                                                                       .secondaryBackground,
                                                                 ),
                                                               ),
@@ -890,10 +867,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                         Icon(
                                                                           Icons
                                                                               .school,
-                                                                          color:
-                                                                          Color(0xFF086D82),
-                                                                          size:
-                                                                          35,
+                                                                          color: Color(
+                                                                              0xFF086D82),
+                                                                          size: 35,
                                                                         ),
                                                                         Expanded(
                                                                           child:
@@ -905,8 +881,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 0),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                              crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -924,7 +902,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                             child: Text(
                                                                                               valueOrDefault<String>(
-                                                                                                listViewListarInspeccionesProcessRow.codigoLocalColegio,
+                                                                                                columnListarInspeccionesProcessRow.codigoLocalColegio,
                                                                                                 's',
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -936,7 +914,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                           ),
                                                                                           Text(
                                                                                             valueOrDefault<String>(
-                                                                                              listViewListarInspeccionesProcessRow.nombreLocalColegio,
+                                                                                              columnListarInspeccionesProcessRow.nombreLocalColegio,
                                                                                               's',
                                                                                             ),
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -955,7 +933,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                   children: [
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProcessRow.departamentoColegio,
+                                                                                        columnListarInspeccionesProcessRow.departamentoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -970,7 +948,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProcessRow.provinciaColegio,
+                                                                                        columnListarInspeccionesProcessRow.provinciaColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -985,7 +963,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProcessRow.distritoColegio,
+                                                                                        columnListarInspeccionesProcessRow.distritoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1006,33 +984,35 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
-                                                                        -1,
-                                                                        0),
+                                                                        -1, 0),
                                                                     child:
                                                                     Container(
                                                                       width: double
                                                                           .infinity,
                                                                       decoration:
                                                                       BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
+                                                                        color: FlutterFlowTheme.of(
+                                                                            context)
                                                                             .lineColor,
                                                                       ),
                                                                       child:
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             55,
                                                                             10,
                                                                             10,
                                                                             10),
-                                                                        child:
-                                                                        Text(
+                                                                        child: Text(
                                                                           valueOrDefault<
                                                                               String>(
-                                                                            listViewListarInspeccionesProcessRow.nombreEvento,
+                                                                            columnListarInspeccionesProcessRow
+                                                                                .nombreEvento,
                                                                             'ssss',
                                                                           ),
-                                                                          style:
-                                                                          FlutterFlowTheme.of(context).bodyMedium,
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1047,23 +1027,24 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           context)
                                                                           .secondaryBackground,
                                                                       borderRadius:
-                                                                      BorderRadius.circular(
+                                                                      BorderRadius
+                                                                          .circular(
                                                                           12),
                                                                     ),
-                                                                    child:
-                                                                    Padding(
+                                                                    child: Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           25,
                                                                           10,
                                                                           25,
                                                                           10),
-                                                                      child:
-                                                                      Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
-                                                                        MainAxisSize.max,
+                                                                        MainAxisSize
+                                                                            .max,
                                                                         mainAxisAlignment:
-                                                                        MainAxisAlignment.spaceBetween,
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                         children: [
                                                                           Container(
                                                                             width:
@@ -1072,11 +1053,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -1088,11 +1071,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         child: Icon(
                                                                                           Icons.sd_card_alert,
                                                                                           color: () {
-                                                                                            if (listViewListarInspeccionesProcessRow.idEstado == 3) {
+                                                                                            if (columnListarInspeccionesProcessRow.idEstado == 3) {
                                                                                               return FlutterFlowTheme.of(context).darkSeaGreen;
-                                                                                            } else if (listViewListarInspeccionesProcessRow.idEstado == 2) {
+                                                                                            } else if (columnListarInspeccionesProcessRow.idEstado == 2) {
                                                                                               return FlutterFlowTheme.of(context).gray600;
-                                                                                            } else if (listViewListarInspeccionesProcessRow.idEstado == 4) {
+                                                                                            } else if (columnListarInspeccionesProcessRow.idEstado == 4) {
                                                                                               return FlutterFlowTheme.of(context).warning;
                                                                                             } else {
                                                                                               return FlutterFlowTheme.of(context).secondary;
@@ -1103,7 +1086,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       ),
                                                                                       Text(
                                                                                         valueOrDefault<String>(
-                                                                                          listViewListarInspeccionesProcessRow.estado,
+                                                                                          columnListarInspeccionesProcessRow.estado,
                                                                                           'estado',
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium,
@@ -1131,11 +1114,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -1179,13 +1164,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                             ),
                                                           ),
                                                         );
-                                                      },
-                                                    );
-                                                  },
+                                                      }),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1199,56 +1182,48 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 15, 15, 0),
-                                                child: FutureBuilder<
-                                                    List<
-                                                        ListarInspeccionesRealizadaRow>>(
-                                                  future: SQLiteManager.instance
-                                                      .listarInspeccionesRealizada(),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                          CircularProgressIndicator(
-                                                            valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                              FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final listViewListarInspeccionesRealizadaRowList =
-                                                    snapshot.data!;
-                                                    return ListView.separated(
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      scrollDirection:
-                                                      Axis.vertical,
-                                                      itemCount:
-                                                      listViewListarInspeccionesRealizadaRowList
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              15, 15, 15, 25),
+                                          child: FutureBuilder<
+                                              List<
+                                                  ListarInspeccionesRealizadaRow>>(
+                                            future: SQLiteManager.instance
+                                                .listarInspeccionesRealizada(),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                    CircularProgressIndicator(
+                                                      valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final columnListarInspeccionesRealizadaRowList =
+                                              snapshot.data!;
+                                              return SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.min,
+                                                  children: List.generate(
+                                                      columnListarInspeccionesRealizadaRowList
                                                           .length,
-                                                      separatorBuilder: (_,
-                                                          __) =>
-                                                          SizedBox(height: 15),
-                                                      itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewListarInspeccionesRealizadaRow =
-                                                        listViewListarInspeccionesRealizadaRowList[
-                                                        listViewIndex];
+                                                          (columnIndex) {
+                                                        final columnListarInspeccionesRealizadaRow =
+                                                        columnListarInspeccionesRealizadaRowList[
+                                                        columnIndex];
                                                         return Card(
                                                           clipBehavior: Clip
                                                               .antiAliasWithSaveLayer,
@@ -1260,40 +1235,38 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                           RoundedRectangleBorder(
                                                             borderRadius:
                                                             BorderRadius
-                                                                .circular(
-                                                                8),
+                                                                .circular(8),
                                                           ),
                                                           child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
+                                                            splashColor:
+                                                            Colors.transparent,
+                                                            focusColor:
+                                                            Colors.transparent,
+                                                            hoverColor:
+                                                            Colors.transparent,
                                                             highlightColor:
-                                                            Colors
-                                                                .transparent,
+                                                            Colors.transparent,
                                                             onTap: () async {
                                                               setState(() {
                                                                 FFAppState()
                                                                     .IdFicha =
-                                                                listViewListarInspeccionesRealizadaRow
+                                                                columnListarInspeccionesRealizadaRow
                                                                     .idFicha!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccionPadre =
-                                                                listViewListarInspeccionesRealizadaRow
+                                                                columnListarInspeccionesRealizadaRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idpregunta =
-                                                                listViewListarInspeccionesRealizadaRow
+                                                                columnListarInspeccionesRealizadaRow
                                                                     .idInspeccion!;
                                                                 FFAppState()
                                                                     .IdPlantilla =
-                                                                listViewListarInspeccionesRealizadaRow
+                                                                columnListarInspeccionesRealizadaRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccion =
-                                                                listViewListarInspeccionesRealizadaRow
+                                                                columnListarInspeccionesRealizadaRow
                                                                     .idPlantilla!;
                                                               });
 
@@ -1301,34 +1274,30 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   'DatosGenerales');
                                                             },
                                                             child: Container(
-                                                              width: double
-                                                                  .infinity,
+                                                              width:
+                                                              double.infinity,
                                                               decoration:
                                                               BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                    context)
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
                                                                     .secondaryBackground,
                                                                 boxShadow: [
                                                                   BoxShadow(
-                                                                    blurRadius:
-                                                                    0,
+                                                                    blurRadius: 0,
                                                                     color: FlutterFlowTheme.of(
                                                                         context)
                                                                         .secondaryBackground,
-                                                                    offset:
-                                                                    Offset(
-                                                                        0,
-                                                                        1),
+                                                                    offset: Offset(
+                                                                        0, 1),
                                                                   )
                                                                 ],
                                                                 borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                     8),
-                                                                border:
-                                                                Border.all(
-                                                                  color: FlutterFlowTheme.of(
-                                                                      context)
+                                                                border: Border.all(
+                                                                  color: FlutterFlowTheme
+                                                                      .of(context)
                                                                       .secondaryBackground,
                                                                 ),
                                                               ),
@@ -1349,10 +1318,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                         Icon(
                                                                           Icons
                                                                               .school,
-                                                                          color:
-                                                                          Color(0xFF086D82),
-                                                                          size:
-                                                                          35,
+                                                                          color: Color(
+                                                                              0xFF086D82),
+                                                                          size: 35,
                                                                         ),
                                                                         Expanded(
                                                                           child:
@@ -1364,8 +1332,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 0),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                              crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -1383,7 +1353,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                             child: Text(
                                                                                               valueOrDefault<String>(
-                                                                                                listViewListarInspeccionesRealizadaRow.codigoLocalColegio,
+                                                                                                columnListarInspeccionesRealizadaRow.codigoLocalColegio,
                                                                                                 's',
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -1395,7 +1365,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                           ),
                                                                                           Text(
                                                                                             valueOrDefault<String>(
-                                                                                              listViewListarInspeccionesRealizadaRow.nombreLocalColegio,
+                                                                                              columnListarInspeccionesRealizadaRow.nombreLocalColegio,
                                                                                               's',
                                                                                             ),
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -1414,7 +1384,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                   children: [
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRealizadaRow.departamentoColegio,
+                                                                                        columnListarInspeccionesRealizadaRow.departamentoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1429,7 +1399,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRealizadaRow.provinciaColegio,
+                                                                                        columnListarInspeccionesRealizadaRow.provinciaColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1444,7 +1414,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesRealizadaRow.distritoColegio,
+                                                                                        columnListarInspeccionesRealizadaRow.distritoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1465,33 +1435,35 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
-                                                                        -1,
-                                                                        0),
+                                                                        -1, 0),
                                                                     child:
                                                                     Container(
                                                                       width: double
                                                                           .infinity,
                                                                       decoration:
                                                                       BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
+                                                                        color: FlutterFlowTheme.of(
+                                                                            context)
                                                                             .lineColor,
                                                                       ),
                                                                       child:
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             55,
                                                                             10,
                                                                             10,
                                                                             10),
-                                                                        child:
-                                                                        Text(
+                                                                        child: Text(
                                                                           valueOrDefault<
                                                                               String>(
-                                                                            listViewListarInspeccionesRealizadaRow.nombreEvento,
+                                                                            columnListarInspeccionesRealizadaRow
+                                                                                .nombreEvento,
                                                                             'ssss',
                                                                           ),
-                                                                          style:
-                                                                          FlutterFlowTheme.of(context).bodyMedium,
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1506,23 +1478,24 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           context)
                                                                           .secondaryBackground,
                                                                       borderRadius:
-                                                                      BorderRadius.circular(
+                                                                      BorderRadius
+                                                                          .circular(
                                                                           12),
                                                                     ),
-                                                                    child:
-                                                                    Padding(
+                                                                    child: Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           25,
                                                                           10,
                                                                           25,
                                                                           10),
-                                                                      child:
-                                                                      Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
-                                                                        MainAxisSize.max,
+                                                                        MainAxisSize
+                                                                            .max,
                                                                         mainAxisAlignment:
-                                                                        MainAxisAlignment.spaceBetween,
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                         children: [
                                                                           Container(
                                                                             width:
@@ -1531,11 +1504,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -1547,11 +1522,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         child: Icon(
                                                                                           Icons.sd_card_alert,
                                                                                           color: () {
-                                                                                            if (listViewListarInspeccionesRealizadaRow.idEstado == 3) {
+                                                                                            if (columnListarInspeccionesRealizadaRow.idEstado == 3) {
                                                                                               return FlutterFlowTheme.of(context).darkSeaGreen;
-                                                                                            } else if (listViewListarInspeccionesRealizadaRow.idEstado == 2) {
+                                                                                            } else if (columnListarInspeccionesRealizadaRow.idEstado == 2) {
                                                                                               return FlutterFlowTheme.of(context).gray600;
-                                                                                            } else if (listViewListarInspeccionesRealizadaRow.idEstado == 4) {
+                                                                                            } else if (columnListarInspeccionesRealizadaRow.idEstado == 4) {
                                                                                               return FlutterFlowTheme.of(context).warning;
                                                                                             } else {
                                                                                               return FlutterFlowTheme.of(context).secondary;
@@ -1562,7 +1537,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       ),
                                                                                       Text(
                                                                                         valueOrDefault<String>(
-                                                                                          listViewListarInspeccionesRealizadaRow.estado,
+                                                                                          columnListarInspeccionesRealizadaRow.estado,
                                                                                           'estado',
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium,
@@ -1590,11 +1565,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -1638,13 +1615,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                             ),
                                                           ),
                                                         );
-                                                      },
-                                                    );
-                                                  },
+                                                      }),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -1658,56 +1633,48 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Flexible(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(15, 15, 15, 0),
-                                                child: FutureBuilder<
-                                                    List<
-                                                        ListarInspeccionesProgramadaRow>>(
-                                                  future: SQLiteManager.instance
-                                                      .listarInspeccionesProgramada(),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                          CircularProgressIndicator(
-                                                            valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                              FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final listViewListarInspeccionesProgramadaRowList =
-                                                    snapshot.data!;
-                                                    return ListView.separated(
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      scrollDirection:
-                                                      Axis.vertical,
-                                                      itemCount:
-                                                      listViewListarInspeccionesProgramadaRowList
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              15, 15, 15, 25),
+                                          child: FutureBuilder<
+                                              List<
+                                                  ListarInspeccionesProgramadaRow>>(
+                                            future: SQLiteManager.instance
+                                                .listarInspeccionesProgramada(),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child:
+                                                    CircularProgressIndicator(
+                                                      valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final columnListarInspeccionesProgramadaRowList =
+                                              snapshot.data!;
+                                              return SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.min,
+                                                  children: List.generate(
+                                                      columnListarInspeccionesProgramadaRowList
                                                           .length,
-                                                      separatorBuilder: (_,
-                                                          __) =>
-                                                          SizedBox(height: 15),
-                                                      itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewListarInspeccionesProgramadaRow =
-                                                        listViewListarInspeccionesProgramadaRowList[
-                                                        listViewIndex];
+                                                          (columnIndex) {
+                                                        final columnListarInspeccionesProgramadaRow =
+                                                        columnListarInspeccionesProgramadaRowList[
+                                                        columnIndex];
                                                         return Card(
                                                           clipBehavior: Clip
                                                               .antiAliasWithSaveLayer,
@@ -1719,40 +1686,38 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                           RoundedRectangleBorder(
                                                             borderRadius:
                                                             BorderRadius
-                                                                .circular(
-                                                                8),
+                                                                .circular(8),
                                                           ),
                                                           child: InkWell(
-                                                            splashColor: Colors
-                                                                .transparent,
-                                                            focusColor: Colors
-                                                                .transparent,
-                                                            hoverColor: Colors
-                                                                .transparent,
+                                                            splashColor:
+                                                            Colors.transparent,
+                                                            focusColor:
+                                                            Colors.transparent,
+                                                            hoverColor:
+                                                            Colors.transparent,
                                                             highlightColor:
-                                                            Colors
-                                                                .transparent,
+                                                            Colors.transparent,
                                                             onTap: () async {
                                                               setState(() {
                                                                 FFAppState()
                                                                     .IdFicha =
-                                                                listViewListarInspeccionesProgramadaRow
+                                                                columnListarInspeccionesProgramadaRow
                                                                     .idFicha!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccionPadre =
-                                                                listViewListarInspeccionesProgramadaRow
+                                                                columnListarInspeccionesProgramadaRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idpregunta =
-                                                                listViewListarInspeccionesProgramadaRow
+                                                                columnListarInspeccionesProgramadaRow
                                                                     .idInspeccion!;
                                                                 FFAppState()
                                                                     .IdPlantilla =
-                                                                listViewListarInspeccionesProgramadaRow
+                                                                columnListarInspeccionesProgramadaRow
                                                                     .idPlantilla!;
                                                                 FFAppState()
                                                                     .idPlantillaSeccion =
-                                                                listViewListarInspeccionesProgramadaRow
+                                                                columnListarInspeccionesProgramadaRow
                                                                     .idPlantilla!;
                                                               });
 
@@ -1760,34 +1725,30 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   'DatosGenerales');
                                                             },
                                                             child: Container(
-                                                              width: double
-                                                                  .infinity,
+                                                              width:
+                                                              double.infinity,
                                                               decoration:
                                                               BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                    context)
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
                                                                     .secondaryBackground,
                                                                 boxShadow: [
                                                                   BoxShadow(
-                                                                    blurRadius:
-                                                                    0,
+                                                                    blurRadius: 0,
                                                                     color: FlutterFlowTheme.of(
                                                                         context)
                                                                         .secondaryBackground,
-                                                                    offset:
-                                                                    Offset(
-                                                                        0,
-                                                                        1),
+                                                                    offset: Offset(
+                                                                        0, 1),
                                                                   )
                                                                 ],
                                                                 borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                     8),
-                                                                border:
-                                                                Border.all(
-                                                                  color: FlutterFlowTheme.of(
-                                                                      context)
+                                                                border: Border.all(
+                                                                  color: FlutterFlowTheme
+                                                                      .of(context)
                                                                       .secondaryBackground,
                                                                 ),
                                                               ),
@@ -1808,10 +1769,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                         Icon(
                                                                           Icons
                                                                               .school,
-                                                                          color:
-                                                                          Color(0xFF086D82),
-                                                                          size:
-                                                                          35,
+                                                                          color: Color(
+                                                                              0xFF086D82),
+                                                                          size: 35,
                                                                         ),
                                                                         Expanded(
                                                                           child:
@@ -1823,8 +1783,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 0),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                              crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -1833,14 +1795,28 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     decoration: BoxDecoration(
                                                                                       color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                     ),
-                                                                                    child: Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      children: [
-                                                                                        Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                                                                                          child: Text(
+                                                                                    child: SingleChildScrollView(
+                                                                                      scrollDirection: Axis.horizontal,
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                                                            child: Text(
+                                                                                              valueOrDefault<String>(
+                                                                                                columnListarInspeccionesProgramadaRow.codigoLocalColegio,
+                                                                                                's',
+                                                                                              ),
+                                                                                              style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                                fontFamily: 'Outfit',
+                                                                                                color: Color(0xFF086D82),
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Text(
                                                                                             valueOrDefault<String>(
-                                                                                              listViewListarInspeccionesProgramadaRow.codigoLocalColegio,
+                                                                                              columnListarInspeccionesProgramadaRow.nombreLocalColegio,
                                                                                               's',
                                                                                             ),
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
@@ -1849,19 +1825,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                               fontWeight: FontWeight.bold,
                                                                                             ),
                                                                                           ),
-                                                                                        ),
-                                                                                        Text(
-                                                                                          valueOrDefault<String>(
-                                                                                            listViewListarInspeccionesProgramadaRow.nombreLocalColegio,
-                                                                                            's',
-                                                                                          ),
-                                                                                          style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                            fontFamily: 'Outfit',
-                                                                                            color: Color(0xFF086D82),
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
+                                                                                        ],
+                                                                                      ),
                                                                                     ),
                                                                                   ),
                                                                                 ),
@@ -1870,7 +1835,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                   children: [
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProgramadaRow.departamentoColegio,
+                                                                                        columnListarInspeccionesProgramadaRow.departamentoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1885,7 +1850,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProgramadaRow.provinciaColegio,
+                                                                                        columnListarInspeccionesProgramadaRow.provinciaColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1900,7 +1865,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ),
                                                                                     Text(
                                                                                       valueOrDefault<String>(
-                                                                                        listViewListarInspeccionesProgramadaRow.distritoColegio,
+                                                                                        columnListarInspeccionesProgramadaRow.distritoColegio,
                                                                                         's',
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -1921,33 +1886,35 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
-                                                                        -1,
-                                                                        0),
+                                                                        -1, 0),
                                                                     child:
                                                                     Container(
                                                                       width: double
                                                                           .infinity,
                                                                       decoration:
                                                                       BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
+                                                                        color: FlutterFlowTheme.of(
+                                                                            context)
                                                                             .lineColor,
                                                                       ),
                                                                       child:
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                        padding: EdgeInsetsDirectional
+                                                                            .fromSTEB(
                                                                             55,
                                                                             10,
                                                                             10,
                                                                             10),
-                                                                        child:
-                                                                        Text(
+                                                                        child: Text(
                                                                           valueOrDefault<
                                                                               String>(
-                                                                            listViewListarInspeccionesProgramadaRow.nombreEvento,
+                                                                            columnListarInspeccionesProgramadaRow
+                                                                                .nombreEvento,
                                                                             'ssss',
                                                                           ),
-                                                                          style:
-                                                                          FlutterFlowTheme.of(context).bodyMedium,
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1962,23 +1929,24 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           context)
                                                                           .secondaryBackground,
                                                                       borderRadius:
-                                                                      BorderRadius.circular(
+                                                                      BorderRadius
+                                                                          .circular(
                                                                           12),
                                                                     ),
-                                                                    child:
-                                                                    Padding(
+                                                                    child: Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
                                                                           25,
                                                                           10,
                                                                           25,
                                                                           10),
-                                                                      child:
-                                                                      Row(
+                                                                      child: Row(
                                                                         mainAxisSize:
-                                                                        MainAxisSize.max,
+                                                                        MainAxisSize
+                                                                            .max,
                                                                         mainAxisAlignment:
-                                                                        MainAxisAlignment.spaceBetween,
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
                                                                         children: [
                                                                           Container(
                                                                             width:
@@ -1987,11 +1955,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -2003,11 +1973,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         child: Icon(
                                                                                           Icons.sd_card_alert,
                                                                                           color: () {
-                                                                                            if (listViewListarInspeccionesProgramadaRow.idEstado == 3) {
+                                                                                            if (columnListarInspeccionesProgramadaRow.idEstado == 3) {
                                                                                               return FlutterFlowTheme.of(context).darkSeaGreen;
-                                                                                            } else if (listViewListarInspeccionesProgramadaRow.idEstado == 2) {
+                                                                                            } else if (columnListarInspeccionesProgramadaRow.idEstado == 2) {
                                                                                               return FlutterFlowTheme.of(context).gray600;
-                                                                                            } else if (listViewListarInspeccionesProgramadaRow.idEstado == 4) {
+                                                                                            } else if (columnListarInspeccionesProgramadaRow.idEstado == 4) {
                                                                                               return FlutterFlowTheme.of(context).warning;
                                                                                             } else {
                                                                                               return FlutterFlowTheme.of(context).secondary;
@@ -2018,7 +1988,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       ),
                                                                                       Text(
                                                                                         valueOrDefault<String>(
-                                                                                          listViewListarInspeccionesProgramadaRow.estado,
+                                                                                          columnListarInspeccionesProgramadaRow.estado,
                                                                                           'estado',
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium,
@@ -2046,11 +2016,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                             100,
                                                                             decoration:
                                                                             BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
                                                                             ),
                                                                             child:
                                                                             Column(
-                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisSize:
+                                                                              MainAxisSize.max,
                                                                               children: [
                                                                                 Align(
                                                                                   alignment: AlignmentDirectional(0, 0),
@@ -2094,13 +2066,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                             ),
                                                           ),
                                                         );
-                                                      },
-                                                    );
-                                                  },
+                                                      }),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -2114,9 +2084,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

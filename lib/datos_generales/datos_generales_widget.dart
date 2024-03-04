@@ -139,439 +139,568 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Align(
-                      alignment: AlignmentDirectional(-1, 0),
-                      child: FutureBuilder<List<ListarInspeccionesPorIdFichaRow>>(
-                        future: SQLiteManager.instance.listarInspeccionesPorIdFicha(
-                          idFicha: FFAppState().IdFicha,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: FutureBuilder<
+                            List<ListarInspeccionesPorIdFichaRow>>(
+                          future: SQLiteManager.instance
+                              .listarInspeccionesPorIdFicha(
+                            idFicha: FFAppState().IdFicha,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
                                   ),
                                 ),
+                              );
+                            }
+                            final containerListarInspeccionesPorIdFichaRowList =
+                            snapshot.data!;
+                            return Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF0E1C27),
                               ),
-                            );
-                          }
-                          final containerListarInspeccionesPorIdFichaRowList = snapshot.data!;
-                          return Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF0E1C27),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF0E1C27),
-                                        border: Border.all(
-                                          color: Colors.transparent,
-                                          width: 0,
+                              child: Padding(
+                                padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFF0E1C27),
+                                          border: Border.all(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
                                         ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(25, 0, 0, 5),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Align(
-                                                  alignment: AlignmentDirectional(0, 0),
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                                        10, 0, 0, 0),
-                                                    child: InkWell(
-                                                      splashColor: Colors.transparent,
-                                                      focusColor: Colors.transparent,
-                                                      hoverColor: Colors.transparent,
-                                                      highlightColor: Colors.transparent,
-                                                      onTap: () async {
-                                                        context.pushNamed('ListaInspecciones');
-                                                      },
-                                                      child: Icon(
-                                                        Icons.house,
-                                                        color: FlutterFlowTheme.of(context)
-                                                            .primaryBackground,
-                                                        size: 35,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment: AlignmentDirectional(0, 0),
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                                        10, 10, 0, 0),
-                                                    child: InkWell(
-                                                      splashColor: Colors.transparent,
-                                                      focusColor: Colors.transparent,
-                                                      hoverColor: Colors.transparent,
-                                                      highlightColor: Colors.transparent,
-                                                      onTap: () async {
-                                                        context.pushNamed(
-                                                          'UbicacionInstitucion',
-                                                          extra: <String, dynamic>{
-                                                            kTransitionInfoKey: TransitionInfo(
-                                                              hasTransition: true,
-                                                              transitionType:
-                                                              PageTransitionType.fade,
-                                                              duration:
-                                                              Duration(milliseconds: 1000),
-                                                            ),
-                                                          },
-                                                        );
-                                                      },
-                                                      child: Icon(
-                                                        Icons.add_location_rounded,
-                                                        color: Color(0xFF086D82),
-                                                        size: 35,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(-1, -1),
-                                              child: Padding(
-                                                padding:
-                                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      width: 278,
-                                                      decoration: BoxDecoration(
-                                                        color: Color(0xFF0E1C27),
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                            0, 0, 0, 5),
-                                                        child: Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.nombreLocalColegio,
-                                                            'ss',
-                                                          ),
-                                                          textAlign: TextAlign.start,
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .headlineMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color: Colors.white,
-                                                            fontSize: 25,
-                                                            fontWeight: FontWeight.bold,
-                                                          ),
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              25, 0, 20, 5),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                    AlignmentDirectional(
+                                                        0, 0),
+                                                    child: Padding(
+                                                      padding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          10, 0, 0, 0),
+                                                      child: InkWell(
+                                                        splashColor:
+                                                        Colors.transparent,
+                                                        focusColor:
+                                                        Colors.transparent,
+                                                        hoverColor:
+                                                        Colors.transparent,
+                                                        highlightColor:
+                                                        Colors.transparent,
+                                                        onTap: () async {
+                                                          context.pushNamed(
+                                                              'ListaInspecciones');
+                                                        },
+                                                        child: Icon(
+                                                          Icons.house,
+                                                          color: FlutterFlowTheme
+                                                              .of(context)
+                                                              .primaryBackground,
+                                                          size: 35,
                                                         ),
                                                       ),
                                                     ),
-                                                    Row(
-                                                      mainAxisSize: MainAxisSize.max,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                    AlignmentDirectional(
+                                                        0, 0),
+                                                    child: Padding(
+                                                      padding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          10, 10, 0, 0),
+                                                      child: InkWell(
+                                                        splashColor:
+                                                        Colors.transparent,
+                                                        focusColor:
+                                                        Colors.transparent,
+                                                        hoverColor:
+                                                        Colors.transparent,
+                                                        highlightColor:
+                                                        Colors.transparent,
+                                                        onTap: () async {
+                                                          context.pushNamed(
+                                                            'UbicacionInstitucion',
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              kTransitionInfoKey:
+                                                              TransitionInfo(
+                                                                hasTransition:
+                                                                true,
+                                                                transitionType:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                    1000),
+                                                              ),
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Icon(
+                                                          Icons
+                                                              .add_location_rounded,
+                                                          color:
+                                                          Color(0xFF086D82),
+                                                          size: 35,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Flexible(
+                                                child: Align(
+                                                  alignment:
+                                                  AlignmentDirectional(
+                                                      -1, -1),
+                                                  child: Padding(
+                                                    padding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20, 0, 20, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                      MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
                                                       children: [
-                                                        Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.departamentoColegio,
-                                                            'de',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .secondaryBackground,
-                                                            fontSize: 13,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '/',
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .secondaryBackground,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.provinciaColegio,
-                                                            'pro',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .secondaryBackground,
-                                                            fontSize: 13,
+                                                        Padding(
+                                                          padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(0,
+                                                              0, 0, 5),
+                                                          child: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              containerListarInspeccionesPorIdFichaRowList
+                                                                  .first
+                                                                  .nombreLocalColegio,
+                                                              'ss',
+                                                            ),
+                                                            textAlign:
+                                                            TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                .of(context)
+                                                                .headlineMedium
+                                                                .override(
+                                                              fontFamily:
+                                                              'Outfit',
+                                                              color: Colors
+                                                                  .white,
+                                                              fontSize: 25,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .bold,
+                                                            ),
                                                           ),
                                                         ),
-                                                        Text(
-                                                          '/',
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .secondaryBackground,
-                                                          ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                          MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .departamentoColegio,
+                                                                'de',
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .secondaryBackground,
+                                                                fontSize:
+                                                                13,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              '/',
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .provinciaColegio,
+                                                                'pro',
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .secondaryBackground,
+                                                                fontSize:
+                                                                13,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              '/',
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .distritoColegio,
+                                                                'dist',
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .secondaryBackground,
+                                                                fontSize:
+                                                                13,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.distritoColegio,
-                                                            'dist',
+                                                        Container(
+                                                          width:
+                                                          MediaQuery.sizeOf(
+                                                              context)
+                                                              .width,
+                                                          decoration:
+                                                          BoxDecoration(
+                                                            color: Color(
+                                                                0xFF0E1C27),
                                                           ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .secondaryBackground,
-                                                            fontSize: 13,
+                                                          child: Padding(
+                                                            padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0,
+                                                                5,
+                                                                0,
+                                                                0),
+                                                            child: Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .nombreEvento,
+                                                                'envet',
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Outfit',
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .primaryBackground,
+                                                                fontSize:
+                                                                12,
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    Container(
-                                                      width: 278,
-                                                      decoration: BoxDecoration(
-                                                        color: Color(0xFF0E1C27),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 55,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .gray200,
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              35, 10, 35, 10),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                width: 130,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                      context)
+                                                      .gray200,
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.max,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                        MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0,
+                                                                0,
+                                                                5,
+                                                                0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .sd_card_alert,
+                                                              color: () {
+                                                                if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .idEstado ==
+                                                                    3) {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .darkSeaGreen;
+                                                                } else if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .idEstado ==
+                                                                    2) {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .gray600;
+                                                                } else if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .estado ==
+                                                                    '4') {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .warning;
+                                                                } else {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .secondary;
+                                                                }
+                                                              }(),
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              containerListarInspeccionesPorIdFichaRowList
+                                                                  .first.estado,
+                                                              'es',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                .of(context)
+                                                                .bodyMedium,
+                                                          ),
+                                                        ],
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                            0, 5, 0, 0),
-                                                        child: Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.nombreEvento,
-                                                            'envet',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                            fontFamily: 'Outfit',
-                                                            color:
-                                                            FlutterFlowTheme.of(context)
-                                                                .primaryBackground,
-                                                            fontSize: 12,
-                                                          ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          14, 0, 0, 0),
+                                                      child: Text(
+                                                        '30/01/2023 10:45 AM',
+                                                        style:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .bodyMedium
+                                                            .override(
+                                                          fontFamily:
+                                                          'Outfit',
+                                                          fontSize: 9,
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                              Container(
+                                                width: 130,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                      context)
+                                                      .gray200,
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                  MainAxisSize.max,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                        MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0,
+                                                                0,
+                                                                5,
+                                                                0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .sd_card_alert,
+                                                              color: () {
+                                                                if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .idEstado ==
+                                                                    3) {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .darkSeaGreen;
+                                                                } else if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .idEstado ==
+                                                                    2) {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .gray600;
+                                                                } else if (containerListarInspeccionesPorIdFichaRowList
+                                                                    .first
+                                                                    .idEstado ==
+                                                                    4) {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .warning;
+                                                                } else {
+                                                                  return FlutterFlowTheme.of(
+                                                                      context)
+                                                                      .secondary;
+                                                                }
+                                                              }(),
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              containerListarInspeccionesPorIdFichaRowList
+                                                                  .first.estado,
+                                                              'ssss',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                .of(context)
+                                                                .bodyMedium,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          14, 0, 0, 0),
+                                                      child: Text(
+                                                        '30/01/2023 10:45 AM',
+                                                        style:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .bodyMedium
+                                                            .override(
+                                                          fontFamily:
+                                                          'Outfit',
+                                                          fontSize: 9,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 55,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context).gray200,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(35, 10, 35, 10),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              width: 130,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: FlutterFlowTheme.of(context).gray200,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Align(
-                                                    alignment: AlignmentDirectional(0, 0),
-                                                    child: Row(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                              0, 0, 5, 0),
-                                                          child: Icon(
-                                                            Icons.sd_card_alert,
-                                                            color: () {
-                                                              if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.idEstado ==
-                                                                  3) {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .darkSeaGreen;
-                                                              } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.idEstado ==
-                                                                  2) {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .gray600;
-                                                              } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.estado ==
-                                                                  '4') {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .warning;
-                                                              } else {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .secondary;
-                                                              }
-                                                            }(),
-                                                            size: 24,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.estado,
-                                                            'es',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                                        14, 0, 0, 0),
-                                                    child: Text(
-                                                      '30/01/2023 10:45 AM',
-                                                      style: FlutterFlowTheme.of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                        fontFamily: 'Outfit',
-                                                        fontSize: 9,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 130,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: FlutterFlowTheme.of(context).gray200,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Align(
-                                                    alignment: AlignmentDirectional(0, 0),
-                                                    child: Row(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                              0, 0, 5, 0),
-                                                          child: Icon(
-                                                            Icons.sd_card_alert,
-                                                            color: () {
-                                                              if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.idEstado ==
-                                                                  3) {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .darkSeaGreen;
-                                                              } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.idEstado ==
-                                                                  2) {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .gray600;
-                                                              } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.idEstado ==
-                                                                  4) {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .warning;
-                                                              } else {
-                                                                return FlutterFlowTheme.of(
-                                                                    context)
-                                                                    .secondary;
-                                                              }
-                                                            }(),
-                                                            size: 24,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          valueOrDefault<String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first.estado,
-                                                            'ssss',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context)
-                                                              .bodyMedium,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                                        14, 0, 0, 0),
-                                                    child: Text(
-                                                      '30/01/2023 10:45 AM',
-                                                      style: FlutterFlowTheme.of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                        fontFamily: 'Outfit',
-                                                        fontSize: 9,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                      Align(
-                        alignment: AlignmentDirectional(-1, -1),
+                      Flexible(
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
-                          height: MediaQuery.sizeOf(context).height * 0.65,
+                          height: MediaQuery.sizeOf(context).height * 1,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -663,14 +792,14 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                     SingleChildScrollView(
                                                       child: Column(
                                                         mainAxisSize:
-                                                        MainAxisSize.max,
+                                                        MainAxisSize.min,
                                                         children: [
                                                           Padding(
                                                             padding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                 0,
-                                                                0,
+                                                                5,
                                                                 0,
                                                                 15),
                                                             child: Container(
@@ -683,9 +812,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .centroPobladoColegio  == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.centroPobladoColegio
+                                                                          .centroPobladoColegio,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode1,
@@ -806,9 +933,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .direccionColegio == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.direccionColegio
+                                                                          .direccionColegio,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode2,
@@ -931,9 +1056,14 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                 controller: _model
                                                                     .dat1Controller3 ??=
                                                                     TextEditingController(
-                                                                      text: datosGeneralesListarFichaPorIdFichaRowList.first.zonaColegio == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.zonaColegio
+                                                                      text: datosGeneralesListarFichaPorIdFichaRowList.first.zonaColegio !=
+                                                                          null &&
+                                                                          datosGeneralesListarFichaPorIdFichaRowList.first.zonaColegio !=
+                                                                              ''
+                                                                          ? ' '
+                                                                          : datosGeneralesListarFichaPorIdFichaRowList
+                                                                          .first
+                                                                          .zonaColegio,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode3,
@@ -1447,7 +1577,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                     width: MediaQuery.sizeOf(
                                                         context)
                                                         .width,
-                                                    height: 400,
                                                     decoration: BoxDecoration(
                                                       color: FlutterFlowTheme
                                                           .of(context)
@@ -1456,615 +1585,623 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                     child: Align(
                                                       alignment:
                                                       AlignmentDirectional(
-                                                          0, 1),
-                                                      child: FutureBuilder<
-                                                          List<
-                                                              ListarFichasModularesPorIdFichaRow>>(
-                                                        future: SQLiteManager
-                                                            .instance
-                                                            .listarFichasModularesPorIdFicha(
-                                                          idFicha: FFAppState()
-                                                              .IdFicha,
-                                                        ),
-                                                        builder: (context,
-                                                            snapshot) {
-                                                          // Customize what your widget looks like when it's loading.
-                                                          if (!snapshot
-                                                              .hasData) {
-                                                            return Center(
-                                                              child: SizedBox(
-                                                                width: 50,
-                                                                height: 50,
-                                                                child:
-                                                                CircularProgressIndicator(
-                                                                  valueColor:
-                                                                  AlwaysStoppedAnimation<
-                                                                      Color>(
-                                                                    FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primary,
+                                                          -1, -1),
+                                                      child: Padding(
+                                                        padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0, 0,
+                                                            0, 35),
+                                                        child: FutureBuilder<
+                                                            List<
+                                                                ListarFichasModularesPorIdFichaRow>>(
+                                                          future: SQLiteManager
+                                                              .instance
+                                                              .listarFichasModularesPorIdFicha(
+                                                            idFicha:
+                                                            FFAppState()
+                                                                .IdFicha,
+                                                          ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 50,
+                                                                  height: 50,
+                                                                  child:
+                                                                  CircularProgressIndicator(
+                                                                    valueColor:
+                                                                    AlwaysStoppedAnimation<
+                                                                        Color>(
+                                                                      FlutterFlowTheme.of(
+                                                                          context)
+                                                                          .primary,
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              ),
-                                                            );
-                                                          }
-                                                          final columnListarFichasModularesPorIdFichaRowList =
-                                                          snapshot.data!;
-                                                          return SingleChildScrollView(
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                              MainAxisSize
-                                                                  .max,
-                                                              children: List.generate(
-                                                                  columnListarFichasModularesPorIdFichaRowList
-                                                                      .length,
-                                                                      (columnIndex) {
-                                                                    final columnListarFichasModularesPorIdFichaRow =
-                                                                    columnListarFichasModularesPorIdFichaRowList[
-                                                                    columnIndex];
-                                                                    return Align(
-                                                                      alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          0),
-                                                                      child:
-                                                                      Container(
-                                                                        width: double
-                                                                            .infinity,
-                                                                        decoration:
-                                                                        BoxDecoration(
-                                                                          color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                              .secondaryBackground,
-                                                                        ),
+                                                              );
+                                                            }
+                                                            final columnListarFichasModularesPorIdFichaRowList =
+                                                            snapshot.data!;
+                                                            return SingleChildScrollView(
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                                children: List.generate(
+                                                                    columnListarFichasModularesPorIdFichaRowList
+                                                                        .length,
+                                                                        (columnIndex) {
+                                                                      final columnListarFichasModularesPorIdFichaRow =
+                                                                      columnListarFichasModularesPorIdFichaRowList[
+                                                                      columnIndex];
+                                                                      return Align(
+                                                                        alignment:
+                                                                        AlignmentDirectional(
+                                                                            -1,
+                                                                            0),
                                                                         child:
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              15),
+                                                                        Container(
+                                                                          width: double
+                                                                              .infinity,
+                                                                          decoration:
+                                                                          BoxDecoration(
+                                                                            color: FlutterFlowTheme.of(context)
+                                                                                .secondaryBackground,
+                                                                          ),
                                                                           child:
-                                                                          SingleChildScrollView(
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                15),
                                                                             child:
-                                                                            Column(
-                                                                              mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                              children: [
-                                                                                Align(
-                                                                                  alignment: AlignmentDirectional(-1, 0),
-                                                                                  child: Container(
-                                                                                    decoration: BoxDecoration(
-                                                                                      color: Color(0xFF086D82),
+                                                                            SingleChildScrollView(
+                                                                              child:
+                                                                              Column(
+                                                                                mainAxisSize:
+                                                                                MainAxisSize.min,
+                                                                                children: [
+                                                                                  Align(
+                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(
+                                                                                        color: Color(0xFF086D82),
+                                                                                      ),
+                                                                                      child: Align(
+                                                                                        alignment: AlignmentDirectional(-1, -1),
+                                                                                        child: Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                                          children: [
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 5, 15),
+                                                                                              child: Text(
+                                                                                                valueOrDefault<String>(
+                                                                                                  columnListarFichasModularesPorIdFichaRow.codigoLocal,
+                                                                                                  'cod',
+                                                                                                ),
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Outfit',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 15),
+                                                                                              child: Text(
+                                                                                                valueOrDefault<String>(
+                                                                                                  columnListarFichasModularesPorIdFichaRow.nivel,
+                                                                                                  'nivel',
+                                                                                                ),
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Outfit',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
                                                                                     ),
-                                                                                    child: Align(
-                                                                                      alignment: AlignmentDirectional(-1, -1),
-                                                                                      child: Row(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                                        children: [
-                                                                                          Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 5, 15),
-                                                                                            child: Text(
-                                                                                              valueOrDefault<String>(
-                                                                                                columnListarFichasModularesPorIdFichaRow.codigoLocal,
-                                                                                                'cod',
-                                                                                              ),
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Outfit',
-                                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(5, 15, 0, 15),
-                                                                                            child: Text(
-                                                                                              valueOrDefault<String>(
-                                                                                                columnListarFichasModularesPorIdFichaRow.nivel,
-                                                                                                'nivel',
-                                                                                              ),
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                fontFamily: 'Outfit',
-                                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller7 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.turno,
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode7,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
                                                                                         ],
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller7 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.turno,
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode7,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Turno',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Turno',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller7Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller7Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller8 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.tipoDocente,
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode8,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Tipo Docente',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller8 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.tipoDocente,
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode8,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Tipo Docente',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller8Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller8Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller9 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.tipoSexo,
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode9,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Tipo Docente',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller9 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.tipoSexo,
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode9,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Tipo Docente',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller9Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller9Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller10 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.numeroAlumnos?.toString(),
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode10,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Número de Alumnos',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller10 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.numeroAlumnos?.toString(),
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode10,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Número de Alumnos',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller10Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller10Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller11 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.numeroHombres?.toString(),
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode11,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Número de Hombres',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller11 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.numeroHombres?.toString(),
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode11,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Número de Hombres',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller11Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller11Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller12 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.numeroMujeres?.toString(),
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode12,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Número de Mujeres',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller12 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.numeroMujeres?.toString(),
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode12,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Número de Mujeres',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller12Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller12Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller13 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.numeroDocente?.toString(),
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode13,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Número de Docentes',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller13 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.numeroDocente?.toString(),
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode13,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Número de Docentes',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller13Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller13Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                  child: Container(
-                                                                                    width: double.infinity,
-                                                                                    child: TextFormField(
-                                                                                      controller: _model.dat1Controller14 ??= TextEditingController(
-                                                                                        text: columnListarFichasModularesPorIdFichaRow.numeroSeccion?.toString(),
-                                                                                      ),
-                                                                                      focusNode: _model.dat1FocusNode14,
-                                                                                      autofocus: true,
-                                                                                      autofillHints: [
-                                                                                        AutofillHints.birthday
-                                                                                      ],
-                                                                                      obscureText: false,
-                                                                                      decoration: InputDecoration(
-                                                                                        labelText: 'Número de Secciones',
-                                                                                        labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      child: TextFormField(
+                                                                                        controller: _model.dat1Controller14 ??= TextEditingController(
+                                                                                          text: columnListarFichasModularesPorIdFichaRow.numeroSeccion?.toString(),
+                                                                                        ),
+                                                                                        focusNode: _model.dat1FocusNode14,
+                                                                                        autofocus: true,
+                                                                                        autofillHints: [
+                                                                                          AutofillHints.birthday
+                                                                                        ],
+                                                                                        obscureText: false,
+                                                                                        decoration: InputDecoration(
+                                                                                          labelText: 'Número de Secciones',
+                                                                                          labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                            fontFamily: 'Outfit',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          ),
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: Color(0xFF2C313E),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          errorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          focusedErrorBorder: OutlineInputBorder(
+                                                                                            borderSide: BorderSide(
+                                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(12),
+                                                                                          ),
+                                                                                          filled: true,
+                                                                                          fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        ),
+                                                                                        style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                           fontFamily: 'Outfit',
-                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          fontSize: 13,
+                                                                                          fontWeight: FontWeight.w300,
                                                                                         ),
-                                                                                        enabledBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        errorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        focusedErrorBorder: OutlineInputBorder(
-                                                                                          borderSide: BorderSide(
-                                                                                            color: FlutterFlowTheme.of(context).alternate,
-                                                                                            width: 0.5,
-                                                                                          ),
-                                                                                          borderRadius: BorderRadius.circular(12),
-                                                                                        ),
-                                                                                        filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        validator: _model.dat1Controller14Validator.asValidator(context),
                                                                                       ),
-                                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        fontSize: 13,
-                                                                                        fontWeight: FontWeight.w300,
-                                                                                      ),
-                                                                                      validator: _model.dat1Controller14Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
-                                                                                ),
-                                                                              ],
+                                                                                ],
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    );
-                                                                  }),
-                                                            ),
-                                                          );
-                                                        },
+                                                                      );
+                                                                    }).addToEnd(
+                                                                    SizedBox(
+                                                                        height:
+                                                                        20)),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -2078,7 +2215,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                     width: MediaQuery.sizeOf(
                                                         context)
                                                         .width,
-                                                    height: 500,
                                                     decoration: BoxDecoration(
                                                       color: FlutterFlowTheme
                                                           .of(context)
@@ -2141,9 +2277,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .dniDirector == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.dniDirector,
+                                                                          .dniDirector,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode15,
@@ -2385,9 +2519,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .correoDirector == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.centroPobladoColegio
+                                                                          .correoDirector,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode17,
@@ -2508,9 +2640,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .telefonoDirector == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.telefonoDirector
+                                                                          .telefonoDirector,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode18,
@@ -2657,9 +2787,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .dniAlterno == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.dniAlterno
+                                                                          .dniAlterno,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode19,
@@ -2780,9 +2908,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .nombreAlterno == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.nombreAlterno
+                                                                          .nombreAlterno,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode20,
@@ -2915,7 +3041,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                 0,
-                                                                0,
+                                                                5,
                                                                 0,
                                                                 15),
                                                             child: Container(
@@ -3174,9 +3300,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .correoInspector == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.correoInspector
+                                                                          .correoInspector,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode23,
@@ -3301,9 +3425,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .telefonoInspector == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.telefonoInspector
+                                                                          .telefonoInspector,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode24,
@@ -3428,9 +3550,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .tipoInspeccion == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.tipoInspeccion,
+                                                                          .tipoInspeccion,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode25,
@@ -3555,9 +3675,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .fechaInspeccion == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.fechaInspeccion
+                                                                          .fechaInspeccion,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode26,
@@ -3685,9 +3803,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     TextEditingController(
                                                                       text: datosGeneralesListarFichaPorIdFichaRowList
                                                                           .first
-                                                                          .horaInspeccion == 'null'
-                                                                          ? ''
-                                                                          : datosGeneralesListarFichaPorIdFichaRowList.first.horaInspeccion,
+                                                                          .horaInspeccion,
                                                                     ),
                                                                 focusNode: _model
                                                                     .dat1FocusNode27,
