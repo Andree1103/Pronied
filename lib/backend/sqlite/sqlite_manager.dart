@@ -422,5 +422,27 @@ class SQLiteManager {
         tipoInspeccion:tipoInspeccion
       );
 
+
+  Future actualizarFichaMod({
+    String? codigoModular,
+    int? numeroHombres,
+    int? numeroMujeres,
+    int? numeroAlumnos,
+    int? numeroDocente,
+    int? numeroSeccion
+  }) =>
+      performActualizarFichaMod(
+          _database,
+          codigoModular:codigoModular,
+          numeroHombres:numeroHombres,
+          numeroMujeres:numeroMujeres,
+          numeroAlumnos:numeroAlumnos,
+          numeroDocente:numeroDocente,
+          numeroSeccion:numeroSeccion
+      );
+
   /// END UPDATE QUERY CALLS
+
+
+
 }

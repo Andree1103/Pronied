@@ -1077,6 +1077,40 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   ),
                                 ),
                               ),
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 25.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      context.pushNamed('Firmas');
+                                    },
+                                    text: 'Cancelar',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 24.0, 0.0),
+                                      iconPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0xFFDE1B1B),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: Colors.white,
+                                      ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),

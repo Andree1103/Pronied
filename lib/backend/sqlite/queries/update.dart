@@ -398,4 +398,32 @@ WHERE
   return database.rawQuery(query);
 }
 
+
+
+Future performActualizarFichaMod(
+    Database database, {
+      String? codigoModular,
+      int? numeroHombres,
+      int? numeroMujeres,
+      int? numeroAlumnos,
+      int? numeroDocente,
+      int? numeroSeccion
+    }) {
+  final query = '''
+UPDATE FichaModular
+SET
+    NumeroHombres = ${numeroHombres},
+    NumeroMujeres = ${numeroMujeres},
+    NumeroAlumnos = ${numeroAlumnos},
+    NumeroDocente = ${numeroDocente},
+    NumeroSeccion = ${numeroSeccion}
+WHERE 
+    CodigoModular = '${codigoModular}';
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
 /// END ACTUALIZARFICHA

@@ -1,9 +1,11 @@
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'datos_generales_widget.dart' show DatosGeneralesWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +15,7 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
@@ -26,6 +29,9 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
   FocusNode? dat1FocusNode2;
   TextEditingController? dat1Controller2;
   String? Function(BuildContext, String?)? dat1Controller2Validator;
+  // State field(s) for Dat1 widget.
+  String? dat1Value;
+  FormFieldController<String>? dat1ValueController;
   // State field(s) for Dat1 widget.
   FocusNode? dat1FocusNode3;
   TextEditingController? dat1Controller3;
@@ -82,6 +88,17 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
   FocusNode? dat1FocusNode16;
   TextEditingController? dat1Controller16;
   String? Function(BuildContext, String?)? dat1Controller16Validator;
+  String? _dat1Controller16Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Email no valido';
+    }
+    return null;
+  }
+
   // State field(s) for Dat1 widget.
   FocusNode? dat1FocusNode17;
   TextEditingController? dat1Controller17;
@@ -98,6 +115,17 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
   FocusNode? dat1FocusNode20;
   TextEditingController? dat1Controller20;
   String? Function(BuildContext, String?)? dat1Controller20Validator;
+  String? _dat1Controller20Validator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Eamil no valido';
+    }
+    return null;
+  }
+
   // State field(s) for Dat1 widget.
   FocusNode? dat1FocusNode21;
   TextEditingController? dat1Controller21;
@@ -126,11 +154,18 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
   FocusNode? dat1FocusNode27;
   TextEditingController? dat1Controller27;
   String? Function(BuildContext, String?)? dat1Controller27Validator;
+  // State field(s) for Dat1 widget.
+  FocusNode? dat1FocusNode28;
+  TextEditingController? dat1Controller28;
+  String? Function(BuildContext, String?)? dat1Controller28Validator;
 
   /// Initialization and disposal methods.
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    dat1Controller16Validator = _dat1Controller16Validator;
+    dat1Controller20Validator = _dat1Controller20Validator;
+  }
 
   @override
   void dispose() {
@@ -216,6 +251,9 @@ class DatosGeneralesModel extends FlutterFlowModel<DatosGeneralesWidget> {
 
     dat1FocusNode27?.dispose();
     dat1Controller27?.dispose();
+
+    dat1FocusNode28?.dispose();
+    dat1Controller28?.dispose();
   }
 
 /// Action blocks are added here.
