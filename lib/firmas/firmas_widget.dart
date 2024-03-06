@@ -518,11 +518,12 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                       },
                     ),
                   ),
+                  Flexible(child:
                   Align(
                     alignment: AlignmentDirectional(-1, -1),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
-                      height: MediaQuery.sizeOf(context).height * 0.7,
+                      height: MediaQuery.sizeOf(context).height * 1,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
@@ -901,7 +902,8 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                         ),
                       ),
                     ),
-                  ),
+                  )
+                  )
                 ],
               ),
             ],

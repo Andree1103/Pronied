@@ -206,7 +206,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 15.0, 0.0, 15.0),
                                         child: Text(
-                                          'SISTEMA DE INSPECCIONES ZONALES',
+                                          'SISTEMA DE INSPECCIONES',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .titleMedium

@@ -952,7 +952,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Direccion',
+                                                                    'Dirección',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -2280,7 +2280,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .dniDirector,
+                                                                              .dniDirector != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.dniDirector
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -2400,7 +2402,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .nombreDirector,
+                                                                              .nombreDirector != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.nombreDirector
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -3285,7 +3289,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .dniInspector,
+                                                                            .dniInspector != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.dniInspector
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode22,
@@ -3404,7 +3410,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .nombreInspector,
+                                                                            .nombreInspector != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.nombreInspector
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode23,
@@ -3527,7 +3535,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .correoInspector,
+                                                                            .correoInspector != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.correoInspector
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode24,
@@ -3650,7 +3660,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .telefonoInspector,
+                                                                            .telefonoInspector != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.telefonoInspector
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode25,
@@ -3773,7 +3785,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .tipoInspeccion,
+                                                                            .tipoInspeccion != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.tipoInspeccion
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode26,
@@ -3896,7 +3910,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .fechaInspeccion,
+                                                                            .fechaInspeccion != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.fechaInspeccion
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode27,
@@ -4022,7 +4038,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       TextEditingController(
                                                                         text: datosGeneralesListarFichaPorIdFichaRowList
                                                                             .first
-                                                                            .horaInspeccion,
+                                                                            .horaInspeccion != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.horaInspeccion
+                                                                            : '',
                                                                       ),
                                                                   focusNode: _model
                                                                       .dat1FocusNode28,

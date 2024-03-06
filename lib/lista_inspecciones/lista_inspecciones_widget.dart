@@ -315,7 +315,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                 child: Column(
                                                   mainAxisSize:
                                                   MainAxisSize.min,
-                                                  children: List.generate(
+                                                  children: columnListarInspeccionesRowList.isEmpty
+                                                      ? [
+                                                    Text("No se han encontrado inspecciones"),
+                                                  ]
+                                                      : List.generate(
                                                       columnListarInspeccionesRowList
                                                           .length,
                                                           (columnIndex) {
@@ -766,7 +770,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                 child: Column(
                                                   mainAxisSize:
                                                   MainAxisSize.min,
-                                                  children: List.generate(
+                                                  children: columnListarInspeccionesProcessRowList.isEmpty
+                                                      ? [
+                                                    Text("No se han encontrado inspecciones"),
+                                                  ] : List.generate(
                                                       columnListarInspeccionesProcessRowList
                                                           .length,
                                                           (columnIndex) {
@@ -1217,7 +1224,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                 child: Column(
                                                   mainAxisSize:
                                                   MainAxisSize.min,
-                                                  children: List.generate(
+                                                  children: columnListarInspeccionesRealizadaRowList.isEmpty
+                                                      ? [
+                                                    Text("No se han encontrado inspecciones"),
+                                                  ] : List.generate(
                                                       columnListarInspeccionesRealizadaRowList
                                                           .length,
                                                           (columnIndex) {
@@ -1668,7 +1678,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                 child: Column(
                                                   mainAxisSize:
                                                   MainAxisSize.min,
-                                                  children: List.generate(
+                                                  children: columnListarInspeccionesProgramadaRowList.isEmpty
+                                                      ? [
+                                                    Text("No se han encontrado inspecciones"),
+                                                  ] : List.generate(
                                                       columnListarInspeccionesProgramadaRowList
                                                           .length,
                                                           (columnIndex) {

@@ -1030,6 +1030,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
                                                                                                 return SizedBox.shrink();
                                                                                               }
+
                                                                                           // Agrega otros casos según sea necesario
                                                                                             case 2:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
@@ -1082,7 +1083,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               } else {
                                                                                                 return SizedBox.shrink();
                                                                                               }
-                                                                                          // Caso específico para el tipo de opción 3 (respuesta libre)
+
+                                                                                              // Caso específico para el tipo de opción 3 (respuesta libre)
                                                                                             case 3:
                                                                                               return Align(
                                                                                                 alignment: AlignmentDirectional(-1, 0),
@@ -1411,7 +1413,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 ),
                                                                                               );
 
-
                                                                                             case 10:
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
                                                                                               return Align(
@@ -1448,7 +1449,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ),
                                                                                                 ),
                                                                                               );
-
 
                                                                                             case 11:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
