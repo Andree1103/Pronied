@@ -104,6 +104,12 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
 
   List<FichaModularData> fichasModularesData = [];
 
+  List<TextEditingController> codDigoControllers = [];
+  List<TextEditingController> turnoControllers = [];
+  List<TextEditingController> tipoDocenteControllers = [];
+  List<TextEditingController> numeroAlumnosControllers = [];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -753,7 +759,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                   text: 'Director',
                                                 ),
                                                 Tab(
-                                                  text: 'Inspeccion',
+                                                  text: 'Inspección',
                                                 ),
                                               ],
                                               controller:
@@ -1589,6 +1595,11 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     final TextEditingController numeroDocentesController = TextEditingController(text: columnListarFichasModularesPorIdFichaRow.numeroDocente.toString());
                                                                     final TextEditingController numeroseccinesController = TextEditingController(text: columnListarFichasModularesPorIdFichaRow.numeroSeccion.toString());
 
+                                                                    codDigoControllers.add(codDigo);
+                                                                    turnoControllers.add(turnoController);
+                                                                    tipoDocenteControllers.add(tipoDocenteController);
+                                                                    numeroAlumnosControllers.add(numeroAlumnosController);
+
                                                                     return Align(
                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                       child: Container(
@@ -1829,9 +1840,10 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                     child: TextFormField(
                                                                                       controller: numeroAlumnosController,
                                                                                       onChanged: (value) {
+                                                                                        final int numeroAlumnos = int.parse(value);
                                                                                         actualizarFichaMod(
                                                                                           codigoModular: codDigo.text,
-                                                                                          numeroAlumnos: int.parse(numeroAlumnosController.text),
+                                                                                          numeroAlumnos: numeroAlumnos,
                                                                                           numeroSeccion: int.parse(numeroseccinesController.text),
                                                                                           numeroDocente: int.parse(numeroDocentesController.text),
                                                                                           numeroMujeres: int.parse(numeroMujeresController.text),
@@ -1839,7 +1851,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                         );
                                                                                       },
-                                                                                      focusNode: _model.dat1FocusNode9,
                                                                                       autofocus: true,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
@@ -1899,17 +1910,17 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                     child: TextFormField(
                                                                                       controller: numeroHombresController,
                                                                                       onChanged: (value) {
+                                                                                        final int numeroAlumnos = int.parse(value);
                                                                                         actualizarFichaMod(
                                                                                           codigoModular: codDigo.text,
                                                                                           numeroAlumnos: int.parse(numeroAlumnosController.text),
                                                                                           numeroSeccion: int.parse(numeroseccinesController.text),
                                                                                           numeroDocente: int.parse(numeroDocentesController.text),
                                                                                           numeroMujeres: int.parse(numeroMujeresController.text),
-                                                                                          numeroHombres: int.parse(numeroHombresController.text),
+                                                                                          numeroHombres: numeroAlumnos,
                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                         );
                                                                                       },
-                                                                                      focusNode: _model.dat1FocusNode10,
                                                                                       autofocus: true,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
@@ -1969,17 +1980,17 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                     child: TextFormField(
                                                                                       controller: numeroMujeresController,
                                                                                       onChanged: (value) {
+                                                                                        final int numeroAlumnos = int.parse(value);
                                                                                         actualizarFichaMod(
                                                                                           codigoModular: codDigo.text,
                                                                                           numeroAlumnos: int.parse(numeroAlumnosController.text),
                                                                                           numeroSeccion: int.parse(numeroseccinesController.text),
                                                                                           numeroDocente: int.parse(numeroDocentesController.text),
-                                                                                          numeroMujeres: int.parse(numeroMujeresController.text),
+                                                                                          numeroMujeres: numeroAlumnos,
                                                                                           numeroHombres: int.parse(numeroHombresController.text),
                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                         );
                                                                                       },
-                                                                                      focusNode: _model.dat1FocusNode11,
                                                                                       autofocus: true,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
@@ -2039,17 +2050,17 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                     child: TextFormField(
                                                                                       controller: numeroDocentesController,
                                                                                       onChanged: (value) {
+                                                                                        final int numeroAlumnos = int.parse(value);
                                                                                         actualizarFichaMod(
                                                                                           codigoModular: codDigo.text,
                                                                                           numeroAlumnos: int.parse(numeroAlumnosController.text),
                                                                                           numeroSeccion: int.parse(numeroseccinesController.text),
-                                                                                          numeroDocente: int.parse(numeroDocentesController.text),
+                                                                                          numeroDocente: numeroAlumnos,
                                                                                           numeroMujeres: int.parse(numeroMujeresController.text),
                                                                                           numeroHombres: int.parse(numeroHombresController.text),
                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                         );
                                                                                       },
-                                                                                      focusNode: _model.dat1FocusNode12,
                                                                                       autofocus: true,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
@@ -2109,17 +2120,17 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                     child: TextFormField(
                                                                                       controller: numeroseccinesController,
                                                                                       onChanged: (value) {
+                                                                                        final int numeroAlumnos = int.parse(value);
                                                                                         actualizarFichaMod(
                                                                                           codigoModular: codDigo.text,
                                                                                           numeroAlumnos: int.parse(numeroAlumnosController.text),
-                                                                                          numeroSeccion: int.parse(numeroseccinesController.text),
+                                                                                          numeroSeccion: numeroAlumnos,
                                                                                           numeroDocente: int.parse(numeroDocentesController.text),
                                                                                           numeroMujeres: int.parse(numeroMujeresController.text),
                                                                                           numeroHombres: int.parse(numeroHombresController.text),
                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                         );
                                                                                       },
-                                                                                      focusNode: _model.dat1FocusNode13,
                                                                                       autofocus: true,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
@@ -2501,13 +2512,11 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .infinity,
                                                                   child:
                                                                   TextFormField(
-                                                                    controller:
-                                                                    _model.dat1Controller16 ??=
-                                                                        TextEditingController(
-                                                                          text: datosGeneralesListarFichaPorIdFichaRowList
-                                                                              .first
-                                                                              .correoDirector,
-                                                                        ),
+                                                                    controller: _model.dat1Controller16 ??= TextEditingController(
+                                                                      text: datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector != 'null'
+                                                                          ? datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector
+                                                                          : '',
+                                                                    ),
                                                                     focusNode:
                                                                     _model
                                                                         .dat1FocusNode16,
@@ -2623,7 +2632,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .telefonoDirector,
+                                                                              .telefonoDirector != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.telefonoDirector
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -2768,7 +2779,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .dniAlterno,
+                                                                              .dniAlterno != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.dniAlterno
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -2885,7 +2898,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .nombreAlterno,
+                                                                              .nombreAlterno != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.nombreAlterno
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -3002,7 +3017,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .correoAlterno,
+                                                                              .correoAlterno != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.correoAlterno
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -3119,7 +3136,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         TextEditingController(
                                                                           text: datosGeneralesListarFichaPorIdFichaRowList
                                                                               .first
-                                                                              .telefonoAlterno,
+                                                                              .telefonoAlterno != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.telefonoAlterno
+                                                                              : '',
                                                                         ),
                                                                     focusNode:
                                                                     _model
@@ -3646,7 +3665,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Telefono',
+                                                                    'Teléfono',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -3769,7 +3788,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Tipo Inspeccion',
+                                                                    'Tipo Inspección',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -3892,7 +3911,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Fecha de Inspecicon',
+                                                                    'Fecha de Inspeción',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -4018,7 +4037,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Hora de Inspeccion',
+                                                                    'Hora de Inspección',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -4166,6 +4185,8 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             telefonoDirector: _model.dat1Controller17.text,
                             dniAlterno: _model.dat1Controller18.text,
                             nombreAlterno: _model.dat1Controller19.text,
+                            correoAlterno: _model.dat1Controller20.text,
+                            telefonoAlterno: _model.dat1Controller21.text,
                             dniInspector: _model.dat1Controller22.text,
                             nombreInspector: _model.dat1Controller23.text,
                             correoInspector: _model.dat1Controller24.text,
