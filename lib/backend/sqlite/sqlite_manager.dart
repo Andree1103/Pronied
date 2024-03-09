@@ -114,12 +114,14 @@ class SQLiteManager {
     int? idPlantilla,
     int? idPregunta,
     int? idPlantillaSeccion,
+    int? idFicha
   }) =>
       performListarOpciones(
         _database,
         idPlantilla: idPlantilla,
         idPregunta: idPregunta,
         idPlantillaSeccion: idPlantillaSeccion,
+        idFicha: idFicha
       );
 
   /// END READ QUERY CALLS
@@ -445,7 +447,28 @@ class SQLiteManager {
           numeroSeccion:numeroSeccion
       );
 
-  /// END UPDATE QUERY CALLS
+  Future cargarFichaRespuesta({
+    int? idFichaPreguntaRespuesta,
+    int? idFicha,
+    int? idPlantillaOpcion,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? numeroRepeticion,
+    String? respuesta,
+  }) =>
+      performCargarFichaRespuesta(
+        _database,
+        idFichaPreguntaRespuesta: idFichaPreguntaRespuesta,
+        idFicha: idFicha,
+        idPlantillaOpcion: idPlantillaOpcion,
+        idPregunta: idPregunta,
+        idPlantillaSeccion: idPlantillaSeccion,
+        numeroRepeticion: numeroRepeticion,
+        respuesta: respuesta,
+      );
+
+
+/// END UPDATE QUERY CALLS
 
 
 

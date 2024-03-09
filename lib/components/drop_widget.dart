@@ -308,6 +308,20 @@ class _DropWidgetState extends State<DropWidget> {
                       }
                     }
 
+                    var respuestas = ApiProniedCall.fichasPreguntasRespuestas(_model.apiResponseDatos?.jsonBody);
+                    if (respuestas != null) {
+                      for (var i=0; i < respuestas.length; i++){
+                        await SQLiteManager.instance.cargarFichaRespuesta(
+                          idFichaPreguntaRespuesta: ApiProniedCall.idFichaPreguntaRespuestaRpta(_model.apiResponseDatos?.jsonBody, i),
+                          idFicha: ApiProniedCall.idFichaRpta(_model.apiResponseDatos?.jsonBody, i),
+                          idPlantillaOpcion: ApiProniedCall.idPlantillaOpcionRpta(_model.apiResponseDatos?.jsonBody, i),
+                          idPregunta: ApiProniedCall.idPreguntaRpta(_model.apiResponseDatos?.jsonBody, i),
+                          idPlantillaSeccion: ApiProniedCall.idPlantillaSeccionRpta(_model.apiResponseDatos?.jsonBody, i),
+                          numeroRepeticion: ApiProniedCall.numeroRepeticionRpta(_model.apiResponseDatos?.jsonBody, i),
+                          respuesta: ApiProniedCall.respuestaRpta(_model.apiResponseDatos?.jsonBody, i)
+                        );
+                      }
+                    }
                     SnackBar(
                       content: Text(
                         'Inspecciones Sincronizadas!',

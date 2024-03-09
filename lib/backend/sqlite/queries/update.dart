@@ -431,3 +431,33 @@ WHERE
 
 
 /// END ACTUALIZARFICHA
+
+/// BEGIN CARGARFICHARESPUESTA
+Future performCargarFichaRespuesta(
+    Database database, {
+      int? idFichaPreguntaRespuesta,
+      int? idFicha,
+      int? idPlantillaOpcion,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
+      String? respuesta
+    }) {
+  final query = '''
+Insert into FichaPreguntaRespuestas  (
+IdFichaPreguntaRespuesta, 
+IdFicha, 
+IdPlantillaOpcion,
+IdPregunta,
+IdPlantillaSeccion,
+NumeroRepeticion,
+Respuesta,
+EstadoAuditoria
+)
+values  ('${idFichaPreguntaRespuesta}','${idFicha}','${idPlantillaOpcion}','${idPregunta}','${idPlantillaSeccion}',
+'${numeroRepeticion}','${respuesta}',"1")
+''';
+  return database.rawQuery(query);
+}
+
+/// END CARGARFICHARESPUESTA

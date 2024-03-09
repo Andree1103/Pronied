@@ -957,6 +957,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                       idPlantilla: FFAppState().IdPlantilla,
                                                                                       idPregunta: columnListarPreguntasRow.idPregunta,
                                                                                       idPlantillaSeccion: columnListarPreguntasRow.idPlantillaSeccion,
+                                                                                      idFicha: FFAppState().IdFicha
                                                                                     ),
                                                                                     builder: (context, snapshot) {
                                                                                       // Customize what your widget looks like when it's loading.
@@ -984,183 +985,222 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             // Verificar si la descripción es una cadena antes de usar split
                                                                                               if (columnListarOpcionesRow.descripcion is String && columnListarOpcionesRow.idTipoOpcion == 1) {
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
-                                                                                                return Align(
-                                                                                                  alignment: AlignmentDirectional(-1, 0),
-                                                                                                  child: Padding(
-                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                    child: Container(
-                                                                                                      width: double.infinity,
-                                                                                                      decoration: BoxDecoration(
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                      ),
-                                                                                                      child: Column(
-                                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                                        children: [
-                                                                                                          Padding(
-                                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                            child: Container(
-                                                                                                              width: double.infinity,
-                                                                                                              child: Column(
-                                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                                children: opciones
-                                                                                                                    .map((opcion) => Row(
-                                                                                                                  children: [
-                                                                                                                    Radio<String>(
-                                                                                                                      value: opcion,
-                                                                                                                      groupValue: itemSelected,
-                                                                                                                      onChanged: (value) {
-                                                                                                                        setState(() {
-                                                                                                                          itemSelected = value;
-                                                                                                                        });
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                    Text(opcion),
-                                                                                                                  ],
-                                                                                                                ))
-                                                                                                                    .toList(),
-                                                                                                              ),
-                                                                                                            ),
+                                                                                                final respuesta = columnListarOpcionesRow.respuesta;
+
+                                                                                                String? seleccionActual;
+
+                                                                                                // Si hay respuesta, encontrar la opción correspondiente
+                                                                                                if (respuesta != null && respuesta.isNotEmpty) {
+                                                                                                  final respuestaSplit = respuesta.split(';');
+                                                                                                  for (int i = 0; i < respuestaSplit.length; i++) {
+                                                                                                    if (respuestaSplit[i] == 'S') {
+                                                                                                      seleccionActual = opciones[i];
+                                                                                                      break;
+                                                                                                    }
+                                                                                                  }
+                                                                                                }
+
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta: ${respuesta ?? "(No hay respuesta)"}"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                           ),
-                                                                                                        ],
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: opciones.map((opcion) => Row(
+                                                                                                              children: [
+                                                                                                                Radio<String>(
+                                                                                                                  value: opcion,
+                                                                                                                  groupValue: seleccionActual,
+                                                                                                                  onChanged: (value) {
+                                                                                                                    setState(() {
+                                                                                                                      seleccionActual = value; // Actualizar la selección actual
+                                                                                                                    });
+                                                                                                                  },
+                                                                                                                ),
+                                                                                                                Text(opcion),
+                                                                                                              ],
+                                                                                                            )).toList(),
+                                                                                                          ),
+                                                                                                        ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
+                                                                                                  ],
                                                                                                 );
                                                                                               } else {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
                                                                                                 return SizedBox.shrink();
                                                                                               }
 
+
                                                                                           // Agrega otros casos según sea necesario
                                                                                             case 2:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
+                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                    : "Respuesta: (No hay respuesta)";
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
-                                                                                                return Align(
-                                                                                                  alignment: AlignmentDirectional(-1, 0),
-                                                                                                  child: Padding(
-                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                    child: Container(
-                                                                                                      width: double.infinity,
-                                                                                                      decoration: BoxDecoration(
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                      ),
-                                                                                                      child: Column(
-                                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                                        children: [
-                                                                                                          Padding(
-                                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                            child: Container(
-                                                                                                              width: double.infinity,
-                                                                                                              child: Column(
-                                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                                children: opciones
-                                                                                                                    .map((opcion) => Row(
-                                                                                                                  children: [
-                                                                                                                    Checkbox(
-                                                                                                                      value: itemsSelected.contains(opcion),
-                                                                                                                      onChanged: (value) {
-                                                                                                                        setState(() {
-                                                                                                                          if (value != null && value) {
-                                                                                                                            itemsSelected.add(opcion);
-                                                                                                                          } else {
-                                                                                                                            itemsSelected.remove(opcion);
-                                                                                                                          }
-                                                                                                                        });
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                    Text(opcion),
-                                                                                                                  ],
-                                                                                                                ))
-                                                                                                                    .toList(),
-                                                                                                              ),
-                                                                                                            ),
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta: ${respuesta}"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                           ),
-                                                                                                        ],
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: [
+                                                                                                              Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: Column(
+                                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                                    children: opciones
+                                                                                                                        .map((opcion) => Row(
+                                                                                                                      children: [
+                                                                                                                        Checkbox(
+                                                                                                                          value: itemsSelected.contains(opcion),
+                                                                                                                          onChanged: (value) {
+                                                                                                                            setState(() {
+                                                                                                                              if (value != null && value) {
+                                                                                                                                itemsSelected.add(opcion);
+                                                                                                                              } else {
+                                                                                                                                itemsSelected.remove(opcion);
+                                                                                                                              }
+                                                                                                                            });
+                                                                                                                          },
+                                                                                                                        ),
+                                                                                                                        Text(opcion),
+                                                                                                                      ],
+                                                                                                                    ))
+                                                                                                                        .toList(),
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ),
+                                                                                                        ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
+                                                                                                  ],
                                                                                                 );
                                                                                               } else {
                                                                                                 return SizedBox.shrink();
                                                                                               }
 
-                                                                                              // Caso específico para el tipo de opción 3 (respuesta libre)
+                                                                                          // Caso específico para el tipo de opción 3 (respuesta libre)
                                                                                             case 3:
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: [
-                                                                                                        Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: TextField(
-                                                                                                              decoration: InputDecoration(
-                                                                                                                labelText: 'Ingrese su respuesta',
-                                                                                                                border: OutlineInputBorder(),
-                                                                                                              ),
-                                                                                                              onChanged: (value) {
-                                                                                                                // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                              },
-                                                                                                            ),
-                                                                                                          ),
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                         ),
-                                                                                                      ],
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: TextField(
+                                                                                                                  decoration: InputDecoration(
+                                                                                                                    labelText: 'Ingrese su respuesta',
+                                                                                                                    border: OutlineInputBorder(),
+                                                                                                                  ),
+                                                                                                                  onChanged: (value) {
+                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                  },
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                           // Caso específico para el tipo de opción 4 (lista desplegable)
                                                                                             case 4:
-                                                                                            // Verificar si la descripción es una cadena antes de usar split
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
+                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                    : "Respuesta: (No hay respuesta)";
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
-                                                                                                return Align(
-                                                                                                  alignment: AlignmentDirectional(-1, 0),
-                                                                                                  child: Padding(
-                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                    child: Container(
-                                                                                                      width: double.infinity,
-                                                                                                      decoration: BoxDecoration(
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                      ),
-                                                                                                      child: Column(
-                                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                                        children: [
-                                                                                                          Padding(
-                                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                            child: Container(
-                                                                                                              width: double.infinity,
-                                                                                                              child: DropdownButton<String>(
-                                                                                                                value: itemSelec,
-                                                                                                                onChanged: (value) {
-                                                                                                                  setState(() {
-                                                                                                                    itemSelec = value!;
-                                                                                                                  });
-                                                                                                                },
-                                                                                                                items: opciones.map<DropdownMenuItem<String>>((opcion) {
-                                                                                                                  return DropdownMenuItem<String>(
-                                                                                                                    value: opcion,
-                                                                                                                    child: Text(opcion),
-                                                                                                                  );
-                                                                                                                }).toList(),
-                                                                                                                hint: Text("Seleccionar una opción"), // Agregar el hint aquí
-                                                                                                              ),
-                                                                                                            ),
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta: ${respuesta}"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                           ),
-                                                                                                        ],
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: [
+                                                                                                              Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: DropdownButton<String>(
+                                                                                                                    value: itemSelec,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      setState(() {
+                                                                                                                        itemSelec = value!;
+                                                                                                                      });
+                                                                                                                    },
+                                                                                                                    items: opciones.map<DropdownMenuItem<String>>((opcion) {
+                                                                                                                      return DropdownMenuItem<String>(
+                                                                                                                        value: opcion,
+                                                                                                                        child: Text(opcion),
+                                                                                                                      );
+                                                                                                                    }).toList(),
+                                                                                                                    hint: Text("Seleccionar una opción"), // Agregar el hint aquí
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ),
+                                                                                                        ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
+                                                                                                  ],
                                                                                                 );
                                                                                               } else {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
@@ -1168,292 +1208,354 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               }
 
                                                                                             case 5:
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: opciones.map((opcion) {
-                                                                                                        return Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: TextField(
-                                                                                                              decoration: InputDecoration(
-                                                                                                                labelText: opcion,
-                                                                                                                hintText: opcion,
-                                                                                                                border: OutlineInputBorder(),
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                        ),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: opciones.map((opcion) {
+                                                                                                            return Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: TextField(
+                                                                                                                  decoration: InputDecoration(
+                                                                                                                    labelText: opcion,
+                                                                                                                    hintText: opcion,
+                                                                                                                    border: OutlineInputBorder(),
+                                                                                                                  ),
+                                                                                                                  keyboardType: TextInputType.number,
+                                                                                                                  onChanged: (value) {
+                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                  },
+                                                                                                                ),
                                                                                                               ),
-                                                                                                              keyboardType: TextInputType.number,
-                                                                                                              onChanged: (value) {
-                                                                                                                // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                              },
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        );
-                                                                                                      }).toList(),
+                                                                                                            );
+                                                                                                          }).toList(),
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 6:
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: [
-                                                                                                        Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: Row(
-                                                                                                              children: [
-                                                                                                                Expanded(
-                                                                                                                  child: GestureDetector(
-                                                                                                                    onTap: () {
-                                                                                                                      _selectDateTime(context);
-                                                                                                                    },
-                                                                                                                    child: TextFormField(
-                                                                                                                      controller: _dateTimeController,
-                                                                                                                      readOnly: true,
-                                                                                                                      decoration: InputDecoration(
-                                                                                                                        labelText: 'Fecha y Hora',
-                                                                                                                        hintText: selectedDateTime != null
-                                                                                                                            ? '${selectedDateTime!.day}/${selectedDateTime!.month}/${selectedDateTime!.year}'
-                                                                                                                            : 'Seleccionar fecha y hora',
-                                                                                                                        border: OutlineInputBorder(),
-                                                                                                                      ),
-                                                                                                                      keyboardType: TextInputType.datetime,
-                                                                                                                      onChanged: (value) {
-                                                                                                                        // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                  ),
-                                                                                                                ),
-                                                                                                                IconButton(
-                                                                                                                  onPressed: () {
-                                                                                                                    _selectDateTime(context);
-                                                                                                                  },
-                                                                                                                  icon: Icon(Icons.calendar_today),
-                                                                                                                ),
-                                                                                                              ],
-                                                                                                            ),
-                                                                                                          ),
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                         ),
-                                                                                                      ],
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: Row(
+                                                                                                                  children: [
+                                                                                                                    Expanded(
+                                                                                                                      child: GestureDetector(
+                                                                                                                        onTap: () {
+                                                                                                                          _selectDateTime(context);
+                                                                                                                        },
+                                                                                                                        child: TextFormField(
+                                                                                                                          controller: _dateTimeController,
+                                                                                                                          readOnly: true,
+                                                                                                                          decoration: InputDecoration(
+                                                                                                                            labelText: 'Fecha y Hora',
+                                                                                                                            hintText: selectedDateTime != null
+                                                                                                                                ? '${selectedDateTime!.day}/${selectedDateTime!.month}/${selectedDateTime!.year}'
+                                                                                                                                : 'Seleccionar fecha y hora',
+                                                                                                                            border: OutlineInputBorder(),
+                                                                                                                          ),
+                                                                                                                          keyboardType: TextInputType.datetime,
+                                                                                                                          onChanged: (value) {
+                                                                                                                            // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                          },
+                                                                                                                        ),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                    IconButton(
+                                                                                                                      onPressed: () {
+                                                                                                                        _selectDateTime(context);
+                                                                                                                      },
+                                                                                                                      icon: Icon(Icons.calendar_today),
+                                                                                                                    ),
+                                                                                                                  ],
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 7:
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: [
-                                                                                                        Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: Row(
-                                                                                                              children: [
-                                                                                                                Expanded(
-                                                                                                                  child: GestureDetector(
-                                                                                                                    onTap: () {
-                                                                                                                      _selectDate(context);
-                                                                                                                    },
-                                                                                                                    child: TextFormField(
-                                                                                                                      controller: _dateController,
-                                                                                                                      readOnly: true,
-                                                                                                                      decoration: InputDecoration(
-                                                                                                                        labelText: 'Fecha',
-                                                                                                                        hintText: selectedDate != null
-                                                                                                                            ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
-                                                                                                                            : 'Seleccionar',
-                                                                                                                        border: OutlineInputBorder(),
-                                                                                                                      ),
-                                                                                                                      keyboardType: TextInputType.datetime,
-                                                                                                                      onChanged: (value) {
-                                                                                                                        // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                  ),
-                                                                                                                ),
-                                                                                                                IconButton(
-                                                                                                                  onPressed: () {
-                                                                                                                    _selectDate(context);
-                                                                                                                  },
-                                                                                                                  icon: Icon(Icons.calendar_today),
-                                                                                                                ),
-                                                                                                              ],
-                                                                                                            ),
-                                                                                                          ),
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                         ),
-                                                                                                      ],
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: Row(
+                                                                                                                  children: [
+                                                                                                                    Expanded(
+                                                                                                                      child: GestureDetector(
+                                                                                                                        onTap: () {
+                                                                                                                          _selectDate(context);
+                                                                                                                        },
+                                                                                                                        child: TextFormField(
+                                                                                                                          controller: _dateController,
+                                                                                                                          readOnly: true,
+                                                                                                                          decoration: InputDecoration(
+                                                                                                                            labelText: 'Fecha',
+                                                                                                                            hintText: selectedDate != null
+                                                                                                                                ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
+                                                                                                                                : 'Seleccionar',
+                                                                                                                            border: OutlineInputBorder(),
+                                                                                                                          ),
+                                                                                                                          keyboardType: TextInputType.datetime,
+                                                                                                                          onChanged: (value) {
+                                                                                                                            // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                          },
+                                                                                                                        ),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                    IconButton(
+                                                                                                                      onPressed: () {
+                                                                                                                        _selectDate(context);
+                                                                                                                      },
+                                                                                                                      icon: Icon(Icons.calendar_today),
+                                                                                                                    ),
+                                                                                                                  ],
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 8:
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: [
-                                                                                                        Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: Row(
-                                                                                                              children: [
-                                                                                                                Expanded(
-                                                                                                                  child: GestureDetector(
-                                                                                                                    onTap: () {
-                                                                                                                      _selectTime(context); // Mostrar el selector de hora al hacer clic
-                                                                                                                    },
-                                                                                                                    child: TextFormField(
-                                                                                                                      controller: _timeController,
-                                                                                                                      readOnly: true,
-                                                                                                                      decoration: InputDecoration(
-                                                                                                                        labelText: 'Hora',
-                                                                                                                        hintText: selectedTime != null
-                                                                                                                            ? '${selectedTime!.hour}:${selectedTime!.minute}'
-                                                                                                                            : 'Seleccionar hora',
-                                                                                                                        border: OutlineInputBorder(),
-                                                                                                                      ),
-                                                                                                                      keyboardType: TextInputType.datetime,
-                                                                                                                      onChanged: (value) {
-                                                                                                                        // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                  ),
-                                                                                                                ),
-                                                                                                                IconButton(
-                                                                                                                  onPressed: () {
-                                                                                                                    _selectTime(context); // Mostrar el selector de hora al hacer clic en el icono
-                                                                                                                  },
-                                                                                                                  icon: Icon(Icons.access_time),
-                                                                                                                ),
-                                                                                                              ],
-                                                                                                            ),
-                                                                                                          ),
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
                                                                                                         ),
-                                                                                                      ],
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: Row(
+                                                                                                                  children: [
+                                                                                                                    Expanded(
+                                                                                                                      child: GestureDetector(
+                                                                                                                        onTap: () {
+                                                                                                                          _selectTime(context); // Mostrar el selector de hora al hacer clic
+                                                                                                                        },
+                                                                                                                        child: TextFormField(
+                                                                                                                          controller: _timeController,
+                                                                                                                          readOnly: true,
+                                                                                                                          decoration: InputDecoration(
+                                                                                                                            labelText: 'Hora',
+                                                                                                                            hintText: selectedTime != null
+                                                                                                                                ? '${selectedTime!.hour}:${selectedTime!.minute}'
+                                                                                                                                : 'Seleccionar hora',
+                                                                                                                            border: OutlineInputBorder(),
+                                                                                                                          ),
+                                                                                                                          keyboardType: TextInputType.datetime,
+                                                                                                                          onChanged: (value) {
+                                                                                                                            // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                          },
+                                                                                                                        ),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                    IconButton(
+                                                                                                                      onPressed: () {
+                                                                                                                        _selectTime(context); // Mostrar el selector de hora al hacer clic en el icono
+                                                                                                                      },
+                                                                                                                      icon: Icon(Icons.access_time),
+                                                                                                                    ),
+                                                                                                                  ],
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 9:
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: [
-                                                                                                        Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: TextField(
-                                                                                                              keyboardType: TextInputType.number,
-                                                                                                              inputFormatters: <TextInputFormatter>[
-                                                                                                                FilteringTextInputFormatter.digitsOnly // Esto permite solo números
-                                                                                                              ],
-                                                                                                              onChanged: (value) {
-                                                                                                                // Aquí puedes manejar los cambios en el valor del TextField
-                                                                                                              },
-                                                                                                              decoration: InputDecoration(
-                                                                                                                hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
-                                                                                                                border: OutlineInputBorder(), // Borde del TextField
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                        ),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: TextField(
+                                                                                                                  keyboardType: TextInputType.number,
+                                                                                                                  inputFormatters: <TextInputFormatter>[
+                                                                                                                    FilteringTextInputFormatter.digitsOnly // Esto permite solo números
+                                                                                                                  ],
+                                                                                                                  onChanged: (value) {
+                                                                                                                    // Aquí puedes manejar los cambios en el valor del TextField
+                                                                                                                  },
+                                                                                                                  decoration: InputDecoration(
+                                                                                                                    hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
+                                                                                                                    border: OutlineInputBorder(), // Borde del TextField
+                                                                                                                  ),
+                                                                                                                ),
                                                                                                               ),
                                                                                                             ),
-                                                                                                          ),
+                                                                                                          ],
                                                                                                         ),
-                                                                                                      ],
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 10:
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                  : "Respuesta: (No hay respuesta)";
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
-                                                                                              return Align(
-                                                                                                alignment: AlignmentDirectional(-1, 0),
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                  child: Container(
-                                                                                                    width: double.infinity,
-                                                                                                    decoration: BoxDecoration(
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                    ),
-                                                                                                    child: Column(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      children: opciones.map((opcion) {
-                                                                                                        return Padding(
-                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                          child: Container(
-                                                                                                            width: double.infinity,
-                                                                                                            child: TextField(
-                                                                                                              decoration: InputDecoration(
-                                                                                                                labelText: opcion,
-                                                                                                                hintText: opcion,
-                                                                                                                border: OutlineInputBorder(),
+                                                                                              return Column(
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  // Mostrar la respuesta en alguna parte
+                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Align(
+                                                                                                    alignment: AlignmentDirectional(-1, 0),
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                      child: Container(
+                                                                                                        width: double.infinity,
+                                                                                                        decoration: BoxDecoration(
+                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                        ),
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: opciones.map((opcion) {
+                                                                                                            return Padding(
+                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                              child: Container(
+                                                                                                                width: double.infinity,
+                                                                                                                child: TextField(
+                                                                                                                  decoration: InputDecoration(
+                                                                                                                    labelText: opcion,
+                                                                                                                    hintText: opcion,
+                                                                                                                    border: OutlineInputBorder(),
+                                                                                                                  ),
+                                                                                                                  keyboardType: TextInputType.number,
+                                                                                                                  onChanged: (value) {
+                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                  },
+                                                                                                                ),
                                                                                                               ),
-                                                                                                              keyboardType: TextInputType.number,
-                                                                                                              onChanged: (value) {
-                                                                                                                // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                              },
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        );
-                                                                                                      }).toList(),
+                                                                                                            );
+                                                                                                          }).toList(),
+                                                                                                        ),
+                                                                                                      ),
                                                                                                     ),
                                                                                                   ),
-                                                                                                ),
+                                                                                                ],
                                                                                               );
 
                                                                                             case 11:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
+                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                    : "Respuesta: (No hay respuesta)";
                                                                                                 final opcionesPorEtiqueta = (columnListarOpcionesRow.descripcion as String).split('|');
-
                                                                                                 return Padding(
                                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                                                                                   child: SingleChildScrollView(
@@ -1469,6 +1571,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                           child: Column(
                                                                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                             children: [
+                                                                                                              // Mostrar la respuesta en alguna parte
+                                                                                                              Text("Respuesta: ${respuesta}"),
                                                                                                               Text(etiqueta), // Mostrar la etiqueta
                                                                                                               DropdownButton<String>(
                                                                                                                 value: selectedValuesss[etiqueta], // Obtener el valor seleccionado
@@ -1501,27 +1605,37 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             case 12:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
-
+                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
+                                                                                                    : "Respuesta: (No hay respuesta)";
                                                                                                 // Unir las opciones con saltos de línea
                                                                                                 final texto = opciones.join('\n');
 
                                                                                                 return Padding(
                                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                                                                                                  child: TextField(
-                                                                                                    keyboardType: TextInputType.multiline,
-                                                                                                    maxLines: null,
-                                                                                                    onChanged: (value) {
-                                                                                                      // Aquí puedes manejar los cambios en el valor del TextField
-                                                                                                    },
-                                                                                                    decoration: InputDecoration(
-                                                                                                      hintText: texto, // Mostrar el texto como hint
-                                                                                                    ),
+                                                                                                  child: Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+                                                                                                      // Mostrar la respuesta en alguna parte
+                                                                                                      Text("Respuesta: ${respuesta}"),
+                                                                                                      TextField(
+                                                                                                        keyboardType: TextInputType.multiline,
+                                                                                                        maxLines: null,
+                                                                                                        onChanged: (value) {
+                                                                                                          // Aquí puedes manejar los cambios en el valor del TextField
+                                                                                                        },
+                                                                                                        decoration: InputDecoration(
+                                                                                                          hintText: texto, // Mostrar el texto como hint
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ],
                                                                                                   ),
                                                                                                 );
                                                                                               } else {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
                                                                                                 return SizedBox.shrink();
                                                                                               }
+
 
                                                                                           // Agrega más casos según sea necesario
                                                                                           default:

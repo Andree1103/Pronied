@@ -506,21 +506,30 @@ Future<List<ListarOpcionesRow>> performListarOpciones(
   int? idPlantilla,
   int? idPregunta,
   int? idPlantillaSeccion,
+  int? idFicha
 }) {
   final query = '''
 SELECT 
-    IdPlantillaOpcion, 
-    IdPlantillaSeccion, 
-    IdPlantilla, 
-    IdPregunta, 
-    Descripcion, 
-    ClasificacionOpcion,
-    IdTipoOpcion,
-    tipoOpcion,
-    matIcon
-FROM PlantillaOpcion where IdPlantillaSeccion =  '${idPlantillaSeccion}'
-and  IdPlantilla  = '${idPlantilla}'
-and IdPregunta = '${idPregunta}'
+    po.IdPlantillaOpcion, 
+    po.IdPlantillaSeccion, 
+    po.IdPlantilla, 
+    po.IdPregunta, 
+    po.Descripcion, 
+    po.ClasificacionOpcion,
+    po.IdTipoOpcion,
+    po.tipoOpcion,
+    po.matIcon,
+    fpr.respuesta as respuesta
+FROM PlantillaOpcion po
+LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
+    AND po.IdPregunta = fpr.IdPregunta
+    AND po.IdPlantillaSeccion = fpr.IdPlantillaSeccion
+INNER JOIN Fichas f ON '${idFicha}' = f.idFicha
+WHERE 
+    po.IdPlantillaSeccion = '${idPlantillaSeccion}'
+    AND po.IdPlantilla = '${idPlantilla}'
+    AND po.IdPregunta = '${idPregunta}'
+		
 ''';
   return _readQuery(database, query, (d) => ListarOpcionesRow(d));
 }
@@ -538,6 +547,7 @@ class ListarOpcionesRow extends SqliteRow {
   String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
   String? get tipoOpcion => data['tipoOpcion'] as String?;
   String? get matIcon => data['matIcon'] as String?;
+  String? get respuesta => data['respuesta'] as String?;
 }
 
 /// END LISTAROPCIONES
