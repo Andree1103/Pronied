@@ -447,6 +447,39 @@ class SQLiteManager {
           numeroSeccion:numeroSeccion
       );
 
+  Future actualizarRpta({
+    String? rpta,
+    int? idficha,
+    int? idplantillaopcion,
+    int? idplanitllaseccion,
+    int? idpregunta
+  }) =>
+      performActualizarRpta(
+          _database,
+        idficha: idficha,
+        idplantillaseccion: idplanitllaseccion,
+        idplantilla: idplantillaopcion,
+        idpregunta: idpregunta,
+        rpta: rpta
+      );
+
+  Future crearRpta({
+    String? rpta,
+    int? idficha,
+    int? idplantillaopcion,
+    int? idplanitllaseccion,
+    int? idpregunta
+  }) =>
+      performCrearRpta(
+          _database,
+          idficha: idficha,
+          idplantillaseccion: idplanitllaseccion,
+          idplantilla: idplantillaopcion,
+          idpregunta: idpregunta,
+          rpta: rpta,
+      );
+
+
   Future cargarFichaRespuesta({
     int? idFichaPreguntaRespuesta,
     int? idFicha,

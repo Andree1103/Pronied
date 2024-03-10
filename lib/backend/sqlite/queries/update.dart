@@ -430,6 +430,61 @@ WHERE
 }
 
 
+Future performActualizarRpta(
+    Database database, {
+      String? rpta,
+      int? idficha,
+      int? idplantilla,
+      int? idplantillaseccion,
+      int? idpregunta
+    }) {
+  final query = '''
+UPDATE FichaPreguntaRespuestas
+SET
+    Respuesta = '${rpta}'
+WHERE 
+    IdFicha = ${idficha} and 
+    IdPlantillaOpcion = ${idplantilla} and
+    IdPlantillaSeccion = ${idplantillaseccion} and
+    IdPregunta = ${idpregunta};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+Future performCrearRpta(
+    Database database, {
+      String? rpta,
+      int? idficha,
+      int? idplantilla,
+      int? idplantillaseccion,
+      int? idpregunta
+    }) {
+  final query = '''
+INSERT INTO FichaPreguntaRespuestas (
+  Respuesta,
+  IdFicha,
+  IdPlantillaOpcion,
+  IdPlantillaSeccion,
+  IdPregunta,
+  NumeroRepeticion,
+  EstadoAuditoria
+) VALUES (
+  '${rpta}',
+  ${idficha},
+  ${idplantilla},
+  ${idplantillaseccion},
+  ${idpregunta},
+  1,
+  "1"
+)
+''';
+  return database.rawQuery(query);
+}
+
+
+
 /// END ACTUALIZARFICHA
 
 /// BEGIN CARGARFICHARESPUESTA
