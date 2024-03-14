@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 import '../schema/structs/index.dart';
 
@@ -53,7 +54,7 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-          'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincrodown',
+          'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -271,6 +272,40 @@ ${corche}''';
     response,
     '\$.dato.fichas[$index].telefonoAlterno',
   );
+  static String? fichausuariocreacion(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].usuarioCreacionAuditoria',
+  );
+  static String? fichausuariomodificacion(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].usuarioModificacionAuditoria',
+  );
+  static String? fichaFecha(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].fechaCreacionAuditoria',
+  );
+  static String? fichaFechaModificacion(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].fechaModificacionAuditoria',
+  );
+  static String? fichaEquipoCreacion(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].equipoCreacionAuditoria',
+  );
+  static String? fichaEquipoModificacionAuditoria(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].equipoModificacionAuditoria',
+  );
+  static String? fichaprogramaCreacionAuditoria(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].programaCreacionAuditoria',
+  );
+  static String? fichaprogramaModificacionAuditoria(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichas[$index].programaModificacionAuditoria',
+  );
+
+
   static dynamic fichaArchivos(dynamic response) => getJsonField(
     response,
     r'''$.dato.fichasArchivos''',
@@ -366,6 +401,43 @@ ${corche}''';
     response,
     '\$.dato.fichasModulares[$index].numeroSeccion',
   );
+  static String? estadoAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].estadoAuditoria',
+  );
+  static String? usuarioCreacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].usuarioCreacionAuditoria',
+  );
+  static String? usuarioModificacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].usuarioModificacionAuditoria',
+  );
+  static String? fichaFechaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].fechaCreacionAuditoria',
+  );
+  static String? fichaFechaModificacionModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].fechaModificacionAuditoria',
+  );
+  static String? equipoCreacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].equipoCreacionAuditoria',
+  );
+  static String? equipoModificacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].equipoModificacionAuditoria',
+  );
+  static String? programaCreacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].programaCreacionAuditoria',
+  );
+  static String? programaModificacionAuditoriaModular(dynamic response, int index) => getJsonField(
+    response,
+    '\$.dato.fichasModulares[$index].programaModificacionAuditoria',
+  );
+
 
 
   static List? plantillas(dynamic response) => getJsonField(
@@ -552,13 +624,13 @@ ${corche}''';
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].estadoAuditoria',
       ));
-  static int? usuarioCreacionAuditoriaRpta(dynamic response, int index) =>
-      castToType<int>(getJsonField(
+  static String? usuarioCreacionAuditoriaRpta(dynamic response, int index) =>
+      castToType<String>(getJsonField(
       response,
       '\$.dato.fichasPreguntasRespuestas[$index].usuarioCreacionAuditoria',
     ));
-  static int? usuarioModificacionAuditoriaRpta(dynamic response, int index) =>
-      castToType<int>(getJsonField(
+  static String? usuarioModificacionAuditoriaRpta(dynamic response, int index) =>
+      castToType<String>(getJsonField(
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].usuarioModificacionAuditoria',
       ));
@@ -567,18 +639,18 @@ ${corche}''';
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].fechaCreacionAuditoria',
       ));
-  static int? equipoCreacionAuditoriaRpta(dynamic response, int index) =>
-      castToType<int>(getJsonField(
+  static String? equipoCreacionAuditoriaRpta(dynamic response, int index) =>
+      castToType<String>(getJsonField(
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].equipoCreacionAuditoria',
   ));
-  static int? equipoModificacionAuditoriaRpta(dynamic response, int index) =>
-      castToType<int>(getJsonField(
+  static String? equipoModificacionAuditoriaRpta(dynamic response, int index) =>
+      castToType<String>(getJsonField(
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].equipoModificacionAuditoria',
       ));
-  static int? programaCreacionAuditoriaRpta(dynamic response, int index) =>
-    castToType<int>(getJsonField(
+  static String? programaCreacionAuditoriaRpta(dynamic response, int index) =>
+    castToType<String>(getJsonField(
       response,
       '\$.dato.fichasPreguntasRespuestas[$index].programaCreacionAuditoria',
   ));
@@ -587,11 +659,81 @@ ${corche}''';
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].fechaModificacionAuditoria',
       ));
-  static int? programaModificacionAuditoriaRpta(dynamic response, int index) =>
-      castToType<int>(getJsonField(
+  static String? programaModificacionAuditoriaRpta(dynamic response, int index) =>
+      castToType<String>(getJsonField(
         response,
         '\$.dato.fichasPreguntasRespuestas[$index].programaModificacionAuditoria',
       ));
+
+
+  ///SINC
+  ///
+
+  static List? sincro(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.sincro''',
+    true,
+  ) as List?;
+  static int? idSincroServer(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.dato.sincro.idSincroServer''',
+      ));
+  static int? inspeccionesCargadasServer(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.dato.sincro.inspeccionesCargadasServer''',
+      ));
+  static int? inspeccionesDescargadasServer(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.dato.sincro.inspeccionesDescargadasServer''',
+      ));
+  static int? idEstadoSincronizacion(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.dato.sincro.idEstadoSincronizacion''',
+      ));
+  static int? idSincroMovil(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.dato.sincro.idSincroMovil''',
+      ));
+
+}
+
+class ApiProniedCallUp {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'API PRONIEDUP',
+      apiUrl: 'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincroup',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? userId(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.userId''',
+  ));
+  static int? id(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.id''',
+  ));
+  static String? nombre(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.title''',
+  ));
+  static dynamic datos(dynamic response) => getJsonField(
+    response,
+    r'''$.datos''',
+  );
 }
 
 class ApiPagingParams {

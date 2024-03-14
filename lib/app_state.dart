@@ -88,6 +88,12 @@ class FFAppState extends ChangeNotifier {
     _IdFicha = _value;
   }
 
+  int _IdSincro = 0;
+  int get IdSincro => _IdSincro;
+  set IdSincro(int _value) {
+    _IdSincro = _value;
+  }
+
   int _idPlantillaSeccionPadre = 0;
   int get idPlantillaSeccionPadre => _idPlantillaSeccionPadre;
   set idPlantillaSeccionPadre(int _value) {
@@ -110,6 +116,12 @@ class FFAppState extends ChangeNotifier {
   int get idPlantillaSeccion => _idPlantillaSeccion;
   set idPlantillaSeccion(int _value) {
     _idPlantillaSeccion = _value;
+  }
+
+  String _username= '';
+  String get username => _username;
+  set username(String _value) {
+    _username = _value;
   }
 }
 

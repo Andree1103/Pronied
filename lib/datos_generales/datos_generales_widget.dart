@@ -4212,6 +4212,10 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             fechaInspeccion: _model.dat1Controller27.text,
                             horaInspeccion: _model.dat1Controller28.text,
                             tipoInspeccion: _model.dat1Controller26.text,
+                            UsuarioModificacionAudi: "SAMADOR",
+                            modificadoMovil: 1,
+                            FechaModificacionAuditoria: DateTime.now().toString(),
+                            EquipoModificacionAuditoria: "localhost"
                           );
 
 
@@ -4276,7 +4280,11 @@ void actualizarFichaMod({
     numeroMujeres: numeroMujeres,
     numeroDocente: numeroDocente,
     numeroSeccion: numeroSeccion,
-    numeroAlumnos: numeroAlumnos
+    numeroAlumnos: numeroAlumnos,
+    FechaModificacionAuditoria: DateTime.now().toString(),
+    UsuarioModificacionAudi: "SAMADOR",
+    modificadoMovil: 1,
+    EquipoModificacionAuditoria: "localhost"
     // Proporciona los otros parámetros según sea necesario...
   );
 }

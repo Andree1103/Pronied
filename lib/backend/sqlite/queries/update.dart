@@ -118,6 +118,16 @@ Future performCargarFicha(
       String? nombreAlterno,
       String? correoAlterno,
       String? telefonoAlterno,
+      double? latitud,
+      double? longitud,
+      String? usuarioCreacion,
+      String? usuarioModificacion,
+      String? fechaCreacion,
+      String? fechaModificacion,
+      String? equipoCreacion,
+      String? equipoModificacion,
+      String? programaCreacion,
+      String? programaModificacion,
     }) {
   final query = '''
 INSERT INTO Fichas (
@@ -149,8 +159,18 @@ INSERT INTO Fichas (
     NombreAlterno,
     CorreoAlterno,
     TelefonoAlterno,
-    EstadoAuditoria
-) VALUES ('${idFicha}','${idPlantilla}',
+    EstadoAuditoria,
+    Latitud,
+    Longitud,
+    UsuarioCreacionAuditoria,
+    UsuarioModificacionAuditoria,
+    FechaCreacionAuditoria,
+    FechaModificacionAuditoria,
+    EquipoCreacionAuditoria,
+    EquipoModificacionAuditoria,
+    ProgramaModificacionAuditoria,
+    modificadoMovil
+    ) VALUES ('${idFicha}','${idPlantilla}',
 '${codigoLocalColegio}',
 '${nombreLocalColegio}',
 '${departamentoColegio}',
@@ -170,14 +190,24 @@ INSERT INTO Fichas (
 '${horaInspeccion}',
 '${tipoInspeccion}',
 '${dniDirector}',
-'${nombreDirector}',
+'${nombreDirector}',     
 '${correoDirector}',
 '${telefonoDirector}',
 '${dniAlterno}',
 '${nombreAlterno}',
 '${correoAlterno}',
 '${telefonoAlterno}',
-'1'
+'1',
+'${latitud}',
+'${longitud}',
+'${usuarioCreacion}',
+'${usuarioModificacion}',
+'${fechaCreacion}',
+'${fechaModificacion}',
+'${equipoCreacion}',
+'${equipoModificacion}',
+'${programaCreacion}',
+'${programaModificacion}'
 );
 ''';
   return database.rawQuery(query);
@@ -205,6 +235,15 @@ Future performCargarFichaModular(
       int? numeroAlumnos,
       int? numeroDocente,
       int? numeroSeccion,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 INSERT INTO FichaModular (
@@ -225,7 +264,15 @@ INSERT INTO FichaModular (
     NumeroAlumnos,
     NumeroDocente,
     NumeroSeccion,
-    EstadoAuditoria
+    EstadoAuditoria,
+    UsuarioCreacionAuditoria,
+    UsuarioModiciacionAuditoria,
+    FechaCreacionAuditoria,
+    FechaModificacionAuditoria,
+    EquipoCreacionAuditoria,
+    EquipoModificacionAuditoria,
+    ProgramaCreacionAuditoria,
+    ProgramaModificacionAuditoria
 ) VALUES ('${idFichaModular}','${idFicha}',
 '${codigoModular}',
 '${codigoLocal}',
@@ -242,7 +289,15 @@ INSERT INTO FichaModular (
 '${numeroAlumnos}',
 '${numeroDocente}',
 '${numeroSeccion}',
-1
+'${estadoAuditoria}',
+'${usuarioCreacionAuditoria}',
+'${usuarioModificacionAuditoria}',
+'${fechaCreacionAuditoria}',
+'${fechaModificacionAuditoria}',
+'${equipoCreacionAuditoria}',
+'${equipoModificacionAuditoria}',
+'${programaCreacionAuditoria}',
+'${programaModificacionAuditoria}'
 );
 ''';
   return database.rawQuery(query);
@@ -369,6 +424,10 @@ Future performActualizarFicha(
   String? fechaInspeccion,
   String? horaInspeccion,
   String? tipoInspeccion,
+  String? UsuarioModificacionAudi,
+  String? FechaModificacionAuditoria,
+  String? EquipoModificacionAuditoria,
+  int? modificadoMovil,
 }) {
   final query = '''
 UPDATE Fichas
@@ -377,7 +436,7 @@ SET
     DireccionColegio = '${direccionColegio}',
     ZonaColegio = '${zonaColegio}',
     TotalPabellon = '${totalPabellon}',
-    TotalAulas = '${totalAulas}', -- Parece que debería ser 'totalAulas' en lugar de 'totalPabellon'
+    TotalAulas = '${totalAulas}',
     TotalSSHH = '${totalSSHH}',
     DniDirector = '${dniDirector}',
     NombreDirector = '${nombreDirector}',
@@ -393,7 +452,12 @@ SET
     TelefonoInspector = '${telefonoInspector}',
     FechaInspeccion = '${fechaInspeccion}',
     HoraInspeccion = '${horaInspeccion}',
-    TipoInspeccion = '${tipoInspeccion}'
+    TipoInspeccion = '${tipoInspeccion}',
+    UsuarioModificacionAuditoria = '${UsuarioModificacionAudi}',
+    FechaModificacionAuditoria = '${FechaModificacionAuditoria}',
+    EquipoModificacionAuditoria = '${EquipoModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
+    
 WHERE 
     idFicha = ${idFicha};
 
@@ -411,7 +475,11 @@ Future performActualizarFichaMod(
       int? numeroMujeres,
       int? numeroAlumnos,
       int? numeroDocente,
-      int? numeroSeccion
+      int? numeroSeccion,
+      String? UsuarioModificacionAudi,
+      String? FechaModificacionAuditoria,
+      String? EquipoModificacionAuditoria,
+      int? modificadoMovil,
     }) {
   final query = '''
 UPDATE FichaModular
@@ -420,7 +488,11 @@ SET
     NumeroMujeres = ${numeroMujeres},
     NumeroAlumnos = ${numeroAlumnos},
     NumeroDocente = ${numeroDocente},
-    NumeroSeccion = ${numeroSeccion}
+    NumeroSeccion = ${numeroSeccion},
+    UsuarioModiciacionAuditoria = '${UsuarioModificacionAudi}',
+    FechaModificacionAuditoria = '${FechaModificacionAuditoria}',
+    EquipoModificacionAuditoria = '${EquipoModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
 WHERE 
     CodigoModular = '${codigoModular}';
 
@@ -428,6 +500,74 @@ WHERE
 ''';
   return database.rawQuery(query);
 }
+
+
+Future performActualizarFichaModAPI(
+    Database database, {
+      int? idFichaModular,
+      int? idFicha,
+      String? codigoModular,
+      String? codigoLocal,
+      String? codigoNivel,
+      String? nivel,
+      String? codigoTipoDocente,
+      String? tipoDocente,
+      String? codigoTipoSexo,
+      String? tipoSexo,
+      String? codigoTurno,
+      String? turno,
+      int? numeroHombres,
+      int? numeroMujeres,
+      int? numeroAlumnos,
+      int? numeroDocente,
+      int? numeroSeccion,
+      String? estadoAuditoria,
+      String? usuacrioCreacionAudi,
+      String? usuarioModificacionAudi,
+      String? fechaCrecionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
+    }) {
+  final query = '''
+UPDATE FichaModular
+SET
+    IdFicha = ${idFicha},
+    CodigoModular = '${codigoModular}',
+    CodigoLocal = '${codigoLocal}',
+    CodigoNivel = '${codigoNivel}',
+    Nivel = '${nivel}',
+    CodigoTipoDocente = '${codigoTipoDocente}',
+    TipoDocente = '${tipoDocente}',
+    CodigoTipoSexo = '${codigoTipoSexo}',
+    TipoSexo = '${tipoSexo}',
+    CodigoTurno = '${codigoTurno}',
+    Turno = '${turno}',
+    NumeroHombres = ${numeroHombres},
+    NumeroMujeres = ${numeroMujeres},
+    NumeroAlumnos = ${numeroAlumnos},
+    NumeroDocente = ${numeroDocente},
+    NumeroSeccion = ${numeroSeccion},
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioCreacionAuditoria = '${usuacrioCreacionAudi}',
+    UsuarioModiciacionAuditoria = '${usuarioModificacionAudi}',
+    FechaCreacionAuditoria = '${fechaCrecionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
+WHERE 
+    CodigoModular = '${idFichaModular}';
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
 
 
 Future performActualizarRpta(
@@ -496,7 +636,16 @@ Future performCargarFichaRespuesta(
       int? idPregunta,
       int? idPlantillaSeccion,
       String? numeroRepeticion,
-      String? respuesta
+      String? respuesta,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 Insert into FichaPreguntaRespuestas  (
@@ -507,12 +656,450 @@ IdPregunta,
 IdPlantillaSeccion,
 NumeroRepeticion,
 Respuesta,
-EstadoAuditoria
+EstadoAuditoria,
+UsuarioCreacionAuditoria,
+UsuarioModificacionAuditoria,
+FechaCreacionAuditoria,
+FechaModificacionAuditoria,
+EquipoCreacionAuditoria,
+EquipoModificacionAuditoria,
+ProgramaCreacionAuditoria,
+ProgramaModificacionAuditoria
 )
 values  ('${idFichaPreguntaRespuesta}','${idFicha}','${idPlantillaOpcion}','${idPregunta}','${idPlantillaSeccion}',
-'${numeroRepeticion}','${respuesta}',"1")
+'${numeroRepeticion}','${respuesta}','${estadoAuditoria}','${usuarioCreacionAuditoria}','${usuarioModificacionAuditoria}','${fechaCreacionAuditoria}',
+'${fechaModificacionAuditoria}','${equipoCreacionAuditoria}','${equipoModificacionAuditoria}','${programaCreacionAuditoria}',
+'${programaModificacionAuditoria}')
 ''';
   return database.rawQuery(query);
 }
 
 /// END CARGARFICHARESPUESTA
+
+///SINCRONIZACION
+Future performCargarSincronizacion(
+    Database database, {
+      String? Fecha,
+      int? Estado,
+      String? IP,
+      String? Latitud,
+      String? Longitud,
+      String? Cum,
+      String? Usuario
+    }) {
+  final query = '''
+Insert into Sincronizacion  (
+Fecha, 
+Estado, 
+IP,
+Latitud,
+Longitud,
+Cum,
+Usuario
+)
+values  ('${Fecha}','${Estado}','${IP}','${Latitud}','${Longitud}',
+'${Cum}','${Usuario}')
+''';
+  return database.rawQuery(query);
+}
+
+///END SINCRONIZACIONC
+
+///COLA COLASINCRONIZACION
+Future performColaSincronizacion(
+    Database database, {
+      String? TipoDato,
+      int? Estado,
+      int? IdDatoLocal,
+      int? IdDatoServer,
+      int? IdSincro
+    }) {
+  final query = '''
+Insert into ColaSincronizacion  (
+TipoDato, 
+EstadoSincronizacion, 
+IdDatoLocal,
+IdDatoServer,
+IdSincro
+)
+values  ('${TipoDato}','${Estado}','${IdDatoLocal}','${IdDatoServer}','${IdSincro}')
+''';
+  return database.rawQuery(query);
+}
+
+
+///COLA COLASINCRONIZACIONupdatependiente
+Future performColaSincronizacionCompleto(
+    Database database, {
+      int? IdColaSinc
+    }) {
+  final query = '''
+UPDATE ColaSincronizacion 
+SET EstadoSincronizacion = 2
+WHERE IdCola = ${IdColaSinc}
+    
+''';
+  return database.rawQuery(query);
+}
+
+///COLA COLASINCRONIZACIONupdatependiente
+Future performColaSincronizacionCompleto3(
+    Database database, {
+      int? IdColaSinc
+    }) {
+  final query = '''
+UPDATE ColaSincronizacion 
+SET EstadoSincronizacion = 3
+WHERE IdCola = ${IdColaSinc}
+    
+''';
+  return database.rawQuery(query);
+}
+
+
+Future performActualizarInspeccionApi(
+    Database database, {
+      int? idInspeccion,
+      String? nombreEvento,
+      int? idFicha,
+      int? idPlantilla,
+      String? codigoLocalColegio,
+      String? nombreLocalColegio,
+      String? departamentoColegio,
+      String? provinciaColegio,
+      String? distritoColegio,
+      int? idEstado,
+      String? estado
+    }) {
+  final query = '''
+UPDATE Inspecciones
+SET
+    nombreEvento = '${nombreEvento}',
+    idPlantilla = ${idPlantilla},
+    codigoLocalColegio = '${codigoLocalColegio}',
+    nombreLocalColegio = '${nombreLocalColegio}',
+    departamentoColegio = '${departamentoColegio}',
+    provinciaColegio = '${provinciaColegio}',
+    distritoColegio = '${distritoColegio}',
+    idEstado = ${idEstado},
+    estado = '${estado}'
+WHERE 
+    idInspeccion = ${idInspeccion}
+
+''';
+  return database.rawQuery(query);
+}
+
+
+Future performActualizarFichaAPI(
+    Database database, {
+      int? idFicha,
+      int? idPlantilla,
+      String? codigoLocalColegio,
+      String? nombreLocalColegio,
+      String? departamentloColegio,
+      String? provinciaColegio,
+      String? distritoColegio,
+      String? centroPobladoColegio,
+      String? direccionColegio,
+      String? zonaColegio,
+      double? latitud,
+      double? longitud,
+      int? totalPabellon,
+      int? totalAulas,
+      int? totalSSHH,
+      String? dniInspector,
+      String? nombreInspector,
+      String? correoInspector,
+      String? telefonoInspector,
+      String? fechaInspeccion,
+      String? horaInspeccion,
+      String? tipoInspeccion,
+      String? dniDirector,
+      String? nombreDirector,
+      String? correoDirector,
+      String? telefonoDirector,
+      String? dniAlterno,
+      String? nombreAlterno,
+      String? correoAlterno,
+      String? telefonoAlterno,
+      String? usuarioCreacionAudi,
+      String? usuarioModificacionAudi,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
+    }) {
+  final query = '''
+UPDATE Fichas
+SET
+    IdPlantilla = ${idPlantilla},
+    CodigoLocalColegio = '${codigoLocalColegio}',
+    NombreLocalColegio = '${nombreLocalColegio}',
+    DepartamentoColegio = '${departamentloColegio}',
+    ProvinciaColegio = '${provinciaColegio}',
+    DistritoColegio = '${distritoColegio}', -- Parece que debería ser 'totalAulas' en lugar de 'totalPabellon'
+    CentroPobladoColegio = '${centroPobladoColegio}',
+    DireccionColegio = '${direccionColegio}',
+    ZonaColegio = '${zonaColegio}',
+    TotalPabellon = '${totalPabellon}',
+    TotalAulas = '${totalAulas}',
+    TotalSSHH = '${totalSSHH}',
+    DniInspector = '${dniInspector}',
+    NombreInspector = '${nombreInspector}',
+    CorreoInspector = '${correoInspector}',
+    TelefonoInspector = '${telefonoInspector}',
+    FechaInspeccion = '${fechaInspeccion}',
+    HoraInspeccion = '${horaInspeccion}',
+    TipoInspeccion = '${tipoInspeccion}',
+    DniDirector = '${dniDirector}',
+    NombreDirector = '${nombreDirector}',
+    CorreoDirector = '${correoDirector}',
+    TelefonoDirector = '${telefonoDirector}',
+    DniAlterno = '${dniAlterno}',
+    NombreAlterno = '${nombreAlterno}',
+    CorreoAlterno = '${correoAlterno}',
+    TelefonoAlterno = '${telefonoAlterno}',
+    UsuarioCreacionAuditoria = '${usuarioCreacionAudi}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAudi}',
+    FechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
+    WHERE 
+      idFicha = ${idFicha};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+///ACTUALIZARPLANTILLASAPI
+///
+
+Future performActualizarPlantillaAPI(
+    Database database, {
+      int? idPlantilla,
+      String? nombreFicha,
+      int? idUnidadTrabajo,
+      String? nombreUnidadTrabajo
+    }) {
+  final query = '''
+UPDATE Plantilla
+SET
+    NombreFicha = '${nombreFicha}',
+    IdUnidadTrabajo = ${idUnidadTrabajo},
+    NombreUnidadTrabajo = '${nombreUnidadTrabajo}'
+WHERE 
+    IdPlantilla = ${idPlantilla};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///ACTUALIZARSECCIONAPI
+///
+
+Future performActualizarSeccionAPI(
+    Database database, {
+      int? idPlantillaSeccion,
+      int? idPlantillaSeccionPadre,
+      int? idPlantilla,
+      String? descripcion,
+      String? modoRepeticion
+    }) {
+  final query = '''
+UPDATE PlantillaSeccion
+SET
+    IdPlantillaSeccionPadre = ${idPlantillaSeccionPadre},
+    IdPlantilla = ${idPlantilla},
+    Descripcion = '${descripcion}',
+    ModoRepeticion = '${modoRepeticion}'
+WHERE 
+    IdPlantillaSeccion = ${idPlantillaSeccion};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+///ACTUALIZAROPCIONAPI
+///
+
+Future performActualizarOpcionAPI(
+    Database database, {
+      int? idPlantillaOpcion,
+      int? idPlantillaSeccion,
+      int? idPlantilla,
+      int? idPregunta,
+      String? descripcion,
+      String? clasificacionOpcion,
+      int? idTipoOpcion,
+      String? tipoOpcion,
+      String? matIcon
+    }) {
+  final query = '''
+UPDATE PlantillaOpcion
+SET
+    IdPlantilla = ${idPlantilla},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    IdPregunta = ${idPregunta},
+    Descripcion = '${descripcion}',
+    ClasificacionOpcion = '${clasificacionOpcion}',
+    IdTipoOpcion = ${idTipoOpcion},
+    TipoOpcion = '${tipoOpcion}',
+    matIcon = '${matIcon}'
+WHERE 
+    IdPlantillaOpcion = ${idPlantillaOpcion};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///ACTUALIZAROPCIONAPI
+///
+
+Future performActualizarPreguntaAPI(
+    Database database, {
+      int? idPlantillaPregunta,
+      int? idPlantillaSeccion,
+      int? idPregunta,
+      String? descripcionPregunta,
+      int? flagMandatorio,
+      int? idPlantilla
+    }) {
+  final query = '''
+UPDATE PlantillaPregunta
+SET
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    IdPregunta = ${idPregunta},
+    DescripcionPregunta = '${descripcionPregunta}',
+    FlagMandatorio = ${flagMandatorio},
+    IdPlantilla = ${idPlantilla}
+WHERE 
+    IdPlantillaPregunta = ${idPlantillaPregunta};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///ACTUALIZARRESPUESTAAPI
+///
+
+Future performActualizarRespuestaAPI(
+    Database database, {
+      int? idFichaPreguntaRespuesta,
+      int? idFicha,
+      int? idPlantillaOpcion,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
+      String? respuesta,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
+    }) {
+  final query = '''
+UPDATE FichaPreguntaRespuestas
+SET
+    IdFicha = ${idFicha},
+    IdPlantillaOpcion = ${idPlantillaOpcion},
+    IdPregunta = ${idPregunta},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    NumeroRepeticion = '${numeroRepeticion}',
+    Respuesta = '${respuesta}',
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
+WHERE 
+    IdFichaPreguntaRespuesta = ${idFichaPreguntaRespuesta};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///FICHA MODIFICACION MOVIL 0
+///
+
+Future performActualizarFichaModificacion0(
+    Database database, {
+      int? idFicha
+    }) {
+  final query = '''
+UPDATE Fichas
+SET
+    modificadoMovil = 0
+    WHERE 
+      idFicha = ${idFicha};
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///FICHA MODIFICACION MOVIL 0
+///
+
+Future performActualizarFichaModularModificacion0(
+    Database database, {
+      int? idFichaModular
+    }) {
+  final query = '''
+UPDATE FichaModular
+SET
+    modificadoMovil = 0
+    WHERE 
+      IdFichaModular = ${idFichaModular};
+
+''';
+  return database.rawQuery(query);
+}
+
+///ACTUALIZARSINCRONIZACIONMOVIL
+///
+
+Future performActualizarSincAPI(
+    Database database, {
+      int? idSincroMovil,
+      int? idSincroServer,
+      int? inspeccionesCargadasServer,
+      int? inspeccionesDescargadasServer,
+      int? idEstadoSincronizacion
+    }) {
+  final query = '''
+UPDATE Sincronizacion
+SET
+    IdSincroServer = ${idSincroServer},
+    InspeccionesCargadasServer = ${inspeccionesCargadasServer},
+    InspeccionesDescargadasServer = ${inspeccionesDescargadasServer},
+    Estado = ${idEstadoSincronizacion}
+WHERE 
+    IdSincro = ${idSincroMovil};
+
+
+''';
+  return database.rawQuery(query);
+}

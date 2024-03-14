@@ -48,62 +48,15 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
   Map<String, String?> selectedValuesss = {};
 
   DateTime? selectedDate;
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-      // Actualizar el valor del campo de texto
-      _dateController.text = '${picked.day}/${picked.month}/${picked.year}';
-    }
-  }
+
   TextEditingController _dateController = TextEditingController();
 
   DateTime? selectedDateTime;
-  Future<void> _selectDateTime(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDateTime ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(selectedDateTime ?? DateTime.now()),
-      );
-      if (pickedTime != null) {
-        setState(() {
-          selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
-          _dateTimeController.text = '${picked.day}/${picked.month}/${picked.year} ${pickedTime.format(context)}';
-        });
-      }
-    }
-  }
   TextEditingController _dateTimeController = TextEditingController();
 
   TimeOfDay? selectedTime;
 
 // Función para mostrar el selector de hora
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedTime ?? TimeOfDay.now(),
-    );
-    if (picked != null && picked != selectedTime) {
-      setState(() {
-        selectedTime = picked;
-        // Actualiza el valor del controlador con la hora seleccionada
-        _timeController.text = selectedTime!.format(context);
-      });
-    }
-  }
   TextEditingController _timeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -982,31 +935,27 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                           final columnListarOpcionesRow = columnListarOpcionesRowList[columnIndex];
                                                                                           switch (columnListarOpcionesRow.idTipoOpcion) {
                                                                                             case 1:
-                                                                                            // Verificar si la descripción es una cadena antes de usar split
                                                                                               if (columnListarOpcionesRow.descripcion is String && columnListarOpcionesRow.idTipoOpcion == 1) {
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
                                                                                                 final respuesta = columnListarOpcionesRow.respuesta;
 
-                                                                                                // Obtener el índice de la opción seleccionada actualmente
-                                                                                                int? seleccionIndex = respuesta != null ? opciones.indexOf(respuesta) : null;
+                                                                                                // Variable para almacenar la posición de la opción seleccionada
+                                                                                                int? seleccionActual;
 
-                                                                                                // Función para manejar cambios en la selección
-                                                                                                void handleSelectionChange(int? value) {
-                                                                                                  setState(() {
-                                                                                                    seleccionIndex = value; // Actualizar el índice de la opción seleccionada
-                                                                                                  });
-                                                                                                  if (value != null) {
-                                                                                                    final nuevaRespuesta = opciones[value];
-                                                                                                    actualizarFichaMod(
-                                                                                                      rpta: nuevaRespuesta,
-                                                                                                      idficha: FFAppState().IdFicha,
-                                                                                                      idplantilla: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                      idplantillaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                      // Agrega otros parámetros según sea necesario...
-                                                                                                    );
+                                                                                                // Variable para almacenar la respuesta actual
+                                                                                                String respuestaActual = '';
+
+                                                                                                // Si hay respuesta, encontrar la posición de la opción correspondiente
+                                                                                                if (respuesta != null && respuesta.isNotEmpty) {
+                                                                                                  final respuestaSplit = respuesta.split(';');
+                                                                                                  for (int i = 0; i < respuestaSplit.length; i++) {
+                                                                                                    if (respuestaSplit[i] == 'S') {
+                                                                                                      seleccionActual = i;
+                                                                                                      break;
+                                                                                                    }
                                                                                                   }
                                                                                                 }
+
                                                                                                 if (respuesta != null) {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1024,21 +973,38 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                             ),
                                                                                                             child: Column(
                                                                                                               mainAxisSize: MainAxisSize.max,
-                                                                                                              children: opciones.asMap().entries.map((entry) {
-                                                                                                                final index = entry.key;
-                                                                                                                final opcion = entry.value;
+                                                                                                              children: opciones.asMap().entries.map((entry) => Row(
+                                                                                                                children: [
+                                                                                                                  Radio<int>(
+                                                                                                                    value: entry.key,
+                                                                                                                    groupValue: seleccionActual,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      setState(() {
+                                                                                                                        // Actualizar la posición de la opción seleccionada
+                                                                                                                        seleccionActual = value;
 
-                                                                                                                return Row(
-                                                                                                                  children: [
-                                                                                                                    Radio<int>(
-                                                                                                                      value: index, // Utilizamos el índice como valor del radio button
-                                                                                                                      groupValue: seleccionIndex, // Utilizamos el índice de la opción seleccionada
-                                                                                                                      onChanged: handleSelectionChange, // Llamamos a la función de manejo de cambios
-                                                                                                                    ),
-                                                                                                                    Text(opcion),
-                                                                                                                  ],
-                                                                                                                );
-                                                                                                              }).toList(),
+                                                                                                                        // Actualizar la respuesta actual
+                                                                                                                        respuestaActual = '';
+                                                                                                                        for (int i = 0; i < opciones.length; i++) {
+                                                                                                                          respuestaActual += (i == value) ? 'S' : 'N';
+                                                                                                                          if (i < opciones.length - 1) {
+                                                                                                                            respuestaActual += ';';
+                                                                                                                          }
+                                                                                                                        }
+                                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                                            rpta: respuestaActual,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                      });
+                                                                                                                    },
+                                                                                                                  ),
+                                                                                                                  Text(entry.value),
+                                                                                                                ],
+                                                                                                              )).toList(),
                                                                                                             ),
                                                                                                           ),
                                                                                                         ),
@@ -1046,10 +1012,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                     ],
                                                                                                   );
                                                                                                 } else {
-                                                                                                  bool _accionRealizada = false;
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
+                                                                                                      // Mostrar la respuesta en alguna parte
+                                                                                                      Text("Respuesta: ${respuesta ?? "(No hay respuestav2)"}"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1061,33 +1028,39 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                             ),
                                                                                                             child: Column(
                                                                                                               mainAxisSize: MainAxisSize.max,
-                                                                                                              children: opciones.map((opcion) {
-                                                                                                                return Row(
-                                                                                                                  children: [
-                                                                                                                    Radio(
-                                                                                                                      value: opcion,
-                                                                                                                      groupValue: null,
-                                                                                                                      onChanged: (value) async {
-                                                                                                                        if (!_accionRealizada) {
-                                                                                                                          _accionRealizada = true;
+                                                                                                              children: opciones.asMap().entries.map((entry) => Row(
+                                                                                                                children: [
+                                                                                                                  Radio<int>(
+                                                                                                                    value: entry.key,
+                                                                                                                    groupValue: seleccionActual,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      setState(() {
+                                                                                                                        // Actualizar la posición de la opción seleccionada
+                                                                                                                        seleccionActual = value;
 
-                                                                                                                          // Aquí puedes agregar la lógica que deseas al seleccionar una opción
-                                                                                                                          print("Opción seleccionada: $value");
-                                                                                                                          await SQLiteManager.instance.crearRpta(
-                                                                                                                              rpta: value,
-                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
-                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                          );
+                                                                                                                        // Actualizar la respuesta actual
+                                                                                                                        respuestaActual = '';
+                                                                                                                        for (int i = 0; i < opciones.length; i++) {
+                                                                                                                          respuestaActual += (i == value) ? 'S' : 'N';
+                                                                                                                          if (i < opciones.length - 1) {
+                                                                                                                            respuestaActual += ';';
+                                                                                                                          }
                                                                                                                         }
-                                                                                                                      },
-                                                                                                                    ),
-                                                                                                                    Text(opcion),
-                                                                                                                  ],
-                                                                                                                );
-                                                                                                              }).toList(),
+                                                                                                                        print("valor ${respuestaActual}");
+                                                                                                                         SQLiteManager.instance.crearRpta(
+                                                                                                                            rpta: respuestaActual,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                      });
+                                                                                                                    },
+                                                                                                                  ),
+                                                                                                                  Text(entry.value),
+                                                                                                                ],
+                                                                                                              )).toList(),
                                                                                                             ),
                                                                                                           ),
                                                                                                         ),
@@ -1103,61 +1076,134 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
                                                                                           // Agrega otros casos según sea necesario
                                                                                             case 2:
+                                                                                            // Variable para almacenar la respuesta actual
+                                                                                              String respuestaActual = '';
+
+                                                                                              // Obtener la respuesta actual (si existe)
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta;
+                                                                                              if (respuesta != null && respuesta.isNotEmpty) {
+                                                                                                respuestaActual = respuesta;
+                                                                                              } else {
+                                                                                                // Inicializar la respuesta actual con N para todas las opciones
+                                                                                                final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
+                                                                                                respuestaActual = List.filled(opciones.length, 'N').join(';');
+                                                                                              }
+
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split(';');
                                                                                                 String? seleccionActual;
 
-                                                                                                // Obtener el índice de la opción seleccionada actualmente
-                                                                                                final respuesta = columnListarOpcionesRow.respuesta;
-                                                                                                if (respuesta != null && respuesta.isNotEmpty) {
-                                                                                                  final respuestaSplit = respuesta.split(';');
-                                                                                                  for (int i = 0; i < respuestaSplit.length; i++) {
-                                                                                                    if (respuestaSplit[i] == 'S') {
-                                                                                                      seleccionActual = opciones[i];
-                                                                                                      break;
-                                                                                                    }
-                                                                                                  }
-                                                                                                }
+                                                                                                // Convertir la respuesta a una lista
+                                                                                                final respuestaLista = respuestaActual.split(';');
 
-                                                                                                return Column(
-                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                  children: [
-                                                                                                    Align(
-                                                                                                      alignment: AlignmentDirectional(-1, 0),
-                                                                                                      child: Padding(
-                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                        child: Container(
-                                                                                                          width: double.infinity,
-                                                                                                          decoration: BoxDecoration(
-                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                          ),
-                                                                                                          child: Column(
-                                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                                            children: opciones.asMap().entries.map((entry) {
-                                                                                                              final index = entry.key;
-                                                                                                              final opcion = entry.value;
-                                                                                                              bool isChecked = seleccionActual == opcion;
-                                                                                                              return Row(
-                                                                                                                children: [
-                                                                                                                  Checkbox(
-                                                                                                                    value: isChecked,
-                                                                                                                    onChanged: null, // Deshabilitamos la interacción
-                                                                                                                  ),
-                                                                                                                  Text(opcion),
-                                                                                                                ],
-                                                                                                              );
-                                                                                                            }).toList(),
+                                                                                                if(respuesta != null) {
+                                                                                                  return Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+                                                                                                      // Mostrar la respuesta actual
+                                                                                                      Text("Respuesta: $respuestaActual"),
+                                                                                                      Align(
+                                                                                                        alignment: AlignmentDirectional(-1, 0),
+                                                                                                        child: Padding(
+                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                          child: Container(
+                                                                                                            width: double.infinity,
+                                                                                                            decoration: BoxDecoration(
+                                                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                            ),
+                                                                                                            child: Column(
+                                                                                                              mainAxisSize: MainAxisSize.max,
+                                                                                                              children: opciones.asMap().entries.map((entry) {
+                                                                                                                final index = entry.key;
+                                                                                                                final opcion = entry.value;
+                                                                                                                bool isChecked = respuestaLista[index] == 'S'; // Ajuste aquí para obtener la respuesta correcta
+
+                                                                                                                return Row(
+                                                                                                                  children: [
+                                                                                                                    Checkbox(
+                                                                                                                      value: isChecked,
+                                                                                                                      onChanged: (value) {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la respuesta actual
+                                                                                                                          respuestaLista[index] = value! ? 'S' : 'N';
+                                                                                                                          respuestaActual = respuestaLista.join(';');
+                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                              rpta: respuestaActual,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        });
+                                                                                                                      },
+                                                                                                                    ),
+                                                                                                                    Text(opcion),
+                                                                                                                  ],
+                                                                                                                );
+                                                                                                              }).toList(),
+                                                                                                            ),
                                                                                                           ),
                                                                                                         ),
                                                                                                       ),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                );
+                                                                                                    ],
+                                                                                                  );
+                                                                                                } else {
+                                                                                                  return Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+                                                                                                      // Mostrar la respuesta actual
+                                                                                                      Text("Respuesta: $respuestaActual"),
+                                                                                                      Align(
+                                                                                                        alignment: AlignmentDirectional(-1, 0),
+                                                                                                        child: Padding(
+                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                          child: Container(
+                                                                                                            width: double.infinity,
+                                                                                                            decoration: BoxDecoration(
+                                                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                            ),
+                                                                                                            child: Column(
+                                                                                                              mainAxisSize: MainAxisSize.max,
+                                                                                                              children: opciones.asMap().entries.map((entry) {
+                                                                                                                final index = entry.key;
+                                                                                                                final opcion = entry.value;
+                                                                                                                bool isChecked = respuestaLista[index] == 'S'; // Ajuste aquí para obtener la respuesta correcta
+
+                                                                                                                return Row(
+                                                                                                                  children: [
+                                                                                                                    Checkbox(
+                                                                                                                      value: isChecked,
+                                                                                                                      onChanged: (value) {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la respuesta actual
+                                                                                                                          respuestaLista[index] = value! ? 'S' : 'N';
+                                                                                                                          respuestaActual = respuestaLista.join(';');
+                                                                                                                          SQLiteManager.instance.crearRpta(
+                                                                                                                              rpta: respuestaActual,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        });
+                                                                                                                      },
+                                                                                                                    ),
+                                                                                                                    Text(opcion),
+                                                                                                                  ],
+                                                                                                                );
+                                                                                                              }).toList(),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ],
+                                                                                                  );
+                                                                                                }
                                                                                               } else {
                                                                                                 return SizedBox.shrink(); // Ocultar si la descripción no es una cadena
                                                                                               }
-
-
 
 
 
@@ -1166,65 +1212,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? columnListarOpcionesRow.respuesta
                                                                                                   : "(No hay respuesta)";
-                                                                                              return Column(
-                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: $respuesta"),
-                                                                                                  Align(
-                                                                                                    alignment: AlignmentDirectional(-1, 0),
-                                                                                                    child: Padding(
-                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                      child: Container(
-                                                                                                        width: double.infinity,
-                                                                                                        decoration: BoxDecoration(
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                        ),
-                                                                                                        child: Column(
-                                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                                          children: [
-                                                                                                            Padding(
-                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                              child: Container(
-                                                                                                                width: double.infinity,
-                                                                                                                child: TextField(
-                                                                                                                  decoration: InputDecoration(
-                                                                                                                    labelText: 'Ingrese su respuesta',
-                                                                                                                    border: OutlineInputBorder(),
-                                                                                                                  ),
-                                                                                                                  controller: TextEditingController(text: respuesta),
-                                                                                                                  onChanged: (value) {
-                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                                  },
-                                                                                                                ),
-                                                                                                              ),
-                                                                                                            ),
-                                                                                                          ],
-                                                                                                        ),
-                                                                                                      ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ],
-                                                                                              );
-
-                                                                                          // Caso específico para el tipo de opción 4 (lista desplegable)
-                                                                                            case 4:
-                                                                                              if (columnListarOpcionesRow.descripcion is String) {
-                                                                                                // Obtener las opciones y la respuesta
-                                                                                                List<String> opciones = (columnListarOpcionesRow.descripcion as String).split(';');
-                                                                                                String respuesta = columnListarOpcionesRow.respuesta ?? "";
-
-                                                                                                // Buscar la posición del 'S' en la respuesta
-                                                                                                int indexSeleccionado = respuesta.split(';').indexOf('S');
-
-                                                                                                // Establecer el valor inicial de itemSelec basado en la posición del 'S' en la respuesta
-                                                                                                String itemSelec = indexSeleccionado != -1 ? opciones[indexSeleccionado] : opciones.first;
-
+                                                                                              if(respuesta != null) {
                                                                                                 return Column(
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
                                                                                                     // Mostrar la respuesta en alguna parte
-                                                                                                    Text("Respuesta: ${respuesta}"),
+                                                                                                    Text("Respuesta: $respuesta"),
                                                                                                     Align(
                                                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                                                       child: Padding(
@@ -1241,20 +1234,22 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                                                                                                 child: Container(
                                                                                                                   width: double.infinity,
-                                                                                                                  child: DropdownButton<String>(
-                                                                                                                    value: itemSelec,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: 'Ingrese su respuesta',
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    controller: TextEditingController(text: respuesta),
                                                                                                                     onChanged: (value) {
-                                                                                                                      setState(() {
-                                                                                                                        itemSelec = value!;
-                                                                                                                      });
-                                                                                                                    },
-                                                                                                                    items: opciones.map<DropdownMenuItem<String>>((opcion) {
-                                                                                                                      return DropdownMenuItem<String>(
-                                                                                                                        value: opcion,
-                                                                                                                        child: Text(opcion),
+                                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                                          rpta: value,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
                                                                                                                       );
-                                                                                                                    }).toList(),
-                                                                                                                    hint: Text("Seleccionar una opción"), // Agregar el hint aquí
+                                                                                                                    },
                                                                                                                   ),
                                                                                                                 ),
                                                                                                               ),
@@ -1266,11 +1261,209 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ],
                                                                                                 );
                                                                                               } else {
-                                                                                                // Manejar el caso donde la descripción no es una cadena
-                                                                                                return SizedBox.shrink();
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta: $respuesta"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: [
+                                                                                                              Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: 'Ingrese su respuesta',
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    controller: TextEditingController(text: respuesta),
+                                                                                                                    onChanged: (value) {
+                                                                                                                      SQLiteManager.instance.crearRpta(
+                                                                                                                          rpta: value,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+                                                                                                                    },
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                );
                                                                                               }
 
 
+                                                                                          // Caso específico para el tipo de opción 4 (lista desplegable)
+
+                                                                                            case 4:
+                                                                                              if (columnListarOpcionesRow.descripcion is String) {
+                                                                                                // Obtener las opciones y la respuesta
+                                                                                                List<String> opciones = (columnListarOpcionesRow.descripcion as String).split(';');
+                                                                                                String respuesta = columnListarOpcionesRow.respuesta ?? "";
+
+                                                                                                // Buscar la posición del 'S' en la respuesta
+                                                                                                int indexSeleccionado = respuesta.split(';').indexOf('S');
+
+                                                                                                // Inicializar la variable para la posición del valor seleccionado
+                                                                                                int posicionSeleccionada = indexSeleccionado;
+
+                                                                                                // Establecer el valor inicial de itemSelec basado en la posición del 'S' en la respuesta
+                                                                                                String itemSelec = indexSeleccionado != -1 ? opciones[indexSeleccionado] : opciones.first;
+
+
+                                                                                                if(respuesta != null){
+                                                                                                  return Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+                                                                                                      // Mostrar la respuesta en alguna parte
+                                                                                                      Text("Respuesta: ${respuesta}"),
+                                                                                                      Align(
+                                                                                                        alignment: AlignmentDirectional(-1, 0),
+                                                                                                        child: Padding(
+                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                          child: Container(
+                                                                                                            width: double.infinity,
+                                                                                                            decoration: BoxDecoration(
+                                                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                            ),
+                                                                                                            child: Column(
+                                                                                                              mainAxisSize: MainAxisSize.max,
+                                                                                                              children: [
+                                                                                                                Padding(
+                                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                  child: Container(
+                                                                                                                    width: double.infinity,
+                                                                                                                    child: DropdownButton<String>(
+                                                                                                                      value: itemSelec,
+                                                                                                                      onChanged: (value) {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'posicionSeleccionada'
+                                                                                                                          posicionSeleccionada = opciones.indexOf(value!);
+
+                                                                                                                          // Generar la cadena con el formato N;N;S
+                                                                                                                          String cadenaFormatoSN = generarCadenaFormatoSN(posicionSeleccionada, opciones);
+
+                                                                                                                          // Almacenar la cadena con el formato N;N;S
+                                                                                                                          // Aquí debes agregar el código para almacenar la variable `cadenaFormatoSN`.
+
+                                                                                                                          itemSelec = value!;
+
+                                                                                                                          print(cadenaFormatoSN);
+                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                              rpta: cadenaFormatoSN,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        });
+                                                                                                                      },
+                                                                                                                      items: opciones.map<DropdownMenuItem<String>>((opcion) {
+                                                                                                                        return DropdownMenuItem<String>(
+                                                                                                                          value: opcion,
+                                                                                                                          child: Text(opcion),
+                                                                                                                        );
+                                                                                                                      }).toList(),
+                                                                                                                      hint: Text("Seleccionar una opción"), // Agregar el hint aquí
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ],
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ],
+                                                                                                  );
+                                                                                                } else {
+                                                                                                  return Column(
+                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                    children: [
+                                                                                                      // Mostrar la respuesta en alguna parte
+                                                                                                      Text("Respuesta: ${respuesta}"),
+                                                                                                      Align(
+                                                                                                        alignment: AlignmentDirectional(-1, 0),
+                                                                                                        child: Padding(
+                                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                          child: Container(
+                                                                                                            width: double.infinity,
+                                                                                                            decoration: BoxDecoration(
+                                                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                            ),
+                                                                                                            child: Column(
+                                                                                                              mainAxisSize: MainAxisSize.max,
+                                                                                                              children: [
+                                                                                                                Padding(
+                                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                  child: Container(
+                                                                                                                    width: double.infinity,
+                                                                                                                    child: DropdownButton<String>(
+                                                                                                                      value: itemSelec,
+                                                                                                                      onChanged: (value) {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'posicionSeleccionada'
+                                                                                                                          posicionSeleccionada = opciones.indexOf(value!);
+
+                                                                                                                          // Generar la cadena con el formato N;N;S
+                                                                                                                          String cadenaFormatoSN = generarCadenaFormatoSN(posicionSeleccionada, opciones);
+
+                                                                                                                          // Almacenar la cadena con el formato N;N;S
+                                                                                                                          // Aquí debes agregar el código para almacenar la variable `cadenaFormatoSN`.
+
+                                                                                                                          itemSelec = value!;
+
+                                                                                                                          print(cadenaFormatoSN);
+                                                                                                                          SQLiteManager.instance.crearRpta(
+                                                                                                                              rpta: cadenaFormatoSN,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        });
+                                                                                                                      },
+                                                                                                                      items: opciones.map<DropdownMenuItem<String>>((opcion) {
+                                                                                                                        return DropdownMenuItem<String>(
+                                                                                                                          value: opcion,
+                                                                                                                          child: Text(opcion),
+                                                                                                                        );
+                                                                                                                      }).toList(),
+                                                                                                                      hint: Text("Seleccionar una opción"), // Agregar el hint aquí
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ],
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ],
+                                                                                                  );
+                                                                                                }
+                                                                                              } else {
+                                                                                                // Manejar el caso donde la descripción no es una cadena
+                                                                                                return SizedBox.shrink();
+                                                                                              }
 
                                                                                             case 5:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
@@ -1279,11 +1472,14 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
 
+                                                                                              // Variable para almacenar la lista de valores
+                                                                                              List<String> listaValores = respuesta.toList();
+
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
                                                                                                   // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta:"),
+                                                                                                  Text("Respuesta: ${listaValores.join('|')}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1308,7 +1504,19 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                   ),
                                                                                                                   keyboardType: TextInputType.number,
                                                                                                                   onChanged: (value) {
-                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                    setState(() {
+                                                                                                                      // Actualizar la variable 'listaValores'
+                                                                                                                      listaValores[index] = value;
+                                                                                                                      String cadenaValores = listaValores.join('|');
+                                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                                          rpta: cadenaValores,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+                                                                                                                    });
                                                                                                                   },
                                                                                                                   controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
                                                                                                                 ),
@@ -1323,12 +1531,47 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               );
 
 
+
                                                                                             case 6:
-                                                                                              final respuesta = columnListarOpcionesRow.respuesta ?? ""; // Obtener la respuesta o cadena vacía si es null
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta ?? ""; // Obtener la respuesta o cadena vacía
 
-                                                                                              // Inicializar el controlador con la respuesta
-                                                                                              _dateTimeController.text = respuesta;
+                                                                                              // Variable para almacenar la fecha y hora seleccionada
+                                                                                              DateTime selectedDateTime = respuesta.isNotEmpty
+                                                                                                  ? DateTime.parse(respuesta) // Analizar la respuesta existente a DateTime
+                                                                                                  : DateTime.now(); // Usar la hora actual como predeterminada
 
+                                                                                              String formattedDateTime = selectedDateTime.toIso8601String();
+                                                                                              _dateTimeController.text = formattedDateTime;
+
+                                                                                              Future<void> _selectDateTime(BuildContext context) async {
+                                                                                                final DateTime? picked = await showDatePicker(
+                                                                                                  context: context,
+                                                                                                  initialDate: selectedDateTime ?? DateTime.now(),
+                                                                                                  firstDate: DateTime(2000),
+                                                                                                  lastDate: DateTime(2101),
+                                                                                                );
+                                                                                                if (picked != null) {
+                                                                                                  final TimeOfDay? pickedTime = await showTimePicker(
+                                                                                                    context: context,
+                                                                                                    initialTime: TimeOfDay.fromDateTime(selectedDateTime ?? DateTime.now()),
+                                                                                                  );
+                                                                                                  if (pickedTime != null) {
+                                                                                                    setState(() {
+                                                                                                      selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
+                                                                                                      _dateTimeController.text = DateFormat('yyyy-MM-ddTHH:mm').format(selectedDateTime);
+                                                                                                      //print(_dateTimeController.text);
+                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                          rpta: _dateTimeController.text,
+                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                      );
+                                                                                                    });
+                                                                                                  }
+                                                                                                }
+                                                                                              }
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
@@ -1354,22 +1597,20 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                   children: [
                                                                                                                     Expanded(
                                                                                                                       child: GestureDetector(
-                                                                                                                        onTap: () {
-                                                                                                                          _selectDateTime(context);
-                                                                                                                        },
                                                                                                                         child: TextFormField(
                                                                                                                           controller: _dateTimeController,
-                                                                                                                          readOnly: true,
+                                                                                                                          readOnly: true, // Solo lectura
                                                                                                                           decoration: InputDecoration(
                                                                                                                             labelText: 'Fecha y Hora',
                                                                                                                             hintText: 'Seleccionar fecha y hora',
                                                                                                                             border: OutlineInputBorder(),
                                                                                                                           ),
                                                                                                                           keyboardType: TextInputType.datetime,
-                                                                                                                          onChanged: (value) {
-                                                                                                                            // Implementa la lógica para manejar el cambio en el valor del campo de texto
-                                                                                                                          },
                                                                                                                         ),
+                                                                                                                        onTap: () {
+                                                                                                                          _selectDateTime(context);
+                                                                                                                          print(_dateTimeController);
+                                                                                                                        },
                                                                                                                       ),
                                                                                                                     ),
                                                                                                                     IconButton(
@@ -1390,11 +1631,37 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 ],
                                                                                               );
 
+
                                                                                             case 7:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
                                                                                                   : "(No hay respuesta)";
                                                                                               _dateController.text = respuesta;
+
+                                                                                              Future<void> _selectDate(BuildContext context) async {
+                                                                                                final DateTime? picked = await showDatePicker(
+                                                                                                  context: context,
+                                                                                                  initialDate: selectedDate ?? DateTime.now(),
+                                                                                                  firstDate: DateTime(2000),
+                                                                                                  lastDate: DateTime(2101),
+                                                                                                );
+                                                                                                if (picked != null && picked != selectedDate) {
+                                                                                                  setState(() {
+                                                                                                    selectedDate = picked;
+                                                                                                    _dateController.text = '${picked.day}/${picked.month}/${picked.year}';
+                                                                                                    SQLiteManager.instance.actualizarRpta(
+                                                                                                        rpta: _dateController.text,
+                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                        idficha: FFAppState().IdFicha
+                                                                                                      // Proporciona los otros parámetros según sea necesario...
+                                                                                                    );
+                                                                                                  });
+                                                                                                  // Actualizar el valor del campo de texto
+                                                                                                  //_dateController.text = '${picked.day}/${picked.month}/${picked.year}';
+                                                                                                }
+                                                                                              }
 
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1464,6 +1731,29 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
                                                                                                   : "Respuesta: (No hay respuesta)";
                                                                                               _timeController.text = respuesta;
+
+                                                                                              Future<void> _selectTime(BuildContext context) async {
+                                                                                                final TimeOfDay? picked = await showTimePicker(
+                                                                                                  context: context,
+                                                                                                  initialTime: selectedTime ?? TimeOfDay.now(),
+                                                                                                );
+                                                                                                if (picked != null && picked != selectedTime) {
+                                                                                                  setState(() {
+                                                                                                    selectedTime = picked;
+                                                                                                    // Actualiza el valor del controlador con la hora seleccionada
+                                                                                                    _timeController.text = selectedTime!.format(context);
+                                                                                                    SQLiteManager.instance.actualizarRpta(
+                                                                                                        rpta: _timeController.text,
+                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                        idficha: FFAppState().IdFicha
+                                                                                                      // Proporciona los otros parámetros según sea necesario...
+                                                                                                    );
+                                                                                                  });
+                                                                                                }
+                                                                                              }
+
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
@@ -1531,50 +1821,113 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
                                                                                                   : "(No hay respuesta)";
-                                                                                              return Column(
-                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${respuesta}"),
-                                                                                                  Align(
-                                                                                                    alignment: AlignmentDirectional(-1, 0),
-                                                                                                    child: Padding(
-                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                      child: Container(
-                                                                                                        width: double.infinity,
-                                                                                                        decoration: BoxDecoration(
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                        ),
-                                                                                                        child: Column(
-                                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                                          children: [
-                                                                                                            Padding(
-                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                              child: Container(
-                                                                                                                width: double.infinity,
-                                                                                                                child: TextField(
-                                                                                                                  controller: TextEditingController(text: respuesta),
-                                                                                                                  keyboardType: TextInputType.number,
-                                                                                                                  inputFormatters: <TextInputFormatter>[
-                                                                                                                    FilteringTextInputFormatter.digitsOnly // Esto permite solo números
-                                                                                                                  ],
-                                                                                                                  onChanged: (value) {
-                                                                                                                    // Aquí puedes manejar los cambios en el valor del TextField
-                                                                                                                  },
-                                                                                                                  decoration: InputDecoration(
-                                                                                                                    hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
-                                                                                                                    border: OutlineInputBorder(), // Borde del TextField
+                                                                                              if(respuesta != null) {
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta9: ${respuesta}"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: [
+                                                                                                              Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    controller: TextEditingController(text: respuesta),
+                                                                                                                    keyboardType: TextInputType.number,
+                                                                                                                    inputFormatters: <TextInputFormatter>[
+                                                                                                                      FilteringTextInputFormatter.digitsOnly // Esto permite solo números
+                                                                                                                    ],
+                                                                                                                    onChanged: (value) {
+                                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                                          rpta: value,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+                                                                                                                    },
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
+                                                                                                                      border: OutlineInputBorder(), // Borde del TextField
+                                                                                                                    ),
                                                                                                                   ),
                                                                                                                 ),
                                                                                                               ),
-                                                                                                            ),
-                                                                                                          ],
+                                                                                                            ],
+                                                                                                          ),
                                                                                                         ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                ],
-                                                                                              );
+                                                                                                  ],
+                                                                                                );
+                                                                                              } else {
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    // Mostrar la respuesta en alguna parte
+                                                                                                    Text("Respuesta9: ${respuesta}"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: [
+                                                                                                              Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    controller: TextEditingController(text: respuesta),
+                                                                                                                    keyboardType: TextInputType.number,
+                                                                                                                    inputFormatters: <TextInputFormatter>[
+                                                                                                                      FilteringTextInputFormatter.digitsOnly // Esto permite solo números
+                                                                                                                    ],
+                                                                                                                    onChanged: (value) {
+                                                                                                                      SQLiteManager.instance.crearRpta(
+                                                                                                                          rpta: value,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+                                                                                                                    },
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
+                                                                                                                      border: OutlineInputBorder(), // Borde del TextField
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                );
+                                                                                              }
+
+
 
                                                                                             case 10:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta ?? "";
@@ -1585,7 +1938,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
                                                                                                   // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${respuesta}"),
+                                                                                                  Text("Respuesta10: ${respuesta}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1630,8 +1983,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             case 11:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
                                                                                                 final respuesta = columnListarOpcionesRow.respuesta != null
-                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
-                                                                                                    : "Respuesta: (No hay respuesta)";
+                                                                                                    ? "Respuesta11: ${columnListarOpcionesRow.respuesta}"
+                                                                                                    : "Respuesta11: (No hay respuesta)";
                                                                                                 final opcionesPorEtiqueta = (columnListarOpcionesRow.descripcion as String).split('|');
                                                                                                 return Padding(
                                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
@@ -1820,4 +2173,13 @@ void actualizarFichaMod({
       idficha: idficha
     // Proporciona los otros parámetros según sea necesario...
   );
+}
+
+
+
+
+String generarCadenaFormatoSN(int posicionSeleccionada, List<String> opciones) {
+  List<String> listaSN = List.filled(opciones.length, 'N');
+  listaSN[posicionSeleccionada] = 'S';
+  return listaSN.join(';');
 }

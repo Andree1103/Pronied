@@ -10,11 +10,17 @@ import 'package:provider/provider.dart';
 import 'login_model.dart';
 export 'login_model.dart';
 
+
+
+
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
 
+
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
+
+
 }
 
 class _LoginWidgetState extends State<LoginWidget>
@@ -78,6 +84,9 @@ class _LoginWidgetState extends State<LoginWidget>
 
     super.dispose();
   }
+
+
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -224,9 +233,15 @@ class _LoginWidgetState extends State<LoginWidget>
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller:
-                                                _model.emailAddressController,
+                                                _emailController,
                                             focusNode:
                                                 _model.emailAddressFocusNode,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                // Actualiza el estado de tu aplicación aquí utilizando el valor del controlador
+                                                FFAppState().username = _emailController.text;
+                                              });
+                                            },
                                             autofocus: true,
                                             autofillHints: [
                                               AutofillHints.email
