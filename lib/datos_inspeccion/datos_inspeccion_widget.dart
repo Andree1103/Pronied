@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -196,7 +198,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                               .fade,
                                                           duration: Duration(
                                                               milliseconds:
-                                                              1000),
+                                                              2000),
                                                         ),
                                                       },
                                                     );
@@ -960,8 +962,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta en alguna parte
-                                                                                                      Text("Respuesta: ${respuesta ?? "(No hay respuesta)"}"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1015,8 +1015,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta en alguna parte
-                                                                                                      Text("Respuesta: ${respuesta ?? "(No hay respuestav2)"}"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1100,8 +1098,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta actual
-                                                                                                      Text("Respuesta: $respuestaActual"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1152,8 +1148,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta actual
-                                                                                                      Text("Respuesta: $respuestaActual"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1209,15 +1203,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
                                                                                           // Caso específico para el tipo de opción 3 (respuesta libre)
                                                                                             case 3:
-                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
-                                                                                                  ? columnListarOpcionesRow.respuesta
-                                                                                                  : "(No hay respuesta)";
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta;
+                                                                                              Timer? _debounce;
                                                                                               if(respuesta != null) {
                                                                                                 return Column(
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
-                                                                                                    // Mostrar la respuesta en alguna parte
-                                                                                                    Text("Respuesta: $respuesta"),
                                                                                                     Align(
                                                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                                                       child: Padding(
@@ -1240,8 +1231,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                       border: OutlineInputBorder(),
                                                                                                                     ),
                                                                                                                     controller: TextEditingController(text: respuesta),
-                                                                                                                    onChanged: (value) {
-                                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                                    onChanged: (value)  {
+                                                                                                                       SQLiteManager.instance.actualizarRpta(
                                                                                                                           rpta: value,
                                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
@@ -1264,8 +1255,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 return Column(
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
-                                                                                                    // Mostrar la respuesta en alguna parte
-                                                                                                    Text("Respuesta: $respuesta"),
                                                                                                     Align(
                                                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                                                       child: Padding(
@@ -1289,14 +1278,21 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                     ),
                                                                                                                     controller: TextEditingController(text: respuesta),
                                                                                                                     onChanged: (value) {
-                                                                                                                      SQLiteManager.instance.crearRpta(
+                                                                                                                      if (_debounce != null && _debounce!.isActive) {
+                                                                                                                        _debounce!.cancel(); // Cancela el temporizador anterior si aún está activo
+                                                                                                                      }
+
+                                                                                                                      // Crea un nuevo temporizador para esperar 500 milisegundos después de que el usuario termine de escribir
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 1000), () {
+                                                                                                                        SQLiteManager.instance.crearRpta(
                                                                                                                           rpta: value,
                                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                      });
                                                                                                                     },
                                                                                                                   ),
                                                                                                                 ),
@@ -1326,15 +1322,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 int posicionSeleccionada = indexSeleccionado;
 
                                                                                                 // Establecer el valor inicial de itemSelec basado en la posición del 'S' en la respuesta
-                                                                                                String itemSelec = indexSeleccionado != -1 ? opciones[indexSeleccionado] : opciones.first;
+                                                                                                String itemSelec = indexSeleccionado != -1 ? opciones[indexSeleccionado] : opciones[0];
 
-
-                                                                                                if(respuesta != null){
+                                                                                                if(respuesta != ""){
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta en alguna parte
-                                                                                                      Text("Respuesta: ${respuesta}"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1398,8 +1391,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   return Column(
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
-                                                                                                      // Mostrar la respuesta en alguna parte
-                                                                                                      Text("Respuesta: ${respuesta}"),
                                                                                                       Align(
                                                                                                         alignment: AlignmentDirectional(-1, 0),
                                                                                                         child: Padding(
@@ -1470,16 +1461,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ? columnListarOpcionesRow.respuesta!.split('|')
                                                                                                   : List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, ""); // Rellenar con cadenas vacías si no hay respuesta
 
+                                                                                              if (columnListarOpcionesRow.respuesta == null) {
+                                                                                                SQLiteManager.instance.crearRpta(
+                                                                                                    rpta: "01|02|03",
+                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                    idficha: FFAppState().IdFicha
+                                                                                                  // Proporciona los otros parámetros según sea necesario...
+                                                                                                );
+                                                                                              }
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
 
                                                                                               // Variable para almacenar la lista de valores
                                                                                               List<String> listaValores = respuesta.toList();
-
+                                                                                              Timer? _debounce;
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${listaValores.join('|')}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1504,18 +1503,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                   ),
                                                                                                                   keyboardType: TextInputType.number,
                                                                                                                   onChanged: (value) {
-                                                                                                                    setState(() {
-                                                                                                                      // Actualizar la variable 'listaValores'
-                                                                                                                      listaValores[index] = value;
-                                                                                                                      String cadenaValores = listaValores.join('|');
-                                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                                          rpta: cadenaValores,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                                                                                                                    _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                      setState(() {
+                                                                                                                        // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                        if (listaValores[index] != value) {
+                                                                                                                          listaValores[index] = value;
+                                                                                                                          String cadenaValores = listaValores.join('|');
+                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                              rpta: cadenaValores,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        }
+                                                                                                                      });
                                                                                                                     });
                                                                                                                   },
                                                                                                                   controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
@@ -1540,9 +1545,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ? DateTime.parse(respuesta) // Analizar la respuesta existente a DateTime
                                                                                                   : DateTime.now(); // Usar la hora actual como predeterminada
 
-                                                                                              String formattedDateTime = selectedDateTime.toIso8601String();
-                                                                                              _dateTimeController.text = formattedDateTime;
-
                                                                                               Future<void> _selectDateTime(BuildContext context) async {
                                                                                                 final DateTime? picked = await showDatePicker(
                                                                                                   context: context,
@@ -1560,23 +1562,34 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                       selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
                                                                                                       _dateTimeController.text = DateFormat('yyyy-MM-ddTHH:mm').format(selectedDateTime);
                                                                                                       //print(_dateTimeController.text);
-                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                          rpta: _dateTimeController.text,
-                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                          idficha: FFAppState().IdFicha
-                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                      );
+                                                                                                      if(respuesta == ""){
+                                                                                                        SQLiteManager.instance.crearRpta(
+                                                                                                            rpta:selectedDateTime.toString(),
+                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                            idficha: FFAppState().IdFicha);
+                                                                                                      } else {
+                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                            rpta:selectedDateTime.toString(),
+                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                        );
+                                                                                                      }
                                                                                                     });
                                                                                                   }
                                                                                                 }
                                                                                               }
+
+                                                                                              String formattedDateTime = selectedDateTime.toIso8601String();
+
+
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${respuesta}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1598,7 +1611,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                     Expanded(
                                                                                                                       child: GestureDetector(
                                                                                                                         child: TextFormField(
-                                                                                                                          controller: _dateTimeController,
+                                                                                                                          controller: TextEditingController(text: respuesta),
                                                                                                                           readOnly: true, // Solo lectura
                                                                                                                           decoration: InputDecoration(
                                                                                                                             labelText: 'Fecha y Hora',
@@ -1635,9 +1648,9 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             case 7:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
-                                                                                                  : "(No hay respuesta)";
-                                                                                              _dateController.text = respuesta;
+                                                                                                  : "";
 
+                                                                                              String? Rptadate = '';
                                                                                               Future<void> _selectDate(BuildContext context) async {
                                                                                                 final DateTime? picked = await showDatePicker(
                                                                                                   context: context,
@@ -1648,15 +1661,25 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 if (picked != null && picked != selectedDate) {
                                                                                                   setState(() {
                                                                                                     selectedDate = picked;
-                                                                                                    _dateController.text = '${picked.day}/${picked.month}/${picked.year}';
-                                                                                                    SQLiteManager.instance.actualizarRpta(
-                                                                                                        rpta: _dateController.text,
-                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                        idficha: FFAppState().IdFicha
-                                                                                                      // Proporciona los otros parámetros según sea necesario...
-                                                                                                    );
+
+                                                                                                    Rptadate = '${picked.day}/${picked.month}/${picked.year}';
+                                                                                                    if(respuesta == ""){
+                                                                                                      SQLiteManager.instance.crearRpta(
+                                                                                                          rpta:Rptadate,
+                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                          idficha: FFAppState().IdFicha);
+                                                                                                    } else {
+                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                          rpta:Rptadate,
+                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                      );
+                                                                                                    }
                                                                                                   });
                                                                                                   // Actualizar el valor del campo de texto
                                                                                                   //_dateController.text = '${picked.day}/${picked.month}/${picked.year}';
@@ -1666,8 +1689,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${respuesta}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1692,10 +1713,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                           _selectDate(context);
                                                                                                                         },
                                                                                                                         child: TextFormField(
-                                                                                                                          controller: _dateController,
+                                                                                                                          controller: TextEditingController(text: Rptadate),
                                                                                                                           readOnly: true,
                                                                                                                           decoration: InputDecoration(
-                                                                                                                            labelText: 'Fecha',
+                                                                                                                            labelText: respuesta,
                                                                                                                             hintText: selectedDate != null
                                                                                                                                 ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
                                                                                                                                 : 'Seleccionar',
@@ -1729,9 +1750,9 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             case 8:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
-                                                                                                  : "Respuesta: (No hay respuesta)";
-                                                                                              _timeController.text = respuesta;
+                                                                                                  : "";
 
+                                                                                              String? RptaHora = '';
                                                                                               Future<void> _selectTime(BuildContext context) async {
                                                                                                 final TimeOfDay? picked = await showTimePicker(
                                                                                                   context: context,
@@ -1741,15 +1762,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   setState(() {
                                                                                                     selectedTime = picked;
                                                                                                     // Actualiza el valor del controlador con la hora seleccionada
-                                                                                                    _timeController.text = selectedTime!.format(context);
-                                                                                                    SQLiteManager.instance.actualizarRpta(
-                                                                                                        rpta: _timeController.text,
-                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                        idficha: FFAppState().IdFicha
-                                                                                                      // Proporciona los otros parámetros según sea necesario...
-                                                                                                    );
+                                                                                                    RptaHora = '${picked.hour}:${picked.minute}';
+                                                                                                    if(respuesta == ""){
+                                                                                                      SQLiteManager.instance.crearRpta(
+                                                                                                          rpta:RptaHora,
+                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                          idficha: FFAppState().IdFicha);
+                                                                                                    } else {
+                                                                                                      SQLiteManager.instance.actualizarRpta(
+                                                                                                          rpta:RptaHora,
+                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                      );
+                                                                                                    }
                                                                                                   });
                                                                                                 }
                                                                                               }
@@ -1757,8 +1787,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta: ${respuesta}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1786,7 +1814,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                           controller: _timeController,
                                                                                                                           readOnly: true,
                                                                                                                           decoration: InputDecoration(
-                                                                                                                            labelText: 'Hora',
+                                                                                                                            labelText: respuesta,
                                                                                                                             hintText: selectedTime != null
                                                                                                                                 ? '${selectedTime!.hour}:${selectedTime!.minute}'
                                                                                                                                 : 'Seleccionar hora',
@@ -1820,13 +1848,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                             case 9:
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
-                                                                                                  : "(No hay respuesta)";
-                                                                                              if(respuesta != null) {
+                                                                                                  : "";
+                                                                                              Timer? _debounce;
+                                                                                              if(respuesta != "") {
                                                                                                 return Column(
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
-                                                                                                    // Mostrar la respuesta en alguna parte
-                                                                                                    Text("Respuesta9: ${respuesta}"),
                                                                                                     Align(
                                                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                                                       child: Padding(
@@ -1839,6 +1866,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                           child: Column(
                                                                                                             mainAxisSize: MainAxisSize.max,
                                                                                                             children: [
+                                                                                                              Text("Respuesta9: ${respuesta}"),
                                                                                                               Padding(
                                                                                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                                                                                                 child: Container(
@@ -1902,14 +1930,18 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                       FilteringTextInputFormatter.digitsOnly // Esto permite solo números
                                                                                                                     ],
                                                                                                                     onChanged: (value) {
-                                                                                                                      SQLiteManager.instance.crearRpta(
-                                                                                                                          rpta: value,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                      if (_debounce?.isActive ?? false) _debounce!.cancel(); // Cancela el temporizador activo si existe
+                                                                                                                      // Crea un nuevo temporizador para ejecutar la llamada después de un cierto tiempo (por ejemplo, 500 milisegundos)
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                        SQLiteManager.instance.crearRpta(
+                                                                                                                            rpta: value,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                      });
                                                                                                                     },
                                                                                                                     decoration: InputDecoration(
                                                                                                                       hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
@@ -1933,7 +1965,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               final respuesta = columnListarOpcionesRow.respuesta ?? "";
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
                                                                                               final List<String> valoresRespuesta = respuesta.split('|');
-
+                                                                                              
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
@@ -2047,7 +2079,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                     children: [
                                                                                                       // Mostrar la respuesta en alguna parte
-                                                                                                      Text("Respuesta: ${respuesta}"),
+                                                                                                      Text("Respuesta12: ${respuesta}"),
                                                                                                       TextField(
                                                                                                         keyboardType: TextInputType.multiline,
                                                                                                         maxLines: null,

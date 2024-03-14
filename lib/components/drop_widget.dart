@@ -207,7 +207,7 @@ class _DropWidgetState extends State<DropWidget> {
                   var valorfechaMod= await SQLiteManager.instance.UltimaFecha(
                     idSincro: idsincro
                   );
-                  if (valorfechaMod != null){
+                  if (valorfechaMod.length >0){
                     fechaMod = valorfechaMod[0].fecha;
                   } else {
                     fechaMod = '';
