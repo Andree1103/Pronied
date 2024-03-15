@@ -54,7 +54,7 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-          'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
+          'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

@@ -1962,15 +1962,28 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
 
                                                                                             case 10:
-                                                                                              final respuesta = columnListarOpcionesRow.respuesta ?? "";
+                                                                                              final respuesta = columnListarOpcionesRow.respuesta != null
+                                                                                                  ? columnListarOpcionesRow.respuesta!.split('|')
+                                                                                                  : List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, ""); // Rellenar con cadenas vacías si no hay respuesta
+
+                                                                                              if (columnListarOpcionesRow.respuesta == null) {
+                                                                                                SQLiteManager.instance.crearRpta(
+                                                                                                    rpta: "01|02|03",
+                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                    idficha: FFAppState().IdFicha
+                                                                                                  // Proporciona los otros parámetros según sea necesario...
+                                                                                                );
+                                                                                              }
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
-                                                                                              final List<String> valoresRespuesta = respuesta.split('|');
-                                                                                              
+
+                                                                                              // Variable para almacenar la lista de valores
+                                                                                              List<String> listaValores = respuesta.toList();
+                                                                                              Timer? _debounce;
                                                                                               return Column(
                                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                 children: [
-                                                                                                  // Mostrar la respuesta en alguna parte
-                                                                                                  Text("Respuesta10: ${respuesta}"),
                                                                                                   Align(
                                                                                                     alignment: AlignmentDirectional(-1, 0),
                                                                                                     child: Padding(
@@ -1983,23 +1996,39 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                         child: Column(
                                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                                           children: List.generate(opciones.length, (index) {
-                                                                                                            final String opcion = opciones[index];
-                                                                                                            final String valorRespuesta = valoresRespuesta.length > index ? valoresRespuesta[index] : "";
                                                                                                             return Padding(
                                                                                                               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                                                                                               child: Container(
                                                                                                                 width: double.infinity,
                                                                                                                 child: TextField(
-                                                                                                                  controller: TextEditingController(text: valorRespuesta), // Usar el controlador para mostrar el valor de la respuesta
                                                                                                                   decoration: InputDecoration(
-                                                                                                                    labelText: opcion,
-                                                                                                                    hintText: opcion,
+                                                                                                                    labelText: opciones[index],
+                                                                                                                    hintText: opciones[index],
                                                                                                                     border: OutlineInputBorder(),
                                                                                                                   ),
                                                                                                                   keyboardType: TextInputType.number,
                                                                                                                   onChanged: (value) {
-                                                                                                                    // Implementa la lógica para manejar el cambio en el valor del campo de texto
+                                                                                                                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                                                                                                                    _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                      setState(() {
+                                                                                                                        // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                        if (listaValores[index] != value) {
+                                                                                                                          listaValores[index] = value;
+                                                                                                                          String cadenaValores = listaValores.join('|');
+                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                              rpta: cadenaValores,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                        }
+                                                                                                                      });
+                                                                                                                    });
                                                                                                                   },
+                                                                                                                  controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
                                                                                                                 ),
                                                                                                               ),
                                                                                                             );
