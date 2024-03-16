@@ -94,6 +94,12 @@ class SQLiteManager {
           _database
       );
 
+  Future<List<FichaPreguntaRespuestas>>
+  listarRespuestasModificas() =>
+      performListarFichaPreguntaRespuestas(
+          _database
+      );
+
   Future<List<SincronizacionUltimo>>
   listarSincronizacionUltimo() =>
       performSincronizacionUltimo(
@@ -613,7 +619,11 @@ class SQLiteManager {
     int? idficha,
     int? idplantillaopcion,
     int? idplanitllaseccion,
-    int? idpregunta
+    int? idpregunta,
+    String? usuarioModificacion,
+    String? fechaModificacion,
+    String? equipoModificacion,
+    String? programaModificacion
   }) =>
       performActualizarRpta(
           _database,
@@ -621,7 +631,11 @@ class SQLiteManager {
         idplantillaseccion: idplanitllaseccion,
         idplantilla: idplantillaopcion,
         idpregunta: idpregunta,
-        rpta: rpta
+        rpta: rpta,
+        programaModificacion: programaModificacion,
+        equipoModificacion: equipoModificacion,
+        fechaModificacion: fechaModificacion,
+        usuarioModificacion: usuarioModificacion
       );
 
   Future crearRpta({
@@ -629,7 +643,11 @@ class SQLiteManager {
     int? idficha,
     int? idplantillaopcion,
     int? idplanitllaseccion,
-    int? idpregunta
+    int? idpregunta,
+    String? usuarioCreacion,
+    String? fechaCreacion,
+    String? equipoCreacion,
+    String? programaCreacion,
   }) =>
       performCrearRpta(
           _database,
@@ -638,6 +656,10 @@ class SQLiteManager {
           idplantilla: idplantillaopcion,
           idpregunta: idpregunta,
           rpta: rpta,
+          usuarioCreacion: usuarioCreacion,
+          programaCreacion: programaCreacion,
+          equipoCreacion: equipoCreacion,
+          fechaCreacion: fechaCreacion
       );
 
 
@@ -1027,6 +1049,14 @@ class SQLiteManager {
       performActualizarFichaModularModificacion0(
           _database,
           idFichaModular: idFichaModular
+      );
+
+  Future ActualizarFichaRespuestaModificacion0({
+    int? idFichaPreguntaRespuesta
+  }) =>
+      performActualizarFichaRespuestaModificacion0(
+          _database,
+          idFichaPreguntaRespuesta: idFichaPreguntaRespuesta
       );
 
 

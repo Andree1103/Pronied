@@ -576,19 +576,26 @@ Future performActualizarRpta(
       int? idficha,
       int? idplantilla,
       int? idplantillaseccion,
-      int? idpregunta
+      int? idpregunta,
+      String? usuarioModificacion,
+      String? fechaModificacion,
+      String? equipoModificacion,
+      String? programaModificacion
     }) {
   final query = '''
 UPDATE FichaPreguntaRespuestas
 SET
-    Respuesta = '${rpta}'
+    Respuesta = '${rpta}',
+    UsuarioModificacionAuditoria = '${usuarioModificacion}',
+    FechaModificacionAuditoria = '${fechaModificacion}',
+    EquipoModificacionAuditoria = '${equipoModificacion}',
+    ProgramaModificacionAuditoria = '${programaModificacion}',
+    modificadoMovil = 1
 WHERE 
     IdFicha = ${idficha} and 
     IdPlantillaOpcion = ${idplantilla} and
     IdPlantillaSeccion = ${idplantillaseccion} and
-    IdPregunta = ${idpregunta};
-
-
+    IdPregunta = ${idpregunta}
 ''';
   return database.rawQuery(query);
 }
@@ -599,7 +606,11 @@ Future performCrearRpta(
       int? idficha,
       int? idplantilla,
       int? idplantillaseccion,
-      int? idpregunta
+      int? idpregunta,
+      String? usuarioCreacion,
+      String? fechaCreacion,
+      String? equipoCreacion,
+      String? programaCreacion,
     }) {
   final query = '''
 INSERT INTO FichaPreguntaRespuestas (
@@ -609,7 +620,12 @@ INSERT INTO FichaPreguntaRespuestas (
   IdPlantillaSeccion,
   IdPregunta,
   NumeroRepeticion,
-  EstadoAuditoria
+  EstadoAuditoria,
+  UsuarioCreacionAuditoria,
+  FechaCreacionAuditoria,
+  EquipoCreacionAuditoria,
+  ProgramaCreacionAuditoria,
+  modificadoMovil
 ) VALUES (
   '${rpta}',
   ${idficha},
@@ -617,7 +633,12 @@ INSERT INTO FichaPreguntaRespuestas (
   ${idplantillaseccion},
   ${idpregunta},
   1,
-  "1"
+  "1",
+  '${usuarioCreacion}',
+  '${fechaCreacion}',
+  '${equipoCreacion}',
+  '${programaCreacion}',
+  1
 )
 ''';
   return database.rawQuery(query);
@@ -722,7 +743,7 @@ IdDatoLocal,
 IdDatoServer,
 IdSincro
 )
-values  ('${TipoDato}','${Estado}','${IdDatoLocal}','${IdDatoServer}','${IdSincro}')
+values  ('${TipoDato}',${Estado},${IdDatoLocal},${IdDatoServer},${IdSincro})
 ''';
   return database.rawQuery(query);
 }
@@ -1073,6 +1094,26 @@ SET
     modificadoMovil = 0
     WHERE 
       IdFichaModular = ${idFichaModular};
+
+''';
+  return database.rawQuery(query);
+}
+
+
+
+///FICHA RESPUESTA MOVIL 0
+///
+
+Future performActualizarFichaRespuestaModificacion0(
+    Database database, {
+      int? idFichaPreguntaRespuesta
+    }) {
+  final query = '''
+UPDATE FichaPreguntaRespuestas
+SET
+    modificadoMovil = 0
+    WHERE 
+      IdFichaPreguntaRespuesta = ${idFichaPreguntaRespuesta};
 
 ''';
   return database.rawQuery(query);

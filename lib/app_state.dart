@@ -123,6 +123,17 @@ class FFAppState extends ChangeNotifier {
   set username(String _value) {
     _username = _value;
   }
+  String _cummovil= '';
+  String get cummovil => _cummovil;
+  set cummovil(String _value) {
+    _cummovil = _value;
+  }
+
+  String _programacreacion= '';
+  String get programacreacion => _programacreacion;
+  set programacreacion(String _value) {
+    _programacreacion = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

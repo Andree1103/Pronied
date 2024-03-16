@@ -996,7 +996,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                             idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                             idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoModificacion: FFAppState().cummovil,
+                                                                                                                            programaModificacion: FFAppState().programacreacion
                                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                                         );
                                                                                                                       });
@@ -1050,7 +1054,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                             idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                             idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                            usuarioCreacion: FFAppState().username
                                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                                         );
                                                                                                                       });
@@ -1128,7 +1136,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                              programaModificacion: FFAppState().programacreacion
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         });
@@ -1178,7 +1190,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoCreacion: FFAppState().cummovil,
+                                                                                                                              programaCreacion: FFAppState().programacreacion,
+                                                                                                                              usuarioCreacion: FFAppState().username
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         });
@@ -1237,7 +1253,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                           idficha: FFAppState().IdFicha,
+                                                                                                                           usuarioModificacion: FFAppState().username,
+                                                                                                                           fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                           equipoModificacion: FFAppState().cummovil,
+                                                                                                                           programaModificacion: FFAppState().programacreacion
                                                                                                                         // Proporciona los otros parámetros según sea necesario...
                                                                                                                       );
                                                                                                                     },
@@ -1289,7 +1309,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                            usuarioCreacion: FFAppState().username
                                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                                         );
                                                                                                                       });
@@ -1365,7 +1389,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                              programaModificacion: FFAppState().programacreacion
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         });
@@ -1428,7 +1456,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoCreacion: FFAppState().cummovil,
+                                                                                                                              programaCreacion: FFAppState().programacreacion,
+                                                                                                                              usuarioCreacion: FFAppState().username
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         });
@@ -1467,7 +1499,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                     idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                     idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                     idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                    idficha: FFAppState().IdFicha
+                                                                                                    idficha: FFAppState().IdFicha,
+                                                                                                    fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                    equipoCreacion: FFAppState().cummovil,
+                                                                                                    programaCreacion: FFAppState().programacreacion,
+                                                                                                    usuarioCreacion: FFAppState().username
                                                                                                   // Proporciona los otros parámetros según sea necesario...
                                                                                                 );
                                                                                               }
@@ -1516,7 +1552,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                              programaModificacion: FFAppState().programacreacion
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         }
@@ -1568,14 +1608,21 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                             idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                             idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                            idficha: FFAppState().IdFicha);
+                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                            usuarioCreacion: FFAppState().username);
                                                                                                       } else {
                                                                                                         SQLiteManager.instance.actualizarRpta(
                                                                                                             rpta:selectedDateTime.toString(),
                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                             idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                             idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                            equipoModificacion: FFAppState().cummovil,
+                                                                                                            programaModificacion: FFAppState().programacreacion
                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                         );
                                                                                                       }
@@ -1669,14 +1716,21 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                          idficha: FFAppState().IdFicha);
+                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                          equipoCreacion: FFAppState().cummovil,
+                                                                                                          programaCreacion: FFAppState().programacreacion,
+                                                                                                          usuarioCreacion: FFAppState().username);
                                                                                                     } else {
                                                                                                       SQLiteManager.instance.actualizarRpta(
                                                                                                           rpta:Rptadate,
                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                          usuarioModificacion: FFAppState().username,
+                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                          programaModificacion: FFAppState().programacreacion
                                                                                                         // Proporciona los otros parámetros según sea necesario...
                                                                                                       );
                                                                                                     }
@@ -1769,14 +1823,21 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                          idficha: FFAppState().IdFicha);
+                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                          equipoCreacion: FFAppState().cummovil,
+                                                                                                          programaCreacion: FFAppState().programacreacion,
+                                                                                                          usuarioCreacion: FFAppState().username);
                                                                                                     } else {
                                                                                                       SQLiteManager.instance.actualizarRpta(
                                                                                                           rpta:RptaHora,
                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                          usuarioModificacion: FFAppState().username,
+                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                          programaModificacion: FFAppState().programacreacion
                                                                                                         // Proporciona los otros parámetros según sea necesario...
                                                                                                       );
                                                                                                     }
@@ -1866,7 +1927,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                           child: Column(
                                                                                                             mainAxisSize: MainAxisSize.max,
                                                                                                             children: [
-                                                                                                              Text("Respuesta9: ${respuesta}"),
                                                                                                               Padding(
                                                                                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                                                                                                 child: Container(
@@ -1883,7 +1943,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                           idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                           idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                           idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha
+                                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                                          usuarioModificacion: FFAppState().username,
+                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                                          programaModificacion: FFAppState().programacreacion
                                                                                                                         // Proporciona los otros parámetros según sea necesario...
                                                                                                                       );
                                                                                                                     },
@@ -1905,8 +1969,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 return Column(
                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                   children: [
-                                                                                                    // Mostrar la respuesta en alguna parte
-                                                                                                    Text("Respuesta9: ${respuesta}"),
                                                                                                     Align(
                                                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                                                       child: Padding(
@@ -1938,7 +2000,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                             idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                             idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                            idficha: FFAppState().IdFicha
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                            usuarioCreacion: FFAppState().username
                                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                                         );
                                                                                                                       });
@@ -1966,15 +2032,23 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                   ? columnListarOpcionesRow.respuesta!.split('|')
                                                                                                   : List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, ""); // Rellenar con cadenas vacías si no hay respuesta
 
-                                                                                              if (columnListarOpcionesRow.respuesta == null) {
-                                                                                                SQLiteManager.instance.crearRpta(
-                                                                                                    rpta: "01|02|03",
-                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                    idficha: FFAppState().IdFicha
-                                                                                                  // Proporciona los otros parámetros según sea necesario...
-                                                                                                );
+                                                                                              bool ejecutado = false;
+                                                                                              if (!ejecutado && columnListarOpcionesRow.respuesta == null) {
+                                                                                                ejecutado = true;
+                                                                                                Future.delayed(Duration(seconds: 2), () {
+                                                                                                  SQLiteManager.instance.crearRpta(
+                                                                                                      rpta: "01|02|03",
+                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                      idficha: FFAppState().IdFicha,
+                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                      equipoCreacion: FFAppState().cummovil,
+                                                                                                      programaCreacion: FFAppState().programacreacion,
+                                                                                                      usuarioCreacion: FFAppState().username
+                                                                                                    // Proporciona los otros parámetros según sea necesario...
+                                                                                                  );
+                                                                                                });
                                                                                               }
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
 
@@ -2021,7 +2095,11 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                                               idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                               idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                               idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                              programaModificacion: FFAppState().programacreacion
                                                                                                                             // Proporciona los otros parámetros según sea necesario...
                                                                                                                           );
                                                                                                                         }
@@ -2043,10 +2121,44 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
                                                                                             case 11:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
-                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
-                                                                                                    ? "Respuesta11: ${columnListarOpcionesRow.respuesta}"
+                                                                                                var desc=columnListarOpcionesRow.descripcion;
+                                                                                                var opi = columnListarOpcionesRow.respuesta; // Variable local para mantener las selecciones actualizadas
+                                                                                                final respuesta = opi != null
+                                                                                                    ? "Respuesta11: $opi"
                                                                                                     : "Respuesta11: (No hay respuesta)";
                                                                                                 final opcionesPorEtiqueta = (columnListarOpcionesRow.descripcion as String).split('|');
+                                                                                                if(opi == null){
+                                                                                                  final _convertirDescripcionAPintado = (String descripcion) {
+                                                                                                    final opcionesPorEtiqueta = descripcion.split('|');
+                                                                                                    final buffer = StringBuffer();
+
+                                                                                                    for (var opcionesEtiqueta in opcionesPorEtiqueta) {
+                                                                                                      final opciones = opcionesEtiqueta.split('#')[1].split(';');
+
+                                                                                                      for (var i = 0; i < opciones.length; i++) {
+                                                                                                        buffer.write('N');
+                                                                                                        if (i < opciones.length - 1) {
+                                                                                                          buffer.write('|');
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+
+                                                                                                    return buffer.toString();
+                                                                                                  };
+
+                                                                                                  SQLiteManager.instance.crearRpta(
+                                                                                                      rpta: _convertirDescripcionAPintado(desc!),
+                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                      idficha: FFAppState().IdFicha,
+                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                      equipoCreacion: FFAppState().cummovil,
+                                                                                                      programaCreacion: FFAppState().programacreacion,
+                                                                                                      usuarioCreacion: FFAppState().username
+                                                                                                    // Proporciona los otros parámetros según sea necesario...
+                                                                                                  );
+                                                                                                }
                                                                                                 return Padding(
                                                                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                                                                                   child: SingleChildScrollView(
@@ -2057,20 +2169,61 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                         final etiqueta = partes[0];
                                                                                                         final opciones = partes[1].split(';');
 
+                                                                                                        String? opcionSeleccionada;
+
+                                                                                                        if (respuesta.isNotEmpty && respuesta.split('|').length > opcionesPorEtiqueta.indexOf(opcionesEtiqueta)) {
+                                                                                                          final respuestaEtiqueta = respuesta.split('|')[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)];
+                                                                                                          final valores = respuestaEtiqueta.split(';');
+
+                                                                                                          // Buscar el primer índice con valor 'S'
+                                                                                                          for (int i = 0; i < valores.length; i++) {
+                                                                                                            if (valores[i] == 'S') {
+                                                                                                              opcionSeleccionada = opciones[i];
+                                                                                                              break;
+                                                                                                            }
+                                                                                                          }
+
+                                                                                                          // Si no se encontró ninguna opción con valor 'S', seleccionar la primera opción
+                                                                                                          if (opcionSeleccionada == null) {
+                                                                                                            opcionSeleccionada = opciones[0];
+                                                                                                          }
+                                                                                                        }
+
                                                                                                         return Padding(
                                                                                                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                                                                                                           child: Column(
                                                                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                             children: [
-                                                                                                              // Mostrar la respuesta en alguna parte
-                                                                                                              Text("Respuesta: ${respuesta}"),
                                                                                                               Text(etiqueta), // Mostrar la etiqueta
                                                                                                               DropdownButton<String>(
-                                                                                                                value: selectedValuesss[etiqueta], // Obtener el valor seleccionado
+                                                                                                                value: opcionSeleccionada,
                                                                                                                 onChanged: (value) {
-                                                                                                                  // Actualizar el valor seleccionado en el estado
+                                                                                                                  // Actualizar el valor seleccionado en la variable local
                                                                                                                   setState(() {
-                                                                                                                    selectedValuesss[etiqueta] = value;
+                                                                                                                    final index = opciones.indexOf(value!);
+                                                                                                                    final nuevaRespuesta = respuesta.split('|');
+                                                                                                                    final respuestaEtiqueta = nuevaRespuesta[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)].split(';');
+                                                                                                                    // Establecer todas las opciones de esta etiqueta a 'N'
+                                                                                                                    for (int i = 0; i < respuestaEtiqueta.length; i++) {
+                                                                                                                      respuestaEtiqueta[i] = i == index ? 'S' : 'N';
+                                                                                                                    }
+                                                                                                                    // Unir la respuesta etiqueta actualizada con ';'
+                                                                                                                    nuevaRespuesta[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)] = respuestaEtiqueta.join(';');
+                                                                                                                    opi = nuevaRespuesta.join('|');
+                                                                                                                    SQLiteManager.instance.actualizarRpta(
+                                                                                                                        rpta: opi,
+                                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                        idficha: FFAppState().IdFicha,
+                                                                                                                        usuarioModificacion: FFAppState().username,
+                                                                                                                        fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                        equipoModificacion: FFAppState().cummovil,
+                                                                                                                        programaModificacion: FFAppState().programacreacion
+                                                                                                                      // Proporciona los otros parámetros según sea necesario...
+                                                                                                                    );
+                                                                                                                    opcionSeleccionada = value;
+                                                                                                                    print(opi);
                                                                                                                   });
                                                                                                                 },
                                                                                                                 items: opciones.map<DropdownMenuItem<String>>((String value) {
@@ -2092,6 +2245,9 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
                                                                                                 return SizedBox.shrink();
                                                                                               }
+
+
+
 
                                                                                             case 12:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
@@ -2231,7 +2387,11 @@ void actualizarFichaMod({
       idpregunta: idpregunta,
       idplantillaopcion: idplantilla,
       idplanitllaseccion: idplantillaseccion,
-      idficha: idficha
+      idficha: FFAppState().IdFicha,
+      usuarioModificacion: FFAppState().username,
+      fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+      equipoModificacion: FFAppState().cummovil,
+      programaModificacion: FFAppState().programacreacion
     // Proporciona los otros parámetros según sea necesario...
   );
 }

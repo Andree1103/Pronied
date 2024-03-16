@@ -522,13 +522,12 @@ FROM PlantillaOpcion po
 LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
     AND po.IdPregunta = fpr.IdPregunta
     AND po.IdPlantillaSeccion = fpr.IdPlantillaSeccion
-LEFT JOIN Fichas f ON fpr.IdFicha = f.idFicha 
     AND fpr.IdFicha = '${idFicha}'
 WHERE 
     po.IdPlantillaSeccion = '${idPlantillaSeccion}'
     AND po.IdPlantilla = '${idPlantilla}'
     AND po.IdPregunta = '${idPregunta}'
-		
+    
 ''';
   return _readQuery(database, query, (d) => ListarOpcionesRow(d));
 }
@@ -608,6 +607,54 @@ class ListarFichasModificacion extends SqliteRow {
 
 /// END LISTARPREGUNTAS
 ///
+
+Future<List<FichaPreguntaRespuestas>> performListarFichaPreguntaRespuestas(Database database) {
+  final query = '''
+    SELECT *
+    FROM FichaPreguntaRespuestas 
+    WHERE modificadoMovil = 1;
+  ''';
+  return _readQuery(database, query, (data) => FichaPreguntaRespuestas(data));
+}
+
+class FichaPreguntaRespuestas {
+  final Map<String, dynamic> data;
+
+  FichaPreguntaRespuestas(this.data);
+
+  int? get idFichaPreguntaRespuestaLocal => data['IdFichaPreguntaRespuestaLocal'] as int?;
+  int? get idFichaPreguntaRespuesta => data['IdFichaPreguntaRespuesta'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPlantillaOpcion => data['IdPlantillaOpcion'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  int? get numeroRepeticion => data['NumeroRepeticion'] as int?;
+  String? get respuesta => data['Respuesta'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+}
+
+
+///
+///LISTAR RESPUESTAS MODIFICADAS
+///
+
+
+
+
+///
+/// END RESPUESTAS MODIFICADAS
+///
+
+
 
 
 /// BEGIN LISTARFICHASMODULARESPORIDFICHA

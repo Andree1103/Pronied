@@ -175,13 +175,12 @@ class _DropWidgetState extends State<DropWidget> {
                   List<Map<String, dynamic>> fichasModularesObj = [];
                   List<Map<String, dynamic>> fichasObj = [];
                   List<Map<String, dynamic>> sincroColaObj = [];
+                  List<Map<String, dynamic>> respuestasColaObj = [];
                   Map<String, dynamic> sincronz = {};
 
                   Position position = await Geolocator.getCurrentPosition(
                       desiredAccuracy: LocationAccuracy.high);
-                  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-                  AndroidDeviceInfo androidInfo;
-                  androidInfo = await deviceInfo.androidInfo;
+
 
                   await SQLiteManager.instance.cargarSincronizacion(
                     Fecha: DateTime.now().toString(),
@@ -189,9 +188,9 @@ class _DropWidgetState extends State<DropWidget> {
                     IP: InternetAddressType.IPv4.toString(),
                     Latitud: position.latitude.toString(),
                     Longitud: position.longitude.toString(),
-                    //Usuario: FFAppState().username,
-                    Usuario: "45006478",
-                    Cum: androidInfo.androidId
+                    Usuario: FFAppState().username,
+                    //Usuario: "45006478",
+                    Cum: FFAppState().cummovil
                   );
 
                   int? idsincro = 0;
@@ -290,7 +289,7 @@ class _DropWidgetState extends State<DropWidget> {
                   if (fichamodularmodificacion != null) {
                     for (var fichamodu in fichamodularmodificacion) {
                       SQLiteManager.instance.cargarColaSincronizacion(
-                        TipoDato: "ficha modular",
+                        TipoDato: "fichamodular",
                         Estado: 1,
                         IdDatoLocal: fichamodu.idFichaModularlocal,
                         IdDatoServer: fichamodu.idFichaModular,
@@ -328,6 +327,41 @@ class _DropWidgetState extends State<DropWidget> {
                     }
                   }
 
+                  var fichapreguntarespuesta = await SQLiteManager.instance.listarRespuestasModificas();
+                  if (fichapreguntarespuesta != null){
+                    for (var fichapregun in fichapreguntarespuesta) {
+                      SQLiteManager.instance.cargarColaSincronizacion(
+                        TipoDato: "fichapreguntarespuesta",
+                        Estado: 1,
+                        IdDatoLocal: fichapregun.idFichaPreguntaRespuestaLocal,
+                        IdDatoServer: fichapregun.idFichaPreguntaRespuesta,
+                        IdSincro: idsincro,
+                      );
+                      Map<String, dynamic> ficharespuestajson = {
+                        "idFichaPreguntaRespuestaMovil": fichapregun.idFichaPreguntaRespuestaLocal,
+                        "idFichaPreguntaRespuesta": fichapregun.idFichaPreguntaRespuesta,
+                        "idFicha": fichapregun.idFicha,
+                        "idPlantillaOpcion": fichapregun.idPlantillaOpcion,
+                        "idPregunta": fichapregun.idPregunta,
+                        "idPlantillaSeccion": fichapregun.idPlantillaSeccion,
+                        "numeroRepeticion": fichapregun.numeroRepeticion,
+                        "respuesta": fichapregun.respuesta,
+                        "descripcionOpcion": null,
+                        "descripcionPregunta": null,
+                        "estadoAuditoria": fichapregun.estadoAuditoria,
+                        "usuarioCreacionAuditoria": fichapregun.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": fichapregun.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": fichapregun.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": fichapregun.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": fichapregun.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": fichapregun.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": fichapregun.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": fichapregun.programaModificacionAuditoria
+                      };
+                      respuestasColaObj.add(ficharespuestajson);
+                    }
+                  }
+
                   var colasincro = await SQLiteManager.instance.ListarColaSincronizacion();
                   if( colasincro != null){
                     for ( var sinc in colasincro){
@@ -350,13 +384,14 @@ class _DropWidgetState extends State<DropWidget> {
                     "sincro": sincronz,
                     "sincroCola": sincroColaObj,
                     "fichas": fichasObj,
-                    "fichasModulares": fichasModularesObj
+                    "fichasModulares": fichasModularesObj,
+                    "fichasPreguntasRespuestas" : respuestasColaObj
                   };
                   print(json);
                   var jsonString = jsonEncode(json);
                   var jsonn = jsonDecode(jsonString);
 
-  // Ahora `jsonString` contendrá tu objeto JSON como una cadena de texto
+                  // Ahora `jsonString` contendrá tu objeto JSON como una cadena de texto
                   print(jsonString);
                   ///CAMBIANDO ESTADO 2
                   for ( var c in colasincro) {
@@ -747,9 +782,13 @@ class _DropWidgetState extends State<DropWidget> {
                         await SQLiteManager.instance.ActualizarFichaModificacion0(
                             idFicha: r.idDatoServer
                         );
-                      } else {
+                      } if (r.tipoDato == "fichamodular") {
                         await SQLiteManager.instance.ActualizarFichaModularModificacion0(
                             idFichaModular: r.idDatoServer
+                        );
+                      } else {
+                        await SQLiteManager.instance.ActualizarFichaRespuestaModificacion0(
+                            idFichaPreguntaRespuesta: r.idDatoServer
                         );
                       }
                     }

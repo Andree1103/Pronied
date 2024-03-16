@@ -1,3 +1,5 @@
+import 'package:device_info/device_info.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -237,9 +239,14 @@ class _LoginWidgetState extends State<LoginWidget>
                                             focusNode:
                                                 _model.emailAddressFocusNode,
                                             onChanged: (value) {
-                                              setState(() {
+                                              setState(() async {
+                                                DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+                                                AndroidDeviceInfo androidInfo;
+                                                androidInfo = await deviceInfo.androidInfo;
+                                                FFAppState().cummovil = androidInfo.androidId;
                                                 // Actualiza el estado de tu aplicación aquí utilizando el valor del controlador
                                                 FFAppState().username = _emailController.text;
+                                                FFAppState().programacreacion= 'Inspeccion Movil';
                                               });
                                             },
                                             autofocus: true,
