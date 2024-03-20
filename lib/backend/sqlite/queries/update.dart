@@ -1054,7 +1054,11 @@ SET
     ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
     ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
-    IdFichaPreguntaRespuesta = ${idFichaPreguntaRespuesta};
+    IdFicha = ${idFicha} and
+    IdPlantillaOpcion = ${idPlantillaOpcion} and
+    IdPregunta = ${idPregunta} and
+    IdPlantillaSeccion = ${idPlantillaSeccion} and
+    NumeroRepeticion = '${numeroRepeticion}';
 
 
 ''';

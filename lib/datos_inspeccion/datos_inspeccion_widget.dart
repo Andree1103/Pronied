@@ -1489,91 +1489,148 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
                                                                                               }
 
                                                                                             case 5:
+                                                                                              var rptanull = List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, "");
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? columnListarOpcionesRow.respuesta!.split('|')
-                                                                                                  : List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, ""); // Rellenar con cadenas vacías si no hay respuesta
+                                                                                                  : rptanull; // Rellenar con cadenas vacías si no hay respuesta
+                                                                                              print(rptanull);
 
                                                                                               if (columnListarOpcionesRow.respuesta == null) {
-                                                                                                SQLiteManager.instance.crearRpta(
-                                                                                                    rpta: "01|02|03",
-                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                    idficha: FFAppState().IdFicha,
-                                                                                                    fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                    equipoCreacion: FFAppState().cummovil,
-                                                                                                    programaCreacion: FFAppState().programacreacion,
-                                                                                                    usuarioCreacion: FFAppState().username
-                                                                                                  // Proporciona los otros parámetros según sea necesario...
-                                                                                                );
+
                                                                                               }
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
 
                                                                                               // Variable para almacenar la lista de valores
                                                                                               List<String> listaValores = respuesta.toList();
                                                                                               Timer? _debounce;
-                                                                                              return Column(
-                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  Align(
-                                                                                                    alignment: AlignmentDirectional(-1, 0),
-                                                                                                    child: Padding(
-                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                      child: Container(
-                                                                                                        width: double.infinity,
-                                                                                                        decoration: BoxDecoration(
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                        ),
-                                                                                                        child: Column(
-                                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                                          children: List.generate(opciones.length, (index) {
-                                                                                                            return Padding(
-                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                              child: Container(
-                                                                                                                width: double.infinity,
-                                                                                                                child: TextField(
-                                                                                                                  decoration: InputDecoration(
-                                                                                                                    labelText: opciones[index],
-                                                                                                                    hintText: opciones[index],
-                                                                                                                    border: OutlineInputBorder(),
-                                                                                                                  ),
-                                                                                                                  keyboardType: TextInputType.number,
-                                                                                                                  onChanged: (value) {
-                                                                                                                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+                                                                                              if(respuesta == rptanull){
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: List.generate(opciones.length, (index) {
+                                                                                                              return Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: opciones[index],
+                                                                                                                      hintText: opciones[index],
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    keyboardType: TextInputType.text,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
 
-                                                                                                                    _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                      setState(() {
-                                                                                                                        // Actualizar la variable 'listaValores' solo si el valor ha cambiado
-                                                                                                                        if (listaValores[index] != value) {
-                                                                                                                          listaValores[index] = value;
-                                                                                                                          String cadenaValores = listaValores.join('|');
-                                                                                                                          SQLiteManager.instance.actualizarRpta(
-                                                                                                                              rpta: cadenaValores,
-                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                              usuarioModificacion: FFAppState().username,
-                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                              equipoModificacion: FFAppState().cummovil,
-                                                                                                                              programaModificacion: FFAppState().programacreacion
-                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                          );
-                                                                                                                        }
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                          if (listaValores[index] != value) {
+                                                                                                                            listaValores[index] = value;
+                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                            SQLiteManager.instance.crearRpta(
+                                                                                                                                rpta: cadenaValores,
+                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoCreacion: FFAppState().cummovil,
+                                                                                                                                programaCreacion: FFAppState().programacreacion,
+                                                                                                                                usuarioCreacion: FFAppState().username
+                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                            );
+                                                                                                                          }
+                                                                                                                        });
                                                                                                                       });
-                                                                                                                    });
-                                                                                                                  },
-                                                                                                                  controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                    },
+                                                                                                                    controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                  ),
                                                                                                                 ),
-                                                                                                              ),
-                                                                                                            );
-                                                                                                          }),
+                                                                                                              );
+                                                                                                            }),
+                                                                                                          ),
                                                                                                         ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                ],
-                                                                                              );
+                                                                                                  ],
+                                                                                                );
+                                                                                              } else {
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: List.generate(opciones.length, (index) {
+                                                                                                              return Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: opciones[index],
+                                                                                                                      hintText: opciones[index],
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    keyboardType: TextInputType.text,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                          if (listaValores[index] != value) {
+                                                                                                                            listaValores[index] = value;
+                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                            SQLiteManager.instance.actualizarRpta(
+                                                                                                                                rpta: cadenaValores,
+                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacion: FFAppState().username,
+                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacion: FFAppState().cummovil,
+                                                                                                                                programaModificacion: FFAppState().programacreacion
+                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                            );
+                                                                                                                          }
+                                                                                                                        });
+                                                                                                                      });
+                                                                                                                    },
+                                                                                                                    controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              );
+                                                                                                            }),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                );
+                                                                                              }
+
 
 
 
@@ -2028,223 +2085,396 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget> {
 
 
                                                                                             case 10:
+                                                                                              var rptanull = List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, "");
                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                   ? columnListarOpcionesRow.respuesta!.split('|')
-                                                                                                  : List.filled((columnListarOpcionesRow.descripcion as String).split('|').length, ""); // Rellenar con cadenas vacías si no hay respuesta
-
-                                                                                              bool ejecutado = false;
-                                                                                              if (!ejecutado && columnListarOpcionesRow.respuesta == null) {
-                                                                                                ejecutado = true;
-                                                                                                Future.delayed(Duration(seconds: 2), () {
-                                                                                                  SQLiteManager.instance.crearRpta(
-                                                                                                      rpta: "01|02|03",
-                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                      idficha: FFAppState().IdFicha,
-                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                      equipoCreacion: FFAppState().cummovil,
-                                                                                                      programaCreacion: FFAppState().programacreacion,
-                                                                                                      usuarioCreacion: FFAppState().username
-                                                                                                    // Proporciona los otros parámetros según sea necesario...
-                                                                                                  );
-                                                                                                });
-                                                                                              }
+                                                                                                  : rptanull;// Rellenar con cadenas vacías si no hay respuesta
                                                                                               final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
 
                                                                                               // Variable para almacenar la lista de valores
                                                                                               List<String> listaValores = respuesta.toList();
                                                                                               Timer? _debounce;
-                                                                                              return Column(
-                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                children: [
-                                                                                                  Align(
-                                                                                                    alignment: AlignmentDirectional(-1, 0),
-                                                                                                    child: Padding(
-                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                                                                                      child: Container(
-                                                                                                        width: double.infinity,
-                                                                                                        decoration: BoxDecoration(
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                                        ),
-                                                                                                        child: Column(
-                                                                                                          mainAxisSize: MainAxisSize.max,
-                                                                                                          children: List.generate(opciones.length, (index) {
-                                                                                                            return Padding(
-                                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                                                                                              child: Container(
-                                                                                                                width: double.infinity,
-                                                                                                                child: TextField(
-                                                                                                                  decoration: InputDecoration(
-                                                                                                                    labelText: opciones[index],
-                                                                                                                    hintText: opciones[index],
-                                                                                                                    border: OutlineInputBorder(),
-                                                                                                                  ),
-                                                                                                                  keyboardType: TextInputType.number,
-                                                                                                                  onChanged: (value) {
-                                                                                                                    if (_debounce?.isActive ?? false) _debounce?.cancel();
+                                                                                              if(respuesta == rptanull){
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    Text("Pregunta10null"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: List.generate(opciones.length, (index) {
+                                                                                                              return Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: opciones[index],
+                                                                                                                      hintText: opciones[index],
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    keyboardType: TextInputType.number,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
 
-                                                                                                                    _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                      setState(() {
-                                                                                                                        // Actualizar la variable 'listaValores' solo si el valor ha cambiado
-                                                                                                                        if (listaValores[index] != value) {
-                                                                                                                          listaValores[index] = value;
-                                                                                                                          String cadenaValores = listaValores.join('|');
-                                                                                                                          SQLiteManager.instance.actualizarRpta(
-                                                                                                                              rpta: cadenaValores,
-                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                              usuarioModificacion: FFAppState().username,
-                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                              equipoModificacion: FFAppState().cummovil,
-                                                                                                                              programaModificacion: FFAppState().programacreacion
-                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                          );
-                                                                                                                        }
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                          if (listaValores[index] != value) {
+                                                                                                                            listaValores[index] = value;
+                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                            SQLiteManager.instance.crearRpta(
+                                                                                                                                rpta: cadenaValores,
+                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoCreacion: FFAppState().cummovil,
+                                                                                                                                programaCreacion: FFAppState().programacreacion,
+                                                                                                                                usuarioCreacion: FFAppState().username
+                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                            );
+                                                                                                                          }
+                                                                                                                        });
                                                                                                                       });
-                                                                                                                    });
-                                                                                                                  },
-                                                                                                                  controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                    },
+                                                                                                                    controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                  ),
                                                                                                                 ),
-                                                                                                              ),
-                                                                                                            );
-                                                                                                          }),
+                                                                                                              );
+                                                                                                            }),
+                                                                                                          ),
                                                                                                         ),
                                                                                                       ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                ],
-                                                                                              );
+                                                                                                  ],
+                                                                                                );
+                                                                                              } else {
+                                                                                                return Column(
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                  children: [
+                                                                                                    Text("Pregunta10"),
+                                                                                                    Align(
+                                                                                                      alignment: AlignmentDirectional(-1, 0),
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                                                                                        child: Container(
+                                                                                                          width: double.infinity,
+                                                                                                          decoration: BoxDecoration(
+                                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                          ),
+                                                                                                          child: Column(
+                                                                                                            mainAxisSize: MainAxisSize.max,
+                                                                                                            children: List.generate(opciones.length, (index) {
+                                                                                                              return Padding(
+                                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                                                                                                                child: Container(
+                                                                                                                  width: double.infinity,
+                                                                                                                  child: TextField(
+                                                                                                                    decoration: InputDecoration(
+                                                                                                                      labelText: opciones[index],
+                                                                                                                      hintText: opciones[index],
+                                                                                                                      border: OutlineInputBorder(),
+                                                                                                                    ),
+                                                                                                                    keyboardType: TextInputType.number,
+                                                                                                                    onChanged: (value) {
+                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
+                                                                                                                        setState(() {
+                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
+                                                                                                                          if (listaValores[index] != value) {
+                                                                                                                            listaValores[index] = value;
+                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                            SQLiteManager.instance.actualizarRpta(
+                                                                                                                                rpta: cadenaValores,
+                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacion: FFAppState().username,
+                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacion: FFAppState().cummovil,
+                                                                                                                                programaModificacion: FFAppState().programacreacion
+                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                            );
+                                                                                                                          }
+                                                                                                                        });
+                                                                                                                      });
+                                                                                                                    },
+                                                                                                                    controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
+                                                                                                                  ),
+                                                                                                                ),
+                                                                                                              );
+                                                                                                            }),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                );
+                                                                                              }
 
 
                                                                                             case 11:
                                                                                               if (columnListarOpcionesRow.descripcion is String) {
-                                                                                                var desc=columnListarOpcionesRow.descripcion;
-                                                                                                var opi = columnListarOpcionesRow.respuesta; // Variable local para mantener las selecciones actualizadas
-                                                                                                final respuesta = opi != null
-                                                                                                    ? "Respuesta11: $opi"
-                                                                                                    : "Respuesta11: (No hay respuesta)";
+                                                                                                Map<String, String> seleccionesPorEtiqueta = {};
+                                                                                                var respuesta = columnListarOpcionesRow.respuesta ?? '';
+                                                                                                var opi = columnListarOpcionesRow.respuesta ?? ''; // Respuesta inicial vacía
                                                                                                 final opcionesPorEtiqueta = (columnListarOpcionesRow.descripcion as String).split('|');
-                                                                                                if(opi == null){
-                                                                                                  final _convertirDescripcionAPintado = (String descripcion) {
-                                                                                                    final opcionesPorEtiqueta = descripcion.split('|');
-                                                                                                    final buffer = StringBuffer();
+                                                                                                if (respuesta == ''){
+                                                                                                  return Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                                                                    child: SingleChildScrollView(
+                                                                                                      scrollDirection: Axis.horizontal,
+                                                                                                      child: Row(
+                                                                                                        children: opcionesPorEtiqueta.map<Widget>((opcionesEtiqueta) {
+                                                                                                          final partes = opcionesEtiqueta.split('#');
+                                                                                                          final etiqueta = partes[0];
+                                                                                                          final opciones = partes[1].split(';');
 
-                                                                                                    for (var opcionesEtiqueta in opcionesPorEtiqueta) {
-                                                                                                      final opciones = opcionesEtiqueta.split('#')[1].split(';');
+                                                                                                          String? opcionSeleccionada;
 
-                                                                                                      for (var i = 0; i < opciones.length; i++) {
-                                                                                                        buffer.write('N');
-                                                                                                        if (i < opciones.length - 1) {
-                                                                                                          buffer.write('|');
-                                                                                                        }
-                                                                                                      }
-                                                                                                    }
+                                                                                                          if ((respuesta != '') && respuesta.split('|').length > opcionesPorEtiqueta.indexOf(opcionesEtiqueta)) {
+                                                                                                            final respuestaEtiqueta = respuesta.split('|')[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)];
+                                                                                                            final valores = respuestaEtiqueta.split(';');
 
-                                                                                                    return buffer.toString();
-                                                                                                  };
+                                                                                                            // Buscar el primer índice con valor 'S'
+                                                                                                            for (int i = 0; i < valores.length; i++) {
+                                                                                                              if (valores[i] == 'S') {
+                                                                                                                opcionSeleccionada = opciones[i];
+                                                                                                                break;
+                                                                                                              }
+                                                                                                            }
 
-                                                                                                  SQLiteManager.instance.crearRpta(
-                                                                                                      rpta: _convertirDescripcionAPintado(desc!),
-                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                      idficha: FFAppState().IdFicha,
-                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                      equipoCreacion: FFAppState().cummovil,
-                                                                                                      programaCreacion: FFAppState().programacreacion,
-                                                                                                      usuarioCreacion: FFAppState().username
-                                                                                                    // Proporciona los otros parámetros según sea necesario...
-                                                                                                  );
-                                                                                                }
-                                                                                                return Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                                                                                                  child: SingleChildScrollView(
-                                                                                                    scrollDirection: Axis.horizontal,
-                                                                                                    child: Row(
-                                                                                                      children: opcionesPorEtiqueta.map<Widget>((opcionesEtiqueta) {
-                                                                                                        final partes = opcionesEtiqueta.split('#');
-                                                                                                        final etiqueta = partes[0];
-                                                                                                        final opciones = partes[1].split(';');
-
-                                                                                                        String? opcionSeleccionada;
-
-                                                                                                        if (respuesta.isNotEmpty && respuesta.split('|').length > opcionesPorEtiqueta.indexOf(opcionesEtiqueta)) {
-                                                                                                          final respuestaEtiqueta = respuesta.split('|')[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)];
-                                                                                                          final valores = respuestaEtiqueta.split(';');
-
-                                                                                                          // Buscar el primer índice con valor 'S'
-                                                                                                          for (int i = 0; i < valores.length; i++) {
-                                                                                                            if (valores[i] == 'S') {
-                                                                                                              opcionSeleccionada = opciones[i];
-                                                                                                              break;
+                                                                                                            // Si no se encontró ninguna opción con valor 'S', seleccionar la primera opción
+                                                                                                            if (opcionSeleccionada == null) {
+                                                                                                              opcionSeleccionada = opciones[0];
                                                                                                             }
                                                                                                           }
 
-                                                                                                          // Si no se encontró ninguna opción con valor 'S', seleccionar la primera opción
-                                                                                                          if (opcionSeleccionada == null) {
-                                                                                                            opcionSeleccionada = opciones[0];
-                                                                                                          }
-                                                                                                        }
+                                                                                                          return Padding(
+                                                                                                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                                                                                            child: Column(
+                                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                              children: [
+                                                                                                                Text(etiqueta), // Mostrar la etiqueta
+                                                                                                                DropdownButton<String>(
+                                                                                                                  value: opcionSeleccionada,
+                                                                                                                  onChanged: (value)  {
+                                                                                                                    // Actualizar el valor seleccionado en la variable local
+                                                                                                                    setState(() async {
+                                                                                                                      final index = opciones.indexOf(value!);
+                                                                                                                      final etiqueta = partes[0]; // Suponiendo que partes[0] es la etiqueta
+                                                                                                                      seleccionesPorEtiqueta[etiqueta] = List.generate(opciones.length, (i) => (i == index) ? 'S' : 'N').join(';');
+                                                                                                                      List<String> etiquetas = [];
+                                                                                                                      for (var opcion in opcionesPorEtiqueta) {
+                                                                                                                        final partes = opcion.split('#');
+                                                                                                                        final etiqueta = partes[0];
+                                                                                                                        etiquetas.add(etiqueta);
+                                                                                                                      }
+                                                                                                                      String opi = '';
+                                                                                                                      for (int i = 0; i < etiquetas.length; i++) {
+                                                                                                                        final seleccionEtiqueta = seleccionesPorEtiqueta[etiquetas[i]] ?? '';
+                                                                                                                        opi += seleccionEtiqueta;
+                                                                                                                        if (i < etiquetas.length - 1) {
+                                                                                                                          opi += '|'; // Añadir pipe '|' después de cada etiqueta excepto la última
+                                                                                                                        }
+                                                                                                                      }
+                                                                                                                      await SQLiteManager.instance.crearRpta(
+                                                                                                                          rpta: opi,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                          equipoCreacion: FFAppState().cummovil,
+                                                                                                                          programaCreacion: FFAppState().programacreacion,
+                                                                                                                          usuarioCreacion: FFAppState().username
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+                                                                                                                    });
 
-                                                                                                        return Padding(
-                                                                                                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                                                                                          child: Column(
-                                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                            children: [
-                                                                                                              Text(etiqueta), // Mostrar la etiqueta
-                                                                                                              DropdownButton<String>(
-                                                                                                                value: opcionSeleccionada,
-                                                                                                                onChanged: (value) {
-                                                                                                                  // Actualizar el valor seleccionado en la variable local
-                                                                                                                  setState(() {
-                                                                                                                    final index = opciones.indexOf(value!);
-                                                                                                                    final nuevaRespuesta = respuesta.split('|');
-                                                                                                                    final respuestaEtiqueta = nuevaRespuesta[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)].split(';');
-                                                                                                                    // Establecer todas las opciones de esta etiqueta a 'N'
-                                                                                                                    for (int i = 0; i < respuestaEtiqueta.length; i++) {
-                                                                                                                      respuestaEtiqueta[i] = i == index ? 'S' : 'N';
-                                                                                                                    }
-                                                                                                                    // Unir la respuesta etiqueta actualizada con ';'
-                                                                                                                    nuevaRespuesta[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)] = respuestaEtiqueta.join(';');
-                                                                                                                    opi = nuevaRespuesta.join('|');
-                                                                                                                    SQLiteManager.instance.actualizarRpta(
-                                                                                                                        rpta: opi,
-                                                                                                                        idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                        idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                        idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                        idficha: FFAppState().IdFicha,
-                                                                                                                        usuarioModificacion: FFAppState().username,
-                                                                                                                        fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                        equipoModificacion: FFAppState().cummovil,
-                                                                                                                        programaModificacion: FFAppState().programacreacion
-                                                                                                                      // Proporciona los otros parámetros según sea necesario...
+
+                                                                                                                  },
+                                                                                                                  items: opciones.map<DropdownMenuItem<String>>((String value) {
+                                                                                                                    return DropdownMenuItem<String>(
+                                                                                                                      value: value,
+                                                                                                                      child: Text(value),
                                                                                                                     );
-                                                                                                                    opcionSeleccionada = value;
-                                                                                                                    print(opi);
-                                                                                                                  });
-                                                                                                                },
-                                                                                                                items: opciones.map<DropdownMenuItem<String>>((String value) {
-                                                                                                                  return DropdownMenuItem<String>(
-                                                                                                                    value: value,
-                                                                                                                    child: Text(value),
-                                                                                                                  );
-                                                                                                                }).toList(),
-                                                                                                                hint: Text("Seleccionar una opción"),
-                                                                                                              ),
-                                                                                                            ],
-                                                                                                          ),
-                                                                                                        );
-                                                                                                      }).toList(),
+                                                                                                                  }).toList(),
+                                                                                                                  hint: Text("Seleccionar una opción"),
+                                                                                                                ),
+                                                                                                              ],
+                                                                                                            ),
+                                                                                                          );
+                                                                                                        }).toList(),
+                                                                                                      ),
                                                                                                     ),
-                                                                                                  ),
-                                                                                                );
+                                                                                                  );
+                                                                                                } else {
+                                                                                                  return Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                                                                    child: SingleChildScrollView(
+                                                                                                      scrollDirection: Axis.horizontal,
+                                                                                                      child: Row(
+                                                                                                        children: opcionesPorEtiqueta.map<Widget>((opcionesEtiqueta) {
+                                                                                                          final partes = opcionesEtiqueta.split('#');
+                                                                                                          final etiqueta = partes[0];
+                                                                                                          final opciones = partes[1].split(';');
+
+                                                                                                          String? opcionSeleccionada;
+
+                                                                                                          if ((respuesta != '') && respuesta.split('|').length > opcionesPorEtiqueta.indexOf(opcionesEtiqueta)) {
+                                                                                                            final respuestaEtiqueta = respuesta.split('|')[opcionesPorEtiqueta.indexOf(opcionesEtiqueta)];
+                                                                                                            final valores = respuestaEtiqueta.split(';');
+
+                                                                                                            opcionSeleccionada = valores.contains('S') ? opciones[valores.indexOf('S')] : opciones[0];
+
+                                                                                                            // Buscar el primer índice con valor 'S'
+                                                                                                            for (int i = 0; i < valores.length; i++) {
+                                                                                                              if (valores[i] == 'S') {
+                                                                                                                opcionSeleccionada = opciones[i];
+                                                                                                                break;
+                                                                                                              }
+                                                                                                            }
+
+                                                                                                            // Si no se encontró ninguna opción con valor 'S', seleccionar la primera opción
+                                                                                                            if (opcionSeleccionada == null) {
+                                                                                                              opcionSeleccionada = opciones[0];
+                                                                                                            }
+                                                                                                          }
+
+                                                                                                          return Padding(
+                                                                                                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                                                                                            child: Column(
+                                                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                              children: [
+                                                                                                                Text(etiqueta), // Mostrar la etiqueta
+                                                                                                                DropdownButton<String>(
+                                                                                                                  value: opcionSeleccionada,
+                                                                                                                  onChanged: (value)  async {
+                                                                                                                    // Actualizar el valor seleccionado en la variable local
+                                                                                                                    setState(() async {
+                                                                                                                      final index = opciones.indexOf(value!);
+                                                                                                                      final etiqueta = partes[0]; // Suponiendo que partes[0] es la etiqueta
+                                                                                                                      seleccionesPorEtiqueta[etiqueta] = List.generate(opciones.length, (i) => (i == index) ? 'S' : 'N').join(';');
+
+                                                                                                                      // Obtener todas las etiquetas actuales
+                                                                                                                      List<String> etiquetas = [];
+                                                                                                                      for (var opcion in opcionesPorEtiqueta) {
+                                                                                                                        final partes = opcion.split('#');
+                                                                                                                        final etiqueta = partes[0];
+                                                                                                                        etiquetas.add(etiqueta);
+                                                                                                                      }
+
+                                                                                                                      // Construir la cadena 'opi' utilizando las selecciones de todas las etiquetas
+                                                                                                                      String opi = '';
+                                                                                                                      for (int i = 0; i < etiquetas.length; i++) {
+                                                                                                                        final seleccionEtiqueta = seleccionesPorEtiqueta[etiquetas[i]] ?? '';
+                                                                                                                        if (respuesta.contains('|$seleccionEtiqueta|')) {
+                                                                                                                          opi += '$seleccionEtiqueta';
+                                                                                                                        } else {
+                                                                                                                          opi += seleccionEtiqueta;
+                                                                                                                        }
+                                                                                                                        if (i < etiquetas.length - 1) {
+                                                                                                                          opi += '|'; // Añadir pipe '|' después de cada etiqueta excepto la última
+                                                                                                                        }
+                                                                                                                      }
+
+                                                                                                                      // Imprimir el valor de la selección de la etiqueta actual para verificar
+                                                                                                                      print("Valor de selección de $etiqueta después de la actualización: ${seleccionesPorEtiqueta[etiqueta]}");
+
+                                                                                                                      // Imprimir el valor de opi para verificar
+                                                                                                                      print("Valor de opi después de la actualización: $opi");
+                                                                                                                      // Concatenar opi y respuesta
+
+                                                                                                                      // Concatenar opi y respuesta
+                                                                                                                      String opiYRespuesta = '';
+                                                                                                                      List<String> opiParts = opi.split('|');
+                                                                                                                      List<String> respuestaParts = respuesta.split('|');
+                                                                                                                      for (int i = 0; i < opiParts.length; i++) {
+                                                                                                                        if (i < respuestaParts.length) {
+                                                                                                                          String seleccionOpi = opiParts[i];
+                                                                                                                          String seleccionRespuesta = respuestaParts[i];
+
+                                                                                                                          // Si la selección en opi está vacía o es igual a la selección en respuesta, tomamos la selección de respuesta
+                                                                                                                          if ((seleccionOpi == "") || seleccionOpi == seleccionRespuesta) {
+                                                                                                                            opiYRespuesta += seleccionRespuesta;
+                                                                                                                          } else {
+                                                                                                                            // De lo contrario, tomamos la selección de opi
+                                                                                                                            opiYRespuesta += seleccionOpi;
+                                                                                                                          }
+                                                                                                                        } else {
+                                                                                                                          // Si no hay una parte correspondiente en respuesta, usamos la selección de opi
+                                                                                                                          opiYRespuesta += opiParts[i];
+                                                                                                                        }
+                                                                                                                        if (i < opiParts.length - 1) {
+                                                                                                                          // Añadir pipe '|' después de cada parte excepto la última
+                                                                                                                          opiYRespuesta += '|';
+                                                                                                                        }
+                                                                                                                      }
+// Si hay partes adicionales en respuesta que no están en opi, las agregamos
+                                                                                                                      if (respuestaParts.length > opiParts.length) {
+                                                                                                                        opiYRespuesta += respuestaParts.sublist(opiParts.length).join('|');
+                                                                                                                      }
+
+                                                                                                                      print("Concatenación de opi y respuesta: $opiYRespuesta");
+
+
+                                                                                                                      print("Concatenación de opi y respuesta: $opiYRespuesta");
+
+                                                                                                                      await SQLiteManager.instance.actualizarRpta(
+                                                                                                                          rpta: opi,
+                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                          idficha: FFAppState().IdFicha,
+                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                                          programaModificacion: FFAppState().programacreacion,
+                                                                                                                          usuarioModificacion: FFAppState().username
+                                                                                                                        // Proporciona los otros parámetros según sea necesario...
+                                                                                                                      );
+
+                                                                                                                    });
+
+
+
+
+
+
+                                                                                                                  },
+                                                                                                                  items: opciones.map<DropdownMenuItem<String>>((String value) {
+                                                                                                                    return DropdownMenuItem<String>(
+                                                                                                                      value: value,
+                                                                                                                      child: Text(value),
+                                                                                                                    );
+                                                                                                                  }).toList(),
+                                                                                                                  hint: Text("Seleccionar una opción"),
+                                                                                                                ),
+                                                                                                              ],
+                                                                                                            ),
+                                                                                                          );
+                                                                                                        }).toList(),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  );
+                                                                                                }
                                                                                               } else {
                                                                                                 // Manejar el caso donde la descripción no es una cadena
                                                                                                 return SizedBox.shrink();
                                                                                               }
+
 
 
 

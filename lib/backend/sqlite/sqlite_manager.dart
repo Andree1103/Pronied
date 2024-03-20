@@ -838,11 +838,19 @@ class SQLiteManager {
 
   ///RESPUESTAS
   Future<List<ExistRespuestaForId>> VerificarSiExisteRespuesta({
-    int? idFichaPreguntaRespuesta
+    int? idFicha,
+    int? idPlantillaOpcion,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? numeroRepeticion,
   }) =>
       performListarRespuestaExist(
         _database,
-        idFichaPreguntaRespuesta: idFichaPreguntaRespuesta,
+        idPlantillaSeccion: idPlantillaSeccion,
+        idFicha: idFicha,
+        idPregunta: idPregunta,
+        idPlantillaOpcion:  idPlantillaOpcion,
+        numeroRepeticion: numeroRepeticion
       );
 
 

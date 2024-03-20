@@ -960,12 +960,20 @@ class ExistPreguntaForId extends SqliteRow {
 Future<List<ExistRespuestaForId>>
 performListarRespuestaExist(
     Database database, {
-      int? idFichaPreguntaRespuesta,
+      int? idFicha,
+      int? idPlantillaOpcion,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
     }) {
   final query = '''
 SELECT 
     IdFichaPreguntaRespuesta
-FROM FichaPreguntaRespuestas where IdFichaPreguntaRespuesta = ${idFichaPreguntaRespuesta};
+FROM FichaPreguntaRespuestas where IdFicha = ${idFicha} and
+    IdPlantillaOpcion = ${idPlantillaOpcion} and
+    IdPregunta = ${idPregunta} and
+    IdPlantillaSeccion = ${idPlantillaSeccion} and
+    NumeroRepeticion = '${numeroRepeticion}';
 ''';
   return _readQuery(
       database, query, (d) => ExistRespuestaForId(d));
