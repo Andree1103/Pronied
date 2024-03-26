@@ -636,19 +636,23 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                             children: List.generate(columnListarSubseccionesRowList.length, (columnIndex) {
                                               final columnListarSubseccionesRow = columnListarSubseccionesRowList[columnIndex];
                                               int cantidadRepeticiones;
-
+                                              String? NameSub;
                                               switch (columnListarSubseccionesRow.modoRepeticion) {
                                                 case 'P':
                                                   cantidadRepeticiones =  FFAppState().CantP;
+                                                  NameSub = 'Pabellón';
                                                   break;
                                                 case 'A':
                                                   cantidadRepeticiones = FFAppState().CantA;
+                                                  NameSub = 'Aula';
                                                   break;
                                                 case 'S':
                                                   cantidadRepeticiones = FFAppState().CantS;
+                                                  NameSub = 'SSHH';
                                                   break;
                                                 default:
                                                   cantidadRepeticiones = 1;
+                                                  NameSub = '';
                                                   break;
                                               }
                                               final tabController = TabController(length: cantidadRepeticiones, vsync: this);
@@ -700,19 +704,22 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                   children: [
                                                                     SingleChildScrollView(
                                                                       scrollDirection: Axis.horizontal,
-                                                                      child: TabBar(
-                                                                        controller: _tabControllers[columnIndex],
-                                                                        isScrollable: true,
-                                                                        labelColor: FlutterFlowTheme.of(context).primary,
-                                                                        unselectedLabelColor: FlutterFlowTheme.of(context).primary,
-                                                                        indicatorColor: FlutterFlowTheme.of(context).primary,
-                                                                        tabs: List.generate(
-                                                                          cantidadRepeticiones!,
-                                                                              (index) => Tab(
-                                                                            text: 'Pestaña ${index + 1}',
+                                                                      child: Visibility(
+                                                                        visible: cantidadRepeticiones! > 1,
+                                                                        child: TabBar(
+                                                                          controller: _tabControllers[columnIndex],
+                                                                          isScrollable: true,
+                                                                          labelColor: FlutterFlowTheme.of(context).primary,
+                                                                          unselectedLabelColor: FlutterFlowTheme.of(context).primary,
+                                                                          indicatorColor: FlutterFlowTheme.of(context).primary,
+                                                                          tabs: List.generate(
+                                                                            cantidadRepeticiones!,
+                                                                                (index) => Tab(
+                                                                              text: '${NameSub} ${index + 1}',
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
+                                                                      )
                                                                     ),
                                                                     Expanded(
                                                                       child: TabBarView(

@@ -446,7 +446,7 @@ SELECT
     Descripcion, 
     ModoRepeticion
 FROM PlantillaSeccion 
-WHERE IdPlantilla = '${idPlantilla}' and  IdPlantillaSeccionPadre  = '${idPlantillaSeccionPadre}';
+WHERE IdPlantilla = '${idPlantilla}' and  IdPlantillaSeccionPadre  = '${idPlantillaSeccionPadre}' order by Descripcion asc;
 
 ''';
   return _readQuery(database, query, (d) => ListarSubseccionesRow(d));
