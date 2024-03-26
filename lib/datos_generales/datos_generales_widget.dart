@@ -154,10 +154,8 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                     children: [
                       Align(
                         alignment: AlignmentDirectional(-1, 0),
-                        child: FutureBuilder<
-                            List<ListarInspeccionesPorIdFichaRow>>(
-                          future: SQLiteManager.instance
-                              .listarInspeccionesPorIdFicha(
+                        child: FutureBuilder<List<ListarInspeccionesPorIdFichaRow>>(
+                          future: SQLiteManager.instance.listarInspeccionesPorIdFicha(
                             idFicha: FFAppState().IdFicha,
                           ),
                           builder: (context, snapshot) {
@@ -175,22 +173,19 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                 ),
                               );
                             }
-                            final containerListarInspeccionesPorIdFichaRowList =
-                            snapshot.data!;
+                            final containerListarInspeccionesPorIdFichaRowList = snapshot.data!;
                             return Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Color(0xFF0E1C27),
                               ),
                               child: Padding(
-                                padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
@@ -201,9 +196,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                           ),
                                         ),
                                         child: Padding(
-                                          padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              25, 0, 0, 5),
+                                          padding: EdgeInsetsDirectional.fromSTEB(25, 0, 0, 5),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -211,31 +204,21 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Align(
-                                                    alignment:
-                                                    AlignmentDirectional(
-                                                        0, 0),
+                                                    alignment: AlignmentDirectional(0, 0),
                                                     child: Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                           10, 0, 0, 0),
                                                       child: InkWell(
-                                                        splashColor:
-                                                        Colors.transparent,
-                                                        focusColor:
-                                                        Colors.transparent,
-                                                        hoverColor:
-                                                        Colors.transparent,
-                                                        highlightColor:
-                                                        Colors.transparent,
+                                                        splashColor: Colors.transparent,
+                                                        focusColor: Colors.transparent,
+                                                        hoverColor: Colors.transparent,
+                                                        highlightColor: Colors.transparent,
                                                         onTap: () async {
-                                                          context.pushNamed(
-                                                              'ListaInspecciones');
+                                                          context.pushNamed('ListaInspecciones');
                                                         },
                                                         child: Icon(
                                                           Icons.house,
-                                                          color: FlutterFlowTheme
-                                                              .of(context)
+                                                          color: FlutterFlowTheme.of(context)
                                                               .primaryBackground,
                                                           size: 35,
                                                         ),
@@ -243,47 +226,32 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                     ),
                                                   ),
                                                   Align(
-                                                    alignment:
-                                                    AlignmentDirectional(
-                                                        0, 0),
+                                                    alignment: AlignmentDirectional(0, 0),
                                                     child: Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                           10, 10, 0, 0),
                                                       child: InkWell(
-                                                        splashColor:
-                                                        Colors.transparent,
-                                                        focusColor:
-                                                        Colors.transparent,
-                                                        hoverColor:
-                                                        Colors.transparent,
-                                                        highlightColor:
-                                                        Colors.transparent,
+                                                        splashColor: Colors.transparent,
+                                                        focusColor: Colors.transparent,
+                                                        hoverColor: Colors.transparent,
+                                                        highlightColor: Colors.transparent,
                                                         onTap: () async {
                                                           context.pushNamed(
                                                             'UbicacionInstitucion',
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              kTransitionInfoKey:
-                                                              TransitionInfo(
-                                                                hasTransition:
-                                                                true,
+                                                            extra: <String, dynamic>{
+                                                              kTransitionInfoKey: TransitionInfo(
+                                                                hasTransition: true,
                                                                 transitionType:
-                                                                PageTransitionType
-                                                                    .fade,
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                    1000),
+                                                                PageTransitionType.fade,
+                                                                duration:
+                                                                Duration(milliseconds: 1000),
                                                               ),
                                                             },
                                                           );
                                                         },
                                                         child: Icon(
-                                                          Icons
-                                                              .add_location_rounded,
-                                                          color:
-                                                          Color(0xFF086D82),
+                                                          Icons.add_location_rounded,
+                                                          color: Color(0xFF086D82),
                                                           size: 35,
                                                         ),
                                                       ),
@@ -292,137 +260,110 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                 ],
                                               ),
                                               Align(
-                                                alignment: AlignmentDirectional(
-                                                    -1, -1),
+                                                alignment: AlignmentDirectional(-1, -1),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 0, 20, 0),
+                                                  padding:
+                                                  EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                                                   child: Column(
-                                                    mainAxisSize:
-                                                    MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .center,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 0, 5),
-                                                        child: Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            containerListarInspeccionesPorIdFichaRowList
-                                                                .first
-                                                                .nombreLocalColegio,
-                                                            'ss',
-                                                          ),
-                                                          textAlign:
-                                                          TextAlign.start,
-                                                          style: FlutterFlowTheme
-                                                              .of(context)
-                                                              .headlineMedium
-                                                              .override(
-                                                            fontFamily:
-                                                            'Outfit',
-                                                            color: Colors
-                                                                .white,
-                                                            fontSize: 25,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .bold,
+                                                      Container(
+                                                        width: 278,
+                                                        decoration: BoxDecoration(
+                                                          color: Color(0xFF0E1C27),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                              0, 0, 0, 5),
+                                                          child: Text(
+                                                            valueOrDefault<String>(
+                                                              containerListarInspeccionesPorIdFichaRowList
+                                                                  .first.nombreLocalColegio,
+                                                              'ss',
+                                                            ),
+                                                            textAlign: TextAlign.start,
+                                                            style: FlutterFlowTheme.of(context)
+                                                                .headlineMedium
+                                                                .override(
+                                                              fontFamily: 'Outfit',
+                                                              color: Colors.white,
+                                                              fontSize: 25,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       Row(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
+                                                        mainAxisSize: MainAxisSize.max,
                                                         children: [
                                                           Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
-                                                                  .first
-                                                                  .departamentoColegio,
+                                                                  .first.departamentoColegio,
                                                               'de',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .secondaryBackground,
                                                               fontSize: 13,
                                                             ),
                                                           ),
                                                           Text(
                                                             '/',
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .secondaryBackground,
                                                             ),
                                                           ),
                                                           Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
-                                                                  .first
-                                                                  .provinciaColegio,
+                                                                  .first.provinciaColegio,
                                                               'pro',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .secondaryBackground,
                                                               fontSize: 13,
                                                             ),
                                                           ),
                                                           Text(
                                                             '/',
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .secondaryBackground,
                                                             ),
                                                           ),
                                                           Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
-                                                                  .first
-                                                                  .distritoColegio,
+                                                                  .first.distritoColegio,
                                                               'dist',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .secondaryBackground,
                                                               fontSize: 13,
                                                             ),
@@ -431,32 +372,24 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                       ),
                                                       Container(
                                                         width: 278,
-                                                        decoration:
-                                                        BoxDecoration(
-                                                          color:
-                                                          Color(0xFF0E1C27),
+                                                        decoration: BoxDecoration(
+                                                          color: Color(0xFF0E1C27),
                                                         ),
                                                         child: Padding(
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(0,
-                                                              5, 0, 0),
+                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                              0, 5, 0, 0),
                                                           child: Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
-                                                                  .first
-                                                                  .nombreEvento,
+                                                                  .first.nombreEvento,
                                                               'envet',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Outfit',
-                                                              color: FlutterFlowTheme.of(
-                                                                  context)
+                                                              fontFamily: 'Outfit',
+                                                              color:
+                                                              FlutterFlowTheme.of(context)
                                                                   .primaryBackground,
                                                               fontSize: 12,
                                                             ),
@@ -478,67 +411,48 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                         width: double.infinity,
                                         height: 55,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .gray200,
+                                          color: FlutterFlowTheme.of(context).gray200,
                                         ),
                                         child: Padding(
-                                          padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              35, 10, 35, 10),
+                                          padding: EdgeInsetsDirectional.fromSTEB(35, 10, 35, 10),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
                                                 width: 130,
                                                 height: 100,
                                                 decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                      context)
-                                                      .gray200,
+                                                  color: FlutterFlowTheme.of(context).gray200,
                                                 ),
                                                 child: Column(
-                                                  mainAxisSize:
-                                                  MainAxisSize.max,
+                                                  mainAxisSize: MainAxisSize.max,
                                                   children: [
                                                     Align(
-                                                      alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
+                                                      alignment: AlignmentDirectional(0, 0),
                                                       child: Row(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
+                                                        mainAxisSize: MainAxisSize.max,
                                                         children: [
                                                           Padding(
-                                                            padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0,
-                                                                0,
-                                                                5,
-                                                                0),
+                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                0, 0, 5, 0),
                                                             child: Icon(
-                                                              Icons
-                                                                  .sd_card_alert,
+                                                              Icons.sd_card_alert,
                                                               color: () {
                                                                 if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .idEstado ==
+                                                                    .first.idEstado ==
                                                                     3) {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
                                                                       .darkSeaGreen;
                                                                 } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .idEstado ==
+                                                                    .first.idEstado ==
                                                                     2) {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
                                                                       .gray600;
                                                                 } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .estado ==
+                                                                    .first.estado ==
                                                                     '4') {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
@@ -553,33 +467,26 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                             ),
                                                           ),
                                                           Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
                                                                   .first.estado,
                                                               'es',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium,
                                                           ),
                                                         ],
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                           14, 0, 0, 0),
                                                       child: Text(
                                                         '30/01/2023 10:45 AM',
-                                                        style:
-                                                        FlutterFlowTheme.of(
-                                                            context)
+                                                        style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
                                                             .override(
-                                                          fontFamily:
-                                                          'Outfit',
+                                                          fontFamily: 'Outfit',
                                                           fontSize: 9,
                                                         ),
                                                       ),
@@ -591,51 +498,36 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                 width: 130,
                                                 height: 100,
                                                 decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                      context)
-                                                      .gray200,
+                                                  color: FlutterFlowTheme.of(context).gray200,
                                                 ),
                                                 child: Column(
-                                                  mainAxisSize:
-                                                  MainAxisSize.max,
+                                                  mainAxisSize: MainAxisSize.max,
                                                   children: [
                                                     Align(
-                                                      alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
+                                                      alignment: AlignmentDirectional(0, 0),
                                                       child: Row(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
+                                                        mainAxisSize: MainAxisSize.max,
                                                         children: [
                                                           Padding(
-                                                            padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                0,
-                                                                0,
-                                                                5,
-                                                                0),
+                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                0, 0, 5, 0),
                                                             child: Icon(
-                                                              Icons
-                                                                  .sd_card_alert,
+                                                              Icons.sd_card_alert,
                                                               color: () {
                                                                 if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .idEstado ==
+                                                                    .first.idEstado ==
                                                                     3) {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
                                                                       .darkSeaGreen;
                                                                 } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .idEstado ==
+                                                                    .first.idEstado ==
                                                                     2) {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
                                                                       .gray600;
                                                                 } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first
-                                                                    .idEstado ==
+                                                                    .first.idEstado ==
                                                                     4) {
                                                                   return FlutterFlowTheme.of(
                                                                       context)
@@ -650,33 +542,26 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                             ),
                                                           ),
                                                           Text(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
                                                                   .first.estado,
                                                               'ssss',
                                                             ),
-                                                            style: FlutterFlowTheme
-                                                                .of(context)
+                                                            style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium,
                                                           ),
                                                         ],
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                           14, 0, 0, 0),
                                                       child: Text(
                                                         '30/01/2023 10:45 AM',
-                                                        style:
-                                                        FlutterFlowTheme.of(
-                                                            context)
+                                                        style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
                                                             .override(
-                                                          fontFamily:
-                                                          'Outfit',
+                                                          fontFamily: 'Outfit',
                                                           fontSize: 9,
                                                         ),
                                                       ),
@@ -4217,6 +4102,12 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             FechaModificacionAuditoria: DateTime.now().toString(),
                             EquipoModificacionAuditoria: "localhost"
                           );
+                          FFAppState().CantA= int.tryParse(_model.dat1Controller4.text)!;
+
+                          FFAppState().CantP= int.tryParse(_model.dat1Controller3.text)!;
+
+                          FFAppState().CantS= int.tryParse(_model.dat1Controller5.text)!;
+
 
 
                           ScaffoldMessenger.of(context).showSnackBar(

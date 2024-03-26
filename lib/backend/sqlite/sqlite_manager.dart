@@ -130,6 +130,30 @@ class SQLiteManager {
         idPlantillaSeccionPadre: idPlantillaSeccionPadre,
       );
 
+  Future<List<ListarAulas>> listarAulas({
+    int? idFicha
+  }) =>
+      performListarAulas(
+        _database,
+        idFicha: idFicha,
+      );
+
+  Future<List<ListarPabellon>> listarPabellones({
+    int? idFicha
+  }) =>
+      performListarPabellon(
+        _database,
+        idFicha: idFicha,
+      );
+
+  Future<List<ListarSSHH>> listarSSHH({
+    int? idFicha
+  }) =>
+      performListarSSHH(
+        _database,
+        idFicha: idFicha,
+      );
+
   Future<List<ListarPreguntasRow>> listarPreguntas({
     int? idPlantillaSeccion,
     int? idPlantilla,
@@ -144,14 +168,16 @@ class SQLiteManager {
     int? idPlantilla,
     int? idPregunta,
     int? idPlantillaSeccion,
-    int? idFicha
+    int? idFicha,
+    int? numero
   }) =>
       performListarOpciones(
         _database,
         idPlantilla: idPlantilla,
         idPregunta: idPregunta,
         idPlantillaSeccion: idPlantillaSeccion,
-        idFicha: idFicha
+        idFicha: idFicha,
+        numero: numero
       );
 
   /// END READ QUERY CALLS
@@ -623,7 +649,8 @@ class SQLiteManager {
     String? usuarioModificacion,
     String? fechaModificacion,
     String? equipoModificacion,
-    String? programaModificacion
+    String? programaModificacion,
+    int? numero
   }) =>
       performActualizarRpta(
           _database,
@@ -635,7 +662,8 @@ class SQLiteManager {
         programaModificacion: programaModificacion,
         equipoModificacion: equipoModificacion,
         fechaModificacion: fechaModificacion,
-        usuarioModificacion: usuarioModificacion
+        usuarioModificacion: usuarioModificacion,
+        numero: numero
       );
 
   Future crearRpta({
@@ -648,6 +676,7 @@ class SQLiteManager {
     String? fechaCreacion,
     String? equipoCreacion,
     String? programaCreacion,
+    int? numero,
   }) =>
       performCrearRpta(
           _database,
@@ -659,7 +688,8 @@ class SQLiteManager {
           usuarioCreacion: usuarioCreacion,
           programaCreacion: programaCreacion,
           equipoCreacion: equipoCreacion,
-          fechaCreacion: fechaCreacion
+          fechaCreacion: fechaCreacion,
+          numero: numero
       );
 
 

@@ -463,6 +463,74 @@ class ListarSubseccionesRow extends SqliteRow {
 }
 
 /// END LISTARSUBSECCIONES
+///
+
+///
+
+/// BEGIN LISTARAULAS
+Future<List<ListarAulas>> performListarAulas(
+    Database database, {
+      int? idFicha,
+    }) {
+  final query = '''
+SELECT 
+    TotalAulas  
+FROM Fichas 
+WHERE idFicha = ${idFicha};
+
+''';
+  return _readQuery(database, query, (d) => ListarAulas(d));
+}
+
+class ListarAulas extends SqliteRow {
+  ListarAulas(Map<String, dynamic> data) : super(data);
+  int? get totalAulas => data['TotalAulas'] as int?;
+}
+
+/// END LISTARAULAS
+
+
+/// BEGIN LISTARPABELLON
+Future<List<ListarPabellon>> performListarPabellon(
+    Database database, {
+      int? idFicha,
+    }) {
+  final query = '''
+SELECT 
+    TotalPabellon  
+FROM Fichas 
+WHERE idFicha = ${idFicha};
+
+''';
+  return _readQuery(database, query, (d) => ListarPabellon(d));
+}
+
+class ListarPabellon extends SqliteRow {
+  ListarPabellon(Map<String, dynamic> data) : super(data);
+  int? get totalPabellones => data['TotalPabellon'] as int?;
+}
+/// END LISTAPABELLON
+
+/// BEGIN LISTARSSHH
+Future<List<ListarSSHH>> performListarSSHH(
+    Database database, {
+      int? idFicha,
+    }) {
+  final query = '''
+SELECT 
+    TotalSSHH  
+FROM Fichas 
+WHERE idFicha = ${idFicha};
+
+''';
+  return _readQuery(database, query, (d) => ListarSSHH(d));
+}
+
+class ListarSSHH extends SqliteRow {
+  ListarSSHH(Map<String, dynamic> data) : super(data);
+  int? get totalSSHH => data['TotalSSHH'] as int?;
+}
+/// END LISTARSSHH
 
 /// BEGIN LISTARPREGUNTAS
 Future<List<ListarPreguntasRow>> performListarPreguntas(
@@ -504,7 +572,8 @@ Future<List<ListarOpcionesRow>> performListarOpciones(
   int? idPlantilla,
   int? idPregunta,
   int? idPlantillaSeccion,
-  int? idFicha
+  int? idFicha,
+  int? numero
 }) {
   final query = '''
 SELECT 
@@ -523,6 +592,7 @@ LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaO
     AND po.IdPregunta = fpr.IdPregunta
     AND po.IdPlantillaSeccion = fpr.IdPlantillaSeccion
     AND fpr.IdFicha = '${idFicha}'
+    AND fpr.numerorepeticion =${numero}
 WHERE 
     po.IdPlantillaSeccion = '${idPlantillaSeccion}'
     AND po.IdPlantilla = '${idPlantilla}'

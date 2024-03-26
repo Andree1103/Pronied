@@ -94,6 +94,22 @@ class FFAppState extends ChangeNotifier {
     _IdSincro = _value;
   }
 
+  int _CantA = 0;
+  int get CantA => _CantA;
+  set CantA(int _value) {
+    _CantA = _value;
+  }
+  int _CantP = 0;
+  int get CantP => _CantP;
+  set CantP(int _value) {
+    _CantP = _value;
+  }
+  int _CantS = 0;
+  int get CantS => _CantS;
+  set CantS(int _value) {
+    _CantS = _value;
+  }
+
   int _idPlantillaSeccionPadre = 0;
   int get idPlantillaSeccionPadre => _idPlantillaSeccionPadre;
   set idPlantillaSeccionPadre(int _value) {

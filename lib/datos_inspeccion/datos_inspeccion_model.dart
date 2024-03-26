@@ -15,6 +15,10 @@ class DatosInspeccionModel extends FlutterFlowModel<DatosInspeccionWidget> {
   FocusNode? dat1FocusNode;
   TextEditingController? dat1Controller;
   String? Function(BuildContext, String?)? dat1ControllerValidator;
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
+
 
   /// Initialization and disposal methods.
 
@@ -26,6 +30,7 @@ class DatosInspeccionModel extends FlutterFlowModel<DatosInspeccionWidget> {
     unfocusNode.dispose();
     dat1FocusNode?.dispose();
     dat1Controller?.dispose();
+
   }
 
 /// Action blocks are added here.

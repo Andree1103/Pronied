@@ -580,7 +580,8 @@ Future performActualizarRpta(
       String? usuarioModificacion,
       String? fechaModificacion,
       String? equipoModificacion,
-      String? programaModificacion
+      String? programaModificacion,
+      int? numero
     }) {
   final query = '''
 UPDATE FichaPreguntaRespuestas
@@ -590,12 +591,14 @@ SET
     FechaModificacionAuditoria = '${fechaModificacion}',
     EquipoModificacionAuditoria = '${equipoModificacion}',
     ProgramaModificacionAuditoria = '${programaModificacion}',
+    NumeroRepeticion = ${numero},
     modificadoMovil = 1
 WHERE 
     IdFicha = ${idficha} and 
     IdPlantillaOpcion = ${idplantilla} and
     IdPlantillaSeccion = ${idplantillaseccion} and
-    IdPregunta = ${idpregunta}
+    IdPregunta = ${idpregunta} and
+    NumeroRepeticion = ${numero}
 ''';
   return database.rawQuery(query);
 }
@@ -611,6 +614,7 @@ Future performCrearRpta(
       String? fechaCreacion,
       String? equipoCreacion,
       String? programaCreacion,
+      int? numero
     }) {
   final query = '''
 INSERT INTO FichaPreguntaRespuestas (
@@ -632,7 +636,7 @@ INSERT INTO FichaPreguntaRespuestas (
   ${idplantilla},
   ${idplantillaseccion},
   ${idpregunta},
-  1,
+  ${numero},
   "1",
   '${usuarioCreacion}',
   '${fechaCreacion}',

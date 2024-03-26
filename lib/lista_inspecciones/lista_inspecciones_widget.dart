@@ -372,6 +372,21 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantilla!;
                                                               });
 
+                                                              var ssh = await SQLiteManager.instance.listarSSHH(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantS= ssh[0].totalSSHH!;
+
+                                                              var aulas = await SQLiteManager.instance.listarAulas(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantA= aulas[0].totalAulas!;
+
+                                                              var patios = await SQLiteManager.instance.listarPabellones(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantP= patios[0].totalPabellones!;
+
                                                               context.pushNamed(
                                                                   'DatosGenerales');
                                                             },
@@ -826,6 +841,20 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantilla!;
                                                               });
 
+                                                              var ssh = await SQLiteManager.instance.listarSSHH(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantS= ssh[0].totalSSHH!;
+
+                                                              var aulas = await SQLiteManager.instance.listarAulas(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantA= aulas[0].totalAulas!;
+
+                                                              var patios = await SQLiteManager.instance.listarPabellones(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantP= patios[0].totalPabellones!;
                                                               context.pushNamed(
                                                                   'DatosGenerales');
                                                             },
@@ -1279,6 +1308,20 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                 columnListarInspeccionesRealizadaRow
                                                                     .idPlantilla!;
                                                               });
+                                                              var ssh = await SQLiteManager.instance.listarSSHH(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantS= ssh[0].totalSSHH!;
+
+                                                              var aulas = await SQLiteManager.instance.listarAulas(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantA= aulas[0].totalAulas!;
+
+                                                              var patios = await SQLiteManager.instance.listarPabellones(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantP= patios[0].totalPabellones!;
 
                                                               context.pushNamed(
                                                                   'DatosGenerales');
@@ -1733,6 +1776,21 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                 columnListarInspeccionesProgramadaRow
                                                                     .idPlantilla!;
                                                               });
+
+                                                              var ssh = await SQLiteManager.instance.listarSSHH(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantS= ssh[0].totalSSHH!;
+
+                                                              var aulas = await SQLiteManager.instance.listarAulas(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantA= aulas[0].totalAulas!;
+
+                                                              var patios = await SQLiteManager.instance.listarPabellones(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().CantP= patios[0].totalPabellones!;
 
                                                               context.pushNamed(
                                                                   'DatosGenerales');
