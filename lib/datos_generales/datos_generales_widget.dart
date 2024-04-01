@@ -1,3 +1,5 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_change_estado_widget.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -101,7 +103,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
     super.dispose();
   }
 
-
+  var edit = FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion== 'EN REGISTRO' ? false : true;
   List<FichaModularData> fichasModularesData = [];
 
   List<TextEditingController> codDigoControllers = [];
@@ -137,6 +139,11 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
             ),
           );
         }
+        // Incorrect
+        print(FFAppState().idestadoInspeccion);  // Missing closing parenthesis
+
+// Correct
+        print(FFAppState().estadoInspeccion);
         final datosGeneralesListarFichaPorIdFichaRowList = snapshot.data!;
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
@@ -409,7 +416,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Container(
                                         width: double.infinity,
-                                        height: 55,
+                                        height: 45,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context).gray200,
                                         ),
@@ -419,81 +426,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
-                                                width: 130,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(context).gray200,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Align(
-                                                      alignment: AlignmentDirectional(0, 0),
-                                                      child: Row(
-                                                        mainAxisSize: MainAxisSize.max,
-                                                        children: [
-                                                          Padding(
-                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                0, 0, 5, 0),
-                                                            child: Icon(
-                                                              Icons.sd_card_alert,
-                                                              color: () {
-                                                                if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first.idEstado ==
-                                                                    3) {
-                                                                  return FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .darkSeaGreen;
-                                                                } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first.idEstado ==
-                                                                    2) {
-                                                                  return FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .gray600;
-                                                                } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                    .first.estado ==
-                                                                    '4') {
-                                                                  return FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .warning;
-                                                                } else {
-                                                                  return FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .secondary;
-                                                                }
-                                                              }(),
-                                                              size: 24,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            valueOrDefault<String>(
-                                                              containerListarInspeccionesPorIdFichaRowList
-                                                                  .first.estado,
-                                                              'es',
-                                                            ),
-                                                            style: FlutterFlowTheme.of(context)
-                                                                .bodyMedium,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                          14, 0, 0, 0),
-                                                      child: Text(
-                                                        '30/01/2023 10:45 AM',
-                                                        style: FlutterFlowTheme.of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                          fontFamily: 'Outfit',
-                                                          fontSize: 9,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
                                               Container(
                                                 width: 130,
                                                 height: 100,
@@ -545,7 +477,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                             valueOrDefault<String>(
                                                               containerListarInspeccionesPorIdFichaRowList
                                                                   .first.estado,
-                                                              'ssss',
+                                                              'es',
                                                             ),
                                                             style: FlutterFlowTheme.of(context)
                                                                 .bodyMedium,
@@ -553,17 +485,40 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                         ],
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                          14, 0, 0, 0),
-                                                      child: Text(
-                                                        '30/01/2023 10:45 AM',
-                                                        style: FlutterFlowTheme.of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                          fontFamily: 'Outfit',
-                                                          fontSize: 9,
-                                                        ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 130,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(context).gray200,
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  children: [
+                                                    Align(
+                                                      alignment: AlignmentDirectional(0, 0),
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                            child: Icon(
+                                                              Icons.check_circle_outline,
+                                                              color: containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                                  ? Colors.blue
+                                                                  : Colors.red, // Conditionally set icon color
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                              containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                                  ? 'Sincronizado'
+                                                                  : 'No Sincronizado', // Conditionally set text
+                                                              style: FlutterFlowTheme.of(context).bodyMedium
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
@@ -709,6 +664,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode1,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -828,6 +784,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode2,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -963,10 +920,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     'Frontera',
                                                                     'Emergencia'
                                                                   ],
-                                                                  onChanged: (val) =>
-                                                                      setState(() =>
-                                                                      _model.dat1Value =
-                                                                          val),
+                                                                  onChanged: (val) => FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO' ? setState(() =>
+                                                                  _model.dat1Value =
+                                                                      val) : null,
                                                                   width: double
                                                                       .infinity,
                                                                   height: 50,
@@ -1040,6 +996,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode3,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -1170,6 +1127,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode4,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -1300,6 +1258,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode5,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -1737,6 +1696,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         );
                                                                                       },
                                                                                       autofocus: true,
+                                                                                      readOnly: edit,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
                                                                                       ],
@@ -1807,6 +1767,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         );
                                                                                       },
                                                                                       autofocus: true,
+                                                                                      readOnly: edit,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
                                                                                       ],
@@ -1877,6 +1838,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         );
                                                                                       },
                                                                                       autofocus: true,
+                                                                                      readOnly: edit,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
                                                                                       ],
@@ -1947,6 +1909,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         );
                                                                                       },
                                                                                       autofocus: true,
+                                                                                      readOnly: edit,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
                                                                                       ],
@@ -2017,6 +1980,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         );
                                                                                       },
                                                                                       autofocus: true,
+                                                                                      readOnly: edit,
                                                                                       autofillHints: [
                                                                                         AutofillHints.birthday
                                                                                       ],
@@ -2174,6 +2138,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode14,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2296,6 +2261,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode15,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2411,6 +2377,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode16,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2530,6 +2497,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode17,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2677,6 +2645,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode18,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2796,6 +2765,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode19,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -2915,6 +2885,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode20,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -3034,6 +3005,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1FocusNode21,
                                                                     autofocus:
                                                                     true,
+                                                                    readOnly: edit,
                                                                     autofillHints: [
                                                                       AutofillHints
                                                                           .birthday
@@ -3182,6 +3154,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode22,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3303,6 +3276,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode23,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3428,6 +3402,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode24,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3553,6 +3528,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode25,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3678,6 +3654,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode26,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3803,6 +3780,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode27,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3812,7 +3790,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    'Fecha de Inspeción',
+                                                                    'Fecha de Inspección',
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -3931,6 +3909,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode28,
                                                                   autofocus:
                                                                   true,
+                                                                  readOnly: edit,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -4054,7 +4033,8 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                       ),
                     ],
                   ),
-                  Align(
+                  if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                    Align(
                     alignment: AlignmentDirectional(1, 1),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 25, 25),
@@ -4102,6 +4082,12 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             FechaModificacionAuditoria: DateTime.now().toString(),
                             EquipoModificacionAuditoria: "localhost"
                           );
+                          setState(() {
+                            SQLiteManager.instance.inspeccion1(
+                              idFicha: FFAppState().IdFicha,
+                            );
+                          });
+
                           FFAppState().CantA= int.tryParse(_model.dat1Controller4.text)!;
 
                           FFAppState().CantP= int.tryParse(_model.dat1Controller3.text)!;
@@ -4128,6 +4114,55 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                       ),
                     ),
                   ),
+                  if(FFAppState().idestadoInspeccion == 2 && FFAppState().estadoInspeccion == 'PROGRAMADA')
+                    Align(
+                      alignment: AlignmentDirectional(0, 1),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () => _model.unfocusNode.canRequestFocus
+                                      ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                                      : FocusScope.of(context).unfocus(),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height: 200,
+                                      child: AlertChangeEstadoWidget(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+                          },
+                          text: 'Iniciar Inspección',
+                          options: FFButtonOptions(
+                            height: 40,
+                            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            color: Color(0xFF086D82),
+                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Outfit',
+                              color: Colors.white,
+                              letterSpacing: 0,
+                            ),
+                            elevation: 3,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),

@@ -150,6 +150,42 @@ class FFAppState extends ChangeNotifier {
   set programacreacion(String _value) {
     _programacreacion = _value;
   }
+
+  String _rol= '';
+  String get rol => _rol;
+  set rol(String _value) {
+    _rol = _value;
+  }
+
+  String _nombrecompletouser= '';
+  String get nombrecompletouser => _nombrecompletouser;
+  set nombrecompletouser(String _value) {
+    _nombrecompletouser = _value;
+  }
+
+  String _ubicacionuser= '';
+  String get ubicacionuse => _ubicacionuser;
+  set ubicacionuse(String _value) {
+    _ubicacionuser = _value;
+  }
+
+  String _estadoInspeccion= '';
+  String get estadoInspeccion => _estadoInspeccion;
+  set estadoInspeccion(String _value) {
+    _estadoInspeccion = _value;
+  }
+
+  int _idestadoInspeccion = 0;
+  int get idestadoInspeccion => _idestadoInspeccion;
+  set idestadoInspeccion(int _value) {
+    _idestadoInspeccion = _value;
+  }
+
+  int _idInspeccion = 0;
+  int get idInspeccion => _idInspeccion;
+  set idInspeccion(int _value) {
+    _idInspeccion = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

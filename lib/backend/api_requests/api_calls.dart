@@ -44,6 +44,8 @@ class APIDatosCall {
       );
 }
 
+
+
 class ApiProniedCall {
   static Future<ApiCallResponse> call({
     dynamic? corcheJson,
@@ -712,8 +714,8 @@ class ApiProniedCallUp {
       headers: {},
       params: {},
       returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
       cache: false,
       alwaysAllowBody: false,
     );
@@ -736,6 +738,240 @@ class ApiProniedCallUp {
     r'''$.datos''',
   );
 }
+
+
+class APIObtenerTOKENCall {
+  static Future<ApiCallResponse> call({
+    String? usuario = '',
+    String? clave = '',
+    String? appId = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "dato": {
+    "app_id": "$appId",
+    "usuario": "$usuario",
+    "clave": "$clave"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'API Obtener TOKEN',
+      apiUrl:
+      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? response(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.mensaje''',
+  ));
+  static dynamic dato(dynamic response) => getJsonField(
+    response,
+    r'''$.dato''',
+  );
+  static String? code(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.code''',
+  ));
+  static String? usuario(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.usuario''',
+  ));
+  static int? estado(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.estado''',
+  ));
+}
+
+class ApiAutorizacionCall {
+  static Future<ApiCallResponse> call({
+    String? applicationId = '',
+    String? tokenSesion = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "dato": {
+    "application_id": "$applicationId",
+    "token_sesion": "$tokenSesion"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'API AUTORIZACION',
+      apiUrl:
+      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic informacion(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.informacion''',
+  );
+  static int? idpersona(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.dato.informacion.idpersona''',
+  ));
+  static String? nombre(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.informacion.nombre''',
+  ));
+  static String? apepaterno(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.apellidopaterno''',
+      ));
+  static String? apematerno(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.apellidomaterno''',
+      ));
+  static String? correo(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.informacion.correo''',
+  ));
+  static String? tipdocidentidad(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.tipodocumentoidentidad''',
+      ));
+  static String? numerodocidad(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.numerodocumentoidentidad''',
+      ));
+  static String? codigoarea(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.codigoarea''',
+      ));
+  static String? nombrearea(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.nombrearea''',
+      ));
+  static String? codusuario(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.codusuario''',
+      ));
+  static String? idtipdocidentidad(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.idtipodocumentoidentidad''',
+      ));
+  static String? celular(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.informacion.celular''',
+  ));
+  static String? direccion(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.informacion.direccion''',
+  ));
+  static String? recuperarclave(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.opcionrecuperarclave''',
+      ));
+  static String? perteneceinstitucion(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.informacion.perteneceinstitucion''',
+      ));
+  static String? sexo(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.informacion.sexo''',
+  ));
+  static int? estado(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.estado''',
+  ));
+  static String? mensaje(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.mensaje''',
+  ));
+
+  static String? roles(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.perfiles[0].nombre''',
+  ));
+}
+
+class ApiTokenFinalCall {
+  static Future<ApiCallResponse> call({
+    String? applicationId = '',
+    String? tokenSesion = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "dato": {
+    "application_id": "$applicationId",
+    "token_sesion": "$tokenSesion"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'API TOKEN FINAL',
+      apiUrl:
+      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? mensaje(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.mensaje''',
+  ));
+  static dynamic dato(dynamic response) => getJsonField(
+    response,
+    r'''$.dato''',
+  );
+  static String? creadortoken(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.creatortoken''',
+      ));
+  static String? jwtoketn(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.jwttoken''',
+  ));
+  static String? fechaexpiracion(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dato.fechaexpiration''',
+      ));
+  static int? estado(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.estado''',
+  ));
+}
+
 
 class ApiPagingParams {
   int nextPageNumber = 0;

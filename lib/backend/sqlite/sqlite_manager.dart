@@ -798,6 +798,13 @@ class SQLiteManager {
     estado: estado
   );
 
+  Future actualizarInspeccionesEstado ({
+    int? idInspeccion,
+  }) => performActualizarInspeccionEstado (
+    _database,
+    idInspeccion: idInspeccion,
+  );
+
   Future actualizarestaFichaCola({
     int? idCola,
   }) =>
@@ -1123,4 +1130,30 @@ class SQLiteManager {
         _database,
         idSincro: idSincro,
       );
+
+  ///ULTIMA FECHA
+  Future inspeccion0({
+    int? idFicha
+  }) =>
+      performModificacionInspecicon0(
+          _database,
+          idFicha: idFicha
+      );
+
+  Future inspeccion1({
+    int? idFicha
+  }) =>
+      performModificacionInspecicon1(
+          _database,
+          idFicha: idFicha
+      );
+
+  Future fichamod1({
+    int? idFicha
+  }) =>
+      performModificacionFicha1(
+          _database,
+          idFicha: idFicha
+      );
+
 }

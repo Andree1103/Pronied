@@ -98,7 +98,7 @@ class _DropWidgetState extends State<DropWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Monitor',
+                                FFAppState().rol,
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -108,7 +108,7 @@ class _DropWidgetState extends State<DropWidget> {
                                 ),
                               ),
                               Text(
-                                'Luis Pedro Reyes Loaiza',
+                                FFAppState().nombrecompletouser,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -118,7 +118,7 @@ class _DropWidgetState extends State<DropWidget> {
                                 ),
                               ),
                               Text(
-                                'UNIDAD ZONAL DE LAMBAYEQUE',
+                                FFAppState().ubicacionuse,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -419,12 +419,15 @@ class _DropWidgetState extends State<DropWidget> {
                             idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
                             idPlantilla: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),
                             codigoLocalColegio: ApiProniedCall.codigoLocalIns(_model.apiResponseDatos?.jsonBody, i),
-                            nombreLocalColegio: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                            nombreLocalColegio: ApiProniedCall.nombreLocalIns(_model.apiResponseDatos?.jsonBody, i),
                             departamentoColegio: ApiProniedCall.departamentoInst(_model.apiResponseDatos?.jsonBody, i),
                             provinciaColegio: ApiProniedCall.provinciaIns(_model.apiResponseDatos?.jsonBody, i),
                             distritoColegio: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
                             idEstado: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
                             estado: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
+                          );
+                          await SQLiteManager.instance.inspeccion0(
+                            idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i)
                           );
                         } else {
                           await SQLiteManager.instance.cargarData(

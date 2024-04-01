@@ -1,3 +1,5 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,21 +15,46 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  String? _emailAddressControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Campo requerido';
+    }
+
+    return null;
+  }
+
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordControllerValidator;
+  String? _passwordControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Campo requerido';
+    }
 
-  /// Initialization and disposal methods.
+    return null;
+  }
+
+
+
+// Stores action output result for [Backend Call - API (API Obtener TOKEN)] action in Button widget.
+  ApiCallResponse? obtenerTok;
+  // Stores action output result for [Backend Call - API (API AUTORIZACION)] action in Button widget.
+  ApiCallResponse? apiResult2ws;
+  // Stores action output result for [Backend Call - API (API TOKEN FINAL)] action in Button widget.
+  ApiCallResponse? apiResultjyh;
 
   @override
   void initState(BuildContext context) {
+    emailAddressControllerValidator = _emailAddressControllerValidator;
     passwordVisibility = false;
+    passwordControllerValidator = _passwordControllerValidator;
   }
 
   @override

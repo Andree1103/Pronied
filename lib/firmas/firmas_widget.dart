@@ -346,7 +346,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: Container(
                                     width: double.infinity,
-                                    height: 55,
+                                    height: 45,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context).gray200,
                                     ),
@@ -356,81 +356,6 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            width: 130,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color: FlutterFlowTheme.of(context).gray200,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Align(
-                                                  alignment: AlignmentDirectional(0, 0),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                            0, 0, 5, 0),
-                                                        child: Icon(
-                                                          Icons.sd_card_alert,
-                                                          color: () {
-                                                            if (containerListarInspeccionesPorIdFichaRowList
-                                                                .first.idEstado ==
-                                                                3) {
-                                                              return FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .darkSeaGreen;
-                                                            } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                .first.idEstado ==
-                                                                2) {
-                                                              return FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .gray600;
-                                                            } else if (containerListarInspeccionesPorIdFichaRowList
-                                                                .first.estado ==
-                                                                '4') {
-                                                              return FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .warning;
-                                                            } else {
-                                                              return FlutterFlowTheme.of(
-                                                                  context)
-                                                                  .secondary;
-                                                            }
-                                                          }(),
-                                                          size: 24,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        valueOrDefault<String>(
-                                                          containerListarInspeccionesPorIdFichaRowList
-                                                              .first.estado,
-                                                          'es',
-                                                        ),
-                                                        style: FlutterFlowTheme.of(context)
-                                                            .bodyMedium,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                                      14, 0, 0, 0),
-                                                  child: Text(
-                                                    '30/01/2023 10:45 AM',
-                                                    style: FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                      fontFamily: 'Outfit',
-                                                      fontSize: 9,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                           Container(
                                             width: 130,
                                             height: 100,
@@ -482,7 +407,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'ssss',
+                                                          'es',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -490,17 +415,40 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                     ],
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                                      14, 0, 0, 0),
-                                                  child: Text(
-                                                    '30/01/2023 10:45 AM',
-                                                    style: FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                      fontFamily: 'Outfit',
-                                                      fontSize: 9,
-                                                    ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 130,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color: FlutterFlowTheme.of(context).gray200,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Align(
+                                                  alignment: AlignmentDirectional(0, 0),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                        child: Icon(
+                                                          Icons.check_circle_outline,
+                                                          color: containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                              ? Colors.blue
+                                                              : Colors.red, // Conditionally set icon color
+                                                          size: 24,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                          containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                              ? 'Sincronizado'
+                                                              : 'No Sincronizado', // Conditionally set text
+                                                          style: FlutterFlowTheme.of(context).bodyMedium
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ],

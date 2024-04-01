@@ -9,6 +9,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 import 'datos_inspeccion_model.dart';
 export 'datos_inspeccion_model.dart';
@@ -25,8 +27,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
     with TickerProviderStateMixin {
   late DatosInspeccionModel _model;
 
-  late List<TabController> _tabControllers;
-  late List<int> _currentTabIndices;
+  late List<List<TabController>> _tabControllersList;
+  late List<List<int>> _currentTabIndicesList;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -34,15 +36,17 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => DatosInspeccionModel());
-    _tabControllers = [];
-    _currentTabIndices = [];
+    _tabControllersList = [];
+    _currentTabIndicesList = [];
   }
 
   @override
   void dispose() {
     _model.dispose();
-    for (var controller in _tabControllers) {
-      controller.dispose();
+    for (var tabControllers in _tabControllersList) {
+      for (var controller in tabControllers) {
+        controller.dispose();
+      }
     }
     super.dispose();
   }
@@ -55,19 +59,29 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
 
   int currentTabIndex = 0; // Declaración de la variable fuera del método _addTabController
 
-  void _addTabController(int length) {
-    final controller = TabController(length: length, vsync: this);
-    controller.addListener(() {
-      setState(() {
-        int currentIndex = _tabControllers.indexOf(controller);
-        currentTabIndex = controller.index; // Asigna el valor a la variable
-        print('El índice del TabController es $currentIndex y el índice de la pestaña actual es $currentTabIndex');
-        _currentTabIndices[currentIndex] = currentTabIndex;
+  void _addTabController(int sectionIndex, int subSectionIndex, int length) {
+    // Verifica si la lista de controladores de la sección ya existe
+    if (_tabControllersList.length <= sectionIndex) {
+      _tabControllersList.add([]);
+      _currentTabIndicesList.add([]);
+    }
+    // Verifica si la lista de controladores de la subsección ya existe
+    if (_tabControllersList[sectionIndex].length <= subSectionIndex) {
+      final controller = TabController(length: length, vsync: this);
+      controller.addListener(() {
+        setState(() {
+          currentTabIndex = controller.index; // Asigna el valor a la variable
+          print('Se cambió a la pestaña $currentTabIndex');
+          print('Controller iNDEX ${controller.index}');
+          _currentTabIndicesList[sectionIndex][subSectionIndex] = currentTabIndex;
+        });
       });
-    });
-    _tabControllers.add(controller);
-    _currentTabIndices.add(0); // Establece el índice inicial en 0
+      _tabControllersList[sectionIndex].add(controller);
+      _currentTabIndicesList[sectionIndex].add(0); // Establece el índice inicial en 0
+    }
   }
+
+
 
 
   @override
@@ -343,7 +357,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                               alignment: AlignmentDirectional(-1, 0),
                               child: Container(
                                 width: double.infinity,
-                                height: 55,
+                                height: 45,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context).gray200,
                                 ),
@@ -353,81 +367,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        width: 130,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context).gray200,
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Align(
-                                              alignment: AlignmentDirectional(0, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                                        0, 0, 5, 0),
-                                                    child: Icon(
-                                                      Icons.sd_card_alert,
-                                                      color: () {
-                                                        if (containerListarInspeccionesPorIdFichaRowList
-                                                            .first.idEstado ==
-                                                            3) {
-                                                          return FlutterFlowTheme.of(
-                                                              context)
-                                                              .darkSeaGreen;
-                                                        } else if (containerListarInspeccionesPorIdFichaRowList
-                                                            .first.idEstado ==
-                                                            2) {
-                                                          return FlutterFlowTheme.of(
-                                                              context)
-                                                              .gray600;
-                                                        } else if (containerListarInspeccionesPorIdFichaRowList
-                                                            .first.estado ==
-                                                            '4') {
-                                                          return FlutterFlowTheme.of(
-                                                              context)
-                                                              .warning;
-                                                        } else {
-                                                          return FlutterFlowTheme.of(
-                                                              context)
-                                                              .secondary;
-                                                        }
-                                                      }(),
-                                                      size: 24,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    valueOrDefault<String>(
-                                                      containerListarInspeccionesPorIdFichaRowList
-                                                          .first.estado,
-                                                      'es',
-                                                    ),
-                                                    style: FlutterFlowTheme.of(context)
-                                                        .bodyMedium,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional.fromSTEB(
-                                                  14, 0, 0, 0),
-                                              child: Text(
-                                                '30/01/2023 10:45 AM',
-                                                style: FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .override(
-                                                  fontFamily: 'Outfit',
-                                                  fontSize: 9,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                       Container(
                                         width: 130,
                                         height: 100,
@@ -479,7 +418,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                     valueOrDefault<String>(
                                                       containerListarInspeccionesPorIdFichaRowList
                                                           .first.estado,
-                                                      'ssss',
+                                                      'es',
                                                     ),
                                                     style: FlutterFlowTheme.of(context)
                                                         .bodyMedium,
@@ -487,17 +426,40 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional.fromSTEB(
-                                                  14, 0, 0, 0),
-                                              child: Text(
-                                                '30/01/2023 10:45 AM',
-                                                style: FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .override(
-                                                  fontFamily: 'Outfit',
-                                                  fontSize: 9,
-                                                ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 130,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context).gray200,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Align(
+                                              alignment: AlignmentDirectional(0, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                    child: Icon(
+                                                      Icons.check_circle_outline,
+                                                      color: containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                          ? Colors.blue
+                                                          : Colors.red, // Conditionally set icon color
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                      containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                          ? 'Sincronizado'
+                                                          : 'No Sincronizado', // Conditionally set text
+                                                      style: FlutterFlowTheme.of(context).bodyMedium
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -655,14 +617,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   NameSub = '';
                                                   break;
                                               }
-                                              final tabController = TabController(length: cantidadRepeticiones, vsync: this);
-                                              _addTabController(cantidadRepeticiones);
-                                              tabController.addListener(() {
-                                                print('Posición : ${tabController.index}');
-                                                // Imprimir la posición actual del tab en la consola
-                                                print('Posición actual del tab: ${tabController.index + 1}');
-
-                                              });
+                                              _addTabController(listViewIndex, columnIndex, cantidadRepeticiones);
                                               return Align(
                                                 alignment: AlignmentDirectional(-1, 0),
                                                 child: Padding(
@@ -707,7 +662,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                       child: Visibility(
                                                                         visible: cantidadRepeticiones! > 1,
                                                                         child: TabBar(
-                                                                          controller: _tabControllers[columnIndex],
+                                                                          controller: _tabControllersList[listViewIndex][columnIndex],
                                                                           isScrollable: true,
                                                                           labelColor: FlutterFlowTheme.of(context).primary,
                                                                           unselectedLabelColor: FlutterFlowTheme.of(context).primary,
@@ -723,7 +678,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                     ),
                                                                     Expanded(
                                                                       child: TabBarView(
-                                                                        controller: _tabControllers[columnIndex],
+                                                                        controller: _tabControllersList[listViewIndex][columnIndex],
                                                                         children: List.generate(
                                                                           cantidadRepeticiones!,
                                                                               (index) => FutureBuilder<List<ListarPreguntasRow>>(
@@ -747,6 +702,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                 );
                                                                               }
                                                                               final columnListarPreguntasRowList = snapshot.data!;
+                                                                              var nrm = index +1;
                                                                               return SingleChildScrollView(
                                                                                   child: Column(
                                                                                     mainAxisSize: MainAxisSize.max,
@@ -791,6 +747,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                   AlignmentDirectional(0, 0),
                                                                                                   child:
                                                                                                   FutureBuilder<List<ListarOpcionesRow>>(
+
                                                                                                     future: SQLiteManager.instance.listarOpciones(
                                                                                                         idPlantilla: FFAppState().IdPlantilla,
                                                                                                         idPregunta: columnListarPreguntasRow.idPregunta,
@@ -818,7 +775,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                         mainAxisSize: MainAxisSize.max,
                                                                                                         children: List.generate(columnListarOpcionesRowList.length, (columnIndex) {
                                                                                                           final columnListarOpcionesRow = columnListarOpcionesRowList[columnIndex];
-                                                                                                          print(currentTabIndex);
                                                                                                           switch (columnListarOpcionesRow.idTipoOpcion) {
                                                                                                             case 1:
                                                                                                               if (columnListarOpcionesRow.descripcion is String && columnListarOpcionesRow.idTipoOpcion == 1) {
@@ -875,19 +831,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                             respuestaActual += ';';
                                                                                                                                           }
                                                                                                                                         }
-                                                                                                                                        SQLiteManager.instance.actualizarRpta(
-                                                                                                                                            rpta: respuestaActual,
-                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                                            usuarioModificacion: FFAppState().username,
-                                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                            equipoModificacion: FFAppState().cummovil,
-                                                                                                                                            programaModificacion: FFAppState().programacreacion,
-                                                                                                                                            numero: currentTabIndex + 1
-                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                        );
+                                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                                              rpta: respuestaActual,
+                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                                              programaModificacion: FFAppState().programacreacion,
+                                                                                                                                              numero: nrm
+                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                          );
+                                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                                          );
+                                                                                                                                        }
                                                                                                                                       });
                                                                                                                                     },
                                                                                                                                   ),
@@ -934,19 +895,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           }
                                                                                                                                         }
                                                                                                                                         print("valor ${respuestaActual}");
-                                                                                                                                        SQLiteManager.instance.crearRpta(
-                                                                                                                                            rpta: respuestaActual,
-                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                            equipoCreacion: FFAppState().cummovil,
-                                                                                                                                            programaCreacion: FFAppState().programacreacion,
-                                                                                                                                            usuarioCreacion: FFAppState().username,
-                                                                                                                                            numero: currentTabIndex + 1
-                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                        );
+                                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                          SQLiteManager.instance.crearRpta(
+                                                                                                                                              rpta: respuestaActual,
+                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                              equipoCreacion: FFAppState().cummovil,
+                                                                                                                                              programaCreacion: FFAppState().programacreacion,
+                                                                                                                                              usuarioCreacion: FFAppState().username,
+                                                                                                                                              numero: nrm
+                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                          );
+                                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                                          );
+                                                                                                                                        }
                                                                                                                                       });
                                                                                                                                     },
                                                                                                                                   ),
@@ -1017,19 +983,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           // Actualizar la respuesta actual
                                                                                                                                           respuestaLista[index] = value! ? 'S' : 'N';
                                                                                                                                           respuestaActual = respuestaLista.join(';');
-                                                                                                                                          SQLiteManager.instance.actualizarRpta(
-                                                                                                                                              rpta: respuestaActual,
-                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                                              usuarioModificacion: FFAppState().username,
-                                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                              equipoModificacion: FFAppState().cummovil,
-                                                                                                                                              programaModificacion: FFAppState().programacreacion,
-                                                                                                                                              numero: currentTabIndex + 1
-                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                          );
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                            SQLiteManager.instance.actualizarRpta(
+                                                                                                                                                rpta: respuestaActual,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                usuarioModificacion: FFAppState().username,
+                                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoModificacion: FFAppState().cummovil,
+                                                                                                                                                programaModificacion: FFAppState().programacreacion,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          }
                                                                                                                                         });
                                                                                                                                       },
                                                                                                                                     ),
@@ -1072,19 +1043,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           // Actualizar la respuesta actual
                                                                                                                                           respuestaLista[index] = value! ? 'S' : 'N';
                                                                                                                                           respuestaActual = respuestaLista.join(';');
-                                                                                                                                          SQLiteManager.instance.crearRpta(
-                                                                                                                                              rpta: respuestaActual,
-                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                              equipoCreacion: FFAppState().cummovil,
-                                                                                                                                              programaCreacion: FFAppState().programacreacion,
-                                                                                                                                              usuarioCreacion: FFAppState().username,
-                                                                                                                                              numero: currentTabIndex + 1
-                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                          );
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                            SQLiteManager.instance.crearRpta(
+                                                                                                                                                rpta: respuestaActual,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoCreacion: FFAppState().cummovil,
+                                                                                                                                                programaCreacion: FFAppState().programacreacion,
+                                                                                                                                                usuarioCreacion: FFAppState().username,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          }
                                                                                                                                         });
                                                                                                                                       },
                                                                                                                                     ),
@@ -1108,7 +1084,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                           // Caso específico para el tipo de opción 3 (respuesta libre)
                                                                                                             case 3:
                                                                                                               final respuesta = columnListarOpcionesRow.respuesta;
-                                                                                                              Timer? _debounce;
+
                                                                                                               if(respuesta != null) {
                                                                                                                 return Column(
                                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1135,20 +1111,25 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                       border: OutlineInputBorder(),
                                                                                                                                     ),
                                                                                                                                     controller: TextEditingController(text: respuesta),
-                                                                                                                                    onChanged: (value)  {
-                                                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                                                          rpta: value,
-                                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                                          usuarioModificacion: FFAppState().username,
-                                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                          equipoModificacion: FFAppState().cummovil,
-                                                                                                                                          programaModificacion: FFAppState().programacreacion,
-                                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                      );
+                                                                                                                                    onSubmitted: (value) {
+                                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                                                            rpta: value,
+                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                            equipoModificacion: FFAppState().cummovil,
+                                                                                                                                            programaModificacion: FFAppState().programacreacion,
+                                                                                                                                            numero: nrm
+                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                        );
+                                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                                        );
+                                                                                                                                      }
                                                                                                                                     },
                                                                                                                                   ),
                                                                                                                                 ),
@@ -1186,13 +1167,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                       border: OutlineInputBorder(),
                                                                                                                                     ),
                                                                                                                                     controller: TextEditingController(text: respuesta),
-                                                                                                                                    onChanged: (value) {
-                                                                                                                                      if (_debounce != null && _debounce!.isActive) {
-                                                                                                                                        _debounce!.cancel(); // Cancela el temporizador anterior si aún está activo
-                                                                                                                                      }
-
-                                                                                                                                      // Crea un nuevo temporizador para esperar 500 milisegundos después de que el usuario termine de escribir
-                                                                                                                                      _debounce = Timer(Duration(milliseconds: 1000), () {
+                                                                                                                                    onSubmitted: (value){
+                                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
                                                                                                                                         SQLiteManager.instance.crearRpta(
                                                                                                                                             rpta: value,
                                                                                                                                             idpregunta: columnListarOpcionesRow.idPregunta!,
@@ -1203,10 +1179,13 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                             equipoCreacion: FFAppState().cummovil,
                                                                                                                                             programaCreacion: FFAppState().programacreacion,
                                                                                                                                             usuarioCreacion: FFAppState().username,
-                                                                                                                                            numero: currentTabIndex + 1
+                                                                                                                                            numero: nrm
                                                                                                                                           // Proporciona los otros parámetros según sea necesario...
                                                                                                                                         );
-                                                                                                                                      });
+                                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                                        );
+                                                                                                                                      }
                                                                                                                                     },
                                                                                                                                   ),
                                                                                                                                 ),
@@ -1267,26 +1246,27 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
 
                                                                                                                                           // Generar la cadena con el formato N;N;S
                                                                                                                                           String cadenaFormatoSN = generarCadenaFormatoSN(posicionSeleccionada, opciones);
-
-                                                                                                                                          // Almacenar la cadena con el formato N;N;S
-                                                                                                                                          // Aquí debes agregar el código para almacenar la variable `cadenaFormatoSN`.
-
                                                                                                                                           itemSelec = value!;
 
                                                                                                                                           print(cadenaFormatoSN);
-                                                                                                                                          SQLiteManager.instance.actualizarRpta(
-                                                                                                                                              rpta: cadenaFormatoSN,
-                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                                              usuarioModificacion: FFAppState().username,
-                                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                              equipoModificacion: FFAppState().cummovil,
-                                                                                                                                              programaModificacion: FFAppState().programacreacion,
-                                                                                                                                              numero: currentTabIndex + 1
-                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                          );
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                            SQLiteManager.instance.actualizarRpta(
+                                                                                                                                                rpta: cadenaFormatoSN,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                usuarioModificacion: FFAppState().username,
+                                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoModificacion: FFAppState().cummovil,
+                                                                                                                                                programaModificacion: FFAppState().programacreacion,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          }
                                                                                                                                         });
                                                                                                                                       },
                                                                                                                                       items: opciones.map<DropdownMenuItem<String>>((opcion) {
@@ -1342,19 +1322,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           itemSelec = value!;
 
                                                                                                                                           print(cadenaFormatoSN);
-                                                                                                                                          SQLiteManager.instance.crearRpta(
-                                                                                                                                              rpta: cadenaFormatoSN,
-                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                              idficha: FFAppState().IdFicha,
-                                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                              equipoCreacion: FFAppState().cummovil,
-                                                                                                                                              programaCreacion: FFAppState().programacreacion,
-                                                                                                                                              usuarioCreacion: FFAppState().username,
-                                                                                                                                              numero: currentTabIndex + 1
-                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                          );
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                            SQLiteManager.instance.crearRpta(
+                                                                                                                                                rpta: cadenaFormatoSN,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoCreacion: FFAppState().cummovil,
+                                                                                                                                                programaCreacion: FFAppState().programacreacion,
+                                                                                                                                                usuarioCreacion: FFAppState().username,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          }
                                                                                                                                         });
                                                                                                                                       },
                                                                                                                                       items: opciones.map<DropdownMenuItem<String>>((opcion) {
@@ -1394,7 +1379,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
 
                                                                                                               // Variable para almacenar la lista de valores
                                                                                                               List<String> listaValores = respuesta.toList();
-                                                                                                              Timer? _debounce;
                                                                                                               if(respuesta == rptanull){
                                                                                                                 return Column(
                                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1422,17 +1406,14 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                       border: OutlineInputBorder(),
                                                                                                                                     ),
                                                                                                                                     keyboardType: TextInputType.text,
-                                                                                                                                    onChanged: (value) {
-                                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
-
-                                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                                        setState(() {
-                                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
-                                                                                                                                          if (listaValores[index] != value) {
-                                                                                                                                            listaValores[index] = value;
-                                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                                    onSubmitted: (value) {
+                                                                                                                                      setState(() {
+                                                                                                                                        if (listaValores[index] != value) {
+                                                                                                                                          listaValores[index] = value;
+                                                                                                                                          String cadenaValores = listaValores.join('|');
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
                                                                                                                                             SQLiteManager.instance.crearRpta(
-                                                                                                                                                rpta: value,
+                                                                                                                                                rpta: cadenaValores,
                                                                                                                                                 idpregunta: columnListarOpcionesRow.idPregunta!,
                                                                                                                                                 idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
                                                                                                                                                 idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
@@ -1441,11 +1422,14 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                 equipoCreacion: FFAppState().cummovil,
                                                                                                                                                 programaCreacion: FFAppState().programacreacion,
                                                                                                                                                 usuarioCreacion: FFAppState().username,
-                                                                                                                                                numero: currentTabIndex + 1
+                                                                                                                                                numero: nrm
                                                                                                                                               // Proporciona los otros parámetros según sea necesario...
                                                                                                                                             );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
                                                                                                                                           }
-                                                                                                                                        });
+                                                                                                                                        }
                                                                                                                                       });
                                                                                                                                     },
                                                                                                                                     controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
@@ -1486,31 +1470,30 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                       border: OutlineInputBorder(),
                                                                                                                                     ),
                                                                                                                                     keyboardType: TextInputType.text,
-                                                                                                                                    onChanged: (value) {
-                                                                                                                                      if (_debounce?.isActive ?? false) _debounce?.cancel();
+                                                                                                                                    onSubmitted: (value) {
+                                                                                                                                      if (listaValores[index] != value) {
+                                                                                                                                        listaValores[index] = value;
+                                                                                                                                        String cadenaValores = listaValores.join('|');
+                                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                                              rpta: cadenaValores,
+                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                              equipoModificacion: FFAppState().cummovil,
+                                                                                                                                              programaModificacion: FFAppState().programacreacion,
+                                                                                                                                              numero: nrm
+                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                          );
+                                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                                          );
+                                                                                                                                        }
 
-                                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                                        setState(() {
-                                                                                                                                          // Actualizar la variable 'listaValores' solo si el valor ha cambiado
-                                                                                                                                          if (listaValores[index] != value) {
-                                                                                                                                            listaValores[index] = value;
-                                                                                                                                            String cadenaValores = listaValores.join('|');
-                                                                                                                                            SQLiteManager.instance.actualizarRpta(
-                                                                                                                                                rpta: cadenaValores,
-                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                                idficha: FFAppState().IdFicha,
-                                                                                                                                                usuarioModificacion: FFAppState().username,
-                                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                                equipoModificacion: FFAppState().cummovil,
-                                                                                                                                                programaModificacion: FFAppState().programacreacion,
-                                                                                                                                                numero: currentTabIndex + 1
-                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                            );
-                                                                                                                                          }
-                                                                                                                                        });
-                                                                                                                                      });
+                                                                                                                                      }
                                                                                                                                     },
                                                                                                                                     controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''), // Asignar el valor de la respuesta al controlador del campo de texto
                                                                                                                                   ),
@@ -1552,35 +1535,46 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                   if (pickedTime != null) {
                                                                                                                     setState(() {
                                                                                                                       selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
-                                                                                                                      _dateTimeController.text = DateFormat('yyyy-MM-ddTHH:mm').format(selectedDateTime);
+                                                                                                                      _dateTimeController.text = DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime);
+                                                                                                                      print(_dateTimeController.text);
                                                                                                                       //print(_dateTimeController.text);
                                                                                                                       if(respuesta == ""){
-                                                                                                                        SQLiteManager.instance.crearRpta(
-                                                                                                                            rpta: selectedDateTime.toString(),
-                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                            equipoCreacion: FFAppState().cummovil,
-                                                                                                                            programaCreacion: FFAppState().programacreacion,
-                                                                                                                            usuarioCreacion: FFAppState().username,
-                                                                                                                            numero: currentTabIndex + 1
-                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                        );
+                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                          SQLiteManager.instance.crearRpta(
+                                                                                                                              rpta: _dateTimeController.text,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                              equipoCreacion: FFAppState().cummovil,
+                                                                                                                              programaCreacion: FFAppState().programacreacion,
+                                                                                                                              usuarioCreacion: FFAppState().username,
+                                                                                                                              numero: nrm
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                          );
+                                                                                                                        }
                                                                                                                       } else {
-                                                                                                                        SQLiteManager.instance.actualizarRpta(
-                                                                                                                            rpta:selectedDateTime.toString(),
-                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                            usuarioModificacion: FFAppState().username,
-                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                            equipoModificacion: FFAppState().cummovil,
-                                                                                                                            programaModificacion: FFAppState().programacreacion,
-                                                                                                                            numero: currentTabIndex + 1
-                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                        );
+                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                          SQLiteManager.instance.actualizarRpta(
+                                                                                                                              rpta:_dateTimeController.text,
+                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                              usuarioModificacion: FFAppState().username,
+                                                                                                                              fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                            equipoModificacion: FFAppState().cummovil,
+                                                                                                                              programaModificacion: FFAppState().programacreacion,
+                                                                                                                              numero: nrm
+                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                          );
+                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                          );
+                                                                                                                        }
                                                                                                                       }
                                                                                                                     });
                                                                                                                   }
@@ -1621,7 +1615,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                             hintText: 'Seleccionar fecha y hora',
                                                                                                                                             border: OutlineInputBorder(),
                                                                                                                                           ),
-                                                                                                                                          keyboardType: TextInputType.datetime,
+                                                                                                                                          keyboardType: TextInputType.text,
                                                                                                                                         ),
                                                                                                                                         onTap: () {
                                                                                                                                           _selectDateTime(context);
@@ -1669,32 +1663,43 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
 
                                                                                                                     Rptadate = '${picked.day}/${picked.month}/${picked.year}';
                                                                                                                     if(respuesta == ""){
-                                                                                                                      SQLiteManager.instance.crearRpta(
-                                                                                                                          rpta: Rptadate,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                          equipoCreacion: FFAppState().cummovil,
-                                                                                                                          programaCreacion: FFAppState().programacreacion,
-                                                                                                                          usuarioCreacion: FFAppState().username,
-                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                        SQLiteManager.instance.crearRpta(
+                                                                                                                            rpta: Rptadate,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                            usuarioCreacion: FFAppState().username,
+                                                                                                                            numero: nrm
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                        );
+                                                                                                                      }
+
                                                                                                                     } else {
-                                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                                          rpta:Rptadate,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                          usuarioModificacion: FFAppState().username,
-                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
-                                                                                                                          programaModificacion: FFAppState().programacreacion,
-                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                                            rpta:Rptadate,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                                            programaModificacion: FFAppState().programacreacion,
+                                                                                                                            numero: nrm
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                        );
+                                                                                                                      }
                                                                                                                     }
                                                                                                                   });
                                                                                                                   // Actualizar el valor del campo de texto
@@ -1782,32 +1787,42 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                     // Actualiza el valor del controlador con la hora seleccionada
                                                                                                                     RptaHora = '${picked.hour}:${picked.minute}';
                                                                                                                     if(respuesta == ""){
-                                                                                                                      SQLiteManager.instance.crearRpta(
-                                                                                                                          rpta: RptaHora,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                          equipoCreacion: FFAppState().cummovil,
-                                                                                                                          programaCreacion: FFAppState().programacreacion,
-                                                                                                                          usuarioCreacion: FFAppState().username,
-                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                        SQLiteManager.instance.crearRpta(
+                                                                                                                            rpta: RptaHora,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                            usuarioCreacion: FFAppState().username,
+                                                                                                                            numero: nrm
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                        );
+                                                                                                                      }
                                                                                                                     } else {
-                                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                                          rpta:RptaHora,
-                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                          usuarioModificacion: FFAppState().username,
-                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
-                                                                                                                          programaModificacion: FFAppState().programacreacion,
-                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                      );
+                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                                            rpta:RptaHora,
+                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),                                                                                                          equipoModificacion: FFAppState().cummovil,
+                                                                                                                            programaModificacion: FFAppState().programacreacion,
+                                                                                                                            numero: nrm
+                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                        );
+                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                        );
+                                                                                                                      }
                                                                                                                     }
                                                                                                                   });
                                                                                                                 }
@@ -1878,7 +1893,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                               final respuesta = columnListarOpcionesRow.respuesta != null
                                                                                                                   ? "${columnListarOpcionesRow.respuesta}"
                                                                                                                   : "";
-                                                                                                              Timer? _debounce;
                                                                                                               if(respuesta != "") {
                                                                                                                 return Column(
                                                                                                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1905,20 +1919,44 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                     inputFormatters: <TextInputFormatter>[
                                                                                                                                       FilteringTextInputFormatter.digitsOnly // Esto permite solo números
                                                                                                                                     ],
-                                                                                                                                    onChanged: (value) {
-                                                                                                                                      SQLiteManager.instance.actualizarRpta(
-                                                                                                                                          rpta: value,
-                                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                                          usuarioModificacion: FFAppState().username,
-                                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                          equipoModificacion: FFAppState().cummovil,
-                                                                                                                                          programaModificacion: FFAppState().programacreacion,
-                                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                      );
+                                                                                                                                    onSubmitted: (value) {
+                                                                                                                                      setState(() {
+                                                                                                                                        if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                          if(value != ""){
+                                                                                                                                            SQLiteManager.instance.actualizarRpta(
+                                                                                                                                                rpta: value,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                usuarioModificacion: FFAppState().username,
+                                                                                                                                                fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoModificacion: FFAppState().cummovil,
+                                                                                                                                                programaModificacion: FFAppState().programacreacion,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          }
+                                                                                                                                          else {
+                                                                                                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                                              SnackBar(
+                                                                                                                                                content: Text(
+                                                                                                                                                  'No se pueden guardar valores nulos',
+                                                                                                                                                  style: TextStyle(
+                                                                                                                                                    color:
+                                                                                                                                                    FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                                                                  ),
+                                                                                                                                                ),
+                                                                                                                                                duration: Duration(milliseconds: 2000),
+                                                                                                                                                backgroundColor: FlutterFlowTheme.of(context).primary,
+                                                                                                                                              ),
+                                                                                                                                            );
+                                                                                                                                          }
+                                                                                                                                        }
+                                                                                                                                      });
                                                                                                                                     },
                                                                                                                                     decoration: InputDecoration(
                                                                                                                                       hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
@@ -1960,24 +1998,44 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                     inputFormatters: <TextInputFormatter>[
                                                                                                                                       FilteringTextInputFormatter.digitsOnly // Esto permite solo números
                                                                                                                                     ],
-                                                                                                                                    onChanged: (value) {
-                                                                                                                                      if (_debounce?.isActive ?? false) _debounce!.cancel(); // Cancela el temporizador activo si existe
-                                                                                                                                      // Crea un nuevo temporizador para ejecutar la llamada después de un cierto tiempo (por ejemplo, 500 milisegundos)
-                                                                                                                                      _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                                        SQLiteManager.instance.crearRpta(
-                                                                                                                                            rpta: value,
-                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                            equipoCreacion: FFAppState().cummovil,
-                                                                                                                                            programaCreacion: FFAppState().programacreacion,
-                                                                                                                                            usuarioCreacion: FFAppState().username,
-                                                                                                                                            numero: currentTabIndex + 1
-                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                        );
-                                                                                                                                      });
+                                                                                                                                    onSubmitted: (value) {
+                                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                        if(value != ""){
+                                                                                                                                          setState(() {
+                                                                                                                                            SQLiteManager.instance.crearRpta(
+                                                                                                                                                rpta: value,
+                                                                                                                                                idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                idficha: FFAppState().IdFicha,
+                                                                                                                                                fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoCreacion: FFAppState().cummovil,
+                                                                                                                                                programaCreacion: FFAppState().programacreacion,
+                                                                                                                                                usuarioCreacion: FFAppState().username,
+                                                                                                                                                numero: nrm
+                                                                                                                                              // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                            );
+                                                                                                                                            SQLiteManager.instance.inspeccion1(
+                                                                                                                                              idFicha: FFAppState().IdFicha,
+                                                                                                                                            );
+                                                                                                                                          });
+                                                                                                                                        }
+                                                                                                                                        else {
+                                                                                                                                          ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                                            SnackBar(
+                                                                                                                                              content: Text(
+                                                                                                                                                'No se pueden guardar valores nulos',
+                                                                                                                                                style: TextStyle(
+                                                                                                                                                  color:
+                                                                                                                                                  FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                                                                ),
+                                                                                                                                              ),
+                                                                                                                                              duration: Duration(milliseconds: 2000),
+                                                                                                                                              backgroundColor: FlutterFlowTheme.of(context).primary,
+                                                                                                                                            ),
+                                                                                                                                          );
+                                                                                                                                        }
+                                                                                                                                      }
                                                                                                                                     },
                                                                                                                                     decoration: InputDecoration(
                                                                                                                                       hintText: 'Ingrese un número', // Hint para indicar al usuario qué debe ingresar
@@ -2006,7 +2064,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
 
                                                                                                               // Variable para almacenar la lista de valores
                                                                                                               List<String> listaValores = respuesta.toList();
-                                                                                                              Timer? _debounce;
+
                                                                                                               if(respuesta == rptanull){
                                                                                                                 return SingleChildScrollView(
                                                                                                                   scrollDirection: Axis.horizontal,
@@ -2029,7 +2087,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                 itemCount: opciones.length,
                                                                                                                                 itemBuilder: (context, index) {
                                                                                                                                   return Padding(
-                                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+                                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 5, 0),
                                                                                                                                     child: Container(
                                                                                                                                       width: 150,
                                                                                                                                       child: TextField(
@@ -2039,29 +2097,48 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           border: OutlineInputBorder(),
                                                                                                                                         ),
                                                                                                                                         keyboardType: TextInputType.number,
-                                                                                                                                        onChanged: (value) {
-                                                                                                                                          if (_debounce?.isActive ?? false) _debounce?.cancel();
+                                                                                                                                        onSubmitted: (value) {
+                                                                                                                                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                            if(value != ""){
+                                                                                                                                              setState(() {
+                                                                                                                                                if (listaValores[index] != value) {
+                                                                                                                                                  listaValores[index] = value;
+                                                                                                                                                  String cadenaValores = listaValores.join('|');
+                                                                                                                                                  SQLiteManager.instance.crearRpta(
+                                                                                                                                                      rpta: cadenaValores,
+                                                                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                      idficha: FFAppState().IdFicha,
+                                                                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                      equipoCreacion: FFAppState().cummovil,
+                                                                                                                                                      programaCreacion: FFAppState().programacreacion,
+                                                                                                                                                      usuarioCreacion: FFAppState().username,
+                                                                                                                                                      numero: nrm
+                                                                                                                                                  );
+                                                                                                                                                  SQLiteManager.instance.inspeccion1(
+                                                                                                                                                    idFicha: FFAppState().IdFicha,
+                                                                                                                                                  );
+                                                                                                                                                }
+                                                                                                                                              });
+                                                                                                                                            }
+                                                                                                                                            else{
+                                                                                                                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                                                SnackBar(
+                                                                                                                                                  content: Text(
+                                                                                                                                                    'No se pueden guardar valores nulos',
+                                                                                                                                                    style: TextStyle(
+                                                                                                                                                      color:
+                                                                                                                                                      FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                                                                    ),
+                                                                                                                                                  ),
+                                                                                                                                                  duration: Duration(milliseconds: 2000),
+                                                                                                                                                  backgroundColor: FlutterFlowTheme.of(context).primary,
+                                                                                                                                                ),
+                                                                                                                                              );
+                                                                                                                                            }
+                                                                                                                                          }
 
-                                                                                                                                          _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                                            setState(() {
-                                                                                                                                              if (listaValores[index] != value) {
-                                                                                                                                                listaValores[index] = value;
-                                                                                                                                                String cadenaValores = listaValores.join('|');
-                                                                                                                                                SQLiteManager.instance.crearRpta(
-                                                                                                                                                    rpta: cadenaValores,
-                                                                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                                    idficha: FFAppState().IdFicha,
-                                                                                                                                                    fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                                    equipoCreacion: FFAppState().cummovil,
-                                                                                                                                                    programaCreacion: FFAppState().programacreacion,
-                                                                                                                                                    usuarioCreacion: FFAppState().username,
-                                                                                                                                                    numero: currentTabIndex + 1
-                                                                                                                                                );
-                                                                                                                                              }
-                                                                                                                                            });
-                                                                                                                                          });
                                                                                                                                         },
                                                                                                                                         controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''),
                                                                                                                                       ),
@@ -2098,7 +2175,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                 itemCount: opciones.length,
                                                                                                                                 itemBuilder: (context, index) {
                                                                                                                                   return Padding(
-                                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+                                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 5, 0),
                                                                                                                                     child: Container(
                                                                                                                                       width: 150,
                                                                                                                                       child: TextField(
@@ -2108,31 +2185,30 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           border: OutlineInputBorder(),
                                                                                                                                         ),
                                                                                                                                         keyboardType: TextInputType.number,
-                                                                                                                                        onChanged: (value) {
-                                                                                                                                          if (_debounce?.isActive ?? false) _debounce?.cancel();
+                                                                                                                                        onSubmitted: (value) {
+                                                                                                                                          if (listaValores[index] != value) {
+                                                                                                                                            listaValores[index] = value;
+                                                                                                                                            String cadenaValores = listaValores.join('|');
+                                                                                                                                            if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                              SQLiteManager.instance.actualizarRpta(
+                                                                                                                                                  rpta: cadenaValores,
+                                                                                                                                                  idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                                  idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                                  idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                                  idficha: FFAppState().IdFicha,
+                                                                                                                                                  usuarioModificacion: FFAppState().username,
+                                                                                                                                                  fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                  equipoModificacion: FFAppState().cummovil,
+                                                                                                                                                  programaModificacion: FFAppState().programacreacion,
+                                                                                                                                                  numero: nrm
+                                                                                                                                                // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                              );
+                                                                                                                                              SQLiteManager.instance.inspeccion1(
+                                                                                                                                                idFicha: FFAppState().IdFicha,
+                                                                                                                                              );
+                                                                                                                                            }
 
-                                                                                                                                          _debounce = Timer(Duration(milliseconds: 2000), () {
-                                                                                                                                            setState(() {
-                                                                                                                                              // Actualizar la variable 'listaValores' solo si el valor ha cambiado
-                                                                                                                                              if (listaValores[index] != value) {
-                                                                                                                                                listaValores[index] = value;
-                                                                                                                                                String cadenaValores = listaValores.join('|');
-                                                                                                                                                SQLiteManager.instance.actualizarRpta(
-                                                                                                                                                    rpta: cadenaValores,
-                                                                                                                                                    idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                                    idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                                    idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                                    idficha: FFAppState().IdFicha,
-                                                                                                                                                    usuarioModificacion: FFAppState().username,
-                                                                                                                                                    fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                                    equipoModificacion: FFAppState().cummovil,
-                                                                                                                                                    programaModificacion: FFAppState().programacreacion,
-                                                                                                                                                    numero: currentTabIndex + 1
-                                                                                                                                                  // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                                );
-                                                                                                                                              }
-                                                                                                                                            });
-                                                                                                                                          });
+                                                                                                                                          }
                                                                                                                                         },
                                                                                                                                         controller: TextEditingController(text: respuesta.length > index ? respuesta[index] : ''),
                                                                                                                                       ),
@@ -2158,7 +2234,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                 final opcionesPorEtiqueta = (columnListarOpcionesRow.descripcion as String).split('|');
                                                                                                                 if (respuesta == ''){
                                                                                                                   return Padding(
-                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 10),
                                                                                                                     child: SingleChildScrollView(
                                                                                                                       scrollDirection: Axis.horizontal,
                                                                                                                       child: Row(
@@ -2197,7 +2273,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                   value: opcionSeleccionada,
                                                                                                                                   onChanged: (value)  {
                                                                                                                                     // Actualizar el valor seleccionado en la variable local
-                                                                                                                                    setState(() async {
+                                                                                                                                    setState(()  {
                                                                                                                                       final index = opciones.indexOf(value!);
                                                                                                                                       final etiqueta = partes[0]; // Suponiendo que partes[0] es la etiqueta
                                                                                                                                       seleccionesPorEtiqueta[etiqueta] = List.generate(opciones.length, (i) => (i == index) ? 'S' : 'N').join(';');
@@ -2215,19 +2291,24 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           opi += '|'; // Añadir pipe '|' después de cada etiqueta excepto la última
                                                                                                                                         }
                                                                                                                                       }
-                                                                                                                                      await SQLiteManager.instance.crearRpta(
-                                                                                                                                          rpta: opi,
-                                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                                          fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                          equipoCreacion: FFAppState().cummovil,
-                                                                                                                                          programaCreacion: FFAppState().programacreacion,
-                                                                                                                                          usuarioCreacion: FFAppState().username,
-                                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                      );
+                                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                        SQLiteManager.instance.crearRpta(
+                                                                                                                                            rpta: opi,
+                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                            equipoCreacion: FFAppState().cummovil,
+                                                                                                                                            programaCreacion: FFAppState().programacreacion,
+                                                                                                                                            usuarioCreacion: FFAppState().username,
+                                                                                                                                            numero: nrm
+                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                        );
+                                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                                        );
+                                                                                                                                      }
                                                                                                                                     });
 
 
@@ -2249,7 +2330,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                   );
                                                                                                                 } else {
                                                                                                                   return Padding(
-                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 10),
                                                                                                                     child: SingleChildScrollView(
                                                                                                                       scrollDirection: Axis.horizontal,
                                                                                                                       child: Row(
@@ -2288,12 +2369,19 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                 Text(etiqueta), // Mostrar la etiqueta
                                                                                                                                 DropdownButton<String>(
                                                                                                                                   value: opcionSeleccionada,
-                                                                                                                                  onChanged: (value)  async {
-                                                                                                                                    // Actualizar el valor seleccionado en la variable local
-                                                                                                                                    setState(() async {
+                                                                                                                                  onChanged: (value) {
+                                                                                                                                    setState(() {
                                                                                                                                       final index = opciones.indexOf(value!);
-                                                                                                                                      final etiqueta = partes[0]; // Suponiendo que partes[0] es la etiqueta
-                                                                                                                                      seleccionesPorEtiqueta[etiqueta] = List.generate(opciones.length, (i) => (i == index) ? 'S' : 'N').join(';');
+                                                                                                                                      final etiqueta = partes[0];
+
+                                                                                                                                      // Copiar el estado actual de seleccionesPorEtiqueta a un nuevo mapa para mantener las selecciones de otras etiquetas intactas
+                                                                                                                                      Map<String, String> nuevasSelecciones = Map.from(seleccionesPorEtiqueta);
+
+                                                                                                                                      // Actualizar solo la selección de la etiqueta actual
+                                                                                                                                      nuevasSelecciones[etiqueta] = List.generate(opciones.length, (i) => (i == index) ? 'S' : 'N').join(';');
+
+                                                                                                                                      // Actualizar el estado con el nuevo mapa de selecciones
+                                                                                                                                      seleccionesPorEtiqueta = nuevasSelecciones;
 
                                                                                                                                       // Obtener todas las etiquetas actuales
                                                                                                                                       List<String> etiquetas = [];
@@ -2323,8 +2411,6 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                       // Imprimir el valor de opi para verificar
                                                                                                                                       print("Valor de opi después de la actualización: $opi");
                                                                                                                                       // Concatenar opi y respuesta
-
-                                                                                                                                      // Concatenar opi y respuesta
                                                                                                                                       String opiYRespuesta = '';
                                                                                                                                       List<String> opiParts = opi.split('|');
                                                                                                                                       List<String> respuestaParts = respuesta.split('|');
@@ -2349,31 +2435,37 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                           opiYRespuesta += '|';
                                                                                                                                         }
                                                                                                                                       }
-// Si hay partes adicionales en respuesta que no están en opi, las agregamos
+
+                                                                                                                                      // Si hay partes adicionales en respuesta que no están en opi, las agregamos
                                                                                                                                       if (respuestaParts.length > opiParts.length) {
                                                                                                                                         opiYRespuesta += respuestaParts.sublist(opiParts.length).join('|');
                                                                                                                                       }
 
+                                                                                                                                      // Imprimir el valor de la concatenación de opi y respuesta para verificar
                                                                                                                                       print("Concatenación de opi y respuesta: $opiYRespuesta");
 
-
-                                                                                                                                      print("Concatenación de opi y respuesta: $opiYRespuesta");
-
-                                                                                                                                      await SQLiteManager.instance.actualizarRpta(
-                                                                                                                                          rpta: opi,
-                                                                                                                                          idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                          idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                          idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                          idficha: FFAppState().IdFicha,
-                                                                                                                                          fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                          equipoModificacion: FFAppState().cummovil,
-                                                                                                                                          programaModificacion: FFAppState().programacreacion,
-                                                                                                                                          usuarioModificacion: FFAppState().username,
-                                                                                                                                          numero: currentTabIndex + 1
-                                                                                                                                        // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                      );
+                                                                                                                                      // Actualizar la respuesta en la base de datos
+                                                                                                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
+                                                                                                                                        SQLiteManager.instance.actualizarRpta(
+                                                                                                                                            rpta: opiYRespuesta,
+                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                            idficha: FFAppState().IdFicha,
+                                                                                                                                            fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                            equipoModificacion: FFAppState().cummovil,
+                                                                                                                                            programaModificacion: FFAppState().programacreacion,
+                                                                                                                                            usuarioModificacion: FFAppState().username,
+                                                                                                                                            numero: nrm
+                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                        );
+                                                                                                                                        SQLiteManager.instance.inspeccion1(
+                                                                                                                                          idFicha: FFAppState().IdFicha,
+                                                                                                                                        );
+                                                                                                                                      }
                                                                                                                                     });
                                                                                                                                   },
+
                                                                                                                                   items: opciones.map<DropdownMenuItem<String>>((String value) {
                                                                                                                                     return DropdownMenuItem<String>(
                                                                                                                                       value: value,
@@ -2402,19 +2494,14 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                             case 12:
                                                                                                               if (columnListarOpcionesRow.descripcion is String) {
                                                                                                                 final opciones = (columnListarOpcionesRow.descripcion as String).split('|');
-                                                                                                                final respuesta = columnListarOpcionesRow.respuesta != null
-                                                                                                                    ? "Respuesta: ${columnListarOpcionesRow.respuesta}"
-                                                                                                                    : "Respuesta: (No hay respuesta)";
                                                                                                                 // Unir las opciones con saltos de línea
                                                                                                                 final texto = opciones.join('\n');
 
                                                                                                                 return Padding(
-                                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 10),
                                                                                                                   child: Column(
                                                                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                                                                     children: [
-                                                                                                                      // Mostrar la respuesta en alguna parte
-                                                                                                                      Text("Respuesta12: ${respuesta}"),
                                                                                                                       TextField(
                                                                                                                         keyboardType: TextInputType.multiline,
                                                                                                                         maxLines: null,

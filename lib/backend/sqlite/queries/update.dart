@@ -77,8 +77,8 @@ Future performCargarData(
   String? estadoIns,
 }) {
   final query = '''
-INSERT INTO Inspecciones (idInspeccion, nombreEvento, idFicha, idPlantilla, codigoLocalColegio, nombreLocalColegio, departamentoColegio, provinciaColegio, distritoColegio, idEstado, estado)
-VALUES ('${idInspeccion}', '${nombreIns}', '${idFichaIns}', '${idPlantillaIns}', '${codigolocalIns}','${nombreLocalIns}', '${departamentoIns}', '${provinciaIns}', '${distritoIns}', '${idEstadoIns}', '${estadoIns}');
+INSERT INTO Inspecciones (idInspeccion, nombreEvento, idFicha, idPlantilla, codigoLocalColegio, nombreLocalColegio, departamentoColegio, provinciaColegio, distritoColegio, idEstado, estado,modificadoMovil )
+VALUES ('${idInspeccion}', '${nombreIns}', '${idFichaIns}', '${idPlantillaIns}', '${codigolocalIns}','${nombreLocalIns}', '${departamentoIns}', '${provinciaIns}', '${distritoIns}', '${idEstadoIns}', '${estadoIns}',0);
 
 ''';
   return database.rawQuery(query);
@@ -581,7 +581,7 @@ Future performActualizarRpta(
       String? fechaModificacion,
       String? equipoModificacion,
       String? programaModificacion,
-      int? numero
+      int?  numero
     }) {
   final query = '''
 UPDATE FichaPreguntaRespuestas
@@ -814,6 +814,23 @@ WHERE
 ''';
   return database.rawQuery(query);
 }
+
+Future performActualizarInspeccionEstado(
+    Database database, {
+      int? idInspeccion,
+    }) {
+  final query = '''
+UPDATE Inspecciones
+SET
+    idEstado = 4,
+    estado = 'EN REGISTRO'
+WHERE 
+    idInspeccion = ${idInspeccion}
+
+''';
+  return database.rawQuery(query);
+}
+
 
 
 Future performActualizarFichaAPI(
@@ -1152,3 +1169,52 @@ WHERE
 ''';
   return database.rawQuery(query);
 }
+
+///ACTUALIZARSINCRONIZACIONMOVILINSPECCIONES
+
+Future performModificacionInspecicon1(
+    Database database, {
+      int? idFicha
+    }) {
+  final query = '''
+UPDATE Inspecciones 
+SET modificadoMovil = 1
+WHERE idFicha = ${idFicha}
+    
+''';
+  return database.rawQuery(query);
+}
+///END
+
+///ACTUALIZARSINCRONIZACIONMOVILINSPECCIONESs
+
+Future performModificacionInspecicon0(
+    Database database, {
+      int? idFicha
+    }) {
+  final query = '''
+UPDATE Inspecciones 
+SET modificadoMovil = 0
+WHERE idFicha = ${idFicha}
+    
+''';
+  return database.rawQuery(query);
+}
+///END
+///
+
+///FICHAMODIFICADOMOVIL
+
+Future performModificacionFicha1(
+    Database database, {
+      int? idFicha
+    }) {
+  final query = '''
+UPDATE Fichas 
+SET modificadoMovil = 1
+WHERE idFicha = ${idFicha}
+    
+''';
+  return database.rawQuery(query);
+}
+///END

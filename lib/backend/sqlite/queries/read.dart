@@ -83,7 +83,8 @@ SELECT
     provinciaColegio,
     distritoColegio,
     idEstado,
-    estado
+    estado,
+    modificadoMovil
 FROM Inspecciones;
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesRow(d));
@@ -103,6 +104,7 @@ class ListarInspeccionesRow extends SqliteRow {
   String? get distritoColegio => data['distritoColegio'] as String?;
   int? get idEstado => data['idEstado'] as int?;
   String? get estado => data['estado'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 /// END LISTARINSPECCIONES
@@ -123,7 +125,8 @@ SELECT
     provinciaColegio,
     distritoColegio,
     idEstado,
-    estado
+    estado,
+    modificadoMovil
 FROM Inspecciones where idEstado = 4;
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesProcessRow(d));
@@ -143,6 +146,7 @@ class ListarInspeccionesProcessRow extends SqliteRow {
   String? get distritoColegio => data['distritoColegio'] as String?;
   int? get idEstado => data['idEstado'] as int?;
   String? get estado => data['estado'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 /// END LISTARINSPECCIONESPROCESS
@@ -163,7 +167,8 @@ SELECT
     provinciaColegio,
     distritoColegio,
     idEstado,
-    estado
+    estado,
+    modificadoMovil
 FROM Inspecciones where idEstado = 3;
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesRealizadaRow(d));
@@ -183,6 +188,7 @@ class ListarInspeccionesRealizadaRow extends SqliteRow {
   String? get distritoColegio => data['distritoColegio'] as String?;
   int? get idEstado => data['idEstado'] as int?;
   String? get estado => data['estado'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 /// END LISTARINSPECCIONESREALIZADA
@@ -204,7 +210,8 @@ SELECT
     provinciaColegio,
     distritoColegio,
     idEstado,
-    estado
+    estado,
+    modificadoMovil
 FROM Inspecciones where idEstado = 2;
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesProgramadaRow(d));
@@ -224,6 +231,7 @@ class ListarInspeccionesProgramadaRow extends SqliteRow {
   String? get distritoColegio => data['distritoColegio'] as String?;
   int? get idEstado => data['idEstado'] as int?;
   String? get estado => data['estado'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 /// END LISTARINSPECCIONESPROGRAMADA
@@ -323,7 +331,8 @@ SELECT
     provinciaColegio,
     distritoColegio,
     idEstado,
-    estado
+    estado,
+    modificadoMovil
 FROM Inspecciones where idFicha = '${idFicha}';
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesPorIdFichaRow(d));
@@ -343,6 +352,7 @@ class ListarInspeccionesPorIdFichaRow extends SqliteRow {
   String? get distritoColegio => data['distritoColegio'] as String?;
   int? get idEstado => data['idEstado'] as int?;
   String? get estado => data['estado'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 /// END LISTARINSPECCIONESPORIDFICHA

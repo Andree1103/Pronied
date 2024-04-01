@@ -370,6 +370,18 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantillaSeccion =
                                                                 columnListarInspeccionesRow
                                                                     .idPlantilla!;
+                                                                FFAppState()
+                                                                    .estadoInspeccion =
+                                                                columnListarInspeccionesRow
+                                                                    .estado!;
+                                                                FFAppState()
+                                                                    .idestadoInspeccion =
+                                                                columnListarInspeccionesRow
+                                                                    .idEstado!;
+                                                                FFAppState()
+                                                                    .idInspeccion =
+                                                                columnListarInspeccionesRow
+                                                                    .idInspeccion!;
                                                               });
 
                                                               var ssh = await SQLiteManager.instance.listarSSHH(
@@ -588,7 +600,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Container(
                                                                     width: double
                                                                         .infinity,
-                                                                    height: 64,
                                                                     decoration:
                                                                     BoxDecoration(
                                                                       color: FlutterFlowTheme.of(
@@ -617,8 +628,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -662,24 +671,12 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ],
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
                                                                               ],
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -699,25 +696,19 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                         child: Icon(
                                                                                           Icons.check_circle_outline,
-                                                                                          color: FlutterFlowTheme.of(context).darkSeaGreen,
+                                                                                          color: columnListarInspeccionesRow.modificadoMovil == 0
+                                                                                              ? Colors.blue
+                                                                                              : Colors.red, // Conditionally set icon color
                                                                                           size: 24,
                                                                                         ),
                                                                                       ),
                                                                                       Text(
-                                                                                        'Realizada',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                                        columnListarInspeccionesRow.modificadoMovil == 0
+                                                                                            ? 'Sincronizado'
+                                                                                            : 'No Sincronizado', // Conditionally set text
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium
                                                                                       ),
                                                                                     ],
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -839,6 +830,18 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantillaSeccion =
                                                                 columnListarInspeccionesProcessRow
                                                                     .idPlantilla!;
+                                                                FFAppState()
+                                                                    .estadoInspeccion =
+                                                                columnListarInspeccionesProcessRow
+                                                                    .estado!;
+                                                                FFAppState()
+                                                                    .idestadoInspeccion =
+                                                                columnListarInspeccionesProcessRow
+                                                                    .idEstado!;
+                                                                FFAppState()
+                                                                    .idInspeccion =
+                                                                columnListarInspeccionesProcessRow
+                                                                    .idInspeccion!;
                                                               });
 
                                                               var ssh = await SQLiteManager.instance.listarSSHH(
@@ -1056,7 +1059,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Container(
                                                                     width: double
                                                                         .infinity,
-                                                                    height: 64,
                                                                     decoration:
                                                                     BoxDecoration(
                                                                       color: FlutterFlowTheme.of(
@@ -1085,8 +1087,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -1130,24 +1130,12 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ],
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
                                                                               ],
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -1167,25 +1155,19 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                         child: Icon(
                                                                                           Icons.check_circle_outline,
-                                                                                          color: FlutterFlowTheme.of(context).darkSeaGreen,
+                                                                                          color: columnListarInspeccionesProcessRow.modificadoMovil == 0
+                                                                                              ? Colors.blue
+                                                                                              : Colors.red, // Conditionally set icon color
                                                                                           size: 24,
                                                                                         ),
                                                                                       ),
                                                                                       Text(
-                                                                                        'Realizada',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                                          columnListarInspeccionesProcessRow.modificadoMovil == 0
+                                                                                              ? 'Sincronizado'
+                                                                                              : 'No Sincronizado', // Conditionally set text
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium
                                                                                       ),
                                                                                     ],
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -1307,6 +1289,18 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantillaSeccion =
                                                                 columnListarInspeccionesRealizadaRow
                                                                     .idPlantilla!;
+                                                                FFAppState()
+                                                                    .estadoInspeccion =
+                                                                columnListarInspeccionesRealizadaRow
+                                                                    .estado!;
+                                                                FFAppState()
+                                                                    .idestadoInspeccion =
+                                                                columnListarInspeccionesRealizadaRow
+                                                                    .idEstado!;
+                                                                FFAppState()
+                                                                    .idInspeccion =
+                                                                columnListarInspeccionesRealizadaRow
+                                                                    .idInspeccion!;
                                                               });
                                                               var ssh = await SQLiteManager.instance.listarSSHH(
                                                                   idFicha: FFAppState().IdFicha
@@ -1524,7 +1518,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Container(
                                                                     width: double
                                                                         .infinity,
-                                                                    height: 64,
                                                                     decoration:
                                                                     BoxDecoration(
                                                                       color: FlutterFlowTheme.of(
@@ -1553,8 +1546,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -1598,24 +1589,12 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ],
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
                                                                               ],
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -1635,25 +1614,19 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                         child: Icon(
                                                                                           Icons.check_circle_outline,
-                                                                                          color: FlutterFlowTheme.of(context).darkSeaGreen,
+                                                                                          color: columnListarInspeccionesRealizadaRow.modificadoMovil == 0
+                                                                                              ? Colors.blue
+                                                                                              : Colors.red, // Conditionally set icon color
                                                                                           size: 24,
                                                                                         ),
                                                                                       ),
                                                                                       Text(
-                                                                                        'Realizada',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                                          columnListarInspeccionesRealizadaRow.modificadoMovil == 0
+                                                                                              ? 'Sincronizado'
+                                                                                              : 'No Sincronizado', // Conditionally set text
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium
                                                                                       ),
                                                                                     ],
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -1775,6 +1748,18 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                     .idPlantillaSeccion =
                                                                 columnListarInspeccionesProgramadaRow
                                                                     .idPlantilla!;
+                                                                FFAppState()
+                                                                    .estadoInspeccion =
+                                                                columnListarInspeccionesProgramadaRow
+                                                                    .estado!;
+                                                                FFAppState()
+                                                                    .idestadoInspeccion =
+                                                                columnListarInspeccionesProgramadaRow
+                                                                    .idEstado!;
+                                                                FFAppState()
+                                                                    .idInspeccion =
+                                                                columnListarInspeccionesProgramadaRow
+                                                                    .idInspeccion!;
                                                               });
 
                                                               var ssh = await SQLiteManager.instance.listarSSHH(
@@ -1993,7 +1978,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   Container(
                                                                     width: double
                                                                         .infinity,
-                                                                    height: 64,
                                                                     decoration:
                                                                     BoxDecoration(
                                                                       color: FlutterFlowTheme.of(
@@ -2022,8 +2006,6 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -2067,24 +2049,12 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                     ],
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
                                                                               ],
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             width:
                                                                             130,
-                                                                            height:
-                                                                            100,
                                                                             decoration:
                                                                             BoxDecoration(
                                                                               color:
@@ -2104,25 +2074,19 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                                                                                         child: Icon(
                                                                                           Icons.check_circle_outline,
-                                                                                          color: FlutterFlowTheme.of(context).darkSeaGreen,
+                                                                                          color: columnListarInspeccionesProgramadaRow.modificadoMovil == 0
+                                                                                              ? Colors.blue
+                                                                                              : Colors.red, // Conditionally set icon color
                                                                                           size: 24,
                                                                                         ),
                                                                                       ),
                                                                                       Text(
-                                                                                        'Realizada',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium,
+                                                                                          columnListarInspeccionesProgramadaRow.modificadoMovil == 0
+                                                                                              ? 'Sincronizado'
+                                                                                              : 'No Sincronizado', // Conditionally set text
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium
                                                                                       ),
                                                                                     ],
-                                                                                  ),
-                                                                                ),
-                                                                                Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                                                                  child: Text(
-                                                                                    '30/01/2023 10:45 AM',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Outfit',
-                                                                                      fontSize: 9,
-                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ],
