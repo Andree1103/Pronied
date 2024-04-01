@@ -42,7 +42,6 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
     context.watch<FFAppState>();
 
     return Container(
-      width: 300.0,
       height: double.infinity,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -69,7 +68,7 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Estas seguro de iniciar la Inspeccion?',
+                  '¿Estás seguro de iniciar la Inspección?',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 15.0,
@@ -83,13 +82,17 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  await SQLiteManager.instance.deleteFoto(
-                    idFoto: FFAppState().IdFoto,
+                  await SQLiteManager.instance.inspeccion1(
+                    idFicha: FFAppState().IdFoto,
                   );
+                  setState(() {
+                    FFAppState().estadoInspeccion = 'EN REGISTRO';
+                    FFAppState().idestadoInspeccion = 4;
+                  });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Foto eliminada correctamente',
+                        'Inspección actualizada correctamente.',
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -101,7 +104,7 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
                   );
                   Navigator.pop(context);
 
-                  context.pushNamed('GaleriaFotos');
+                  context.pushNamed('DatosGenerales');
                 },
                 text: 'Aceptar',
                 options: FFButtonOptions(
