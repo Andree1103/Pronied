@@ -537,7 +537,6 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                   alignment: AlignmentDirectional(-1.0, -1.0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
@@ -547,495 +546,477 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 15.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 15.0),
-                                  child: Text(
-                                    'Agregar Firma',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 15.0),
+                                child: Text(
+                                  'Agregar Firma',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                    fontFamily: 'Outfit',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: FlutterFlowDropDown<String>(
+                                controller:
+                                _model.dropDownValueController1 ??=
+                                    FormFieldController<String>(null),
+                                options: ['Director', 'Profesor'],
+                                onChanged: (val) => setState(
+                                        () => _model.dropDownValue1 = val),
+                                width: double.infinity,
+                                height: 50.0,
+                                textStyle:
+                                FlutterFlowTheme.of(context).bodyMedium,
+                                hintText: 'Tipo de Persona',
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
+                                ),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                elevation: 2.0,
+                                borderColor:
+                                FlutterFlowTheme.of(context).alternate,
+                                borderWidth: 2.0,
+                                borderRadius: 8.0,
+                                margin: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 4.0, 16.0, 4.0),
+                                hidesUnderline: true,
+                                isOverButton: true,
+                                isSearchable: false,
+                                isMultiSelect: false,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: FlutterFlowDropDown<String>(
+                                controller:
+                                _model.dropDownValueController2 ??=
+                                    FormFieldController<String>(null),
+                                options: ['DNI', 'Carnet de Extranjeria'],
+                                onChanged: (val) => setState(
+                                        () => _model.dropDownValue2 = val),
+                                width: double.infinity,
+                                height: 50.0,
+                                textStyle:
+                                FlutterFlowTheme.of(context).bodyMedium,
+                                hintText: 'Tipo de documento',
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
+                                ),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                elevation: 2.0,
+                                borderColor:
+                                FlutterFlowTheme.of(context).alternate,
+                                borderWidth: 2.0,
+                                borderRadius: 8.0,
+                                margin: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 4.0, 16.0, 4.0),
+                                hidesUnderline: true,
+                                isOverButton: true,
+                                isSearchable: false,
+                                isMultiSelect: false,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.dat1Controller1,
+                                  focusNode: _model.dat1FocusNode1,
+                                  autofocus: true,
+                                  autofillHints: [AutofillHints.birthday],
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Número de documento',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelLarge
                                         .override(
                                       fontFamily: 'Outfit',
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
-                                      fontWeight: FontWeight.w600,
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: FlutterFlowDropDown<String>(
-                                  controller:
-                                  _model.dropDownValueController1 ??=
-                                      FormFieldController<String>(null),
-                                  options: ['Director', 'Profesor'],
-                                  onChanged: (val) => setState(
-                                          () => _model.dropDownValue1 = val),
-                                  width: double.infinity,
-                                  height: 50.0,
-                                  textStyle:
-                                  FlutterFlowTheme.of(context).bodyMedium,
-                                  hintText: 'Tipo de Persona',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
-                                  ),
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2.0,
-                                  borderColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                                  borderWidth: 2.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 16.0, 4.0),
-                                  hidesUnderline: true,
-                                  isOverButton: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: FlutterFlowDropDown<String>(
-                                  controller:
-                                  _model.dropDownValueController2 ??=
-                                      FormFieldController<String>(null),
-                                  options: ['DNI', 'Carnet de Extranjeria'],
-                                  onChanged: (val) => setState(
-                                          () => _model.dropDownValue2 = val),
-                                  width: double.infinity,
-                                  height: 50.0,
-                                  textStyle:
-                                  FlutterFlowTheme.of(context).bodyMedium,
-                                  hintText: 'Tipo de documento',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
-                                  ),
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2.0,
-                                  borderColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                                  borderWidth: 2.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 16.0, 4.0),
-                                  hidesUnderline: true,
-                                  isOverButton: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: _model.dat1Controller1,
-                                    focusNode: _model.dat1FocusNode1,
-                                    autofocus: true,
-                                    autofillHints: [AutofillHints.birthday],
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Número de documento',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    keyboardType: TextInputType.datetime,
-                                    validator: _model.dat1Controller1Validator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: _model.dat1Controller2,
-                                    focusNode: _model.dat1FocusNode2,
-                                    autofocus: true,
-                                    autofillHints: [AutofillHints.birthday],
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Nombres',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    validator: _model.dat1Controller2Validator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: _model.dat1Controller3,
-                                    focusNode: _model.dat1FocusNode3,
-                                    autofocus: true,
-                                    autofillHints: [AutofillHints.birthday],
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Primer Apellido',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    validator: _model.dat1Controller3Validator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: _model.dat1Controller4,
-                                    focusNode: _model.dat1FocusNode4,
-                                    autofocus: true,
-                                    autofillHints: [AutofillHints.birthday],
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Segundo Apellido',
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelLarge
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          width: 2.0,
-                                        ),
-                                        borderRadius:
-                                        BorderRadius.circular(12.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    validator: _model.dat1Controller4Validator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 10.0),
-                                child: Text(
-                                  'Firma',
-                                  style:
-                                  FlutterFlowTheme.of(context).bodyMedium,
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                height: 145.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  border: Border.all(
-                                    width: 1.0,
-                                  ),
-                                ),
-                                child: ClipRect(
-                                  child: Signature(
-                                    controller: _model.signatureController ??=
-                                        SignatureController(
-                                          penStrokeWidth: 2.0,
-                                          penColor: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          exportBackgroundColor: Color(0x00000000),
-                                        ),
-                                    backgroundColor:
-                                    FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    height: double.infinity,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 5.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      _model.signatureController?.clear();
-                                    },
-                                    text: 'Limpiar firma',
-                                    options: FFButtonOptions(
-                                      height: 40.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      iconPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .darkSeaGreen,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: Colors.white,
-                                      ),
-                                      elevation: 3.0,
+                                    enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                    fontFamily: 'Outfit',
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  keyboardType: TextInputType.datetime,
+                                  validator: _model.dat1Controller1Validator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.dat1Controller2,
+                                  focusNode: _model.dat1FocusNode2,
+                                  autofocus: true,
+                                  autofillHints: [AutofillHints.birthday],
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Nombres',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelLarge
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                    fontFamily: 'Outfit',
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  validator: _model.dat1Controller2Validator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.dat1Controller3,
+                                  focusNode: _model.dat1FocusNode3,
+                                  autofocus: true,
+                                  autofillHints: [AutofillHints.birthday],
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Primer Apellido',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelLarge
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                    fontFamily: 'Outfit',
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  validator: _model.dat1Controller3Validator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 15.0),
+                              child: Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _model.dat1Controller4,
+                                  focusNode: _model.dat1FocusNode4,
+                                  autofocus: true,
+                                  autofillHints: [AutofillHints.birthday],
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Segundo Apellido',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelLarge
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius:
+                                      BorderRadius.circular(12.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                    fontFamily: 'Outfit',
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  validator: _model.dat1Controller4Validator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 10.0),
+                              child: Text(
+                                'Firma',
+                                style:
+                                FlutterFlowTheme.of(context).bodyMedium,
+                              ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 145.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                border: Border.all(
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: ClipRect(
+                                child: Signature(
+                                  controller: _model.signatureController ??=
+                                      SignatureController(
+                                        penStrokeWidth: 2.0,
+                                        penColor: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        exportBackgroundColor: Color(0x00000000),
+                                      ),
+                                  backgroundColor:
+                                  FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  height: double.infinity,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 5.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    _model.signatureController?.clear();
+                                  },
+                                  text: 'Limpiar firma',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        24.0, 0.0, 24.0, 0.0),
+                                    iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context)
+                                        .darkSeaGreen,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: Colors.white,
+                                    ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 25.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (_model.formKey.currentState == null ||
-                                          !_model.formKey.currentState!
-                                              .validate()) {
-                                        return;
-                                      }
-                                      if (_model.dropDownValue1 == null) {
-                                        return;
-                                      }
-                                      if (_model.dropDownValue2 == null) {
-                                        return;
-                                      }
-                                      exportedImge = await _model.signatureController?.toPngBytes();
-                                      savedImagePath = await saveImageToDevice(exportedImge!);
-                                      setState(() { });
-                                      await SQLiteManager.instance.crearFirma(
-                                        persona: _model.dropDownValue1,
-                                        documento: _model.dropDownValue2,
-                                        numeroDoc: _model.dat1Controller1.text,
-                                        apePaterno: _model.dat1Controller3.text,
-                                        apeMaterno: _model.dat1Controller4.text,
-                                        image: savedImagePath,
-                                        nombre: _model.dat1Controller2.text,
-                                      );
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 25.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    if (_model.formKey.currentState == null ||
+                                        !_model.formKey.currentState!
+                                            .validate()) {
+                                      return;
+                                    }
+                                    if (_model.dropDownValue1 == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Fimra Agregada!',
+                                            'Seleccionar tipo de persona',
                                             style: TextStyle(
                                               color:
                                               FlutterFlowTheme.of(context)
@@ -1043,76 +1024,150 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                             ),
                                           ),
                                           duration:
-                                          Duration(milliseconds: 4000),
+                                          Duration(milliseconds: 2000),
                                           backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .primary,
                                         ),
                                       );
+                                      return;
+                                    }
+                                    if (_model.dropDownValue2 == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Seleccionar tipo de documento',
+                                            style: TextStyle(
+                                              color:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryBackground,
+                                            ),
+                                          ),
+                                          duration:
+                                          Duration(milliseconds: 2000),
+                                          backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .primary,
+                                        ),
+                                      );
+                                      return;
+                                    }
+                                    exportedImge = await _model.signatureController?.toPngBytes();
+                                    savedImagePath = await saveImageToDevice(exportedImge!);
+                                    setState(() {
+                                      SQLiteManager.instance.inspeccion1(
+                                        idFicha: FFAppState().IdFicha,
+                                      );
+                                    });
+                                    /*await SQLiteManager.instance.crearFirma(
+                                      persona: _model.dropDownValue1,
+                                      documento: _model.dropDownValue2,
+                                      numeroDoc: _model.dat1Controller1.text,
+                                      apePaterno: _model.dat1Controller3.text,
+                                      apeMaterno: _model.dat1Controller4.text,
+                                      image: savedImagePath,
+                                      nombre: _model.dat1Controller2.text,
+                                    );*/
+                                    await SQLiteManager.instance.crearFichaFirma(
+                                      idFicha: FFAppState().IdFicha,
+                                      idTipoPersona: _model.dropDownValue1 == 'Director' ? 1 : 2,
+                                      idTipoDocumento: _model.dropDownValue2 == 'DNI' ? 1 : 2,
+                                      numDocumento: _model.dat1Controller1.text,
+                                      nombres: _model.dat1Controller2.text,
+                                      apellidoPaterno: _model.dat1Controller3.text,
+                                      apellidoMaterno: _model.dat1Controller4.text,
+                                      estadoAuditoria: '1',
+                                      tipoArchivo: 'F',
+                                      rutalocal: savedImagePath,
+                                      modificacionMovil: 1,
+                                      uploadDocumento: 0,
+                                      fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                      equipoCreacionAuditoria: FFAppState().cummovil,
+                                      programaCreacionAuditoria: FFAppState().programacreacion,
+                                      usuarioCreacionAuditoria: FFAppState().username,
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Fimra Agregada!',
+                                          style: TextStyle(
+                                            color:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                          ),
+                                        ),
+                                        duration:
+                                        Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .primary,
+                                      ),
+                                    );
 
-                                      context.pushNamed('Firmas');
-                                    },
-                                    text: 'Guardar firma',
-                                    options: FFButtonOptions(
-                                      height: 40.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      iconPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFF086D82),
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: Colors.white,
-                                      ),
-                                      elevation: 3.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                    context.pushNamed('Firmas');
+                                  },
+                                  text: 'Guardar firma',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        24.0, 0.0, 24.0, 0.0),
+                                    iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: Color(0xFF086D82),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: Colors.white,
                                     ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 25.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      context.pushNamed('Firmas');
-                                    },
-                                    text: 'Cancelar',
-                                    options: FFButtonOptions(
-                                      height: 40.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      iconPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFFDE1B1B),
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                        fontFamily: 'Outfit',
-                                        color: Colors.white,
-                                      ),
-                                      elevation: 3.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 25.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    context.pushNamed('Firmas');
+                                  },
+                                  text: 'Cancelar',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        24.0, 0.0, 24.0, 0.0),
+                                    iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: Color(0xFFDE1B1B),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                      fontFamily: 'Outfit',
+                                      color: Colors.white,
                                     ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

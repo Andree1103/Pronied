@@ -478,7 +478,9 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(20, 15, 20, 0),
                         child: FutureBuilder<List<ListarFirmasRow>>(
-                          future: SQLiteManager.instance.listarFirmas(),
+                          future: SQLiteManager.instance.listarFirmas(
+                            idFicha: FFAppState().IdFicha,
+                          ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -557,8 +559,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         child: Text(
                                                           valueOrDefault<String>(
                                                             columnListarFirmasRow
-                                                                .persona,
-                                                            'Persona',
+                                                                .persona == 1 ? 'Director' : 'Persona', 'a'// Conditionally set text
                                                           ),
                                                           style:
                                                           FlutterFlowTheme.of(
@@ -612,7 +613,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                                         valueOrDefault<
                                                                             String>(
                                                                           columnListarFirmasRow
-                                                                              .documento,
+                                                                              .documento == 1 ? 'DNI' : 'Carnet de Extranjeria',
                                                                           'Documento',
                                                                         ),
                                                                         style: FlutterFlowTheme.of(

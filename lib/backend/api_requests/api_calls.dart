@@ -44,6 +44,63 @@ class APIDatosCall {
       );
 }
 
+class UploaddocCall {
+  static Future<ApiCallResponse> call({
+    FFUploadedFile? archivos,
+    String? tag = '',
+    String? codigoapp = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'uploaddoc',
+      apiUrl: 'https://calidad.ngrok.io/segedo/api/genimagen/uploaddocumentos',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {
+        'archivos': archivos,
+        'tag': tag,
+        'codigoapp': codigoapp,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+  static int? id(dynamic response) => castToType<int>(getJsonField(
+    response,
+    '\$.[0].id',
+  ));
+  static String? url(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].url',
+  ));
+  static String? nombrearchivo(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].nombrearchivo',
+  ));
+  static String? extension(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].extension',
+  ));
+  static String? tamano(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].tamano',
+  ));
+  static String? tag(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].tag',
+  ));
+  static bool? estado(dynamic response) => castToType<bool>(getJsonField(
+    response,
+    '\$[0].estado',
+  ));
+  static String? mensaje(dynamic response) => castToType<String>(getJsonField(
+    response,
+    '\$[0].mensaje',
+  ));
+}
 
 
 class ApiProniedCall {
@@ -669,6 +726,131 @@ ${corche}''';
       ));
 
 
+  ///FICHAFIRMAS
+  ///
+
+  static List? fichasFirmas(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.fichasFirmas''',
+    true,
+  ) as List?;
+  static int? idFichaFirma(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].idFichaFirma',
+      ));
+  static int? idFichaFirmaMovil(dynamic response, int index) => castToType<int>(getJsonField(
+    response,
+    '\$.dato.fichasFirmas[$index].idFichaFirmaMovil',
+  ));
+  static int? idFichaFirmasfir(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].idFicha',
+      ));
+  static String? nombresfir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].nombres',
+      ));
+  static String? apellidoPaternofir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].apellidoPaterno',
+      ));
+  static String? apellidoMaternofir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].apellidoMaterno',
+      ));
+  static String? nombreArchivofir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].nombreArchivo',
+      ));
+  static String? extensionfir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].extension',
+      ));
+  static String? rutafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].ruta',
+      ));
+  static double? pesofir(dynamic response, int index) =>
+      castToType<double>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].peso',
+      ));
+  static String? tipoArchivofir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].tipoArchivo',
+      ));
+  static String? numDocumentofir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].numDocumento',
+      ));
+  static int? idTipoDocumentofir(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].idTipoDocumento',
+      ));
+  static int? idTipoPersonafir(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].idTipoPersona',
+      ));
+  static String? estadoAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].estadoAuditoria',
+      ));
+  static String? usuarioCreacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].usuarioCreacionAuditoria',
+      ));
+  static String? usuarioModificacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].usuarioModificacionAuditoria',
+      ));
+  static String? fechaCreacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].fechaCreacionAuditoria',
+      ));
+  static String? fechaModificacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].fechaModificacionAuditoria',
+      ));
+  static String? equipoCreacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].equipoCreacionAuditoria',
+      ));
+  static String? equipoModificacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].equipoModificacionAuditoria',
+      ));
+  static String? programaCreacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].programaCreacionAuditoria',
+      ));
+  static String? programaModificacionAuditoriafir(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasFirmas[$index].programaModificacionAuditoria',
+      ));
+
+
+
   ///SINC
   ///
 
@@ -756,8 +938,8 @@ class APIObtenerTOKENCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Obtener TOKEN',
-      apiUrl:
-      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -807,8 +989,8 @@ class ApiAutorizacionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API AUTORIZACION',
-      apiUrl:
-      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -929,8 +1111,8 @@ class ApiTokenFinalCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API TOKEN FINAL',
-      apiUrl:
-      'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

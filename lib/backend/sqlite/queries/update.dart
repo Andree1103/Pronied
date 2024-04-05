@@ -34,13 +34,64 @@ Future performCrearFirma(
 
 /// END CREARFIRMA
 
+///
+/// BEGIN CREARFICHAFIRMA
+Future performCrearFichaFirma(
+    Database database, {
+      int? idFichaFirmaMovil,
+      int? idFichaFirma,
+      int? idFicha,
+      String? nombres,
+      String? apellidoPaterno,
+      String? apellidoMaterno,
+      String? nombreArchivo,
+      String? extension,
+      String? ruta,
+      double? peso,
+      String? tipoArchivo,
+      String? numDocumento,
+      int? idTipoDocumento,
+      int? idTipoPersona,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificacionMovil,
+      int? uploadDocumento,
+      String? rutalocal
+    }) {
+  final query = '''
+  INSERT INTO FichasFirmas (idFichaFirmaMovil,
+   idFichaFirma,idFicha, nombres, apellidoPaterno,apellidoMaterno, nombreArchivo, extension,
+   ruta, peso, tipoArchivo, numDocumento,idTipoDocumento, idTipoPersona, estadoAuditoria,
+   usuarioCreacionAuditoria, usuarioModificacionAuditoria,fechaCreacionAuditoria, fechaModificacionAuditoria,
+   equipoCreacionAuditoria, equipoModificacionAuditoria, programaCreacionAuditoria, programaModificacionAuditoria,modificacionMovil,uploadDocumento,rutalocal) 
+   VALUES (${idFichaFirmaMovil}, ${idFichaFirma}, ${idFicha}, '${nombres}', '${apellidoPaterno}', 
+   '${apellidoMaterno}', '${nombreArchivo}', '${extension}', '${ruta}', ${peso}, '${tipoArchivo}', 
+   '${numDocumento}', ${idTipoDocumento}, ${idTipoPersona}, '${estadoAuditoria}', '${usuarioCreacionAuditoria}',
+    '${usuarioModificacionAuditoria}', '${fechaCreacionAuditoria}', '${fechaModificacionAuditoria}', 
+    '${equipoCreacionAuditoria}', '${equipoModificacionAuditoria}', '${programaCreacionAuditoria}', 
+    '${programaModificacionAuditoria}', ${modificacionMovil},${uploadDocumento},'${rutalocal}')
+''';
+  return database.rawQuery(query);
+}
+
+/// END CREARFIRMA
+
 /// BEGIN DELETEFIRMA
 Future performDeleteFirma(
     Database database, {
       int? id,
     }) {
   final query = '''
-Delete FROM Firma  where Id =${id}
+UPDATE FichasFirmas
+SET estadoAuditoria = '0'
+WHERE idFichaFirmaMovil = ${id};
 ''';
   return database.rawQuery(query);
 }
@@ -466,7 +517,32 @@ WHERE
   return database.rawQuery(query);
 }
 
+/// BEGIN ACTUALIZARFICHA
+Future performFirmaUpload(
+    Database database, {
+      int? idFicha,
+      String? rutalocal,
+      String? nombreArchivo,
+      String? extension,
+      String? ruta,
+      double? peso,
+      int? uploadDocumento
+    }) {
+  final query = '''
+UPDATE FichasFirmas
+SET
+    nombreArchivo = '${nombreArchivo}',
+    extension = '${extension}',
+    ruta = '${ruta}',
+    peso = ${peso},
+    uploadDocumento = ${uploadDocumento}
+WHERE 
+    idFicha = ${idFicha} and rutalocal = '${rutalocal}';
 
+
+''';
+  return database.rawQuery(query);
+}
 
 Future performActualizarFichaMod(
     Database database, {
@@ -561,6 +637,67 @@ SET
     ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
     CodigoModular = '${idFichaModular}';
+
+
+''';
+  return database.rawQuery(query);
+}
+
+Future performActualizarFichaFirmasMod(
+    Database database, {
+      int? idFichaFirma,
+      int? idFichaFirmaMovil,
+      int? idFicha,
+      String? nombres,
+      String? apellidoPaterno,
+      String? apellidoMaterno,
+      String? nombreArchivo,
+      String? extension,
+      String? ruta,
+      double? peso,
+      String? tipoArchivo,
+      String? numDocumento,
+      int? idTipoDocumento,
+      int? idTipoPersona,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificacionMovil,
+    }) {
+  final query = '''
+UPDATE FichasFirmas
+SET
+    idFicha = ${idFicha},
+    idFichaFirma = ${idFichaFirma},
+    nombres = '${nombres}',
+    apellidoPaterno = '${apellidoPaterno}',
+    apellidoMaterno = '${apellidoMaterno}',
+    nombreArchivo = '${nombreArchivo}',
+    extension = '${extension}',
+    ruta = '${ruta}',
+    peso = ${peso},
+    tipoArchivo = '${tipoArchivo}',
+    numDocumento = '${numDocumento}',
+    idTipoDocumento = ${idTipoDocumento},
+    idTipoPersona = ${idTipoPersona},
+    estadoAuditoria = '${estadoAuditoria}',
+    usuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaCreacionAuditoria = '${programaCreacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificacionMovil = ${modificacionMovil}
+WHERE 
+    idFichaFirmaMovil = ${idFichaFirmaMovil} and idFicha = ${idFicha};
 
 
 ''';
@@ -1100,6 +1237,25 @@ SET
     modificadoMovil = 0
     WHERE 
       idFicha = ${idFicha};
+
+''';
+  return database.rawQuery(query);
+}
+
+
+///FICHA FIRMAS MOVIL 0
+///
+
+Future performActualizarFichaFirmas0(
+    Database database, {
+      int? idFicha
+    }) {
+  final query = '''
+UPDATE FichasFirmas
+SET
+    modificadoMovil = 0
+    WHERE 
+      idFichaFirmaMovil = ${idFicha};
 
 ''';
   return database.rawQuery(query);

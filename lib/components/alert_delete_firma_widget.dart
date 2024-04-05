@@ -81,6 +81,11 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
                   await SQLiteManager.instance.deleteFirma(
                     id: FFAppState().IdFirma,
                   );
+                  setState(() {
+                    SQLiteManager.instance.inspeccion1(
+                      idFicha: FFAppState().IdFicha,
+                    );
+                  });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(

@@ -82,8 +82,8 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  await SQLiteManager.instance.inspeccion1(
-                    idFicha: FFAppState().IdFoto,
+                  await SQLiteManager.instance.actualizarInspeccionesEstado(
+                    idInspeccion: FFAppState().idInspeccion
                   );
                   setState(() {
                     FFAppState().estadoInspeccion = 'EN REGISTRO';

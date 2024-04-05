@@ -33,8 +33,12 @@ class SQLiteManager {
         _database,
       );
 
-  Future<List<ListarFirmasRow>> listarFirmas() => performListarFirmas(
+  Future<List<ListarFirmasRow>> listarFirmas({
+    int? idFicha,
+  }) =>
+      performListarFirmas(
         _database,
+        idFicha: idFicha,
       );
 
   Future<List<ListarInspeccionesRow>> listarInspecciones() =>
@@ -91,6 +95,19 @@ class SQLiteManager {
   Future<List<ListarFichasModificacion>>
   listarFichasModificas() =>
       performListarFichaMod(
+          _database
+      );
+
+  Future<List<ListarFichasFirmaModificacion>>
+  listarFichasFirmaModificas() =>
+      performListarFichaFirmaMod(
+          _database
+      );
+
+
+  Future<List<ListarFichasFirmas>>
+  listarFichasFirmas1() =>
+      performListarFichaFirmas(
           _database
       );
 
@@ -215,6 +232,64 @@ class SQLiteManager {
         image: image,
         nombre: nombre,
       );
+
+
+  Future crearFichaFirma({
+    int? idFichaFirmaMovil,
+    int? idFichaFirma,
+    int? idFicha,
+    String? nombres,
+    String? apellidoPaterno,
+    String? apellidoMaterno,
+    String? nombreArchivo,
+    String? extension,
+    String? ruta,
+    double? peso,
+    String? tipoArchivo,
+    String? numDocumento,
+    int? idTipoDocumento,
+    int? idTipoPersona,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificacionMovil,
+    int? uploadDocumento,
+    String? rutalocal
+}) => performCrearFichaFirma(
+    _database,
+    idFichaFirmaMovil: idFichaFirmaMovil,
+    idFichaFirma: idFichaFirma,
+    idFicha: idFicha,
+    nombres: nombres,
+    apellidoPaterno: apellidoPaterno,
+    apellidoMaterno: apellidoMaterno,
+    nombreArchivo: nombreArchivo,
+    extension: extension,
+    ruta: ruta,
+    peso: peso,
+    tipoArchivo: tipoArchivo,
+    numDocumento: numDocumento,
+    idTipoDocumento: idTipoDocumento,
+    idTipoPersona: idTipoPersona,
+    estadoAuditoria: estadoAuditoria,
+    usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaCreacionAuditoria: fechaCreacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoCreacionAuditoria: equipoCreacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaCreacionAuditoria: programaCreacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria,
+    modificacionMovil: modificacionMovil,
+    uploadDocumento: uploadDocumento,
+    rutalocal: rutalocal
+  );
 
   Future deleteFirma({
     int? id,
@@ -528,6 +603,27 @@ class SQLiteManager {
         FechaModificacionAuditoria: FechaModificacionAuditoria,
         modificadoMovil: modificadoMovil,
         UsuarioModificacionAudi: UsuarioModificacionAudi
+      );
+
+
+  Future actualizarFichaFirmaUpload({
+    int? idFicha,
+    String? rutalocal,
+    String? nombreArchivo,
+    String? extension,
+    String? ruta,
+    double? peso,
+    int? uploadDocumento
+  }) =>
+      performFirmaUpload(
+          _database,
+          idFicha: idFicha,
+          rutalocal: rutalocal,
+          nombreArchivo: nombreArchivo,
+          extension: extension,
+          ruta: ruta,
+          peso: peso,
+          uploadDocumento: uploadDocumento
       );
 
 
@@ -890,6 +986,34 @@ class SQLiteManager {
         numeroRepeticion: numeroRepeticion
       );
 
+  ///FIRMAS
+  ///
+
+  Future<List<ExistFirmaForId>> VerificarSiExisteFirma({
+    int? idFicha,
+    int? idFichaFirmaMovil
+  }) =>
+      performListarFirmaExist(
+          _database,
+        idFicha: idFicha,
+        idFichaFirmaMovil: idFichaFirmaMovil
+      );
+
+
+  ///FIRMAS RUTA NOT NULL Y MOVIL NULL
+  ///
+
+  Future<List<ExistFirmaNullForId>> VerificarSiExisteFirmaNotNUll({
+    int? idFicha,
+    int? idFichaFirma,
+    int? idFichaFirmaMovil
+  }) =>
+      performListarFirmaExistNull(
+          _database,
+          idFicha: idFicha,
+          idFichaFirma: idFichaFirma,
+          idFichaFirmaMovil: idFichaFirmaMovil
+      );
 
   ///INSPECCION
   Future<List<ExistInspeciconForId>> VerificarSiExisteInspeccion({
@@ -958,6 +1082,66 @@ class SQLiteManager {
           programaCreacionAuditoria: programaCreacionAuditoria,
           programaModificacionAuditoria: programaModificacionAuditoria
       );
+
+
+  ///FICHA API
+  ///
+
+  Future actualizarFichaFirmasAPI({
+    int? idFichaFirma,
+    int? idFichaFirmaMovil,
+    int? idFicha,
+    String? nombres,
+    String? apellidoPaterno,
+    String? apellidoMaterno,
+    String? nombreArchivo,
+    String? extension,
+    String? ruta,
+    double? peso,
+    String? tipoArchivo,
+    String? numDocumento,
+    int? idTipoDocumento,
+    int? idTipoPersona,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificacionMovil,
+  }) =>
+      performActualizarFichaFirmasMod(
+          _database,
+          idFicha: idFicha,
+          idFichaFirma: idFichaFirma,
+          idFichaFirmaMovil: idFichaFirmaMovil,
+          nombres: nombres,
+          apellidoPaterno:apellidoPaterno,
+          apellidoMaterno:apellidoMaterno,
+          nombreArchivo:nombreArchivo,
+          extension:extension,
+          ruta:ruta,
+          peso:peso,
+          tipoArchivo:tipoArchivo,
+          numDocumento:numDocumento,
+          idTipoDocumento:idTipoDocumento,
+          idTipoPersona:idTipoPersona,
+          estadoAuditoria:estadoAuditoria,
+          usuarioCreacionAuditoria:usuarioCreacionAuditoria,
+          usuarioModificacionAuditoria:usuarioModificacionAuditoria,
+          fechaCreacionAuditoria:fechaCreacionAuditoria,
+          fechaModificacionAuditoria:fechaModificacionAuditoria,
+          equipoCreacionAuditoria:equipoCreacionAuditoria,
+          equipoModificacionAuditoria:equipoModificacionAuditoria,
+          programaCreacionAuditoria:programaCreacionAuditoria,
+          programaModificacionAuditoria:programaModificacionAuditoria,
+          modificacionMovil:modificacionMovil
+      );
+
+
 
 ///PLANTILLA API
   Future actualizarPlantillaAPI({
