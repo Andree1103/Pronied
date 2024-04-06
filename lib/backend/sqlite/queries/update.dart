@@ -969,6 +969,22 @@ WHERE
 }
 
 
+Future performFinalizarInspeccion(
+    Database database, {
+      int? idInspeccion,
+    }) {
+  final query = '''
+UPDATE Inspecciones
+SET
+    idEstado = 3,
+    estado = 'REALIZADA'
+WHERE 
+    idInspeccion = ${idInspeccion}
+
+''';
+  return database.rawQuery(query);
+}
+
 
 Future performActualizarFichaAPI(
     Database database, {

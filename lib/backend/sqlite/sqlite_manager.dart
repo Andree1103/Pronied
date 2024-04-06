@@ -901,6 +901,13 @@ class SQLiteManager {
     idInspeccion: idInspeccion,
   );
 
+  Future actualizarFinalizarInspeccion ({
+    int? idInspeccion,
+  }) => performFinalizarInspeccion (
+    _database,
+    idInspeccion: idInspeccion,
+  );
+
   Future actualizarestaFichaCola({
     int? idCola,
   }) =>

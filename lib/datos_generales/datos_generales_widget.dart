@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_change_estado_widget.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -116,7 +117,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-
     return FutureBuilder<List<ListarFichaPorIdFichaRow>>(
       future: SQLiteManager.instance.listarFichaPorIdFicha(
         idFicha: FFAppState().IdFicha,
@@ -139,11 +139,6 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
             ),
           );
         }
-        // Incorrect
-        print(FFAppState().idestadoInspeccion);  // Missing closing parenthesis
-
-// Correct
-        print(FFAppState().estadoInspeccion);
         final datosGeneralesListarFichaPorIdFichaRowList = snapshot.data!;
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
@@ -738,9 +733,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -862,9 +855,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -939,9 +930,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .secondaryText,
                                                                     size: 24,
                                                                   ),
-                                                                  fillColor: FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .secondaryBackground,
+                                                                  fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   elevation: 2,
                                                                   borderColor:
                                                                   FlutterFlowTheme.of(
@@ -1074,9 +1063,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -1092,6 +1079,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                   validator: _model
                                                                       .dat1Controller3Validator
                                                                       .asValidator(
@@ -1205,9 +1193,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -1223,6 +1209,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                   validator: _model
                                                                       .dat1Controller4Validator
                                                                       .asValidator(
@@ -1336,9 +1323,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -1354,6 +1339,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                   validator: _model
                                                                       .dat1Controller5Validator
                                                                       .asValidator(
@@ -1548,7 +1534,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1607,7 +1593,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1666,7 +1652,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1736,7 +1722,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1744,6 +1730,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                                       validator: _model.dat1Controller9Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1807,7 +1794,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1815,6 +1802,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                                       validator: _model.dat1Controller10Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1878,7 +1866,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1886,6 +1874,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                                       validator: _model.dat1Controller11Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1949,7 +1938,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -1957,6 +1946,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                                       validator: _model.dat1Controller12Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -2020,7 +2010,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                           borderRadius: BorderRadius.circular(12),
                                                                                         ),
                                                                                         filled: true,
-                                                                                        fillColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                                       ),
                                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                         fontFamily: 'Outfit',
@@ -2028,6 +2018,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                                                       validator: _model.dat1Controller13Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -2208,9 +2199,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2230,6 +2219,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller14Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2331,9 +2321,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2350,6 +2338,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller15Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2447,9 +2436,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2466,6 +2453,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller16Validator
                                                                         .asValidator(
                                                                         context),
+                                                                      inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2567,9 +2555,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2589,6 +2575,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller17Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(9)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2715,9 +2702,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2730,10 +2715,13 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       fontWeight:
                                                                       FontWeight.w300,
                                                                     ),
+                                                                    minLines: null,
+                                                                    keyboardType: TextInputType.number,
                                                                     validator: _model
                                                                         .dat1Controller18Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2835,9 +2823,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2854,6 +2840,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller19Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -2955,9 +2942,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -2974,6 +2959,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller20Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -3075,9 +3061,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       ),
                                                                       filled:
                                                                       true,
-                                                                      fillColor:
-                                                                      FlutterFlowTheme.of(context)
-                                                                          .primaryBtnText,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                     ),
                                                                     style: FlutterFlowTheme.of(
                                                                         context)
@@ -3097,6 +3081,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .dat1Controller21Validator
                                                                         .asValidator(
                                                                         context),
+                                                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(9)],
                                                                   ),
                                                                 ),
                                                               ),
@@ -3154,7 +3139,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode22,
                                                                   autofocus:
                                                                   true,
-                                                                  readOnly: edit,
+                                                                  readOnly: true,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3228,9 +3213,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3276,7 +3259,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1FocusNode23,
                                                                   autofocus:
                                                                   true,
-                                                                  readOnly: edit,
+                                                                  readOnly: true,
                                                                   autofillHints: [
                                                                     AutofillHints
                                                                         .birthday
@@ -3354,9 +3337,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3480,9 +3461,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3499,6 +3478,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1Controller24Validator
                                                                       .asValidator(
                                                                       context),
+                                                                  inputFormatters: [LengthLimitingTextInputFormatter(9)],
                                                                 ),
                                                               ),
                                                             ),
@@ -3606,9 +3586,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3625,6 +3603,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1Controller25Validator
                                                                       .asValidator(
                                                                       context),
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(9)],
                                                                 ),
                                                               ),
                                                             ),
@@ -3732,9 +3711,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3858,9 +3835,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -3987,9 +3962,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     ),
                                                                     filled:
                                                                     true,
-                                                                    fillColor: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .primaryBtnText,
+                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
@@ -4051,65 +4024,116 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                           size: 30,
                         ),
                         onPressed: () async {
-                          await SQLiteManager.instance.actualizarFicha(
-                            idFicha: FFAppState().IdFicha,
-                            centroPobladoColegio: _model.dat1Controller1.text,
-                            direccionColegio: _model.dat1Controller2.text,
-                            zonaColegio: _model.dat1Value,
-                            totalPabellon:
-                            int.tryParse(_model.dat1Controller3.text),
-                            totalAulas:
-                            int.tryParse(_model.dat1Controller4.text),
-                            totalSSHH:
-                            int.tryParse(_model.dat1Controller5.text),
-                            dniDirector: _model.dat1Controller14.text,
-                            nombreDirector: _model.dat1Controller15.text,
-                            correoDirector: _model.dat1Controller16.text,
-                            telefonoDirector: _model.dat1Controller17.text,
-                            dniAlterno: _model.dat1Controller18.text,
-                            nombreAlterno: _model.dat1Controller19.text,
-                            correoAlterno: _model.dat1Controller20.text,
-                            telefonoAlterno: _model.dat1Controller21.text,
-                            dniInspector: _model.dat1Controller22.text,
-                            nombreInspector: _model.dat1Controller23.text,
-                            correoInspector: _model.dat1Controller24.text,
-                            telefonoInspector: _model.dat1Controller25.text,
-                            fechaInspeccion: _model.dat1Controller27.text,
-                            horaInspeccion: _model.dat1Controller28.text,
-                            tipoInspeccion: _model.dat1Controller26.text,
-                            UsuarioModificacionAudi: "SAMADOR",
-                            modificadoMovil: 1,
-                            FechaModificacionAuditoria: DateTime.now().toString(),
-                            EquipoModificacionAuditoria: "localhost"
-                          );
-                          setState(() {
-                            SQLiteManager.instance.inspeccion1(
-                              idFicha: FFAppState().IdFicha,
-                            );
-                          });
+                          if(_model.dat1Controller4.text! != null && int.tryParse(_model.dat1Controller4.text)! < 50 && int.tryParse(_model.dat1Controller4.text)! > 0) {
+                            if(_model.dat1Controller3.text! != null && int.tryParse(_model.dat1Controller3.text)! < 50 && int.tryParse(_model.dat1Controller3.text)! > 0) {
+                              if(_model.dat1Controller5.text! != null && int.tryParse(_model.dat1Controller5.text)! < 50 && int.tryParse(_model.dat1Controller5.text)! > 0){
+                                await SQLiteManager.instance.actualizarFicha(
+                                    idFicha: FFAppState().IdFicha,
+                                    centroPobladoColegio: _model.dat1Controller1.text,
+                                    direccionColegio: _model.dat1Controller2.text,
+                                    zonaColegio: _model.dat1Value,
+                                    totalPabellon:
+                                    int.tryParse(_model.dat1Controller3.text),
+                                    totalAulas:
+                                    int.tryParse(_model.dat1Controller4.text),
+                                    totalSSHH:
+                                    int.tryParse(_model.dat1Controller5.text),
+                                    dniDirector: _model.dat1Controller14.text,
+                                    nombreDirector: _model.dat1Controller15.text,
+                                    correoDirector: _model.dat1Controller16.text,
+                                    telefonoDirector: _model.dat1Controller17.text,
+                                    dniAlterno: _model.dat1Controller18.text,
+                                    nombreAlterno: _model.dat1Controller19.text,
+                                    correoAlterno: _model.dat1Controller20.text,
+                                    telefonoAlterno: _model.dat1Controller21.text,
+                                    dniInspector: _model.dat1Controller22.text,
+                                    nombreInspector: _model.dat1Controller23.text,
+                                    correoInspector: _model.dat1Controller24.text,
+                                    telefonoInspector: _model.dat1Controller25.text,
+                                    fechaInspeccion: _model.dat1Controller27.text,
+                                    horaInspeccion: _model.dat1Controller28.text,
+                                    tipoInspeccion: _model.dat1Controller26.text,
+                                    UsuarioModificacionAudi: "SAMADOR",
+                                    modificadoMovil: 1,
+                                    FechaModificacionAuditoria: DateTime.now().toString(),
+                                    EquipoModificacionAuditoria: "localhost"
+                                );
+                                setState(() {
+                                  SQLiteManager.instance.inspeccion1(
+                                    idFicha: FFAppState().IdFicha,
+                                  );
+                                });
 
-                          FFAppState().CantA= int.tryParse(_model.dat1Controller4.text)!;
+                                FFAppState().CantA= int.tryParse(_model.dat1Controller4.text)!;
 
-                          FFAppState().CantP= int.tryParse(_model.dat1Controller3.text)!;
+                                FFAppState().CantP= int.tryParse(_model.dat1Controller3.text)!;
 
-                          FFAppState().CantS= int.tryParse(_model.dat1Controller5.text)!;
+                                FFAppState().CantS= int.tryParse(_model.dat1Controller5.text)!;
 
 
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Actualizado Correctamente',
-                                style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Actualizado Correctamente',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'La cantidad de SS.HH no puede ser mayor de 50 ni menor de 0',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'La cantidad de Pabellones no puede ser mayor de 50 ni menor de 0',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'La cantidad de Aulas no puede ser mayor de 50 ni menor de 0',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                FlutterFlowTheme.of(context).primary,
                               ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                              FlutterFlowTheme.of(context).primary,
-                            ),
-                          );
+                            );
+                          }
                         },
                       ),
                     ),

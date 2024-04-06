@@ -59,24 +59,28 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF0E1C27),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('FloatingActionButton pressed ...');
-          },
-          backgroundColor: Color(0xFF086D82),
-          elevation: 8,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
+        floatingActionButton:
+        Visibility(
+          visible: FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO',
+          child: FloatingActionButton(
+            onPressed: () {
               context.pushNamed('AddFoto');
             },
-            child: Icon(
-              Icons.add,
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-              size: 24,
+            backgroundColor: Color(0xFF086D82),
+            elevation: 8,
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.pushNamed('AddFoto');
+              },
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                size: 24,
+              ),
             ),
           ),
         ),
@@ -663,6 +667,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         ),
                                                       ],
                                                     ),
+                                                    if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
                                                     Align(
                                                       alignment:
                                                       AlignmentDirectional(

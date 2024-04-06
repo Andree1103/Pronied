@@ -353,7 +353,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Container(
                                   width: double.infinity,
-                                  height: 55,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context).gray200,
                                   ),
@@ -363,81 +363,6 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          width: 130,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context).gray200,
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Align(
-                                                alignment: AlignmentDirectional(0, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                          0, 0, 5, 0),
-                                                      child: Icon(
-                                                        Icons.sd_card_alert,
-                                                        color: () {
-                                                          if (containerListarInspeccionesPorIdFichaRowList
-                                                              .first.idEstado ==
-                                                              3) {
-                                                            return FlutterFlowTheme.of(
-                                                                context)
-                                                                .darkSeaGreen;
-                                                          } else if (containerListarInspeccionesPorIdFichaRowList
-                                                              .first.idEstado ==
-                                                              2) {
-                                                            return FlutterFlowTheme.of(
-                                                                context)
-                                                                .gray600;
-                                                          } else if (containerListarInspeccionesPorIdFichaRowList
-                                                              .first.estado ==
-                                                              '4') {
-                                                            return FlutterFlowTheme.of(
-                                                                context)
-                                                                .warning;
-                                                          } else {
-                                                            return FlutterFlowTheme.of(
-                                                                context)
-                                                                .secondary;
-                                                          }
-                                                        }(),
-                                                        size: 24,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      valueOrDefault<String>(
-                                                        containerListarInspeccionesPorIdFichaRowList
-                                                            .first.estado,
-                                                        'es',
-                                                      ),
-                                                      style: FlutterFlowTheme.of(context)
-                                                          .bodyMedium,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(
-                                                    14, 0, 0, 0),
-                                                child: Text(
-                                                  '30/01/2023 10:45 AM',
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                    fontFamily: 'Outfit',
-                                                    fontSize: 9,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
                                         Container(
                                           width: 130,
                                           height: 100,
@@ -489,7 +414,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                       valueOrDefault<String>(
                                                         containerListarInspeccionesPorIdFichaRowList
                                                             .first.estado,
-                                                        'ssss',
+                                                        'es',
                                                       ),
                                                       style: FlutterFlowTheme.of(context)
                                                           .bodyMedium,
@@ -497,17 +422,40 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                   ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(
-                                                    14, 0, 0, 0),
-                                                child: Text(
-                                                  '30/01/2023 10:45 AM',
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                    fontFamily: 'Outfit',
-                                                    fontSize: 9,
-                                                  ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 130,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context).gray200,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(0, 0),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                      child: Icon(
+                                                        Icons.check_circle_outline,
+                                                        color: containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                            ? Colors.blue
+                                                            : Colors.red, // Conditionally set icon color
+                                                        size: 24,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                        containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                            ? 'Sincronizado'
+                                                            : 'No Sincronizado', // Conditionally set text
+                                                        style: FlutterFlowTheme.of(context).bodyMedium
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -783,6 +731,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                           color: Color(0xFF086D82),
                                           size: 35.0,
                                         ),
+
                                       ),
                                     ),
                                   ),
@@ -890,6 +839,40 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                       EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       color: Color(0xFF086D82),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: Colors.white,
+                                      ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 25.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      context.pushNamed('GaleriaFotos');
+                                    },
+                                    text: 'Cancelar',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 24.0, 0.0),
+                                      iconPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0xFFDE1B1B),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
