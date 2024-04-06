@@ -109,6 +109,33 @@ class ListarInspeccionesRow extends SqliteRow {
 }
 
 /// END LISTARINSPECCIONES
+///
+
+/// BEGIN LISTARINSPECCIONES
+Future<List<ListarInspeccionesMod1Row>> performListarInspeccionesMod1(
+    Database database,
+    ) {
+  final query = '''
+SELECT 
+    idInspeccion, 
+    idFicha, 
+    idEstado,
+    modificadoMovil
+FROM Inspecciones where modificadoMovil = 1;
+''';
+  return _readQuery(database, query, (d) => ListarInspeccionesMod1Row(d));
+}
+
+class ListarInspeccionesMod1Row extends SqliteRow {
+  ListarInspeccionesMod1Row(Map<String, dynamic> data) : super(data);
+
+  int? get idInspeccion => data['idInspeccion'] as int?;
+  int? get idFicha => data['idFicha'] as int?;
+  int? get idEstado => data['idEstado'] as int?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+}
+
+
 
 /// BEGIN LISTARINSPECCIONESPROCESS
 Future<List<ListarInspeccionesProcessRow>> performListarInspeccionesProcess(

@@ -61,6 +61,11 @@ class SQLiteManager {
             _database,
           );
 
+  Future<List<ListarInspeccionesMod1Row>>
+  listarInspeccionesMod1() => performListarInspeccionesMod1(
+    _database,
+  );
+
   Future<List<ListarFichaPorIdFichaRow>> listarFichaPorIdFicha({
     int? idFicha,
   }) =>

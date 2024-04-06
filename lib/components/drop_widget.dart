@@ -180,6 +180,7 @@ class _DropWidgetState extends State<DropWidget> {
                   List<Map<String, dynamic>> fichasModularesObj = [];
                   List<Map<String, dynamic>> fichasObj = [];
                   List<Map<String, dynamic>> fichasFichasObj = [];
+                  List<Map<String, dynamic>> inspeccionesObj = [];
                   List<Map<String, dynamic>> sincroColaObj = [];
                   List<Map<String, dynamic>> respuestasColaObj = [];
                   Map<String, dynamic> sincronz = {};
@@ -444,6 +445,17 @@ class _DropWidgetState extends State<DropWidget> {
                       respuestasColaObj.add(ficharespuestajson);
                     }
                   }
+                  var inspeccionesMod1= await SQLiteManager.instance.listarInspeccionesMod1();
+                  if (inspeccionesMod1 != null){
+                    for (var ins in inspeccionesMod1){
+                      Map<String, dynamic> inspeccionesJson = {
+                        "idInspeccion": ins.idInspeccion,
+                        "idFicha": ins.idFicha,
+                        "idEstado": ins.idEstado
+                      };
+                      inspeccionesObj.add(inspeccionesJson);
+                    }
+                  }
 
                   var colasincro = await SQLiteManager.instance.ListarColaSincronizacion();
                   if( colasincro != null){
@@ -466,6 +478,7 @@ class _DropWidgetState extends State<DropWidget> {
                   Map<String, dynamic> json = {
                     "sincro": sincronz,
                     "sincroCola": sincroColaObj,
+                    "inspecciones": inspeccionesObj,
                     "fichas": fichasObj,
                     "fichasModulares": fichasModularesObj,
                     "fichasPreguntasRespuestas" : respuestasColaObj,
