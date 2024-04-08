@@ -500,357 +500,368 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                               );
                             }
                             final columnListarFirmasRowList = snapshot.data!;
-                            return SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: List.generate(
-                                    columnListarFirmasRowList.length,
-                                        (columnIndex) {
-                                      final columnListarFirmasRow =
-                                      columnListarFirmasRowList[columnIndex];
-                                      return Card(
-                                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        elevation: 8,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        child: Align(
-                                          alignment: AlignmentDirectional(-1, 1),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Column(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsetsDirectional
-                                                          .fromSTEB(0, 10, 0, 0),
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                        child: Image.file(
-                                                          File(valueOrDefault<String>(
-                                                            columnListarFirmasRow
-                                                                .image,
-                                                            'image',
-                                                          )),
-                                                          width: 300,
-                                                          height: 200,
-                                                          fit: BoxFit.contain,
+                            if(columnListarFirmasRowList.length > 1){
+                              return SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: List.generate(
+                                      columnListarFirmasRowList.length,
+                                          (columnIndex) {
+                                        final columnListarFirmasRow =
+                                        columnListarFirmasRowList[columnIndex];
+                                        return Card(
+                                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          elevation: 8,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Align(
+                                            alignment: AlignmentDirectional(-1, 1),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                              ),
+                                              child: Stack(
+                                                children: [
+                                                  Column(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsetsDirectional
+                                                            .fromSTEB(0, 10, 0, 0),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                          child: Image.file(
+                                                            File(valueOrDefault<String>(
+                                                              columnListarFirmasRow
+                                                                  .image,
+                                                              'image',
+                                                            )),
+                                                            width: 300,
+                                                            height: 200,
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                      AlignmentDirectional(
-                                                          -1, 0),
-                                                      child: Padding(
-                                                        padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            25, 10, 0, 0),
-                                                        child: Text(
-                                                          valueOrDefault<String>(
-                                                            columnListarFirmasRow
-                                                                .persona == 1 ? 'Director' : 'Persona', 'a'// Conditionally set text
+                                                      Align(
+                                                        alignment:
+                                                        AlignmentDirectional(
+                                                            -1, 0),
+                                                        child: Padding(
+                                                          padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              25, 10, 0, 0),
+                                                          child: Text(
+                                                            valueOrDefault<String>(
+                                                                columnListarFirmasRow
+                                                                    .persona == 1 ? 'Director' : 'Persona', 'a'// Conditionally set text
+                                                            ),
+                                                            style:
+                                                            FlutterFlowTheme.of(
+                                                                context)
+                                                                .titleLarge,
                                                           ),
-                                                          style:
-                                                          FlutterFlowTheme.of(
-                                                              context)
-                                                              .titleLarge,
                                                         ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                      AlignmentDirectional(
-                                                          -1, 0),
-                                                      child: Padding(
-                                                        padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 0, 0, 15),
-                                                        child: Container(
-                                                          width: MediaQuery.sizeOf(
-                                                              context)
-                                                              .width *
-                                                              0.7,
-                                                          decoration: BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                .of(context)
-                                                                .secondaryBackground,
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                            MainAxisSize.max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    25,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          0),
-                                                                      child: Text(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          columnListarFirmasRow
-                                                                              .documento == 1 ? 'DNI' : 'Carnet de Extranjeria',
-                                                                          'Documento',
-                                                                        ),
-                                                                        style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily:
-                                                                          'Outfit',
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Align(
-                                                                      alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          0),
-                                                                      child: Text(
-                                                                        ':',
-                                                                        style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily:
-                                                                          'Outfit',
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child: Align(
+                                                      Align(
+                                                        alignment:
+                                                        AlignmentDirectional(
+                                                            -1, 0),
+                                                        child: Padding(
+                                                          padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              0, 0, 0, 15),
+                                                          child: Container(
+                                                            width: MediaQuery.sizeOf(
+                                                                context)
+                                                                .width *
+                                                                0.7,
+                                                            decoration: BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                              MainAxisSize.max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      25,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                    children: [
+                                                                      Align(
                                                                         alignment:
                                                                         AlignmentDirectional(
                                                                             -1,
                                                                             0),
-                                                                        child:
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                          child: Text(
-                                                                            valueOrDefault<
-                                                                                String>(
-                                                                              columnListarFirmasRow
-                                                                                  .numeroDoc,
-                                                                              '123',
-                                                                            ),
-                                                                            style: FlutterFlowTheme.of(
-                                                                                context)
-                                                                                .bodyMedium
-                                                                                .override(
-                                                                              fontFamily:
-                                                                              'Outfit',
-                                                                              fontWeight:
-                                                                              FontWeight.w600,
-                                                                            ),
+                                                                        child: Text(
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                            columnListarFirmasRow
+                                                                                .documento == 1 ? 'DNI' : 'Carnet de Extranjeria',
+                                                                            'Documento',
+                                                                          ),
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                            fontFamily:
+                                                                            'Outfit',
+                                                                            fontWeight:
+                                                                            FontWeight.w600,
                                                                           ),
                                                                         ),
-                                                                      ),)
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    25,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          0),
-                                                                      child: Text(
-                                                                        'Nombre',
-                                                                        style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily:
-                                                                          'Outfit',
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    Align(
-                                                                      alignment:
-                                                                      AlignmentDirectional(
-                                                                          -1,
-                                                                          0),
-                                                                      child: Text(
-                                                                        ':',
-                                                                        style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                          fontFamily:
-                                                                          'Outfit',
-                                                                          fontWeight:
-                                                                          FontWeight.w600,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child: Align(
+                                                                      Align(
                                                                         alignment:
                                                                         AlignmentDirectional(
                                                                             -1,
                                                                             0),
-                                                                        child:
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
+                                                                        child: Text(
+                                                                          ':',
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                            fontFamily:
+                                                                            'Outfit',
+                                                                            fontWeight:
+                                                                            FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Expanded(
+                                                                        child: Align(
+                                                                          alignment:
+                                                                          AlignmentDirectional(
+                                                                              -1,
                                                                               0),
                                                                           child:
-                                                                          Text(
-                                                                            valueOrDefault<
-                                                                                String>(
-                                                                              columnListarFirmasRow
-                                                                                  .nombresCompletos,
-                                                                              '123',
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional
+                                                                                .fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child: Text(
+                                                                              valueOrDefault<
+                                                                                  String>(
+                                                                                columnListarFirmasRow
+                                                                                    .numeroDoc,
+                                                                                '123',
+                                                                              ),
+                                                                              style: FlutterFlowTheme.of(
+                                                                                  context)
+                                                                                  .bodyMedium
+                                                                                  .override(
+                                                                                fontFamily:
+                                                                                'Outfit',
+                                                                                fontWeight:
+                                                                                FontWeight.w600,
+                                                                              ),
                                                                             ),
-                                                                            style: FlutterFlowTheme.of(context)
-                                                                                .bodyMedium
-                                                                                .override(
-                                                                              fontFamily: 'Outfit',
-                                                                              fontWeight: FontWeight.w600,
+                                                                          ),
+                                                                        ),)
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                      25,
+                                                                      0,
+                                                                      0,
+                                                                      0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                    children: [
+                                                                      Align(
+                                                                        alignment:
+                                                                        AlignmentDirectional(
+                                                                            -1,
+                                                                            0),
+                                                                        child: Text(
+                                                                          'Nombre',
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                            fontFamily:
+                                                                            'Outfit',
+                                                                            fontWeight:
+                                                                            FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Align(
+                                                                        alignment:
+                                                                        AlignmentDirectional(
+                                                                            -1,
+                                                                            0),
+                                                                        child: Text(
+                                                                          ':',
+                                                                          style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                            fontFamily:
+                                                                            'Outfit',
+                                                                            fontWeight:
+                                                                            FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Expanded(
+                                                                        child: Align(
+                                                                          alignment:
+                                                                          AlignmentDirectional(
+                                                                              -1,
+                                                                              0),
+                                                                          child:
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional
+                                                                                .fromSTEB(
+                                                                                5,
+                                                                                0,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                            Text(
+                                                                              valueOrDefault<
+                                                                                  String>(
+                                                                                columnListarFirmasRow
+                                                                                    .nombresCompletos,
+                                                                                '123',
+                                                                              ),
+                                                                              style: FlutterFlowTheme.of(context)
+                                                                                  .bodyMedium
+                                                                                  .override(
+                                                                                fontFamily: 'Outfit',
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ],
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
-                                                Align(
-                                                  alignment:
-                                                  AlignmentDirectional(1, 1),
-                                                  child: Padding(
-                                                    padding: EdgeInsetsDirectional
-                                                        .fromSTEB(0, 225, 30, 0),
-                                                    child: FlutterFlowIconButton(
-                                                      borderColor:
-                                                      FlutterFlowTheme.of(
-                                                          context)
-                                                          .secondaryBackground,
-                                                      borderRadius: 20,
-                                                      borderWidth: 2,
-                                                      buttonSize: 50,
-                                                      fillColor: Color(0xFFAF2D3F),
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: FlutterFlowTheme.of(
-                                                            context)
-                                                            .primaryBackground,
-                                                        size: 26,
-                                                      ),
-                                                      onPressed: () async {
-                                                        setState(() {
-                                                          FFAppState().IdFirma =
-                                                          columnListarFirmasRow
-                                                              .id!;
-                                                        });
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled: true,
-                                                          backgroundColor:
-                                                          Colors.transparent,
-                                                          enableDrag: false,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                                  ? FocusScope.of(
-                                                                  context)
-                                                                  .requestFocus(
-                                                                  _model
-                                                                      .unfocusNode)
-                                                                  : FocusScope.of(
-                                                                  context)
-                                                                  .unfocus(),
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                    context),
-                                                                child: Container(
-                                                                  height: 200,
-                                                                  child:
-                                                                  AlertDeleteFirmaWidget(),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(() {}));
-                                                      },
-                                                    ),
+                                                    ],
                                                   ),
-                                                ),
-                                              ],
+                                                  if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                    Align(
+                                                      alignment:
+                                                      AlignmentDirectional(1, 1),
+                                                      child: Padding(
+                                                        padding: EdgeInsetsDirectional
+                                                            .fromSTEB(0, 225, 30, 0),
+                                                        child: FlutterFlowIconButton(
+                                                          borderColor:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .secondaryBackground,
+                                                          borderRadius: 20,
+                                                          borderWidth: 2,
+                                                          buttonSize: 50,
+                                                          fillColor: Color(0xFFAF2D3F),
+                                                          icon: Icon(
+                                                            Icons.delete,
+                                                            color: FlutterFlowTheme.of(
+                                                                context)
+                                                                .primaryBackground,
+                                                            size: 26,
+                                                          ),
+                                                          onPressed: () async {
+                                                            setState(() {
+                                                              FFAppState().IdFirma =
+                                                              columnListarFirmasRow
+                                                                  .id!;
+                                                            });
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled: true,
+                                                              backgroundColor:
+                                                              Colors.transparent,
+                                                              enableDrag: false,
+                                                              context: context,
+                                                              builder: (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () => _model
+                                                                      .unfocusNode
+                                                                      .canRequestFocus
+                                                                      ? FocusScope.of(
+                                                                      context)
+                                                                      .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                                      : FocusScope.of(
+                                                                      context)
+                                                                      .unfocus(),
+                                                                  child: Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                        context),
+                                                                    child: Container(
+                                                                      height: 200,
+                                                                      child:
+                                                                      AlertDeleteFirmaWidget(),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                safeSetState(() {}));
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    })
-                                    .divide(SizedBox(height: 20))
-                                    .around(SizedBox(height: 20)),
-                              ),
-                            );
+                                        );
+                                      })
+                                      .divide(SizedBox(height: 20))
+                                      .around(SizedBox(height: 20)),
+                                ),
+                              );
+                            } else {
+                                return Text(
+                                  "No se han encontrado Firmas",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center, // Centra el texto
+                                );
+                            }
                           },
                         ),
                       ),

@@ -4024,9 +4024,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                           size: 30,
                         ),
                         onPressed: () async {
-                          if(_model.dat1Controller4.text! != null && int.tryParse(_model.dat1Controller4.text)! < 50 && int.tryParse(_model.dat1Controller4.text)! > 0) {
-                            if(_model.dat1Controller3.text! != null && int.tryParse(_model.dat1Controller3.text)! < 50 && int.tryParse(_model.dat1Controller3.text)! > 0) {
-                              if(_model.dat1Controller5.text! != null && int.tryParse(_model.dat1Controller5.text)! < 50 && int.tryParse(_model.dat1Controller5.text)! > 0){
+                          if(_model.dat1Controller4.text! != null && int.tryParse(_model.dat1Controller4.text)! < 50 && int.tryParse(_model.dat1Controller4.text)! >= 0) {
+                            if(_model.dat1Controller3.text! != null && int.tryParse(_model.dat1Controller3.text)! < 50 && int.tryParse(_model.dat1Controller3.text)! >= 0) {
+                              if(_model.dat1Controller5.text! != null && int.tryParse(_model.dat1Controller5.text)! < 50 && int.tryParse(_model.dat1Controller5.text)! >= 0){
                                 await SQLiteManager.instance.actualizarFicha(
                                     idFicha: FFAppState().IdFicha,
                                     centroPobladoColegio: _model.dat1Controller1.text,

@@ -1001,37 +1001,33 @@ class _DropWidgetState extends State<DropWidget> {
                     log("Proceso de Sincronizacion Finalizado");
 
 
-                    SnackBar(
-                      content: Text(
-                        'Inspecciones Sincronizadas!',
-                        style: TextStyle(
-                          color:
-                          FlutterFlowTheme.of(context)
-                              .primaryBackground,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Inspección Sincronizadas.',
+                          style: TextStyle(
+                            color:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
                         ),
+                        duration: const Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
                       ),
-                      duration:
-                      Duration(milliseconds: 4000),
-                      backgroundColor:
-                      FlutterFlowTheme.of(context)
-                          .primary,
                     );
                   }
                   else {
-                    SnackBar(
-                      content: Text(
-                        'Error en la Sincronizacion!',
-                        style: TextStyle(
-                          color:
-                          FlutterFlowTheme.of(context)
-                              .primaryBackground,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Error al Sincronizar.',
+                          style: TextStyle(
+                            color:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
                         ),
+                        duration: const Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
                       ),
-                      duration:
-                      Duration(milliseconds: 4000),
-                      backgroundColor:
-                      FlutterFlowTheme.of(context)
-                          .primary,
                     );
                   }
 

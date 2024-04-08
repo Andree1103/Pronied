@@ -485,19 +485,6 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, -1),
-                                child: Text(
-                                  'Galería de fotos',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                    fontFamily: 'Outfit',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
                               FutureBuilder<List<ListarFotosRow>>(
                                 future: SQLiteManager.instance.listarFotos(),
                                 builder: (context, snapshot) {
@@ -519,238 +506,249 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                   }
                                   final columnListarFotosRowList =
                                   snapshot.data!;
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: List.generate(
-                                        columnListarFotosRowList.length,
-                                            (columnIndex) {
-                                          final columnListarFotosRow =
-                                          columnListarFotosRowList[columnIndex];
-                                          return Card(
-                                            clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            elevation: 4,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(8),
-                                            ),
-                                            child: Align(
-                                              alignment:
-                                              AlignmentDirectional(-1, 1),
-                                              child: Container(
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    Column(
-                                                      mainAxisSize:
-                                                      MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0, 10, 0, 10),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                            child: Image.file(
-                                                              File(valueOrDefault<String>(
-                                                                columnListarFotosRow
-                                                                    .imagen,
-                                                                'imagen',
-                                                              )),
-                                                              width: 300,
-                                                              height: 200,
-                                                              fit: BoxFit.cover,
+                                  if(columnListarFotosRowList.length == 0){
+                                    return Text(
+                                      "No se han encontrado Fotos en la Galeria",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.center, // Centra el texto
+                                    );
+                                  }else {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: List.generate(
+                                          columnListarFotosRowList.length,
+                                              (columnIndex) {
+                                            final columnListarFotosRow =
+                                            columnListarFotosRowList[columnIndex];
+                                            return Card(
+                                              clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                              elevation: 4,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(8),
+                                              ),
+                                              child: Align(
+                                                alignment:
+                                                AlignmentDirectional(-1, 1),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Column(
+                                                        mainAxisSize:
+                                                        MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 10, 0, 10),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                              child: Image.file(
+                                                                File(valueOrDefault<String>(
+                                                                  columnListarFotosRow
+                                                                      .imagen,
+                                                                  'imagen',
+                                                                )),
+                                                                width: 300,
+                                                                height: 200,
+                                                                fit: BoxFit.cover,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Align(
-                                                          alignment:
-                                                          AlignmentDirectional(
-                                                              -1, 1),
-                                                          child: Container(
-                                                            width:
-                                                            MediaQuery.sizeOf(
-                                                                context)
-                                                                .width *
-                                                                0.7,
-                                                            decoration:
-                                                            BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                  .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                              MainAxisSize.max,
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                  AlignmentDirectional(
-                                                                      -1, 0),
-                                                                  child: Padding(
-                                                                    padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                        25,
-                                                                        10,
-                                                                        0,
-                                                                        0),
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        columnListarFotosRow
-                                                                            .titulo,
-                                                                        '111',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                        fontFamily:
-                                                                        'Outfit',
-                                                                        fontSize:
-                                                                        14,
-                                                                        fontWeight:
-                                                                        FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child: Align(
-                                                                        alignment:
-                                                                        AlignmentDirectional(
-                                                                            -1,
-                                                                            0),
-                                                                        child:
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional
-                                                                              .fromSTEB(
-                                                                              25,
-                                                                              0,
-                                                                              0,
-                                                                              10),
-                                                                          child:
-                                                                          Text(
-                                                                            valueOrDefault<
-                                                                                String>(
-                                                                              columnListarFotosRow
-                                                                                  .comentario,
-                                                                              'Comentario',
-                                                                            ),
-                                                                            style: FlutterFlowTheme.of(context)
-                                                                                .bodyMedium,
-                                                                          ),
+                                                          Align(
+                                                            alignment:
+                                                            AlignmentDirectional(
+                                                                -1, 1),
+                                                            child: Container(
+                                                              width:
+                                                              MediaQuery.sizeOf(
+                                                                  context)
+                                                                  .width *
+                                                                  0.7,
+                                                              decoration:
+                                                              BoxDecoration(
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                MainAxisSize.max,
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                    AlignmentDirectional(
+                                                                        -1, 0),
+                                                                    child: Padding(
+                                                                      padding:
+                                                                      EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                          25,
+                                                                          10,
+                                                                          0,
+                                                                          0),
+                                                                      child: Text(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          columnListarFotosRow
+                                                                              .titulo,
+                                                                          '111',
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                          fontFamily:
+                                                                          'Outfit',
+                                                                          fontSize:
+                                                                          14,
+                                                                          fontWeight:
+                                                                          FontWeight.w600,
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                              ],
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child: Align(
+                                                                          alignment:
+                                                                          AlignmentDirectional(
+                                                                              -1,
+                                                                              0),
+                                                                          child:
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional
+                                                                                .fromSTEB(
+                                                                                25,
+                                                                                0,
+                                                                                0,
+                                                                                10),
+                                                                            child:
+                                                                            Text(
+                                                                              valueOrDefault<
+                                                                                  String>(
+                                                                                columnListarFotosRow
+                                                                                    .comentario,
+                                                                                'Comentario',
+                                                                              ),
+                                                                              style: FlutterFlowTheme.of(context)
+                                                                                  .bodyMedium,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                        Align(
+                                                          alignment:
+                                                          AlignmentDirectional(
+                                                              1, 1),
+                                                          child: Padding(
+                                                            padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                0, 217, 25, 0),
+                                                            child:
+                                                            FlutterFlowIconButton(
+                                                              borderColor:
+                                                              FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .secondaryBackground,
+                                                              borderRadius: 20,
+                                                              borderWidth: 2,
+                                                              buttonSize: 50,
+                                                              fillColor:
+                                                              Color(0xFFAF2D3F),
+                                                              icon: Icon(
+                                                                Icons.delete,
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                    .primaryBackground,
+                                                                size: 26,
+                                                              ),
+                                                              onPressed: () async {
+                                                                setState(() {
+                                                                  FFAppState().IdFoto =
+                                                                  columnListarFotosRow
+                                                                      .id!;
+                                                                });
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                  true,
+                                                                  backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                                  enableDrag: false,
+                                                                  context: context,
+                                                                  builder: (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () => _model
+                                                                          .unfocusNode
+                                                                          .canRequestFocus
+                                                                          ? FocusScope.of(
+                                                                          context)
+                                                                          .requestFocus(
+                                                                          _model
+                                                                              .unfocusNode)
+                                                                          : FocusScope.of(
+                                                                          context)
+                                                                          .unfocus(),
+                                                                      child: Padding(
+                                                                        padding: MediaQuery
+                                                                            .viewInsetsOf(
+                                                                            context),
+                                                                        child:
+                                                                        Container(
+                                                                          height: 200,
+                                                                          child:
+                                                                          AlertDeleteFotoWidget(),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    safeSetState(
+                                                                            () {}));
+                                                              },
                                                             ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
-                                                    Align(
-                                                      alignment:
-                                                      AlignmentDirectional(
-                                                          1, 1),
-                                                      child: Padding(
-                                                        padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0, 217, 25, 0),
-                                                        child:
-                                                        FlutterFlowIconButton(
-                                                          borderColor:
-                                                          FlutterFlowTheme.of(
-                                                              context)
-                                                              .secondaryBackground,
-                                                          borderRadius: 20,
-                                                          borderWidth: 2,
-                                                          buttonSize: 50,
-                                                          fillColor:
-                                                          Color(0xFFAF2D3F),
-                                                          icon: Icon(
-                                                            Icons.delete,
-                                                            color: FlutterFlowTheme
-                                                                .of(context)
-                                                                .primaryBackground,
-                                                            size: 26,
-                                                          ),
-                                                          onPressed: () async {
-                                                            setState(() {
-                                                              FFAppState().IdFoto =
-                                                              columnListarFotosRow
-                                                                  .id!;
-                                                            });
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                              true,
-                                                              backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                              enableDrag: false,
-                                                              context: context,
-                                                              builder: (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () => _model
-                                                                      .unfocusNode
-                                                                      .canRequestFocus
-                                                                      ? FocusScope.of(
-                                                                      context)
-                                                                      .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                                      : FocusScope.of(
-                                                                      context)
-                                                                      .unfocus(),
-                                                                  child: Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                        context),
-                                                                    child:
-                                                                    Container(
-                                                                      height: 200,
-                                                                      child:
-                                                                      AlertDeleteFotoWidget(),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                        () {}));
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        })
-                                        .divide(SizedBox(height: 20))
-                                        .around(SizedBox(height: 20)),
-                                  );
+                                            );
+                                          })
+                                          .divide(SizedBox(height: 20))
+                                          .around(SizedBox(height: 20)),
+                                    );
+                                  }
                                 },
                               ),
                             ],
