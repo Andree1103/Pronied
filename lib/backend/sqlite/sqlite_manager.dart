@@ -29,8 +29,11 @@ class SQLiteManager {
 
   /// START READ QUERY CALLS
 
-  Future<List<ListarFotosRow>> listarFotos() => performListarFotos(
+  Future<List<ListarFotosRow>> listarFotos({
+    int? idFicha,
+}) => performListarFotos(
         _database,
+        idFicha: idFicha,
       );
 
   Future<List<ListarFirmasRow>> listarFirmas({
@@ -109,10 +112,22 @@ class SQLiteManager {
           _database
       );
 
+  Future<List<ListarFichasModificacionModificacion>>
+  listarFichasArchivosModificas() =>
+      performListarFichaArchivosMod(
+          _database
+      );
+
 
   Future<List<ListarFichasFirmas>>
   listarFichasFirmas1() =>
       performListarFichaFirmas(
+          _database
+      );
+
+  Future<List<ListarFichasArchivos>>
+  listarFichasArchivos1() =>
+      performListarFichaArchivos(
           _database
       );
 
@@ -164,6 +179,22 @@ class SQLiteManager {
     int? idFicha
   }) =>
       performListarPabellon(
+        _database,
+        idFicha: idFicha,
+      );
+
+  Future<List<ListarLatitud>> listarLatitud({
+    int? idFicha
+  }) =>
+      performListarLatitud(
+        _database,
+        idFicha: idFicha,
+      );
+
+  Future<List<ListarLongitud>> listarLongitud({
+    int? idFicha
+  }) =>
+      performListarLongitud(
         _database,
         idFicha: idFicha,
       );
@@ -295,6 +326,54 @@ class SQLiteManager {
     uploadDocumento: uploadDocumento,
     rutalocal: rutalocal
   );
+
+  Future crearFichaArchivo({
+    int? idFichaArchivoMovil,
+    int? idFichaArchivo,
+    int? idFicha,
+    String? nombre,
+    String? extension,
+    String? ruta,
+    double? peso,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil,
+    int? uploadDocumento,
+    String? rutalocal,
+    String? titulo,
+    String? comentario
+  }) => performfichaArchivos(
+      _database,
+    idFicha: idFicha,
+    idFichaArchivo: idFichaArchivo,
+    idFichaArchivoMovil: idFichaArchivoMovil,
+    nombre: nombre,
+    extension: extension,
+    ruta: ruta,
+    peso: peso,
+    estadoAuditoria: estadoAuditoria,
+    usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaCreacionAuditoria: fechaCreacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoCreacionAuditoria: equipoCreacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaCreacionAuditoria: programaCreacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria,
+    modificadoMovil: modificadoMovil,
+    uploadDocumento: uploadDocumento,
+    rutalocal: rutalocal,
+    titulo: titulo,
+    comentario: comentario
+  );
+
 
   Future deleteFirma({
     int? id,
@@ -621,6 +700,26 @@ class SQLiteManager {
     int? uploadDocumento
   }) =>
       performFirmaUpload(
+          _database,
+          idFicha: idFicha,
+          rutalocal: rutalocal,
+          nombreArchivo: nombreArchivo,
+          extension: extension,
+          ruta: ruta,
+          peso: peso,
+          uploadDocumento: uploadDocumento
+      );
+
+  Future actualizarFichaArchivosUpload({
+    int? idFicha,
+    String? rutalocal,
+    String? nombreArchivo,
+    String? extension,
+    String? ruta,
+    double? peso,
+    int? uploadDocumento
+  }) =>
+      performArchivosUpload(
           _database,
           idFicha: idFicha,
           rutalocal: rutalocal,
@@ -1027,6 +1126,19 @@ class SQLiteManager {
           idFichaFirmaMovil: idFichaFirmaMovil
       );
 
+  Future<List<ExistArchivoNullForId>> VerificarSiExisteArchivoNotNUll({
+    int? idFicha,
+    int? idFichaArchivo,
+    int? idFichaArchivoMovil
+  }) =>
+      performListarArchivoExistNull(
+          _database,
+          idFicha: idFicha,
+          idFichaArchivo: idFichaArchivo,
+          idFichaArchivoMovil: idFichaArchivoMovil
+      );
+
+
   ///INSPECCION
   Future<List<ExistInspeciconForId>> VerificarSiExisteInspeccion({
     int? idInspeccion
@@ -1151,6 +1263,47 @@ class SQLiteManager {
           programaCreacionAuditoria:programaCreacionAuditoria,
           programaModificacionAuditoria:programaModificacionAuditoria,
           modificacionMovil:modificacionMovil
+      );
+
+
+  Future actualizarFichaArchivosAPI({
+    int? idFichaArchivo,
+    int? idFichaArchivoMovil,
+    int? idFicha,
+    String? nombre,
+    String? extension,
+    String? ruta,
+    String? peso,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil,
+  }) =>
+      performActualizarFichaArchivosMod(
+          _database,
+          idFicha: idFicha,
+          idFichaArchivo: idFichaArchivo,
+          idFichaArchivoMovil: idFichaArchivoMovil,
+          nombre: nombre,
+          extension: extension,
+          ruta: ruta,
+          peso: peso,
+          estadoAuditoria: estadoAuditoria,
+          usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+          usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+          fechaCreacionAuditoria: fechaCreacionAuditoria,
+          fechaModificacionAuditoria: fechaModificacionAuditoria,
+          equipoCreacionAuditoria: equipoCreacionAuditoria,
+          equipoModificacionAuditoria: equipoModificacionAuditoria,
+          programaCreacionAuditoria: programaCreacionAuditoria,
+          programaModificacionAuditoria: programaModificacionAuditoria,
+          modificadoMovil: modificadoMovil
       );
 
 

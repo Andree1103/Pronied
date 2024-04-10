@@ -500,7 +500,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                               );
                             }
                             final columnListarFirmasRowList = snapshot.data!;
-                            if(columnListarFirmasRowList.length > 1){
+                            if(columnListarFirmasRowList.length >= 1){
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,

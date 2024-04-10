@@ -65,7 +65,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Estas seguro de eliminar la firma?',
+                  '¿Está usted seguro de eliminar la firma?',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 16.0,
@@ -89,7 +89,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Firma eliminada correctamente',
+                        'La firma ha sido eliminada satisfactoriamente',
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,

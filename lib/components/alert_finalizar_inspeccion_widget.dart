@@ -69,7 +69,7 @@ class _AlertFinalizarInspeccionWidgetState
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Estas seguro de finalizar la Inspección?',
+                  '¿Está usted seguro de finalizar la inspección?',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 15.0,

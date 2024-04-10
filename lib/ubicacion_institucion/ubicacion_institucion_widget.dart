@@ -1,3 +1,6 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/queries/read.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/sqlite_manager.dart';
+
 import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -35,9 +38,12 @@ class _UbicacionInstitucionWidgetState
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+
 
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
@@ -52,254 +58,381 @@ class _UbicacionInstitucionWidgetState
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 95.0,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF0E1C27),
-                    border: Border.all(
-                      color: Colors.transparent,
-                      width: 0.0,
-                    ),
+              Align(
+                alignment: AlignmentDirectional(-1, 0),
+                child: FutureBuilder<List<ListarInspeccionesPorIdFichaRow>>(
+                  future: SQLiteManager.instance.listarInspeccionesPorIdFicha(
+                    idFicha: FFAppState().IdFicha,
                   ),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(25.0, 0.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Column(
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    final containerListarInspeccionesPorIdFichaRowList = snapshot.data!;
+                    return Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0E1C27),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                        child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.safePop();
-                                  },
-                                  child: Icon(
-                                    Icons.house,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    size: 35.0,
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF0E1C27),
+                                  border: Border.all(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(25, 0, 0, 5),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Align(
+                                            alignment: AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                              child: InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor: Colors.transparent,
+                                                onTap: () async {
+                                                  context.pushNamed('ListaInspecciones');
+                                                },
+                                                child: Icon(
+                                                  Icons.house,
+                                                  color: FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                                  size: 35,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(
+                                                  10, 10, 0, 0),
+                                              child: InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor: Colors.transparent,
+                                                onTap: () async {
+                                                  context.pushNamed(
+                                                    'UbicacionInstitucion',
+                                                    extra: <String, dynamic>{
+                                                      kTransitionInfoKey: TransitionInfo(
+                                                        hasTransition: true,
+                                                        transitionType:
+                                                        PageTransitionType.fade,
+                                                        duration:
+                                                        Duration(milliseconds: 1000),
+                                                      ),
+                                                    },
+                                                  );
+                                                },
+                                                child: Icon(
+                                                  Icons.add_location_rounded,
+                                                  color: Color(0xFF086D82),
+                                                  size: 35,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, -1),
+                                        child: Padding(
+                                          padding:
+                                          EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 278,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF0E1C27),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                      0, 0, 0, 5),
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.nombreLocalColegio,
+                                                      'ss',
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color: Colors.white,
+                                                      fontSize: 25,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.departamentoColegio,
+                                                      'de',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '/',
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.provinciaColegio,
+                                                      'pro',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '/',
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.distritoColegio,
+                                                      'dist',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .secondaryBackground,
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: 278,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF0E1C27),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                                      0, 5, 0, 0),
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.nombreEvento,
+                                                      'envet',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                      fontFamily: 'Outfit',
+                                                      color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .primaryBackground,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 10.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context.pushNamed(
-                                      'UbicacionInstitucion',
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.fade,
-                                          duration:
-                                              Duration(milliseconds: 1000),
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Container(
+                                width: double.infinity,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).gray200,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(35, 10, 35, 10),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: 130,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context).gray200,
                                         ),
-                                      },
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.add_location_rounded,
-                                    color: Color(0xFF086D82),
-                                    size: 35.0,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Align(
+                                              alignment: AlignmentDirectional(0, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                                        0, 0, 5, 0),
+                                                    child: Icon(
+                                                      Icons.sd_card_alert,
+                                                      color: () {
+                                                        if (containerListarInspeccionesPorIdFichaRowList
+                                                            .first.idEstado ==
+                                                            3) {
+                                                          return FlutterFlowTheme.of(
+                                                              context)
+                                                              .darkSeaGreen;
+                                                        } else if (containerListarInspeccionesPorIdFichaRowList
+                                                            .first.idEstado ==
+                                                            2) {
+                                                          return FlutterFlowTheme.of(
+                                                              context)
+                                                              .gray600;
+                                                        } else if (containerListarInspeccionesPorIdFichaRowList
+                                                            .first.idEstado ==
+                                                            4) {
+                                                          return FlutterFlowTheme.of(
+                                                              context)
+                                                              .warning;
+                                                        } else {
+                                                          return FlutterFlowTheme.of(
+                                                              context)
+                                                              .secondary;
+                                                        }
+                                                      }(),
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      containerListarInspeccionesPorIdFichaRowList
+                                                          .first.estado,
+                                                      'es',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .bodyMedium,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 130,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context).gray200,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Align(
+                                              alignment: AlignmentDirectional(0, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                                                    child: Icon(
+                                                      Icons.check_circle_outline,
+                                                      color: containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                          ? Colors.blue
+                                                          : Colors.red, // Conditionally set icon color
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                      containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
+                                                          ? 'Sincronizado'
+                                                          : 'No Sincronizado', // Conditionally set text
+                                                      style: FlutterFlowTheme.of(context).bodyMedium
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(-1.0, -1.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 20.0, 0.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 5.0),
-                                  child: Text(
-                                    'San Juan de la Libertad',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Colors.white,
-                                          fontSize: 25.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                                Text(
-                                  'Amazonas/Chachapoyas/Chachapoyas',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .headlineMedium
-                                      .override(
-                                        fontFamily: 'Outfit',
-                                        color: Colors.white,
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.normal,
-                                        lineHeight: 0.0,
-                                      ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Inspección de Mobiliario y Equipamiento',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-1.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 55.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).gray200,
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(35.0, 10.0, 35.0, 10.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 120.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).gray200,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 5.0, 0.0),
-                                      child: Icon(
-                                        Icons.check_circle_outline,
-                                        color: FlutterFlowTheme.of(context)
-                                            .darkSeaGreen,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Realizada',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                '30/01/2023 10:45 AM',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 9.0,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 110.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).gray200,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 5.0, 0.0),
-                                        child: Icon(
-                                          Icons.sync,
-                                          color: Color(0xFF534AF2),
-                                          size: 24.0,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Sincronizada',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                '30/01/2023 10:45 AM',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      fontSize: 9.0,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Align(
@@ -318,10 +451,8 @@ class _UbicacionInstitucionWidgetState
                         Expanded(
                           child: FlutterFlowGoogleMap(
                             controller: _model.googleMapsController,
-                            onCameraIdle: (latLng) =>
-                                _model.googleMapsCenter = latLng,
-                            initialLocation: _model.googleMapsCenter ??=
-                                LatLng(13.106061, -59.613158),
+                            onCameraIdle: (latLng) => _model.googleMapsCenter = latLng,
+                            initialLocation: _model.googleMapsCenter ??= LatLng(FFAppState().latitud, FFAppState().longitud), // Use variables for latitude and longitude
                             markerColor: GoogleMarkerColor.violet,
                             mapType: MapType.normal,
                             style: GoogleMapStyle.standard,
@@ -334,7 +465,19 @@ class _UbicacionInstitucionWidgetState
                             showMapToolbar: false,
                             showTraffic: false,
                             centerMapOnMarkerTap: true,
+                            markers: {
+                              FlutterFlowMarker(
+                                'myLocation', // ID único para el marcador
+                                position: LatLng(FFAppState().latitud, FFAppState().longitud), // Posición del marcador
+                                infoWindow: InfoWindow(
+                                  title: 'Mi ubicación', // Título del marcador
+                                  snippet: 'Lat: ${FFAppState().latitud}, Lng: ${FFAppState().longitud}', // Información adicional
+                                ),
+                              ),
+                            },
                           ),
+
+
                         ),
                       ],
                     ),
@@ -348,3 +491,4 @@ class _UbicacionInstitucionWidgetState
     );
   }
 }
+

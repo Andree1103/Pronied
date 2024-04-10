@@ -186,6 +186,18 @@ class FFAppState extends ChangeNotifier {
   set idInspeccion(int _value) {
     _idInspeccion = _value;
   }
+
+  double _Latitud = 0;
+  double get latitud => _Latitud;
+  set latitud(double _value) {
+    _Latitud = _value;
+  }
+
+  double _Longitud = 0;
+  double get longitud => _Longitud;
+  set longitud(double _value) {
+    _Longitud = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

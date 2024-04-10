@@ -68,7 +68,7 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Estás seguro de iniciar la Inspección?',
+                  '¿Está usted seguro de iniciar la inspección?',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 15.0,

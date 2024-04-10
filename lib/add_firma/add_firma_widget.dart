@@ -1039,7 +1039,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                         .showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'Fimra Agregada!',
+                                          'La firma ha sido agregada satisfactoriamente',
                                           style: TextStyle(
                                             color:
                                             FlutterFlowTheme.of(context)

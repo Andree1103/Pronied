@@ -399,6 +399,17 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                               );
                                                               FFAppState().CantP= patios[0].totalPabellones!;
 
+                                                              var latitud = await SQLiteManager.instance.listarLatitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().latitud = latitud[0].Latitud!;
+
+                                                              var longitud = await SQLiteManager.instance.listarLongitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+
+                                                              FFAppState().longitud = longitud[0].Longitud!;
+
                                                               context.pushNamed(
                                                                   'DatosGenerales');
                                                             },

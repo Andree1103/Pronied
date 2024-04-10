@@ -8,7 +8,7 @@ Future performCrearFoto(
   String? imagen,
 }) {
   final query = '''
-INSERT INTO Fotos (Titulo, Comentario, Imagen) VALUES ('${titulo}','${comentario}','${imagen}')
+INSERT INTO FichasArchivos (titulo, comentario, rutalocal) VALUES ('${titulo}','${comentario}','${imagen}')
 ''';
   return database.rawQuery(query);
 }
@@ -33,6 +33,45 @@ Future performCrearFirma(
 }
 
 /// END CREARFIRMA
+
+
+/// BEGIN CREARFOTO
+Future performfichaArchivos(
+    Database database, {
+      int? idFichaArchivoMovil,
+      int? idFichaArchivo,
+      int? idFicha,
+      String? nombre,
+      String? extension,
+      String? ruta,
+      double? peso,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil,
+      int? uploadDocumento,
+      String? rutalocal,
+      String? titulo,
+      String? comentario
+    }) {
+  final query = '''
+INSERT INTO FichasArchivos (idFichaArchivoMovil,
+   idFichaArchivo,idFicha, nombre, extension,ruta, peso, estadoAuditoria, usuarioCreacionAuditoria, usuarioModificacionAuditoria,
+    fechaCreacionAuditoria, fechaModificacionAuditoria, equipoCreacionAuditoria, equipoModificacionAuditoria, programaCreacionAuditoria,
+    programaModificacionAuditoria,modificadoMovil,uploadDocumento,rutalocal,titulo,comentario)
+    VALUES (${idFichaArchivoMovil}, ${idFichaArchivo}, ${idFicha}, '${nombre}', '${extension}', '${ruta}', ${peso}, '${estadoAuditoria}',
+     '${usuarioCreacionAuditoria}','${usuarioModificacionAuditoria}','${fechaCreacionAuditoria}', '${fechaModificacionAuditoria}', '${equipoCreacionAuditoria}',
+      '${equipoModificacionAuditoria}', '${programaCreacionAuditoria}', '${programaModificacionAuditoria}', ${modificadoMovil},${uploadDocumento},'${rutalocal}','${titulo}','${comentario}')
+''';
+  return database.rawQuery(query);
+}
+
 
 ///
 /// BEGIN CREARFICHAFIRMA
@@ -105,7 +144,9 @@ Future performDeleteFoto(
   int? idFoto,
 }) {
   final query = '''
-Delete FROM Fotos where Id = ${idFoto}
+UPDATE FichasArchivos
+SET estadoAuditoria = '0'
+WHERE idFichaArchivoMovil = ${idFoto};
 ''';
   return database.rawQuery(query);
 }
@@ -544,6 +585,34 @@ WHERE
   return database.rawQuery(query);
 }
 
+
+/// BEGIN ACTUALIZARFICHA
+Future performArchivosUpload(
+    Database database, {
+      int? idFicha,
+      String? rutalocal,
+      String? nombreArchivo,
+      String? extension,
+      String? ruta,
+      double? peso,
+      int? uploadDocumento
+    }) {
+  final query = '''
+UPDATE FichasArchivos
+SET
+    nombre = '${nombreArchivo}',
+    extension = '${extension}',
+    ruta = '${ruta}',
+    peso = ${peso},
+    uploadDocumento = ${uploadDocumento}
+WHERE 
+    idFicha = ${idFicha} and rutalocal = '${rutalocal}';
+
+
+''';
+  return database.rawQuery(query);
+}
+
 Future performActualizarFichaMod(
     Database database, {
       String? codigoModular,
@@ -698,6 +767,54 @@ SET
     modificacionMovil = ${modificacionMovil}
 WHERE 
     idFichaFirmaMovil = ${idFichaFirmaMovil} and idFicha = ${idFicha};
+
+
+''';
+  return database.rawQuery(query);
+}
+
+
+Future performActualizarFichaArchivosMod(
+    Database database, {
+      int? idFichaArchivo,
+      int? idFichaArchivoMovil,
+      int? idFicha,
+      String? nombre,
+      String? extension,
+      String? ruta,
+      String? peso,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil,
+    }) {
+  final query = '''
+UPDATE FichasArchivos
+SET
+    idFicha = ${idFicha},
+    idFichaArchivo = ${idFichaArchivo},
+    nombre = '${nombre}',
+    extension = '${extension}',
+    ruta = '${ruta}',
+    peso = ${peso},
+    estadoAuditoria = '${estadoAuditoria}',
+    usuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaCreacionAuditoria = '${programaCreacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
+WHERE 
+    idFichaArchivoMovil = ${idFichaArchivoMovil} and idFicha = ${idFicha};
 
 
 ''';

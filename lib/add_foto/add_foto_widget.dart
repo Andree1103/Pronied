@@ -804,16 +804,39 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         return;
                                       }
                                       savedImagePath  = await saveImageToDevice(_model.uploadedLocalFile);
-                                      await SQLiteManager.instance.crearFoto(
+                                      setState(() {
+                                        SQLiteManager.instance.inspeccion1(
+                                          idFicha: FFAppState().IdFicha,
+                                        );
+                                      });
+                                      /*await SQLiteManager.instance.crearFoto(
                                         titulo: _model.dat1Controller1.text,
                                         comentario: _model.dat1Controller2.text,
                                         imagen: savedImagePath,
+                                      );*/
+
+                                      await SQLiteManager.instance.crearFichaArchivo(
+                                        idFicha: FFAppState().IdFicha,
+                                        titulo: _model.dat1Controller1.text,
+                                        comentario: _model.dat1Controller2.text,
+                                        rutalocal: savedImagePath,
+                                        estadoAuditoria: '1',
+                                        modificadoMovil: 1,
+                                        uploadDocumento: 0,
+                                        fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                        equipoCreacionAuditoria: FFAppState().cummovil,
+                                        programaCreacionAuditoria: FFAppState().programacreacion,
+                                        usuarioCreacionAuditoria: FFAppState().username,
                                       );
+
+
+
+
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Foto Agregada!',
+                                            'La foto ha sido agregada satisfactoriamente',
                                             style: TextStyle(
                                               color:
                                               FlutterFlowTheme.of(context)

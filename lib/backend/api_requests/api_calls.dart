@@ -113,8 +113,8 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-          'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
-      //'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
+          //'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
+      'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -848,7 +848,102 @@ ${corche}''';
         response,
         '\$.dato.fichasFirmas[$index].programaModificacionAuditoria',
       ));
+///FICHA ARCHIVOS
 
+  static List? fichasArchivos(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.fichasArchivos''',
+    true,
+  ) as List?;
+  static int? idFichaArchivoArc(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].idFichaArchivo',
+      ));
+  static int? idFichaArchivoMovilArc(dynamic response, int index) => castToType<int>(getJsonField(
+    response,
+    '\$.dato.fichasArchivos[$index].idFichaArchivoMovil',
+  ));
+  static int? idFichaArc(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].idFicha',
+      ));
+  static String? nombreArc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].nombre',
+      ));
+  static String? extensionarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].extension',
+      ));
+  static String? rutaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].ruta',
+      ));
+  static String? pesoarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].peso',
+      ));
+  static String? tituloarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].titulo',
+      ));
+  static String? comentarioarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].comentario',
+      ));
+  static String? estadoAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].estadoAuditoria',
+      ));
+  static String? usuarioCreacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].usuarioCreacionAuditoria',
+      ));
+  static String? usuarioModificacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].usuarioModificacionAuditoria',
+      ));
+  static String? fechaCreacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].fechaCreacionAuditoria',
+      ));
+  static String? fechaModificacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].fechaModificacionAuditoria',
+      ));
+  static String? equipoCreacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].equipoCreacionAuditoria',
+      ));
+  static String? equipoModificacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].equipoModificacionAuditoria',
+      ));
+  static String? programaCreacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].programaCreacionAuditoria',
+      ));
+  static String? programaModificacionAuditoriaarc(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasArchivos[$index].programaModificacionAuditoria',
+      ));
 
 
   ///SINC
@@ -887,41 +982,6 @@ ${corche}''';
 
 }
 
-class ApiProniedCallUp {
-  static Future<ApiCallResponse> call() async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'API PRONIEDUP',
-      apiUrl: 'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincroup',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: true,
-      decodeUtf8: true,
-      cache: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  static int? userId(dynamic response) => castToType<int>(getJsonField(
-    response,
-    r'''$.userId''',
-  ));
-  static int? id(dynamic response) => castToType<int>(getJsonField(
-    response,
-    r'''$.id''',
-  ));
-  static String? nombre(dynamic response) => castToType<String>(getJsonField(
-    response,
-    r'''$.title''',
-  ));
-  static dynamic datos(dynamic response) => getJsonField(
-    response,
-    r'''$.datos''',
-  );
-}
-
-
 class APIObtenerTOKENCall {
   static Future<ApiCallResponse> call({
     String? usuario = '',
@@ -938,8 +998,8 @@ class APIObtenerTOKENCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Obtener TOKEN',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -989,8 +1049,8 @@ class ApiAutorizacionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API AUTORIZACION',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1111,8 +1171,8 @@ class ApiTokenFinalCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API TOKEN FINAL',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

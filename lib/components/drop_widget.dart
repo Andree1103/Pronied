@@ -180,6 +180,7 @@ class _DropWidgetState extends State<DropWidget> {
                   List<Map<String, dynamic>> fichasModularesObj = [];
                   List<Map<String, dynamic>> fichasObj = [];
                   List<Map<String, dynamic>> fichasFichasObj = [];
+                  List<Map<String, dynamic>> fichasArchivosObj = [];
                   List<Map<String, dynamic>> inspeccionesObj = [];
                   List<Map<String, dynamic>> sincroColaObj = [];
                   List<Map<String, dynamic>> respuestasColaObj = [];
@@ -208,6 +209,45 @@ class _DropWidgetState extends State<DropWidget> {
                             await SQLiteManager.instance.actualizarFichaFirmaUpload(
                               idFicha: ficha.idFicha,
                               rutalocal: ficha.rutalocal,
+                              ruta: UploaddocCall.url(response?.jsonBody),
+                              extension: UploaddocCall.extension(response?.jsonBody),
+                              nombreArchivo: UploaddocCall.nombrearchivo(response?.jsonBody),
+                              peso: double.parse(UploaddocCall.tamano(response?.jsonBody)!),
+                              uploadDocumento: 1,
+                            );
+                          } else {
+                            print('La llamada falló con el código de estado: ${response.statusCode}');
+                          }
+                        } catch (e) {
+                          // Manejar excepciones si la llamada falla
+                          print('Se produjo un error al realizar la llamada: $e');
+                        }
+                      } else {
+                        print('El archivo no existe en la ruta especificada.');
+                      }
+                    }
+                  }
+
+                  var archivossinupload = await SQLiteManager.instance.listarFichasArchivos1();
+                  if(archivossinupload != null){
+                    for(var arc in archivossinupload){
+                      File file = File(arc.rutalocal!);
+                      if (await file.exists()) {
+                        try {
+                          List<int> bytes = await file.readAsBytes();
+                          String fileName = path.basename(file.path);
+                          Uint8List uint8List = Uint8List.fromList(bytes);
+                          FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
+                          var response = await UploaddocCall.call(
+                            archivos: uploadedFile,
+                            codigoapp: '48',
+                            tag: '1049',
+                          );
+                          // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
+                          if (response.statusCode == 200) {
+                            await SQLiteManager.instance.actualizarFichaArchivosUpload(
+                              idFicha: arc.idFicha,
+                              rutalocal: arc.rutalocal,
                               ruta: UploaddocCall.url(response?.jsonBody),
                               extension: UploaddocCall.extension(response?.jsonBody),
                               nombreArchivo: UploaddocCall.nombrearchivo(response?.jsonBody),
@@ -269,6 +309,39 @@ class _DropWidgetState extends State<DropWidget> {
                     };
                   }
 
+                  var fichaArchivos = await SQLiteManager.instance.listarFichasArchivosModificas();
+                  if(fichaArchivos != null){
+                    for (var archi in fichaArchivos){
+                      SQLiteManager.instance.cargarColaSincronizacion(
+                        TipoDato: "fichaarchivo",
+                        Estado: 1,
+                        IdDatoLocal: archi.idFichaArchivoMovil,
+                        IdDatoServer: archi.idFichaArchivoMovil,
+                        IdSincro:idsincro,
+                      );
+                      Map<String, dynamic> archivosjson = {
+                        "idFichaArchivo": archi.idFichaArchivo,
+                        "idFichaArchivoMovil": archi.idFichaArchivoMovil,
+                        "idFicha": archi.idFicha,
+                        "nombre": archi.nombre,
+                        "extension": archi.extension,
+                        "ruta": archi.ruta,
+                        "peso": archi.peso.toString(),
+                        "titulo": archi.titulo,
+                        "comentario": archi.comentario,
+                        "estadoAuditoria": archi.estadoAuditoria,
+                        "usuarioCreacionAuditoria": archi.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": archi.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": archi.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": archi.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": archi.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": archi.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": archi.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": archi.programaModificacionAuditoria
+                      };
+                      fichasArchivosObj.add(archivosjson);
+                    }
+                  }
                   var fichaFirmas = await SQLiteManager.instance.listarFichasFirmaModificas();
                   if( fichaFirmas != null) {
                     for (var ficha in fichaFirmas) {
@@ -482,7 +555,8 @@ class _DropWidgetState extends State<DropWidget> {
                     "fichas": fichasObj,
                     "fichasModulares": fichasModularesObj,
                     "fichasPreguntasRespuestas" : respuestasColaObj,
-                    "fichasFirmas": fichasFichasObj
+                    "fichasFirmas": fichasFichasObj,
+                    "fichasArchivos": fichasArchivosObj
                   };
                   var jsonString = jsonEncode(json);
                   var jsonn = jsonDecode(jsonString);
@@ -959,6 +1033,87 @@ class _DropWidgetState extends State<DropWidget> {
                       }
                     }
 
+                    var fichaArchivos = ApiProniedCall.fichaArchivos(_model.apiResponseDatos?.jsonBody);
+                    if (fichaArchivos != null){
+                      for (var i = 0; i<fichaArchivos.length; i++){
+                        var rpta = await SQLiteManager.instance.VerificarSiExisteArchivoNotNUll(
+                          idFicha: ApiProniedCall.idFichaArc(_model.apiResponseDatos?.jsonBody, i),
+                          idFichaArchivo: ApiProniedCall.idFichaArchivoArc(_model.apiResponseDatos?.jsonBody, i),
+                          idFichaArchivoMovil: ApiProniedCall.idFichaArchivoMovilArc(_model.apiResponseDatos?.jsonBody, i),
+                        );
+                        if( rpta.length > 0){
+                          await SQLiteManager.instance.actualizarFichaArchivosAPI(
+                            idFicha: ApiProniedCall.idFichaArc(_model.apiResponseDatos?.jsonBody, i),
+                            idFichaArchivo: ApiProniedCall.idFichaArchivoArc(_model.apiResponseDatos?.jsonBody, i),
+                            idFichaArchivoMovil: ApiProniedCall.idFichaArchivoMovilArc(_model.apiResponseDatos?.jsonBody, i),
+                            nombre: ApiProniedCall.nombreArc(_model.apiResponseDatos?.jsonBody, i),
+                            ruta: ApiProniedCall.rutaarc(_model.apiResponseDatos?.jsonBody, i),
+                            peso: ApiProniedCall.pesoarc(_model.apiResponseDatos?.jsonBody, i),
+                            extension: ApiProniedCall.extensionarc(_model.apiResponseDatos?.jsonBody, i),
+                            estadoAuditoria: ApiProniedCall.estadoAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            modificadoMovil: 0
+                          );
+                        } else {
+                          var imageUrl = ApiProniedCall.rutaarc(_model.apiResponseDatos?.jsonBody, i);
+                          var filePath = '';
+                          try {
+                            // Obtener el directorio de almacenamiento local
+                            final appDir = await getApplicationDocumentsDirectory();
+                            // Extraer el nombre del archivo de la URL
+                            final fileName = imageUrl!.split('/').last;
+                            // Construir la ruta completa del archivo
+                            filePath = '${appDir.path}/$fileName';
+                            // Realizar la solicitud HTTP para descargar la imagen
+                            final response = await http.get(Uri.parse(imageUrl!));
+                            if (response.statusCode == 200) {
+                              // Convertir los bytes de la respuesta a Uint8List
+                              Uint8List bytes = response.bodyBytes;
+                              // Guardar los bytes de la imagen en el archivo
+                              await File(filePath).writeAsBytes(bytes);
+                              print('Imagen guardada en: $filePath');
+                            } else {
+                              print('Error al descargar la imagen. Código de estado: ${response.statusCode}');
+                            }
+                          } catch (e) {
+                            print('Error al guardar la imagen: $e');
+                          }
+
+                          await SQLiteManager.instance.crearFichaArchivo(
+                            idFichaArchivoMovil: ApiProniedCall.idFichaArchivoMovilArc(_model.apiResponseDatos?.jsonBody, i),
+                            idFicha: ApiProniedCall.idFichaArc(_model.apiResponseDatos?.jsonBody, i),
+                            idFichaArchivo: ApiProniedCall.idFichaArchivoArc(_model.apiResponseDatos?.jsonBody, i),
+                            nombre: ApiProniedCall.nombreArc(_model.apiResponseDatos?.jsonBody, i),
+                            ruta: ApiProniedCall.rutaarc(_model.apiResponseDatos?.jsonBody, i),
+                            peso: double.parse(ApiProniedCall.pesoarc(_model.apiResponseDatos?.jsonBody, i)!),
+                            extension: ApiProniedCall.extensionarc(_model.apiResponseDatos?.jsonBody, i),
+                            estadoAuditoria: ApiProniedCall.estadoAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
+                            modificadoMovil: 0,
+                            rutalocal: filePath,
+                            uploadDocumento: 1,
+                            comentario: ApiProniedCall.comentarioarc(_model.apiResponseDatos?.jsonBody, i),
+                            titulo: ApiProniedCall.tituloarc(_model.apiResponseDatos?.jsonBody, i),
+                          );
+
+                        }
+                      }
+                    }
+
                     ///CAMBIANDO ESTADO 3
 
                     List<dynamic> resultado = [];
@@ -1004,7 +1159,7 @@ class _DropWidgetState extends State<DropWidget> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Inspección Sincronizadas.',
+                          'Sincronización Exitosa.',
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,

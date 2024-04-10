@@ -65,7 +65,7 @@ class _AlertDeleteFotoWidgetState extends State<AlertDeleteFotoWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Estas seguro de eliminar la foto?',
+                  '¿Está usted seguro de eliminar la foto?',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 16.0,
@@ -81,10 +81,15 @@ class _AlertDeleteFotoWidgetState extends State<AlertDeleteFotoWidget> {
                   await SQLiteManager.instance.deleteFoto(
                     idFoto: FFAppState().IdFoto,
                   );
+                  setState(() {
+                    SQLiteManager.instance.inspeccion1(
+                      idFicha: FFAppState().IdFicha,
+                    );
+                  });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Foto eliminada correctamente',
+                        'La foto ha sido eliminada satisfactoriamente',
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,

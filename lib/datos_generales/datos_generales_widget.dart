@@ -1079,7 +1079,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
-                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(2)],
                                                                   validator: _model
                                                                       .dat1Controller3Validator
                                                                       .asValidator(
@@ -1209,7 +1209,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
-                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(2)],
                                                                   validator: _model
                                                                       .dat1Controller4Validator
                                                                       .asValidator(
@@ -1339,7 +1339,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   keyboardType:
                                                                   TextInputType
                                                                       .number,
-                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(2)],
                                                                   validator: _model
                                                                       .dat1Controller5Validator
                                                                       .asValidator(
@@ -1730,7 +1730,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
-                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                                                                                       validator: _model.dat1Controller9Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1802,7 +1802,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
-                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                                                                                       validator: _model.dat1Controller10Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1874,7 +1874,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
-                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                                                                                       validator: _model.dat1Controller11Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -1946,7 +1946,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
-                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                                                                                       validator: _model.dat1Controller12Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -2018,7 +2018,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         fontWeight: FontWeight.w300,
                                                                                       ),
                                                                                       keyboardType: TextInputType.number,
-                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly,LengthLimitingTextInputFormatter(8)],
                                                                                       validator: _model.dat1Controller13Validator.asValidator(context),
                                                                                     ),
                                                                                   ),
@@ -3478,7 +3478,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       .dat1Controller24Validator
                                                                       .asValidator(
                                                                       context),
-                                                                  inputFormatters: [LengthLimitingTextInputFormatter(9)],
+                                                                  inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                 ),
                                                               ),
                                                             ),
@@ -3731,7 +3731,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                 ),
                                                               ),
                                                             ),
-                                                            Padding(
+                                                            /*Padding(
                                                               padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
@@ -3984,7 +3984,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       context),
                                                                 ),
                                                               ),
-                                                            ),
+                                                            ),*/
                                                           ],
                                                         ),
                                                       ),
@@ -4050,8 +4050,8 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                     nombreInspector: _model.dat1Controller23.text,
                                     correoInspector: _model.dat1Controller24.text,
                                     telefonoInspector: _model.dat1Controller25.text,
-                                    fechaInspeccion: _model.dat1Controller27.text,
-                                    horaInspeccion: _model.dat1Controller28.text,
+                                    //fechaInspeccion: _model.dat1Controller27.text,
+                                    //horaInspeccion: _model.dat1Controller28.text,
                                     tipoInspeccion: _model.dat1Controller26.text,
                                     UsuarioModificacionAudi: "SAMADOR",
                                     modificadoMovil: 1,
