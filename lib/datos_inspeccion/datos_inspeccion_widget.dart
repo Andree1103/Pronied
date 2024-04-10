@@ -851,6 +851,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                 );
                                                                                                                                                 SQLiteManager.instance.inspeccion1(
                                                                                                                                                   idFicha: FFAppState().IdFicha,
+                                                                                                                                                  usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                  fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                  equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                  programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                 );
                                                                                                                                               }
                                                                                                                                             });
@@ -915,6 +919,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                 );
                                                                                                                                                 SQLiteManager.instance.inspeccion1(
                                                                                                                                                   idFicha: FFAppState().IdFicha,
+                                                                                                                                                  usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                  fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                  equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                  programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                 );
                                                                                                                                               }
                                                                                                                                             });
@@ -1003,6 +1011,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               });
@@ -1063,6 +1075,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               });
@@ -1130,6 +1146,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               }
@@ -1211,6 +1231,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               }
@@ -1321,6 +1345,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               });
@@ -1394,6 +1422,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               });
@@ -1481,6 +1513,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                       );
                                                                                                                                                       SQLiteManager.instance.inspeccion1(
                                                                                                                                                         idFicha: FFAppState().IdFicha,
+                                                                                                                                                        usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                        programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                       );
                                                                                                                                                     }
                                                                                                                                                   }
@@ -1516,6 +1552,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                               }
@@ -1580,6 +1620,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                       );
                                                                                                                                                       SQLiteManager.instance.inspeccion1(
                                                                                                                                                         idFicha: FFAppState().IdFicha,
+                                                                                                                                                        usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                        programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                       );
                                                                                                                                                     }
                                                                                                                                                   }
@@ -1680,6 +1724,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                 );
                                                                                                                                 SQLiteManager.instance.inspeccion1(
                                                                                                                                   idFicha: FFAppState().IdFicha,
+                                                                                                                                  usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                  fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                  equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                  programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                 );
                                                                                                                               }
                                                                                                                             } else {
@@ -1698,6 +1746,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                 );
                                                                                                                                 SQLiteManager.instance.inspeccion1(
                                                                                                                                   idFicha: FFAppState().IdFicha,
+                                                                                                                                  usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                  fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                  equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                  programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                 );
                                                                                                                               }
                                                                                                                             }
@@ -1817,6 +1869,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                               );
                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                               );
                                                                                                                             }
 
@@ -1836,6 +1892,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                               );
                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                               );
                                                                                                                             }
                                                                                                                           }
@@ -1955,6 +2015,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                               );
                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                               );
                                                                                                                             }
                                                                                                                           } else {
@@ -1973,6 +2037,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                               );
                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                               );
                                                                                                                             }
                                                                                                                           }
@@ -2106,6 +2174,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                       );
                                                                                                                                                       SQLiteManager.instance.inspeccion1(
                                                                                                                                                         idFicha: FFAppState().IdFicha,
+                                                                                                                                                        usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                        programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                       );
                                                                                                                                                     }
                                                                                                                                                     else {
@@ -2153,6 +2225,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 }
                                                                                                                                                 else {
@@ -2233,6 +2309,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                       );
                                                                                                                                                       SQLiteManager.instance.inspeccion1(
                                                                                                                                                         idFicha: FFAppState().IdFicha,
+                                                                                                                                                        usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                        programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                       );
                                                                                                                                                     }
                                                                                                                                                     else {
@@ -2280,6 +2360,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                   );
                                                                                                                                                   SQLiteManager.instance.inspeccion1(
                                                                                                                                                     idFicha: FFAppState().IdFicha,
+                                                                                                                                                    usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                    equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                    programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                   );
                                                                                                                                                 });
                                                                                                                                               }
@@ -2385,6 +2469,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                             );
                                                                                                                                                             SQLiteManager.instance.inspeccion1(
                                                                                                                                                               idFicha: FFAppState().IdFicha,
+                                                                                                                                                              usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                              fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                              equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                              programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                             );
                                                                                                                                                           }
                                                                                                                                                         });
@@ -2524,6 +2612,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                                             );
                                                                                                                                                             SQLiteManager.instance.inspeccion1(
                                                                                                                                                               idFicha: FFAppState().IdFicha,
+                                                                                                                                                              usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                              fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                              equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                              programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                                             );
                                                                                                                                                           }
                                                                                                                                                         });
@@ -2677,6 +2769,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                               );
                                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                               );
                                                                                                                                             }
                                                                                                                                           });
@@ -2831,6 +2927,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                                               );
                                                                                                                                               SQLiteManager.instance.inspeccion1(
                                                                                                                                                 idFicha: FFAppState().IdFicha,
+                                                                                                                                                usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                                equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                                programaModificacionAuditoria: FFAppState().programacreacion,
                                                                                                                                               );
                                                                                                                                             }
                                                                                                                                           });

@@ -38,6 +38,7 @@ class _UbicacionInstitucionWidgetState
     super.dispose();
   }
 
+  LatLng? location12 = LatLng(FFAppState().latitud, FFAppState().longitud);
 
   @override
   Widget build(BuildContext context) {
@@ -465,16 +466,13 @@ class _UbicacionInstitucionWidgetState
                             showMapToolbar: false,
                             showTraffic: false,
                             centerMapOnMarkerTap: true,
-                            markers: {
-                              FlutterFlowMarker(
-                                'myLocation', // ID único para el marcador
-                                position: LatLng(FFAppState().latitud, FFAppState().longitud), // Posición del marcador
-                                infoWindow: InfoWindow(
-                                  title: 'Mi ubicación', // Título del marcador
-                                  snippet: 'Lat: ${FFAppState().latitud}, Lng: ${FFAppState().longitud}', // Información adicional
+                            markers: [
+                              if (location12 != null)
+                                FlutterFlowMarker(
+                                  location12!.serialize(),
+                                  location12!,
                                 ),
-                              ),
-                            },
+                            ],
                           ),
 
 

@@ -83,7 +83,11 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
               child: FFButtonWidget(
                 onPressed: () async {
                   await SQLiteManager.instance.actualizarInspeccionesEstado(
-                    idInspeccion: FFAppState().idInspeccion
+                    idInspeccion: FFAppState().idInspeccion,
+                    usuarioModificacionAuditoria: FFAppState().username,
+                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                    equipoModificacionAuditoria: FFAppState().cummovil,
+                    programaModificacionAuditoria: FFAppState().programacreacion,
                   );
                   setState(() {
                     FFAppState().estadoInspeccion = 'EN REGISTRO';

@@ -126,10 +126,18 @@ Future performCrearFichaFirma(
 Future performDeleteFirma(
     Database database, {
       int? id,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 UPDATE FichasFirmas
-SET estadoAuditoria = '0'
+SET estadoAuditoria = '0', modificacionMovil = 1,
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE idFichaFirmaMovil = ${id};
 ''';
   return database.rawQuery(query);
@@ -142,10 +150,18 @@ WHERE idFichaFirmaMovil = ${id};
 Future performDeleteFoto(
   Database database, {
   int? idFoto,
+  String? usuarioModificacionAuditoria,
+  String? fechaModificacionAuditoria,
+  String? equipoModificacionAuditoria,
+  String? programaModificacionAuditoria
 }) {
   final query = '''
 UPDATE FichasArchivos
-SET estadoAuditoria = '0'
+SET estadoAuditoria = '0', modificadoMovil = 1,
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE idFichaArchivoMovil = ${idFoto};
 ''';
   return database.rawQuery(query);
@@ -167,10 +183,21 @@ Future performCargarData(
   String? distritoIns,
   int? idEstadoIns,
   String? estadoIns,
+  String? usuarioCreacionAuditoria,
+  String? usuarioModificacionAuditoria,
+  String? fechaCreacionAuditoria,
+  String? fechaModificacionAuditoria,
+  String? equipoCreacionAuditoria,
+  String? equipoModificacionAuditoria,
+  String? programaCreacionAuditoria,
+  String? programaModificacionAuditoria
+
 }) {
   final query = '''
-INSERT INTO Inspecciones (idInspeccion, nombreEvento, idFicha, idPlantilla, codigoLocalColegio, nombreLocalColegio, departamentoColegio, provinciaColegio, distritoColegio, idEstado, estado,modificadoMovil )
-VALUES ('${idInspeccion}', '${nombreIns}', '${idFichaIns}', '${idPlantillaIns}', '${codigolocalIns}','${nombreLocalIns}', '${departamentoIns}', '${provinciaIns}', '${distritoIns}', '${idEstadoIns}', '${estadoIns}',0);
+INSERT INTO Inspecciones (idInspeccion, nombreEvento, idFicha, idPlantilla, codigoLocalColegio, nombreLocalColegio, departamentoColegio, provinciaColegio, distritoColegio, idEstado, estado,modificadoMovil,
+usuarioCreacionAuditoria,usuarioModificacionAuditoria,fechaCreacionAuditoria,fechaModificacionAuditoria,equipoCreacionAuditoria,equipoModificacionAuditoria,programaCreacionAuditoria,programaModificacionAuditoria)
+VALUES ('${idInspeccion}', '${nombreIns}', '${idFichaIns}', '${idPlantillaIns}', '${codigolocalIns}','${nombreLocalIns}', '${departamentoIns}', '${provinciaIns}', '${distritoIns}', '${idEstadoIns}', '${estadoIns}',0,
+'${usuarioCreacionAuditoria}','${usuarioModificacionAuditoria}','${fechaCreacionAuditoria}','${fechaModificacionAuditoria}','${equipoCreacionAuditoria}','${equipoModificacionAuditoria}','${programaCreacionAuditoria}','${programaModificacionAuditoria}');
 
 ''';
   return database.rawQuery(query);
@@ -766,7 +793,7 @@ SET
     programaModificacionAuditoria = '${programaModificacionAuditoria}',
     modificacionMovil = ${modificacionMovil}
 WHERE 
-    idFichaFirmaMovil = ${idFichaFirmaMovil} and idFicha = ${idFicha};
+    (idFichaFirmaMovil = ${idFichaFirmaMovil} or idFichaFirma = ${idFichaFirma}) and idFicha = ${idFicha};
 
 
 ''';
@@ -814,7 +841,7 @@ SET
     programaModificacionAuditoria = '${programaModificacionAuditoria}',
     modificadoMovil = ${modificadoMovil}
 WHERE 
-    idFichaArchivoMovil = ${idFichaArchivoMovil} and idFicha = ${idFicha};
+    (idFichaArchivoMovil = ${idFichaArchivoMovil} or idFichaArchivo = ${idFichaArchivo}) and idFicha = ${idFicha};
 
 
 ''';
@@ -1048,7 +1075,15 @@ Future performActualizarInspeccionApi(
       String? provinciaColegio,
       String? distritoColegio,
       int? idEstado,
-      String? estado
+      String? estado,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 UPDATE Inspecciones
@@ -1061,7 +1096,15 @@ SET
     provinciaColegio = '${provinciaColegio}',
     distritoColegio = '${distritoColegio}',
     idEstado = ${idEstado},
-    estado = '${estado}'
+    estado = '${estado}',
+    usuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaCreacionAuditoria = '${programaCreacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
     idInspeccion = ${idInspeccion}
 
@@ -1072,12 +1115,20 @@ WHERE
 Future performActualizarInspeccionEstado(
     Database database, {
       int? idInspeccion,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 UPDATE Inspecciones
 SET
     idEstado = 4,
-    estado = 'EN REGISTRO'
+    estado = 'EN REGISTRO',
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
     idInspeccion = ${idInspeccion}
 
@@ -1089,12 +1140,20 @@ WHERE
 Future performFinalizarInspeccion(
     Database database, {
       int? idInspeccion,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 UPDATE Inspecciones
 SET
     idEstado = 3,
-    estado = 'REALIZADA'
+    estado = 'REALIZADA',
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
     idInspeccion = ${idInspeccion}
 
@@ -1463,11 +1522,19 @@ WHERE
 
 Future performModificacionInspecicon1(
     Database database, {
-      int? idFicha
+      int? idFicha,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria
     }) {
   final query = '''
 UPDATE Inspecciones 
-SET modificadoMovil = 1
+SET modificadoMovil = 1,
+    usuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    fechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    programaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE idFicha = ${idFicha}
     
 ''';
@@ -1479,7 +1546,7 @@ WHERE idFicha = ${idFicha}
 
 Future performModificacionInspecicon0(
     Database database, {
-      int? idFicha
+      int? idFicha,
     }) {
   final query = '''
 UPDATE Inspecciones 

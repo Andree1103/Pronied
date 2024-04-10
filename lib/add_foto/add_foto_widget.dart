@@ -807,6 +807,10 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                       setState(() {
                                         SQLiteManager.instance.inspeccion1(
                                           idFicha: FFAppState().IdFicha,
+                                          usuarioModificacionAuditoria: FFAppState().username,
+                                          fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                          equipoModificacionAuditoria: FFAppState().cummovil,
+                                          programaModificacionAuditoria: FFAppState().programacreacion,
                                         );
                                       });
                                       /*await SQLiteManager.instance.crearFoto(

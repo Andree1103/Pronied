@@ -524,7 +524,11 @@ class _DropWidgetState extends State<DropWidget> {
                       Map<String, dynamic> inspeccionesJson = {
                         "idInspeccion": ins.idInspeccion,
                         "idFicha": ins.idFicha,
-                        "idEstado": ins.idEstado
+                        "idEstado": ins.idEstado,
+                        "usuarioModificacionAuditoria": ins.usuarioModificacionAuditoria,
+                        "fechaModificacionAuditoria": ins.fechaModificacionAuditoria,
+                        "equipoModificacionAuditoria": ins.equipoModificacionAuditoria,
+                        "programaModificacionAuditoria": ins.programaModificacionAuditoria
                       };
                       inspeccionesObj.add(inspeccionesJson);
                     }
@@ -593,6 +597,15 @@ class _DropWidgetState extends State<DropWidget> {
                             distritoColegio: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
                             idEstado: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
                             estado: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+
                           );
                           await SQLiteManager.instance.inspeccion0(
                             idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i)
@@ -610,6 +623,14 @@ class _DropWidgetState extends State<DropWidget> {
                             distritoIns: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
                             idEstadoIns: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
                             estadoIns: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
                           );
                         }
                       }
@@ -1059,7 +1080,7 @@ class _DropWidgetState extends State<DropWidget> {
                             equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
                             programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
                             programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriaarc(_model.apiResponseDatos?.jsonBody, i),
-                            modificadoMovil: 0
+                            modificadoMovil: 0,
                           );
                         } else {
                           var imageUrl = ApiProniedCall.rutaarc(_model.apiResponseDatos?.jsonBody, i);

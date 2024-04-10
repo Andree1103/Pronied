@@ -123,7 +123,15 @@ SELECT
     idInspeccion, 
     idFicha, 
     idEstado,
-    modificadoMovil
+    modificadoMovil,
+    usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria,
+    fechaCreacionAuditoria,
+    fechaModificacionAuditoria,
+    equipoCreacionAuditoria,
+    equipoModificacionAuditoria,
+    programaCreacionAuditoria,
+    programaModificacionAuditoria
 FROM Inspecciones where modificadoMovil = 1;
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesMod1Row(d));
@@ -136,6 +144,14 @@ class ListarInspeccionesMod1Row extends SqliteRow {
   int? get idFicha => data['idFicha'] as int?;
   int? get idEstado => data['idEstado'] as int?;
   int? get modificadoMovil => data['modificadoMovil'] as int?;
+  String? get usuarioCreacionAuditoria => data['usuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['usuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['fechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['fechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['equipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['equipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['programaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['programaModificacionAuditoria'] as String?;
 }
 
 

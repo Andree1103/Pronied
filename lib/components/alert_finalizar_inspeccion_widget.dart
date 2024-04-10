@@ -85,6 +85,10 @@ class _AlertFinalizarInspeccionWidgetState
                 onPressed: () async {
                   await SQLiteManager.instance.actualizarFinalizarInspeccion(
                     idInspeccion: FFAppState().idInspeccion,
+                    programaModificacionAuditoria:  FFAppState().programacreacion,
+                    equipoModificacionAuditoria: FFAppState().cummovil,
+                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                    usuarioModificacionAuditoria: FFAppState().username,
                   );
                   setState(() {
                     FFAppState().estadoInspeccion = 'REALIZADA';

@@ -80,10 +80,18 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
                 onPressed: () async {
                   await SQLiteManager.instance.deleteFirma(
                     id: FFAppState().IdFirma,
+                    usuarioModificacionAuditoria: FFAppState().username,
+                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                    equipoModificacionAuditoria: FFAppState().cummovil,
+                    programaModificacionAuditoria: FFAppState().programacreacion,
                   );
                   setState(() {
                     SQLiteManager.instance.inspeccion1(
                       idFicha: FFAppState().IdFicha,
+                      usuarioModificacionAuditoria: FFAppState().username,
+                      fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                      equipoModificacionAuditoria: FFAppState().cummovil,
+                      programaModificacionAuditoria: FFAppState().programacreacion,
                     );
                   });
                   ScaffoldMessenger.of(context).showSnackBar(

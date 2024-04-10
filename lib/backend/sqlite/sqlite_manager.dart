@@ -377,18 +377,34 @@ class SQLiteManager {
 
   Future deleteFirma({
     int? id,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
   }) =>
       performDeleteFirma(
         _database,
         id: id,
+        usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+        fechaModificacionAuditoria: fechaModificacionAuditoria,
+        equipoModificacionAuditoria: equipoModificacionAuditoria,
+        programaModificacionAuditoria: programaModificacionAuditoria
       );
 
   Future deleteFoto({
     int? idFoto,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
   }) =>
       performDeleteFoto(
         _database,
         idFoto: idFoto,
+        usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+        fechaModificacionAuditoria: fechaModificacionAuditoria,
+        equipoModificacionAuditoria: equipoModificacionAuditoria,
+        programaModificacionAuditoria: programaModificacionAuditoria
       );
 
   Future cargarData({
@@ -403,6 +419,14 @@ class SQLiteManager {
     String? distritoIns,
     int? idEstadoIns,
     String? estadoIns,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria
   }) =>
       performCargarData(
         _database,
@@ -417,6 +441,14 @@ class SQLiteManager {
         distritoIns: distritoIns,
         idEstadoIns: idEstadoIns,
         estadoIns: estadoIns,
+        usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+        usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+        fechaCreacionAuditoria: fechaCreacionAuditoria,
+        fechaModificacionAuditoria: fechaModificacionAuditoria,
+        equipoCreacionAuditoria: equipoCreacionAuditoria,
+        equipoModificacionAuditoria: equipoModificacionAuditoria,
+        programaCreacionAuditoria: programaCreacionAuditoria,
+        programaModificacionAuditoria: programaModificacionAuditoria
       );
 
   Future cargarFicha({
@@ -982,8 +1014,16 @@ class SQLiteManager {
     String? provinciaColegio,
     String? distritoColegio,
     int? idEstado,
-    String? estado
-}) => performActualizarInspeccionApi (
+    String? estado,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria
+  }) => performActualizarInspeccionApi (
     _database,
     idInspeccion:idInspeccion,
     nombreEvento: nombreEvento,
@@ -995,21 +1035,45 @@ class SQLiteManager {
     provinciaColegio: provinciaColegio,
     distritoColegio: distritoColegio,
     idEstado: idEstado,
-    estado: estado
+    estado: estado,
+    usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaCreacionAuditoria: fechaCreacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoCreacionAuditoria: equipoCreacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaCreacionAuditoria: programaCreacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria
   );
 
   Future actualizarInspeccionesEstado ({
     int? idInspeccion,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
   }) => performActualizarInspeccionEstado (
     _database,
     idInspeccion: idInspeccion,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria
   );
 
   Future actualizarFinalizarInspeccion ({
     int? idInspeccion,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
   }) => performFinalizarInspeccion (
     _database,
     idInspeccion: idInspeccion,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria
   );
 
   Future actualizarestaFichaCola({
@@ -1490,11 +1554,19 @@ class SQLiteManager {
       );
 
   Future inspeccion1({
-    int? idFicha
+    int? idFicha,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
   }) =>
       performModificacionInspecicon1(
           _database,
-          idFicha: idFicha
+          idFicha: idFicha,
+          usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+          fechaModificacionAuditoria: fechaModificacionAuditoria,
+          equipoModificacionAuditoria: equipoModificacionAuditoria,
+          programaModificacionAuditoria: programaModificacionAuditoria
       );
 
   Future fichamod1({
