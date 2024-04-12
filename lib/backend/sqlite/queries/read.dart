@@ -73,7 +73,9 @@ class ListarFirmasRow extends SqliteRow {
 
 /// BEGIN LISTARINSPECCIONES
 Future<List<ListarInspeccionesRow>> performListarInspecciones(
-  Database database,
+  Database database, {
+      String? dniInspector,
+}
 ) {
   final query = '''
 SELECT 
@@ -89,7 +91,7 @@ SELECT
     idEstado,
     estado,
     modificadoMovil
-FROM Inspecciones;
+FROM Inspecciones where dniInspector = '${dniInspector}';
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesRow(d));
 }
@@ -117,6 +119,7 @@ class ListarInspeccionesRow extends SqliteRow {
 /// BEGIN LISTARINSPECCIONES
 Future<List<ListarInspeccionesMod1Row>> performListarInspeccionesMod1(
     Database database,
+    {String? dniInspector}
     ) {
   final query = '''
 SELECT 
@@ -132,7 +135,7 @@ SELECT
     equipoModificacionAuditoria,
     programaCreacionAuditoria,
     programaModificacionAuditoria
-FROM Inspecciones where modificadoMovil = 1;
+FROM Inspecciones where dniInspector = '${dniInspector}'
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesMod1Row(d));
 }
@@ -158,7 +161,9 @@ class ListarInspeccionesMod1Row extends SqliteRow {
 
 /// BEGIN LISTARINSPECCIONESPROCESS
 Future<List<ListarInspeccionesProcessRow>> performListarInspeccionesProcess(
-  Database database,
+  Database database,{
+    String? dniInspector,
+}
 ) {
   final query = '''
 SELECT 
@@ -174,7 +179,7 @@ SELECT
     idEstado,
     estado,
     modificadoMovil
-FROM Inspecciones where idEstado = 4;
+FROM Inspecciones where idEstado = 4 and dniInspector = '${dniInspector}'
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesProcessRow(d));
 }
@@ -200,7 +205,9 @@ class ListarInspeccionesProcessRow extends SqliteRow {
 
 /// BEGIN LISTARINSPECCIONESREALIZADA
 Future<List<ListarInspeccionesRealizadaRow>> performListarInspeccionesRealizada(
-  Database database,
+  Database database,{
+    String? dniInspector,
+}
 ) {
   final query = '''
 SELECT 
@@ -216,7 +223,7 @@ SELECT
     idEstado,
     estado,
     modificadoMovil
-FROM Inspecciones where idEstado = 3;
+FROM Inspecciones where idEstado = 3 and dniInspector = '${dniInspector}'
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesRealizadaRow(d));
 }
@@ -243,7 +250,9 @@ class ListarInspeccionesRealizadaRow extends SqliteRow {
 /// BEGIN LISTARINSPECCIONESPROGRAMADA
 Future<List<ListarInspeccionesProgramadaRow>>
     performListarInspeccionesProgramada(
-  Database database,
+  Database database, {
+    String? dniInspector,
+}
 ) {
   final query = '''
 SELECT 
@@ -259,7 +268,7 @@ SELECT
     idEstado,
     estado,
     modificadoMovil
-FROM Inspecciones where idEstado = 2;
+FROM Inspecciones where idEstado = 2 and dniInspector = '${dniInspector}';
 ''';
   return _readQuery(database, query, (d) => ListarInspeccionesProgramadaRow(d));
 }
@@ -809,11 +818,13 @@ class ListarFichasArchivos extends SqliteRow {
 
 
 /// BEGIN LISTARPREGUNTAS
-Future<List<ListarFichasModificacion>> performListarFichaMod(Database database) {
+Future<List<ListarFichasModificacion>> performListarFichaMod(Database database, {
+  String? dniInspector,
+}) {
   final query = '''
     SELECT *
     FROM Fichas 
-    WHERE modificadoMovil = 1;
+    WHERE modificadoMovil = 1 and DniInspector = '${dniInspector}'
   ''';
   return _readQuery(database, query, (data) => ListarFichasModificacion(data));
 }
@@ -858,6 +869,7 @@ class ListarFichasModificacion extends SqliteRow {
   String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
   String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
   String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
   int? get modificadoMovil => data['modificadoMovil'] as int?;
   double? get latitud => data['Latitud'] as double?;
   double? get longitud => data['Longitud'] as double?;
@@ -869,11 +881,13 @@ class ListarFichasModificacion extends SqliteRow {
 /// BEGIN LISTARFICHAFIRMA
 ///
 
-Future<List<ListarFichasFirmaModificacion>> performListarFichaFirmaMod(Database database) {
+Future<List<ListarFichasFirmaModificacion>> performListarFichaFirmaMod(Database database,{
+  String? dniInspector,
+}) {
   final query = '''
     SELECT *
     FROM FichasFirmas 
-    WHERE modificacionMovil = 1;
+    WHERE modificacionMovil = 1 and idFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}')
   ''';
   return _readQuery(database, query, (data) => ListarFichasFirmaModificacion(data));
 }
@@ -915,11 +929,14 @@ class ListarFichasFirmaModificacion extends SqliteRow {
 /// BEGIN LISTARFICHAFIRMA
 ///
 
-Future<List<ListarFichasModificacionModificacion>> performListarFichaArchivosMod(Database database) {
+Future<List<ListarFichasModificacionModificacion>> performListarFichaArchivosMod(Database database, {
+  String? dniInspector,
+
+}) {
   final query = '''
      SELECT *
     FROM FichasArchivos 
-    WHERE modificadoMovil = 1 and( (estadoAuditoria = '0' and idFichaArchivo is  not null) or (estadoAuditoria = '1' and idFichaArchivo is  null))
+    WHERE modificadoMovil = 1 and idFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}') and( (estadoAuditoria = '0' and idFichaArchivo is  not null) or (estadoAuditoria = '1' and idFichaArchivo is  null))
   ''';
   return _readQuery(database, query, (data) => ListarFichasModificacionModificacion(data));
 }
@@ -954,11 +971,14 @@ class ListarFichasModificacionModificacion extends SqliteRow {
 
 
 
-Future<List<FichaPreguntaRespuestas>> performListarFichaPreguntaRespuestas(Database database) {
+Future<List<FichaPreguntaRespuestas>> performListarFichaPreguntaRespuestas(Database database,
+{
+  String? dniInspector,
+}) {
   final query = '''
     SELECT *
     FROM FichaPreguntaRespuestas 
-    WHERE modificadoMovil = 1;
+    WHERE modificadoMovil = 1 and idFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}')
   ''';
   return _readQuery(database, query, (data) => FichaPreguntaRespuestas(data));
 }
@@ -1005,7 +1025,10 @@ class FichaPreguntaRespuestas {
 /// BEGIN LISTARFICHASMODULARESPORIDFICHA
 Future<List<ListarFichasModularesPorModificado>>
 performListarFichasModularesPorModificado(
-    Database database) {
+    Database database,
+{
+  String? dniInspector,
+}) {
   final query = '''
 SELECT 
     IdFichaModularLocal,
@@ -1033,8 +1056,9 @@ SELECT
     FechaModificacionAuditoria,
     EquipoCreacionAuditoria,
     EquipoModificacionAuditoria,
+    ProgramaCreacionAuditoria
     ProgramaModificacionAuditoria
-FROM FichaModular where modificadoMovil = 1;
+FROM FichaModular where modificadoMovil = 1 and idFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}')
 ''';
   return _readQuery(
       database, query, (d) => ListarFichasModularesPorModificado(d));
@@ -1068,6 +1092,7 @@ class ListarFichasModularesPorModificado extends SqliteRow {
   String? get fechamodificacion => data['FechaModificacionAuditoria'] as String?;
   String? get equipocreacion => data['EquipoCreacionAuditoria'] as String?;
   String? get equipomodificacion => data['EquipoModificacionAuditoria'] as String?;
+  String? get programacreacion => data['ProgramaCreacionAuditoria'] as String?;
   String? get programamodificacion => data['ProgramaModificacionAuditoria'] as String?;
 }
 
@@ -1142,6 +1167,10 @@ class ColaSincronizacionList extends SqliteRow {
   int? get longitudSincronizacion => data['LongitudSincronizacion'] as int?;
   int? get idSincro => data['IdSincro'] as int?;
   int? get idColaServer => data['IdColaServer'] as int?;
+  String? get UsuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get EquipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get FechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get ProgramaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
 
 // Nota: las propiedades adicionales que deseas deben ser agregadas aquí siguiendo el mismo patrón
 }

@@ -44,29 +44,44 @@ class SQLiteManager {
         idFicha: idFicha,
       );
 
-  Future<List<ListarInspeccionesRow>> listarInspecciones() =>
+  Future<List<ListarInspeccionesRow>> listarInspecciones({
+    String? dniInspector,
+}) =>
       performListarInspecciones(
         _database,
+        dniInspector: dniInspector,
       );
 
-  Future<List<ListarInspeccionesProcessRow>> listarInspeccionesProcess() =>
+  Future<List<ListarInspeccionesProcessRow>> listarInspeccionesProcess({
+    String? dniInspector,
+}) =>
       performListarInspeccionesProcess(
         _database,
+        dniInspector: dniInspector,
       );
 
-  Future<List<ListarInspeccionesRealizadaRow>> listarInspeccionesRealizada() =>
+  Future<List<ListarInspeccionesRealizadaRow>> listarInspeccionesRealizada(
+    {String? dniInspector}
+      ) =>
       performListarInspeccionesRealizada(
         _database,
+        dniInspector: dniInspector,
       );
 
   Future<List<ListarInspeccionesProgramadaRow>>
-      listarInspeccionesProgramada() => performListarInspeccionesProgramada(
+      listarInspeccionesProgramada({
+    String? dniInspector,
+}) => performListarInspeccionesProgramada(
             _database,
+            dniInspector: dniInspector,
           );
 
   Future<List<ListarInspeccionesMod1Row>>
-  listarInspeccionesMod1() => performListarInspeccionesMod1(
+  listarInspeccionesMod1({
+   String? dniInspector,
+}) => performListarInspeccionesMod1(
     _database,
+    dniInspector: dniInspector,
   );
 
   Future<List<ListarFichaPorIdFichaRow>> listarFichaPorIdFicha({
@@ -95,27 +110,39 @@ class SQLiteManager {
           );
 
   Future<List<ListarFichasModularesPorModificado>>
-  listarFichasModularesPorModificad() =>
+  listarFichasModularesPorModificad({
+    String? dniInspector,
+  }) =>
       performListarFichasModularesPorModificado(
-        _database
+        _database,
+        dniInspector: dniInspector,
       );
 
   Future<List<ListarFichasModificacion>>
-  listarFichasModificas() =>
+  listarFichasModificas({
+    String? dniInspector,
+}) =>
       performListarFichaMod(
-          _database
+          _database,
+          dniInspector: dniInspector
       );
 
   Future<List<ListarFichasFirmaModificacion>>
-  listarFichasFirmaModificas() =>
+  listarFichasFirmaModificas({
+    String? dniInspector,
+}) =>
       performListarFichaFirmaMod(
-          _database
+          _database,
+        dniInspector: dniInspector
       );
 
   Future<List<ListarFichasModificacionModificacion>>
-  listarFichasArchivosModificas() =>
+  listarFichasArchivosModificas({
+    String? dniInspector,
+}) =>
       performListarFichaArchivosMod(
-          _database
+          _database,
+          dniInspector: dniInspector
       );
 
 
@@ -132,9 +159,12 @@ class SQLiteManager {
       );
 
   Future<List<FichaPreguntaRespuestas>>
-  listarRespuestasModificas() =>
+  listarRespuestasModificas({
+    String? dniInspector,
+}) =>
       performListarFichaPreguntaRespuestas(
-          _database
+          _database,
+          dniInspector: dniInspector
       );
 
   Future<List<SincronizacionUltimo>>
@@ -412,6 +442,7 @@ class SQLiteManager {
     String? nombreIns,
     int? idFichaIns,
     int? idPlantillaIns,
+    String? dniIns,
     String? codigolocalIns,
     String? nombreLocalIns,
     String? departamentoIns,
@@ -448,7 +479,8 @@ class SQLiteManager {
         equipoCreacionAuditoria: equipoCreacionAuditoria,
         equipoModificacionAuditoria: equipoModificacionAuditoria,
         programaCreacionAuditoria: programaCreacionAuditoria,
-        programaModificacionAuditoria: programaModificacionAuditoria
+        programaModificacionAuditoria: programaModificacionAuditoria,
+        dniIns: dniIns
       );
 
   Future cargarFicha({
@@ -679,8 +711,8 @@ class SQLiteManager {
     String? nombreAlterno,
     String? correoAlterno,
     String? telefonoAlterno,
-    String? dniInspector,
-    String? nombreInspector,
+    //String? dniInspector,
+    //String? nombreInspector,
     String? correoInspector,
     String? telefonoInspector,
     String? fechaInspeccion,
@@ -689,6 +721,7 @@ class SQLiteManager {
     String? UsuarioModificacionAudi,
     String? FechaModificacionAuditoria,
     String? EquipoModificacionAuditoria,
+    String? ProgramaModificacionAuditoria,
     int? modificadoMovil
   }) =>
       performActualizarFicha(
@@ -708,8 +741,8 @@ class SQLiteManager {
         nombreAlterno: nombreAlterno,
         correoAlterno: correoAlterno,
         telefonoAlterno: telefonoAlterno,
-        dniInspector : dniInspector,
-        nombreInspector : nombreInspector,
+        //dniInspector : dniInspector,
+        //nombreInspector : nombreInspector,
         correoInspector: correoInspector,
         telefonoInspector:telefonoInspector,
         fechaInspeccion:fechaInspeccion,
@@ -718,7 +751,8 @@ class SQLiteManager {
         EquipoModificacionAuditoria: EquipoModificacionAuditoria,
         FechaModificacionAuditoria: FechaModificacionAuditoria,
         modificadoMovil: modificadoMovil,
-        UsuarioModificacionAudi: UsuarioModificacionAudi
+        UsuarioModificacionAudi: UsuarioModificacionAudi,
+        ProgramaModificacionAuditoria: ProgramaModificacionAuditoria
       );
 
 
@@ -856,6 +890,7 @@ class SQLiteManager {
     String? UsuarioModificacionAudi,
     String? FechaModificacionAuditoria,
     String? EquipoModificacionAuditoria,
+    String? ProgramaModificacionAuditoria,
     int? modificadoMovil,
   }) =>
       performActualizarFichaMod(
@@ -869,7 +904,8 @@ class SQLiteManager {
           EquipoModificacionAuditoria: EquipoModificacionAuditoria,
           modificadoMovil: modificadoMovil,
           UsuarioModificacionAudi: UsuarioModificacionAudi,
-          FechaModificacionAuditoria: FechaModificacionAuditoria
+          FechaModificacionAuditoria: FechaModificacionAuditoria,
+          ProgramaModificacionAuditoria: ProgramaModificacionAuditoria
       );
 
   Future actualizarRpta({
@@ -992,7 +1028,11 @@ class SQLiteManager {
     int? Estado,
     int? IdDatoLocal,
     int? IdDatoServer,
-    int? IdSincro
+    int? IdSincro,
+    String? UsuarioCreacionAuditoria,
+    String? EquipoCreacionAuditoria,
+    String? FechaCreacionAuditoria,
+    String? ProgramaCreacionAuditoria
   }) =>
       performColaSincronizacion(
           _database,
@@ -1000,7 +1040,11 @@ class SQLiteManager {
           Estado: Estado,
           IdDatoLocal: IdDatoLocal,
           IdDatoServer: IdDatoServer,
-          IdSincro: IdSincro
+          IdSincro: IdSincro,
+          UsuarioCreacionAuditoria: UsuarioCreacionAuditoria,
+          EquipoCreacionAuditoria: EquipoCreacionAuditoria,
+          FechaCreacionAuditoria: FechaCreacionAuditoria,
+          ProgramaCreacionAuditoria: ProgramaCreacionAuditoria
       );
 
   Future actualizarInspeccionesApi ({
@@ -1022,7 +1066,8 @@ class SQLiteManager {
     String? equipoCreacionAuditoria,
     String? equipoModificacionAuditoria,
     String? programaCreacionAuditoria,
-    String? programaModificacionAuditoria
+    String? programaModificacionAuditoria,
+    String? dniInspector
   }) => performActualizarInspeccionApi (
     _database,
     idInspeccion:idInspeccion,
@@ -1043,7 +1088,8 @@ class SQLiteManager {
     equipoCreacionAuditoria: equipoCreacionAuditoria,
     equipoModificacionAuditoria: equipoModificacionAuditoria,
     programaCreacionAuditoria: programaCreacionAuditoria,
-    programaModificacionAuditoria: programaModificacionAuditoria
+    programaModificacionAuditoria: programaModificacionAuditoria,
+    dniInspector: dniInspector
   );
 
   Future actualizarInspeccionesEstado ({

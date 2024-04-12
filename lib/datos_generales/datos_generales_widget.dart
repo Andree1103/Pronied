@@ -4046,17 +4046,18 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                     nombreAlterno: _model.dat1Controller19.text,
                                     correoAlterno: _model.dat1Controller20.text,
                                     telefonoAlterno: _model.dat1Controller21.text,
-                                    dniInspector: _model.dat1Controller22.text,
-                                    nombreInspector: _model.dat1Controller23.text,
+                                    //dniInspector: _model.dat1Controller22.text,
+                                    //nombreInspector: _model.dat1Controller23.text,
                                     correoInspector: _model.dat1Controller24.text,
                                     telefonoInspector: _model.dat1Controller25.text,
                                     //fechaInspeccion: _model.dat1Controller27.text,
                                     //horaInspeccion: _model.dat1Controller28.text,
                                     tipoInspeccion: _model.dat1Controller26.text,
-                                    UsuarioModificacionAudi: "SAMADOR",
+                                    UsuarioModificacionAudi: FFAppState().username,
                                     modificadoMovil: 1,
-                                    FechaModificacionAuditoria: DateTime.now().toString(),
-                                    EquipoModificacionAuditoria: "localhost"
+                                    FechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                    EquipoModificacionAuditoria: FFAppState().cummovil,
+                                  ProgramaModificacionAuditoria: FFAppState().programacreacion,
                                 );
                                 setState(() {
                                   SQLiteManager.instance.inspeccion1(
@@ -4235,11 +4236,19 @@ void actualizarFichaMod({
     numeroDocente: numeroDocente,
     numeroSeccion: numeroSeccion,
     numeroAlumnos: numeroAlumnos,
-    FechaModificacionAuditoria: DateTime.now().toString(),
-    UsuarioModificacionAudi: "SAMADOR",
+    FechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+    UsuarioModificacionAudi: FFAppState().username,
     modificadoMovil: 1,
-    EquipoModificacionAuditoria: "localhost"
+    EquipoModificacionAuditoria: FFAppState().cummovil,
+    ProgramaModificacionAuditoria: FFAppState().programacreacion
     // Proporciona los otros parámetros según sea necesario...
+  );
+  await SQLiteManager.instance.inspeccion1(
+    idFicha: FFAppState().IdFicha,
+    usuarioModificacionAuditoria: FFAppState().username,
+    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+    equipoModificacionAuditoria: FFAppState().cummovil,
+    programaModificacionAuditoria: FFAppState().programacreacion,
   );
 }
 

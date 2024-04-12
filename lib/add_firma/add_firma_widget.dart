@@ -559,7 +559,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 controller:
                                 _model.dropDownValueController2 ??=
                                     FormFieldController<String>(null),
-                                options: ['DNI', 'Carnet de Extranjeria'],
+                                options: ['DNI'],
                                 onChanged: (val) => setState(
                                         () => _model.dropDownValue2 = val),
                                 width: double.infinity,
@@ -656,6 +656,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     fontWeight: FontWeight.w300,
                                   ),
                                   keyboardType: TextInputType.datetime,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
                                   validator: _model.dat1Controller1Validator
                                       .asValidator(context),
                                 ),
@@ -728,6 +729,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.w300,
                                   ),
+                                  inputFormatters: [ LengthLimitingTextInputFormatter(100)],
                                   validator: _model.dat1Controller2Validator
                                       .asValidator(context),
                                 ),
@@ -800,6 +802,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.w300,
                                   ),
+                                  inputFormatters: [ LengthLimitingTextInputFormatter(100)],
                                   validator: _model.dat1Controller3Validator
                                       .asValidator(context),
                                 ),
@@ -872,6 +875,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     fontSize: 13.0,
                                     fontWeight: FontWeight.w300,
                                   ),
+                                  inputFormatters: [ LengthLimitingTextInputFormatter(100)],
                                   validator: _model.dat1Controller4Validator
                                       .asValidator(context),
                                 ),

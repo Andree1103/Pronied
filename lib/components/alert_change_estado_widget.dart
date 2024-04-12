@@ -92,6 +92,13 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
                   setState(() {
                     FFAppState().estadoInspeccion = 'EN REGISTRO';
                     FFAppState().idestadoInspeccion = 4;
+                    SQLiteManager.instance.inspeccion1(
+                      idFicha: FFAppState().IdFicha,
+                      usuarioModificacionAuditoria: FFAppState().username,
+                      fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                      equipoModificacionAuditoria: FFAppState().cummovil,
+                      programaModificacionAuditoria: FFAppState().programacreacion,
+                    );
                   });
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

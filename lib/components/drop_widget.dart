@@ -309,7 +309,9 @@ class _DropWidgetState extends State<DropWidget> {
                     };
                   }
 
-                  var fichaArchivos = await SQLiteManager.instance.listarFichasArchivosModificas();
+                  var fichaArchivos = await SQLiteManager.instance.listarFichasArchivosModificas(
+                    dniInspector: FFAppState().username
+                  );
                   if(fichaArchivos != null){
                     for (var archi in fichaArchivos){
                       SQLiteManager.instance.cargarColaSincronizacion(
@@ -318,6 +320,10 @@ class _DropWidgetState extends State<DropWidget> {
                         IdDatoLocal: archi.idFichaArchivoMovil,
                         IdDatoServer: archi.idFichaArchivoMovil,
                         IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
                       );
                       Map<String, dynamic> archivosjson = {
                         "idFichaArchivo": archi.idFichaArchivo,
@@ -330,19 +336,21 @@ class _DropWidgetState extends State<DropWidget> {
                         "titulo": archi.titulo,
                         "comentario": archi.comentario,
                         "estadoAuditoria": archi.estadoAuditoria,
-                        "usuarioCreacionAuditoria": archi.usuarioCreacionAuditoria,
-                        "usuarioModificacionAuditoria": archi.usuarioModificacionAuditoria,
-                        "fechaCreacionAuditoria": archi.fechaCreacionAuditoria,
-                        "fechaModificacionAuditoria": archi.fechaModificacionAuditoria,
-                        "equipoCreacionAuditoria": archi.equipoCreacionAuditoria,
-                        "equipoModificacionAuditoria": archi.equipoModificacionAuditoria,
-                        "programaCreacionAuditoria": archi.programaCreacionAuditoria,
-                        "programaModificacionAuditoria": archi.programaModificacionAuditoria
+                        "usuarioCreacionAuditoria": archi.usuarioCreacionAuditoria == "null" ? null : archi.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": archi.usuarioModificacionAuditoria == "null" ? null : archi.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": archi.fechaCreacionAuditoria == "null" ? null : archi.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": archi.fechaModificacionAuditoria == "null" ? null : archi.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": archi.equipoCreacionAuditoria == "null" ? null : archi.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": archi.equipoModificacionAuditoria == "null" ? null : archi.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": archi.programaCreacionAuditoria == "null" ? null : archi.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": archi.programaModificacionAuditoria == "null" ? null : archi.programaModificacionAuditoria
                       };
                       fichasArchivosObj.add(archivosjson);
                     }
                   }
-                  var fichaFirmas = await SQLiteManager.instance.listarFichasFirmaModificas();
+                  var fichaFirmas = await SQLiteManager.instance.listarFichasFirmaModificas(
+                    dniInspector: FFAppState().username
+                  );
                   if( fichaFirmas != null) {
                     for (var ficha in fichaFirmas) {
                       SQLiteManager.instance.cargarColaSincronizacion(
@@ -351,6 +359,10 @@ class _DropWidgetState extends State<DropWidget> {
                         IdDatoLocal: ficha.idFichaFirmaMovil,
                         IdDatoServer: ficha.idFichaFirma,
                         IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
                       );
                       Map<String, dynamic> fichafirmajson = {
                         "idFichaFirma": ficha.idFichaFirma,
@@ -368,20 +380,22 @@ class _DropWidgetState extends State<DropWidget> {
                         "idTipoDocumento": ficha.idTipoDocumento,
                         "idTipoPersona": ficha.idTipoPersona,
                         "estadoAuditoria": ficha.estadoAuditoria,
-                        "usuarioCreacionAuditoria": ficha.usuarioCreacionAuditoria,
-                        "usuarioModificacionAuditoria": ficha.usuarioModificacionAuditoria,
-                        "fechaCreacionAuditoria": ficha.fechaCreacionAuditoria,
-                        "fechaModificacionAuditoria": ficha.fechaModificacionAuditoria,
-                        "equipoCreacionAuditoria": ficha.equipoCreacionAuditoria,
-                        "equipoModificacionAuditoria": ficha.equipoModificacionAuditoria,
-                        "programaCreacionAuditoria": ficha.programaCreacionAuditoria,
-                        "programaModificacionAuditoria": ficha.programaModificacionAuditoria
+                        "usuarioCreacionAuditoria": ficha.usuarioCreacionAuditoria == "null" ? null : ficha.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": ficha.usuarioModificacionAuditoria == "null" ? null : ficha.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": ficha.fechaCreacionAuditoria == "null" ? null : ficha.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": ficha.fechaModificacionAuditoria == "null" ? null : ficha.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": ficha.equipoCreacionAuditoria == "null" ? null : ficha.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": ficha.equipoModificacionAuditoria == "null" ? null : ficha.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": ficha.programaCreacionAuditoria == "null" ? null : ficha.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": ficha.programaModificacionAuditoria == "null" ? null : ficha.programaModificacionAuditoria
                       };
                       fichasFichasObj.add(fichafirmajson);
                     }
                   }
 
-                  var fichasmodificar = await SQLiteManager.instance.listarFichasModificas();
+                  var fichasmodificar = await SQLiteManager.instance.listarFichasModificas(
+                    dniInspector: FFAppState().username
+                  );
                   if (fichasmodificar != null) {
                     for (var ficha in fichasmodificar) {
                       SQLiteManager.instance.cargarColaSincronizacion(
@@ -390,18 +404,22 @@ class _DropWidgetState extends State<DropWidget> {
                         IdDatoLocal: ficha.idFichaLocal,
                         IdDatoServer: ficha.idFicha,
                         IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
                       );
                       Map<String, dynamic> fichajson = {
                         "idFicha": ficha.idFicha,
                         "idPlantilla": ficha.idPlantilla,
-                        "codigoLocalColegio": ficha.codigoLocalColegio,
-                        "nombreLocalColegio": ficha.nombreLocalColegio,
-                        "departamentoColegio": ficha.departamentoColegio,
-                        "provinciaColegio": ficha.provinciaColegio,
-                        "distritoColegio": ficha.distritoColegio,
-                        "centroPobladoColegio": ficha.centroPobladoColegio,
-                        "direccionColegio": ficha.direccionColegio,
-                        "zonaColegio": ficha.zonaColegio,
+                        "codigoLocalColegio": ficha.codigoLocalColegio == "null" ? null : ficha.codigoLocalColegio,
+                        "nombreLocalColegio": ficha.nombreLocalColegio == "null" ? null : ficha.nombreLocalColegio,
+                        "departamentoColegio": ficha.departamentoColegio == "null" ? null : ficha.departamentoColegio,
+                        "provinciaColegio": ficha.provinciaColegio == "null" ? null : ficha.provinciaColegio,
+                        "distritoColegio": ficha.distritoColegio == "null" ? null : ficha.distritoColegio,
+                        "centroPobladoColegio": ficha.centroPobladoColegio == "null" ? null : ficha.centroPobladoColegio,
+                        "direccionColegio": ficha.direccionColegio == "null" ? null : ficha.direccionColegio,
+                        "zonaColegio": ficha.zonaColegio == "null" ? null : ficha.zonaColegio,
                         "latitud": ficha.latitud,
                         "longitud": ficha.longitud,
                         "totalPabellon":ficha.totalPabellon,
@@ -409,40 +427,42 @@ class _DropWidgetState extends State<DropWidget> {
                         "totalSSHH": ficha.totalSSHH,
                         "idEstado": 3, //*
                         "estado": ficha.estadoAuditoria, //*
-                        "dniInspector": ficha.dniInspector,
-                        "nombreInspector": ficha.nombreInspector,
-                        "correoInspector": ficha.correoInspector,
-                        "telefonoInspector": ficha.telefonoInspector,
-                        "fechaInspeccion": ficha.fechaInspeccion,
-                        "horaInspeccion": ficha.horaInspeccion,
-                        "tipoInspeccion": ficha.tipoInspeccion,
-                        "dniDirector": ficha.dniDirector,
-                        "nombreDirector": ficha.nombreDirector,
+                        "dniInspector": ficha.dniInspector == "null" ? null : ficha.dniInspector,
+                        "nombreInspector": ficha.nombreInspector == "null" ? null : ficha.nombreInspector,
+                        "correoInspector": ficha.correoInspector == "null" ? null : ficha.correoInspector,
+                        "telefonoInspector": ficha.telefonoInspector == "null" ? null : ficha.telefonoInspector,
+                        "fechaInspeccion": ficha.fechaInspeccion == "null" ? null : ficha.fechaInspeccion,
+                        "horaInspeccion": ficha.horaInspeccion == "null" ? null : ficha.horaInspeccion,
+                        "tipoInspeccion": ficha.tipoInspeccion == "null" ? null : ficha.tipoInspeccion,
+                        "dniDirector": ficha.dniDirector == "null" ? null : ficha.dniDirector,
+                        "nombreDirector": ficha.nombreDirector == "null" ? null : ficha.nombreDirector,
                         "primerApellidoDirector": "",
                         "segundoApellidoDirector": "",
-                        "correoDirector": ficha.correoDirector,
-                        "telefonoDirector": ficha.telefonoDirector,
-                        "dniAlterno": ficha.dniAlterno,
-                        "nombreAlterno": ficha.nombreAlterno,
+                        "correoDirector": ficha.correoDirector == "null" ? null : ficha.correoDirector,
+                        "telefonoDirector": ficha.telefonoDirector == "null" ? null : ficha.telefonoDirector,
+                        "dniAlterno": ficha.dniAlterno == "null" ? null : ficha.dniAlterno,
+                        "nombreAlterno": ficha.nombreAlterno == "null" ? null : ficha.nombreAlterno,
                         "primerApellidoAlterno": "*", //*
                         "segundoApellidoAlterno": "*", //*
-                        "correoAlterno": ficha.correoAlterno,
-                        "telefonoAlterno": ficha.telefonoAlterno,
-                        "estadoAuditoria": ficha.estadoAuditoria,
-                        "usuarioCreacionAuditoria": ficha.usuarioCreacionAuditoria,
-                        "usuarioModificacionAuditoria": ficha.usuarioModificacionAuditoria,
-                        "fechaCreacionAuditoria": ficha.fechaCreacionAuditoria,
-                        "fechaModificacionAuditoria": ficha.fechaModificacionAuditoria,
-                        "equipoCreacionAuditoria": ficha.equipoCreacionAuditoria,
-                        "equipoModificacionAuditoria": ficha.equipoModificacionAuditoria,
-                        "programaCreacionAuditoria": "",
-                        "programaModificacionAuditoria": ficha.programaModificacionAuditoria
+                        "correoAlterno": ficha.correoAlterno == "null" ? null : ficha.correoAlterno,
+                        "telefonoAlterno": ficha.telefonoAlterno == "null" ? null : ficha.telefonoAlterno,
+                        "estadoAuditoria": ficha.estadoAuditoria == "null" ? null : ficha.estadoAuditoria,
+                        "usuarioCreacionAuditoria": ficha.usuarioCreacionAuditoria == "null" ? null : ficha.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": ficha.usuarioModificacionAuditoria == "null" ? null : ficha.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": ficha.fechaCreacionAuditoria == "null" ? null : ficha.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": ficha.fechaModificacionAuditoria == "null" ? null : ficha.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": ficha.equipoCreacionAuditoria == "null" ? null : ficha.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": ficha.equipoModificacionAuditoria == "null" ? null : ficha.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": ficha.programaCreacionAuditoria == "null" ? null : ficha.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": ficha.programaModificacionAuditoria == "null" ? null : ficha.programaModificacionAuditoria
                       };
                       fichasObj.add(fichajson);
                     }
                   }
 
-                  var fichamodularmodificacion = await SQLiteManager.instance.listarFichasModularesPorModificad();
+                  var fichamodularmodificacion = await SQLiteManager.instance.listarFichasModularesPorModificad(
+                    dniInspector: FFAppState().username
+                  );
                   if (fichamodularmodificacion != null) {
                     for (var fichamodu in fichamodularmodificacion) {
                       SQLiteManager.instance.cargarColaSincronizacion(
@@ -451,6 +471,10 @@ class _DropWidgetState extends State<DropWidget> {
                         IdDatoLocal: fichamodu.idFichaModularlocal,
                         IdDatoServer: fichamodu.idFichaModular,
                         IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
                       );
                       Map<String, dynamic> fichaModularjson = {
                         "idFichaModular": fichamodu.idFichaModular,
@@ -471,20 +495,22 @@ class _DropWidgetState extends State<DropWidget> {
                         "numeroDocente": fichamodu.numeroDocente,
                         "numeroSeccion": fichamodu.numeroSeccion,
                         "estadoAuditoria": fichamodu.estadoauditoria,
-                        "usuarioCreacionAuditoria": fichamodu.usuariocreacion,
-                        "usuarioModificacionAuditoria": fichamodu.usuariomodificacion,
-                        "fechaCreacionAuditoria": fichamodu.fechacreacion,
-                        "fechaModificacionAuditoria": fichamodu.fechamodificacion,
-                        "equipoCreacionAuditoria": fichamodu.equipocreacion,
-                        "equipoModificacionAuditoria": fichamodu.equipomodificacion,
-                        "programaCreacionAuditoria": fichamodu.programamodificacion,
-                        "programaModificacionAuditoria": fichamodu.programamodificacion
+                        "usuarioCreacionAuditoria": fichamodu.usuariocreacion == "null" ? null : fichamodu.usuariocreacion,
+                        "usuarioModificacionAuditoria": fichamodu.usuariomodificacion == "null" ? null : fichamodu.usuariomodificacion,
+                        "fechaCreacionAuditoria": fichamodu.fechacreacion == "null" ? null : fichamodu.fechacreacion,
+                        "fechaModificacionAuditoria": fichamodu.fechamodificacion == "null" ? null : fichamodu.fechamodificacion,
+                        "equipoCreacionAuditoria": fichamodu.equipocreacion == "null" ? null : fichamodu.equipocreacion,
+                        "equipoModificacionAuditoria": fichamodu.equipomodificacion == "null" ? null : fichamodu.equipomodificacion,
+                        "programaCreacionAuditoria": fichamodu.programacreacion == "null" ? null : fichamodu.programacreacion,
+                        "programaModificacionAuditoria": fichamodu.programamodificacion == "null" ? null : fichamodu.programamodificacion
                       };
                       fichasModularesObj.add(fichaModularjson);
                     }
                   }
 
-                  var fichapreguntarespuesta = await SQLiteManager.instance.listarRespuestasModificas();
+                  var fichapreguntarespuesta = await SQLiteManager.instance.listarRespuestasModificas(
+                    dniInspector: FFAppState().username
+                  );
                   if (fichapreguntarespuesta != null){
                     for (var fichapregun in fichapreguntarespuesta) {
                       SQLiteManager.instance.cargarColaSincronizacion(
@@ -493,6 +519,10 @@ class _DropWidgetState extends State<DropWidget> {
                         IdDatoLocal: fichapregun.idFichaPreguntaRespuestaLocal,
                         IdDatoServer: fichapregun.idFichaPreguntaRespuesta,
                         IdSincro: idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
                       );
                       Map<String, dynamic> ficharespuestajson = {
                         "idFichaPreguntaRespuestaMovil": fichapregun.idFichaPreguntaRespuestaLocal,
@@ -506,29 +536,35 @@ class _DropWidgetState extends State<DropWidget> {
                         "descripcionOpcion": null,
                         "descripcionPregunta": null,
                         "estadoAuditoria": fichapregun.estadoAuditoria,
-                        "usuarioCreacionAuditoria": fichapregun.usuarioCreacionAuditoria,
-                        "usuarioModificacionAuditoria": fichapregun.usuarioModificacionAuditoria,
-                        "fechaCreacionAuditoria": fichapregun.fechaCreacionAuditoria,
-                        "fechaModificacionAuditoria": fichapregun.fechaModificacionAuditoria,
-                        "equipoCreacionAuditoria": fichapregun.equipoCreacionAuditoria,
-                        "equipoModificacionAuditoria": fichapregun.equipoModificacionAuditoria,
-                        "programaCreacionAuditoria": fichapregun.programaCreacionAuditoria,
-                        "programaModificacionAuditoria": fichapregun.programaModificacionAuditoria
+                        "usuarioCreacionAuditoria": fichapregun.usuarioCreacionAuditoria == "null" ? null : fichapregun.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": fichapregun.usuarioModificacionAuditoria == "null" ? null : fichapregun.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": fichapregun.fechaCreacionAuditoria == "null" ? null : fichapregun.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": fichapregun.fechaModificacionAuditoria == "null" ? null : fichapregun.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": fichapregun.equipoCreacionAuditoria == "null" ? null : fichapregun.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": fichapregun.equipoModificacionAuditoria == "null" ? null : fichapregun.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": fichapregun.programaCreacionAuditoria == "null" ? null : fichapregun.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": fichapregun.programaModificacionAuditoria == "null" ? null : fichapregun.programaModificacionAuditoria
                       };
                       respuestasColaObj.add(ficharespuestajson);
                     }
                   }
-                  var inspeccionesMod1= await SQLiteManager.instance.listarInspeccionesMod1();
+                  var inspeccionesMod1= await SQLiteManager.instance.listarInspeccionesMod1(
+                    dniInspector: FFAppState().username
+                  );
                   if (inspeccionesMod1 != null){
                     for (var ins in inspeccionesMod1){
                       Map<String, dynamic> inspeccionesJson = {
                         "idInspeccion": ins.idInspeccion,
                         "idFicha": ins.idFicha,
                         "idEstado": ins.idEstado,
-                        "usuarioModificacionAuditoria": ins.usuarioModificacionAuditoria,
-                        "fechaModificacionAuditoria": ins.fechaModificacionAuditoria,
-                        "equipoModificacionAuditoria": ins.equipoModificacionAuditoria,
-                        "programaModificacionAuditoria": ins.programaModificacionAuditoria
+                        "usuarioCreacionAuditoria": ins.usuarioCreacionAuditoria == "null" ? null : ins.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": ins.usuarioModificacionAuditoria == "null" ? null : ins.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": ins.fechaCreacionAuditoria == "null" ? null : ins.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": ins.fechaModificacionAuditoria == "null" ? null : ins.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": ins.equipoCreacionAuditoria == "null" ? null : ins.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": ins.equipoModificacionAuditoria == "null" ? null : ins.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": ins.programaCreacionAuditoria == "null" ? null : ins.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": ins.programaModificacionAuditoria == "null" ? null : ins.programaModificacionAuditoria
                       };
                       inspeccionesObj.add(inspeccionesJson);
                     }
@@ -545,7 +581,11 @@ class _DropWidgetState extends State<DropWidget> {
                         "idMovil":sinc.idDatoLocal,
                         "idServer":sinc.idDatoServer,
                         "idSincroMovil":sinc.idSincro,
-                        "observacion": null
+                        "observacion": null,
+                        "usuarioCreacionAuditoria":sinc.UsuarioCreacionAuditoria == "null" ? null : sinc.UsuarioCreacionAuditoria,
+                        "fechaCreacionAuditoria":sinc.FechaCreacionAuditoria == "null" ? null : sinc.FechaCreacionAuditoria,
+                        "equipoCreacionAuditoria":sinc.EquipoCreacionAuditoria == "null" ? null : sinc.EquipoCreacionAuditoria,
+                        "programaCreacionAuditoria":sinc.ProgramaCreacionAuditoria == "null" ? null : sinc.ProgramaCreacionAuditoria
                       };
                       sincroColaObj.add(sincroColajson);
                     }
@@ -586,6 +626,7 @@ class _DropWidgetState extends State<DropWidget> {
                         );
                         if (existe.length > 0) {
                           await SQLiteManager.instance.actualizarInspeccionesApi(
+                            dniInspector: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
                             idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
                             nombreEvento: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
                             idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
@@ -613,6 +654,7 @@ class _DropWidgetState extends State<DropWidget> {
                         } else {
                           await SQLiteManager.instance.cargarData(
                             idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                            dniIns: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
                             nombreIns: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
                             idFichaIns: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
                             idPlantillaIns: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),

@@ -49,10 +49,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-
+    print(FFAppState().username);
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -288,7 +289,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                           child: FutureBuilder<
                                               List<ListarInspeccionesRow>>(
                                             future: SQLiteManager.instance
-                                                .listarInspecciones(),
+                                                .listarInspecciones(
+                                              dniInspector: FFAppState().username
+                                            ),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -760,7 +763,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                               List<
                                                   ListarInspeccionesProcessRow>>(
                                             future: SQLiteManager.instance
-                                                .listarInspeccionesProcess(),
+                                                .listarInspeccionesProcess(
+                                              dniInspector: FFAppState().username
+                                            ),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -869,6 +874,17 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   idFicha: FFAppState().IdFicha
                                                               );
                                                               FFAppState().CantP= patios[0].totalPabellones!;
+
+                                                              var latitud = await SQLiteManager.instance.listarLatitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().latitud = latitud[0].Latitud!;
+
+                                                              var longitud = await SQLiteManager.instance.listarLongitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+
+                                                              FFAppState().longitud = longitud[0].Longitud!;
                                                               context.pushNamed(
                                                                   'DatosGenerales');
                                                             },
@@ -1219,7 +1235,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                               List<
                                                   ListarInspeccionesRealizadaRow>>(
                                             future: SQLiteManager.instance
-                                                .listarInspeccionesRealizada(),
+                                                .listarInspeccionesRealizada(
+                                              dniInspector: FFAppState().username
+                                            ),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -1328,6 +1346,16 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                               );
                                                               FFAppState().CantP= patios[0].totalPabellones!;
 
+                                                              var latitud = await SQLiteManager.instance.listarLatitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().latitud = latitud[0].Latitud!;
+
+                                                              var longitud = await SQLiteManager.instance.listarLongitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+
+                                                              FFAppState().longitud = longitud[0].Longitud!;
                                                               context.pushNamed(
                                                                   'DatosGenerales');
                                                             },
@@ -1678,7 +1706,9 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                               List<
                                                   ListarInspeccionesProgramadaRow>>(
                                             future: SQLiteManager.instance
-                                                .listarInspeccionesProgramada(),
+                                                .listarInspeccionesProgramada(
+                                              dniInspector: FFAppState().username
+                                            ),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -1787,6 +1817,17 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                   idFicha: FFAppState().IdFicha
                                                               );
                                                               FFAppState().CantP= patios[0].totalPabellones!;
+
+                                                              var latitud = await SQLiteManager.instance.listarLatitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+                                                              FFAppState().latitud = latitud[0].Latitud!;
+
+                                                              var longitud = await SQLiteManager.instance.listarLongitud(
+                                                                  idFicha: FFAppState().IdFicha
+                                                              );
+
+                                                              FFAppState().longitud = longitud[0].Longitud!;
 
                                                               context.pushNamed(
                                                                   'DatosGenerales');

@@ -182,6 +182,7 @@ Future performCargarData(
   String? provinciaIns,
   String? distritoIns,
   int? idEstadoIns,
+      String? dniIns,
   String? estadoIns,
   String? usuarioCreacionAuditoria,
   String? usuarioModificacionAuditoria,
@@ -195,9 +196,9 @@ Future performCargarData(
 }) {
   final query = '''
 INSERT INTO Inspecciones (idInspeccion, nombreEvento, idFicha, idPlantilla, codigoLocalColegio, nombreLocalColegio, departamentoColegio, provinciaColegio, distritoColegio, idEstado, estado,modificadoMovil,
-usuarioCreacionAuditoria,usuarioModificacionAuditoria,fechaCreacionAuditoria,fechaModificacionAuditoria,equipoCreacionAuditoria,equipoModificacionAuditoria,programaCreacionAuditoria,programaModificacionAuditoria)
+usuarioCreacionAuditoria,usuarioModificacionAuditoria,fechaCreacionAuditoria,fechaModificacionAuditoria,equipoCreacionAuditoria,equipoModificacionAuditoria,programaCreacionAuditoria,programaModificacionAuditoria,dniInspector )
 VALUES ('${idInspeccion}', '${nombreIns}', '${idFichaIns}', '${idPlantillaIns}', '${codigolocalIns}','${nombreLocalIns}', '${departamentoIns}', '${provinciaIns}', '${distritoIns}', '${idEstadoIns}', '${estadoIns}',0,
-'${usuarioCreacionAuditoria}','${usuarioModificacionAuditoria}','${fechaCreacionAuditoria}','${fechaModificacionAuditoria}','${equipoCreacionAuditoria}','${equipoModificacionAuditoria}','${programaCreacionAuditoria}','${programaModificacionAuditoria}');
+'${usuarioCreacionAuditoria}','${usuarioModificacionAuditoria}','${fechaCreacionAuditoria}','${fechaModificacionAuditoria}','${equipoCreacionAuditoria}','${equipoModificacionAuditoria}','${programaCreacionAuditoria}','${programaModificacionAuditoria}','${dniIns}')
 
 ''';
   return database.rawQuery(query);
@@ -536,8 +537,8 @@ Future performActualizarFicha(
   String? nombreAlterno,
   String? correoAlterno,
   String? telefonoAlterno,
-  String? dniInspector,
-  String? nombreInspector,
+  //String? dniInspector,
+  //String? nombreInspector,
   String? correoInspector,
   String? telefonoInspector,
   String? fechaInspeccion,
@@ -546,6 +547,7 @@ Future performActualizarFicha(
   String? UsuarioModificacionAudi,
   String? FechaModificacionAuditoria,
   String? EquipoModificacionAuditoria,
+      String? ProgramaModificacionAuditoria,
   int? modificadoMovil,
 }) {
   final query = '''
@@ -565,8 +567,7 @@ SET
     NombreAlterno = '${nombreAlterno}',
     CorreoAlterno = '${correoAlterno}',
     TelefonoAlterno = '${telefonoAlterno}',
-    DniInspector = '${dniInspector}',
-    NombreInspector = '${nombreInspector}',
+   
     CorreoInspector = '${correoInspector}',
     TelefonoInspector = '${telefonoInspector}',
     FechaInspeccion = '${fechaInspeccion}',
@@ -575,6 +576,7 @@ SET
     UsuarioModificacionAuditoria = '${UsuarioModificacionAudi}',
     FechaModificacionAuditoria = '${FechaModificacionAuditoria}',
     EquipoModificacionAuditoria = '${EquipoModificacionAuditoria}',
+    ProgramaModificacionAuditoria = '${ProgramaModificacionAuditoria}',
     modificadoMovil = ${modificadoMovil}
     
 WHERE 
@@ -651,6 +653,7 @@ Future performActualizarFichaMod(
       String? UsuarioModificacionAudi,
       String? FechaModificacionAuditoria,
       String? EquipoModificacionAuditoria,
+      String? ProgramaModificacionAuditoria,
       int? modificadoMovil,
     }) {
   final query = '''
@@ -664,6 +667,7 @@ SET
     UsuarioModiciacionAuditoria = '${UsuarioModificacionAudi}',
     FechaModificacionAuditoria = '${FechaModificacionAuditoria}',
     EquipoModificacionAuditoria = '${EquipoModificacionAuditoria}',
+    ProgramaModificacionAuditoria = '${ProgramaModificacionAuditoria}',
     modificadoMovil = ${modificadoMovil}
 WHERE 
     CodigoModular = '${codigoModular}';
@@ -1018,7 +1022,11 @@ Future performColaSincronizacion(
       int? Estado,
       int? IdDatoLocal,
       int? IdDatoServer,
-      int? IdSincro
+      int? IdSincro,
+      String? UsuarioCreacionAuditoria,
+      String? EquipoCreacionAuditoria,
+      String? FechaCreacionAuditoria,
+      String? ProgramaCreacionAuditoria
     }) {
   final query = '''
 Insert into ColaSincronizacion  (
@@ -1026,9 +1034,13 @@ TipoDato,
 EstadoSincronizacion, 
 IdDatoLocal,
 IdDatoServer,
-IdSincro
+IdSincro,
+UsuarioCreacionAuditoria,
+EquipoCreacionAuditoria,
+FechaCreacionAuditoria,
+ProgramaCreacionAuditoria
 )
-values  ('${TipoDato}',${Estado},${IdDatoLocal},${IdDatoServer},${IdSincro})
+values  ('${TipoDato}',${Estado},${IdDatoLocal},${IdDatoServer},${IdSincro}, '${UsuarioCreacionAuditoria}', '${EquipoCreacionAuditoria}', '${FechaCreacionAuditoria}','${ProgramaCreacionAuditoria}')
 ''';
   return database.rawQuery(query);
 }
@@ -1083,7 +1095,8 @@ Future performActualizarInspeccionApi(
       String? equipoCreacionAuditoria,
       String? equipoModificacionAuditoria,
       String? programaCreacionAuditoria,
-      String? programaModificacionAuditoria
+      String? programaModificacionAuditoria,
+      String? dniInspector,
     }) {
   final query = '''
 UPDATE Inspecciones
@@ -1104,7 +1117,8 @@ SET
     equipoCreacionAuditoria = '${equipoCreacionAuditoria}',
     equipoModificacionAuditoria = '${equipoModificacionAuditoria}',
     programaCreacionAuditoria = '${programaCreacionAuditoria}',
-    programaModificacionAuditoria = '${programaModificacionAuditoria}'
+    programaModificacionAuditoria = '${programaModificacionAuditoria}',
+    dniInspector = '${dniInspector}'
 WHERE 
     idInspeccion = ${idInspeccion}
 

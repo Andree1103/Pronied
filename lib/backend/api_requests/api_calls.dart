@@ -113,8 +113,8 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-          'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
-      //'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
+          //'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
+      'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -140,6 +140,10 @@ ${corche}''';
   static String? nombreInspeccion(dynamic response, int index) => castToType<String>(getJsonField(
     response,
     '\$.dato.inspecciones[$index].nombreEvento',
+  ));
+  static String? dniInspeccion(dynamic response, int index) => castToType<String>(getJsonField(
+    response,
+    '\$.dato.inspecciones[$index].dniInspector',
   ));
   static int? idFichaIns(dynamic response, int index) => castToType<int>(getJsonField(
     response,
@@ -1030,8 +1034,8 @@ class APIObtenerTOKENCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Obtener TOKEN',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1081,8 +1085,8 @@ class ApiAutorizacionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API AUTORIZACION',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1203,8 +1207,8 @@ class ApiTokenFinalCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API TOKEN FINAL',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
