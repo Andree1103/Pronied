@@ -1468,12 +1468,13 @@ Future<List<ListarPreguntaComentarioRow>> performListarPreguntaComentario(
     Database database, {
       int? idPlantillaSeccion,
       int? idPregunta,
-      int? idFicha
+      int? idFicha,
+      String? numeroRepeticion
     }) {
   final query = '''
 SELECT *
 FROM FichaPreguntaComentario where IdPlantillaSeccion =  '${idPlantillaSeccion}' 
-and IdPregunta = '${idPregunta}' and IdFicha = '${idFicha}' and EstadoAuditoria = '1';
+and IdPregunta = '${idPregunta}' and IdFicha = '${idFicha}' and EstadoAuditoria = '1' and numeroRepeticion = '${numeroRepeticion}';
 
 ''';
   return _readQuery(database, query, (d) => ListarPreguntaComentarioRow(d));
@@ -1489,6 +1490,50 @@ class ListarPreguntaComentarioRow extends SqliteRow {
   int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
   String? get observacion => data['Observacion'] as String?;
   String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+}
+
+
+/// BEGIN LISTARPREGUNTAS
+Future<List<ListarPreguntaArchivosRow>> performListarPreguntaArchivos(
+    Database database, {
+      int? idPlantillaSeccion,
+      int? idPregunta,
+      int? idFicha,
+      String? numeroRepeticion
+    }) {
+  final query = '''
+SELECT *
+FROM FichaPreguntaArchivo where idPlantillaSeccion =  '${idPlantillaSeccion}' 
+and IdPregunta = '${idPregunta}' and IdFicha = '${idFicha}' and EstadoAuditoria = '1' and numeroRepeticion = '${numeroRepeticion}';
+
+''';
+  return _readQuery(database, query, (d) => ListarPreguntaArchivosRow(d));
+}
+
+class ListarPreguntaArchivosRow extends SqliteRow {
+  ListarPreguntaArchivosRow(Map<String, dynamic> data) : super(data);
+
+  int? get idFichaPreguntaArchivoLocal => data['IdFichaPreguntaArchivoLocal'] as int?;
+  int? get idFichaPreguntaArchivo => data['IdFichaPreguntaArchivo'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['idPlantillaSeccion'] as int?;
+  String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get nombre => data['Nombre'] as String?;
+  String? get extension => data['Extension'] as String?;
+  String? get ruta => data['Ruta'] as String?;
+  String? get rutalocal => data['rutaLocal'] as String?;
+  String? get peso => data['Peso'] as String?;
   String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
   String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
   String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;

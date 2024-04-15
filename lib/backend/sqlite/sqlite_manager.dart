@@ -250,13 +250,29 @@ class SQLiteManager {
   Future<List<ListarPreguntaComentarioRow>> listarComentarios ({
     int? idPlantillaSeccion,
     int? idPregunta,
-    int? idFicha
+    int? idFicha,
+    String? numeroRpe
 }) =>
       performListarPreguntaComentario(
         _database,
         idPlantillaSeccion: idPlantillaSeccion,
         idPregunta: idPregunta,
-        idFicha: idFicha
+        idFicha: idFicha,
+        numeroRepeticion: numeroRpe
+      );
+
+  Future<List<ListarPreguntaArchivosRow>> listarPreguntaArchivoss ({
+    int? idPlantillaSeccion,
+    int? idPregunta,
+    int? idFicha,
+    String? numeroRpe
+  }) =>
+      performListarPreguntaArchivos(
+          _database,
+          idPlantillaSeccion: idPlantillaSeccion,
+          idPregunta: idPregunta,
+          idFicha: idFicha,
+          numeroRepeticion: numeroRpe
       );
 
   Future<List<ListarOpcionesRow>> listarOpciones({
@@ -1703,4 +1719,49 @@ class SQLiteManager {
       modificadoMovil: modificadoMovil
   );
 
+  Future CrearPreguntaArchivoAPI({
+    int? idFichaPreguntaArchivo,
+    int? idFicha,
+    int? idPlantillaSeccion,
+    int? idPregunta,
+    String? nombre,
+    String? extension,
+    String? ruta,
+    String? rutaLocal,
+    String? peso,
+    String? numeroRepeticion,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil
+  }) => performCrearPreguntaArchivoAPI(
+      _database,
+      idFichaPreguntaArchivo: idFichaPreguntaArchivo,
+      idFicha: idFicha,
+      idPlantillaSeccion: idPlantillaSeccion,
+      idPregunta: idPregunta,
+      nombre: nombre,
+      extension: extension,
+      ruta: ruta,
+      rutaLocal: rutaLocal,
+      peso: peso,
+      numeroRepeticion: numeroRepeticion,
+      estadoAuditoria: estadoAuditoria,
+      usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+      usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+      fechaCreacionAuditoria: fechaCreacionAuditoria,
+      fechaModificacionAuditoria: fechaModificacionAuditoria,
+      equipoCreacionAuditoria: equipoCreacionAuditoria,
+      equipoModificacionAuditoria: equipoModificacionAuditoria,
+      programaCreacionAuditoria: programaCreacionAuditoria,
+      programaModificacionAuditoria: programaModificacionAuditoria,
+      modificadoMovil: modificadoMovil
+  );
+  
 }

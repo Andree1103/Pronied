@@ -797,7 +797,10 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                         IconButton(
                                                                                                                           icon: Icon(Icons.insert_drive_file),
                                                                                                                           onPressed: () {
-                                                                                                                            // Acción al presionar el icono de archivo
+                                                                                                                            FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                                                            FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
+                                                                                                                            FFAppState().nrmRepeticion = nrm.toString();
+                                                                                                                            context.pushNamed('GaleriaArchivos');
                                                                                                                           },
                                                                                                                         ),
                                                                                                                       ],

@@ -1779,5 +1779,80 @@ WHERE
   return database.rawQuery(query);
 }
 
+///PREGUNTA ARCHIVOS
+///
+
+Future performCrearPreguntaArchivoAPI(
+    Database database, {
+      //int? IdFichaPreguntaArchivoLocal,
+      int? idFichaPreguntaArchivo,
+      int? idFicha,
+      int? idPlantillaSeccion,
+      int? idPregunta,
+      String? nombre,
+      String? extension,
+      String? ruta,
+      String? rutaLocal,
+      String? peso,
+      String? numeroRepeticion,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil
+    }) {
+  final query = '''
+INSERT INTO FichaPreguntaArchivo (
+  IdFichaPreguntaArchivo,
+  IdFicha,
+  idPlantillaSeccion,
+  IdPregunta,
+  numeroRepeticion,
+  Nombre,
+  Extension,
+  Ruta,
+  Peso,
+  EstadoAuditoria,
+  UsuarioCreacionAuditoria,
+  UsuarioModificacionAuditoria,
+  FechaCreacionAuditoria,
+  FechaModificacionAuditoria,
+  EquipoCreacionAuditoria,
+  EquipoModificacionAuditoria,
+  ProgramaCreacionAuditoria,
+  ProgramaModificacionAuditoria,
+  modificadoMovil,
+  rutaLocal
+) VALUES (
+  ${idFichaPreguntaArchivo},
+  ${idFicha},
+  ${idPlantillaSeccion},
+  ${idPregunta},
+  '${numeroRepeticion}',
+  '${nombre}',
+  '${extension}',
+  '${ruta}',
+  '${peso}',
+  '${estadoAuditoria}',
+  '${usuarioCreacionAuditoria}',
+  '${usuarioModificacionAuditoria}',
+  '${fechaCreacionAuditoria}',
+  '${fechaModificacionAuditoria}',
+  '${equipoCreacionAuditoria}',
+  '${equipoModificacionAuditoria}',
+  '${programaCreacionAuditoria}',
+  '${programaModificacionAuditoria}',
+  ${modificadoMovil},
+  '${rutaLocal}'
+)
+''';
+  return database.rawQuery(query);
+}
+
 
 

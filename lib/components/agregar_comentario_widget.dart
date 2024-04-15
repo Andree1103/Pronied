@@ -47,7 +47,8 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
       future: SQLiteManager.instance.listarComentarios(
         idPregunta: FFAppState().idPregunta,
         idFicha: FFAppState().IdFicha,
-        idPlantillaSeccion: FFAppState().idPlantillaSeccion
+        idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+        numeroRpe: FFAppState().nrmRepeticion,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
