@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/components/agregar_comentario_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_finalizar_inspeccion_widget.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -770,8 +771,27 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                       children: [
                                                                                                                         IconButton(
                                                                                                                           icon: Icon(Icons.comment),
-                                                                                                                          onPressed: () {
-                                                                                                                            // Acción al presionar el icono de comentario
+                                                                                                                          onPressed: () async {
+                                                                                                                            FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                                                            FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
+                                                                                                                            FFAppState().nrmRepeticion = nrm.toString();
+                                                                                                                            await showModalBottomSheet(
+                                                                                                                              isScrollControlled: true,
+                                                                                                                              backgroundColor: Colors.transparent,
+                                                                                                                              enableDrag: false,
+                                                                                                                              context: context,
+                                                                                                                              builder: (context) {
+                                                                                                                                return GestureDetector(
+                                                                                                                                  onTap: () => _model.unfocusNode.canRequestFocus
+                                                                                                                                      ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                                                                                                                                      : FocusScope.of(context).unfocus(),
+                                                                                                                                  child: Padding(
+                                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                    child: AgregarComentarioWidget(),
+                                                                                                                                  ),
+                                                                                                                                );
+                                                                                                                              },
+                                                                                                                            ).then((value) => safeSetState(() {}));
                                                                                                                           },
                                                                                                                         ),
                                                                                                                         IconButton(

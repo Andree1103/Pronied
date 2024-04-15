@@ -1588,3 +1588,196 @@ WHERE idFicha = ${idFicha}
   return database.rawQuery(query);
 }
 ///END
+///
+///
+/// FICHAPREGUNTACOMENTARIO
+
+Future performActualizarComentarioAPI(
+    Database database, {
+      int? idFichaPreguntaComentarioLocal,
+      int? idFichaPreguntaComentario,
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? observacion,
+      String? numeroRepeticion,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil
+    }) {
+  final query = '''
+UPDATE FichaPreguntaRespuestas
+SET
+    IdFichaPreguntaComentario = ${idFichaPreguntaComentario},
+    IdFicha = ${idFicha},
+    IdPregunta = ${idPregunta},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    Observacion = '${observacion}',
+    numeroRepeticion = '${numeroRepeticion}',
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
+WHERE 
+    (IdFichaPreguntaComentarioLocal = ${idFichaPreguntaComentario} or IdFichaPreguntaComentario = ${idFichaPreguntaComentarioLocal}) and IdFicha = ${idFicha};
+''';
+  return database.rawQuery(query);
+}
+
+Future performCrearComentarioAPI(
+    Database database, {
+      //int? idFichaPreguntaComentarioLocal,
+      int? idFichaPreguntaComentario,
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? observacion,
+      String? numeroRepeticion,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil
+    }) {
+  final query = '''
+INSERT INTO FichaPreguntaComentario (
+  IdFichaPreguntaComentario,
+  IdFicha,
+  IdPregunta,
+  IdPlantillaSeccion,
+  Observacion,
+  numeroRepeticion,
+  EstadoAuditoria,
+  UsuarioCreacionAuditoria,
+  UsuarioModificacionAuditoria,
+  FechaCreacionAuditoria,
+  FechaModificacionAuditoria,
+  EquipoCreacionAuditoria,
+  EquipoModificacionAuditoria,
+  ProgramaCreacionAuditoria,
+  ProgramaModificacionAuditoria,
+  modificadoMovil
+) VALUES (
+  ${idFichaPreguntaComentario},
+  ${idFicha},
+  ${idPregunta},
+  ${idPlantillaSeccion},
+  '${observacion}',
+  '${numeroRepeticion}',
+  '${estadoAuditoria}',
+  '${usuarioCreacionAuditoria}',
+  '${usuarioModificacionAuditoria}',
+  '${fechaCreacionAuditoria}',
+  '${fechaModificacionAuditoria}',
+  '${equipoCreacionAuditoria}',
+  '${equipoModificacionAuditoria}',
+  '${programaCreacionAuditoria}',
+  '${programaModificacionAuditoria}',
+  ${modificadoMovil}
+)
+''';
+  return database.rawQuery(query);
+}
+
+Future performActualizarComentario(
+    Database database, {
+      int? idFichaPreguntaComentarioLocal,
+      int? idFichaPreguntaComentario,
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? observacion,
+      String? numeroRepeticion,
+      String? estadoAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil
+    }) {
+  final query = '''
+UPDATE FichaPreguntaComentario
+SET
+    IdFichaPreguntaComentario = ${idFichaPreguntaComentario},
+    IdFicha = ${idFicha},
+    IdPregunta = ${idPregunta},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    Observacion = '${observacion}',
+    numeroRepeticion = '${numeroRepeticion}',
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
+WHERE 
+    (IdFichaPreguntaComentario = ${idFichaPreguntaComentario} or IdFichaPreguntaComentarioLocal = ${idFichaPreguntaComentarioLocal}) and IdFicha = ${idFicha};
+''';
+  return database.rawQuery(query);
+}
+
+Future performActualizarPreguntaComentarioAPI(
+    Database database, {
+      int? idFichaPreguntaComentarioLocal,
+      int? idFichaPreguntaComentario,
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? observacion,
+      String? numeroRepeticion,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil
+    }) {
+  final query = '''
+UPDATE FichaPreguntaRespuestas
+SET
+    IdFichaPreguntaComentario = ${idFichaPreguntaComentario},
+    IdFicha = ${idFicha},
+    IdPregunta = ${idPregunta},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    Observacion = '${observacion}',
+    numeroRepeticion = '${numeroRepeticion}',
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil}
+WHERE 
+    (IdFichaPreguntaComentarioLocal = ${idFichaPreguntaComentario} or IdFichaPreguntaComentario = ${idFichaPreguntaComentarioLocal}) and IdFicha = ${idFicha};
+''';
+  return database.rawQuery(query);
+}
+
+
+

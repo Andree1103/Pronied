@@ -247,6 +247,18 @@ class SQLiteManager {
         idPlantilla: idPlantilla,
       );
 
+  Future<List<ListarPreguntaComentarioRow>> listarComentarios ({
+    int? idPlantillaSeccion,
+    int? idPregunta,
+    int? idFicha
+}) =>
+      performListarPreguntaComentario(
+        _database,
+        idPlantillaSeccion: idPlantillaSeccion,
+        idPregunta: idPregunta,
+        idFicha: idFicha
+      );
+
   Future<List<ListarOpcionesRow>> listarOpciones({
     int? idPlantilla,
     int? idPregunta,
@@ -1622,5 +1634,73 @@ class SQLiteManager {
           _database,
           idFicha: idFicha
       );
+
+  Future crearComentario({
+    int? idFichaPreguntaComentario,
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? observacion,
+    String? numeroRepeticion,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil
+}) => performCrearComentarioAPI(
+    _database,
+    idFichaPreguntaComentario: idFichaPreguntaComentario,
+    idFicha: idFicha,
+    idPregunta: idPregunta,
+    idPlantillaSeccion: idPlantillaSeccion,
+    observacion: observacion,
+    numeroRepeticion: numeroRepeticion,
+    estadoAuditoria: estadoAuditoria,
+    usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaCreacionAuditoria: fechaCreacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoCreacionAuditoria: equipoCreacionAuditoria,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaCreacionAuditoria: programaCreacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria,
+    modificadoMovil: modificadoMovil
+  );
+
+  Future actualizarComentario({
+    int? idFichaPreguntaComentarioLocal,
+    int? idFichaPreguntaComentario,
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? observacion,
+    String? numeroRepeticion,
+    String? estadoAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil
+  }) => performActualizarComentario(
+      _database,
+      idFichaPreguntaComentarioLocal: idFichaPreguntaComentarioLocal,
+      idFichaPreguntaComentario: idFichaPreguntaComentario,
+      idFicha: idFicha,
+      idPregunta: idPregunta,
+      idPlantillaSeccion: idPlantillaSeccion,
+      observacion: observacion,
+      numeroRepeticion: numeroRepeticion,
+      estadoAuditoria: estadoAuditoria,
+      usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+      fechaModificacionAuditoria: fechaModificacionAuditoria,
+      equipoModificacionAuditoria: equipoModificacionAuditoria,
+      programaModificacionAuditoria: programaModificacionAuditoria,
+      modificadoMovil: modificadoMovil
+  );
 
 }

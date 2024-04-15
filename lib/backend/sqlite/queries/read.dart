@@ -1463,5 +1463,42 @@ class FechaAnteriorForId extends SqliteRow {
 /// END VERIFICACION OPCION
 ///
 
+/// BEGIN LISTARPREGUNTAS
+Future<List<ListarPreguntaComentarioRow>> performListarPreguntaComentario(
+    Database database, {
+      int? idPlantillaSeccion,
+      int? idPregunta,
+      int? idFicha
+    }) {
+  final query = '''
+SELECT *
+FROM FichaPreguntaComentario where IdPlantillaSeccion =  '${idPlantillaSeccion}' 
+and IdPregunta = '${idPregunta}' and IdFicha = '${idFicha}' and EstadoAuditoria = '1';
+
+''';
+  return _readQuery(database, query, (d) => ListarPreguntaComentarioRow(d));
+}
+
+class ListarPreguntaComentarioRow extends SqliteRow {
+  ListarPreguntaComentarioRow(Map<String, dynamic> data) : super(data);
+
+  int? get idFichaPreguntaComentarioLocal => data['IdFichaPreguntaComentarioLocal'] as int?;
+  int? get idFichaPreguntaComentario => data['IdFichaPreguntaComentario'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  String? get observacion => data['Observacion'] as String?;
+  String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+}
 
 

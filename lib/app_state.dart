@@ -134,6 +134,12 @@ class FFAppState extends ChangeNotifier {
     _idPlantillaSeccion = _value;
   }
 
+  String _nrmRepeticion = '';
+  String get nrmRepeticion => _nrmRepeticion;
+  set nrmRepeticion(String _value) {
+    _nrmRepeticion = _value;
+  }
+
   String _username= '';
   String get username => _username;
   set username(String _value) {
@@ -187,6 +193,12 @@ class FFAppState extends ChangeNotifier {
     _idInspeccion = _value;
   }
 
+  int _idPregunta = 0;
+  int get idPregunta => _idPregunta;
+  set idPregunta(int _value) {
+    _idPregunta = _value;
+  }
+
   double _Latitud = 0;
   double get latitud => _Latitud;
   set latitud(double _value) {
@@ -198,6 +210,7 @@ class FFAppState extends ChangeNotifier {
   set longitud(double _value) {
     _Longitud = _value;
   }
+
 }
 
 void _safeInit(Function() initializeField) {
