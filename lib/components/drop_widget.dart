@@ -184,6 +184,8 @@ class _DropWidgetState extends State<DropWidget> {
                   List<Map<String, dynamic>> inspeccionesObj = [];
                   List<Map<String, dynamic>> sincroColaObj = [];
                   List<Map<String, dynamic>> respuestasColaObj = [];
+                  List<Map<String, dynamic>> fichacomentarioObj = [];
+                  List<Map<String, dynamic>> fichaarchivosObj = [];
                   Map<String, dynamic> sincronz = {};
 
                   Position position = await Geolocator.getCurrentPosition(
@@ -248,6 +250,45 @@ class _DropWidgetState extends State<DropWidget> {
                             await SQLiteManager.instance.actualizarFichaArchivosUpload(
                               idFicha: arc.idFicha,
                               rutalocal: arc.rutalocal,
+                              ruta: UploaddocCall.url(response?.jsonBody),
+                              extension: UploaddocCall.extension(response?.jsonBody),
+                              nombreArchivo: UploaddocCall.nombrearchivo(response?.jsonBody),
+                              peso: double.parse(UploaddocCall.tamano(response?.jsonBody)!),
+                              uploadDocumento: 1,
+                            );
+                          } else {
+                            print('La llamada falló con el código de estado: ${response.statusCode}');
+                          }
+                        } catch (e) {
+                          // Manejar excepciones si la llamada falla
+                          print('Se produjo un error al realizar la llamada: $e');
+                        }
+                      } else {
+                        print('El archivo no existe en la ruta especificada.');
+                      }
+                    }
+                  }
+
+                  var preguntarchsinupload = await SQLiteManager.instance.listarFichasPreguntaArchivos1();
+                  if(preguntarchsinupload != null){
+                    for(var pre in preguntarchsinupload){
+                      File file = File(pre.rutalocal!);
+                      if (await file.exists()) {
+                        try {
+                          List<int> bytes = await file.readAsBytes();
+                          String fileName = path.basename(file.path);
+                          Uint8List uint8List = Uint8List.fromList(bytes);
+                          FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
+                          var response = await UploaddocCall.call(
+                            archivos: uploadedFile,
+                            codigoapp: '48',
+                            tag: '1049',
+                          );
+                          // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
+                          if (response.statusCode == 200) {
+                            await SQLiteManager.instance.actualizarFichaPreguntaArchivosUpload(
+                              idFicha: pre.idFicha,
+                              rutalocal: pre.rutalocal,
                               ruta: UploaddocCall.url(response?.jsonBody),
                               extension: UploaddocCall.extension(response?.jsonBody),
                               nombreArchivo: UploaddocCall.nombrearchivo(response?.jsonBody),
@@ -460,6 +501,85 @@ class _DropWidgetState extends State<DropWidget> {
                     }
                   }
 
+                  var comentarios = await SQLiteManager.instance.listarComentariosModificas(
+                    dniInspector: FFAppState().username
+                  );
+                  if (comentarios != null){
+                    for (var coment in comentarios){
+                      SQLiteManager.instance.cargarColaSincronizacion(
+                        TipoDato: "fichapreguntacomentario",
+                        Estado: 1,
+                        IdDatoLocal: coment.idFichaPreguntaComentarioLocal,
+                        IdDatoServer: coment.idFichaPreguntaComentario,
+                        IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
+                      );
+                      Map<String, dynamic> comentariojson ={
+                        "idFichaPreguntaComentario": coment.idFichaPreguntaComentario,
+                        "idFichaPreguntaComentarioMovil": coment.idFichaPreguntaComentarioLocal,
+                        "idFicha": coment.idFicha,
+                        "idPregunta": coment.idPregunta,
+                        "idPlantillaSeccion": coment.idPlantillaSeccion,
+                        "observacion": coment.observacion,
+                        "numeroRepeticion": coment.numeroRepeticion,
+                        "estadoAuditoria": coment.estadoAuditoria,
+                        "usuarioCreacionAuditoria": coment.usuarioCreacionAuditoria == "null" ? null : coment.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": coment.usuarioModificacionAuditoria == "null" ? null : coment.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": coment.fechaCreacionAuditoria == "null" ? null : coment.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": coment.fechaModificacionAuditoria == "null" ? null : coment.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": coment.equipoCreacionAuditoria == "null" ? null : coment.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": coment.equipoModificacionAuditoria == "null" ? null : coment.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": coment.programaCreacionAuditoria == "null" ? null : coment.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": coment.programaModificacionAuditoria == "null" ? null : coment.programaModificacionAuditoria
+                      };
+                      fichacomentarioObj.add(comentariojson);
+                    }
+                  }
+
+                  var fichaPreguntaArchivos = await SQLiteManager.instance.listarFichaArchivModificas(
+                    dniInspector: FFAppState().username
+                  );
+                  if (fichaPreguntaArchivos != null){
+                    for (var archivo in fichaPreguntaArchivos){
+                      SQLiteManager.instance.cargarColaSincronizacion(
+                        TipoDato: "fichapreguntaarchivo",
+                        Estado: 1,
+                        IdDatoLocal: archivo.idFichaPreguntaArchivoLocal,
+                        IdDatoServer: archivo.idFichaPreguntaArchivo,
+                        IdSincro:idsincro,
+                        UsuarioCreacionAuditoria: FFAppState().username,
+                        FechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        EquipoCreacionAuditoria: FFAppState().cummovil,
+                        ProgramaCreacionAuditoria: FFAppState().programacreacion,
+                      );
+                      Map<String, dynamic> prearchivosjson = {
+                        "idFichaPreguntaArchivo": archivo.idFichaPreguntaArchivo,
+                        "idFichaPreguntaArchivoMovil": archivo.idFichaPreguntaArchivoLocal,
+                        "idFicha": archivo.idFicha,
+                        "idPregunta": archivo.idPregunta,
+                        "idPlantillaSeccion": archivo.idPlantillaSeccion,
+                        "numeroRepeticion": archivo.numeroRepeticion,
+                        "nombre": archivo.nombre,
+                        "extension": archivo.extension,
+                        "ruta": archivo.ruta,
+                        "peso": archivo.peso,
+                        "estadoAuditoria": archivo.estadoAuditoria,
+                        "usuarioCreacionAuditoria": archivo.usuarioCreacionAuditoria == "null" ? null : archivo.usuarioCreacionAuditoria,
+                        "usuarioModificacionAuditoria": archivo.usuarioModificacionAuditoria == "null" ? null : archivo.usuarioModificacionAuditoria,
+                        "fechaCreacionAuditoria": archivo.fechaCreacionAuditoria == "null" ? null : archivo.fechaCreacionAuditoria,
+                        "fechaModificacionAuditoria": archivo.fechaModificacionAuditoria == "null" ? null : archivo.fechaModificacionAuditoria,
+                        "equipoCreacionAuditoria": archivo.equipoCreacionAuditoria == "null" ? null : archivo.equipoCreacionAuditoria,
+                        "equipoModificacionAuditoria": archivo.equipoModificacionAuditoria == "null" ? null : archivo.equipoModificacionAuditoria,
+                        "programaCreacionAuditoria": archivo.programaCreacionAuditoria == "null" ? null : archivo.programaCreacionAuditoria,
+                        "programaModificacionAuditoria": archivo.programaModificacionAuditoria == "null" ? null : archivo.programaModificacionAuditoria
+                      };
+                      fichaarchivosObj.add(prearchivosjson);
+                    }
+                  }
+
                   var fichamodularmodificacion = await SQLiteManager.instance.listarFichasModularesPorModificad(
                     dniInspector: FFAppState().username
                   );
@@ -548,6 +668,7 @@ class _DropWidgetState extends State<DropWidget> {
                       respuestasColaObj.add(ficharespuestajson);
                     }
                   }
+
                   var inspeccionesMod1= await SQLiteManager.instance.listarInspeccionesMod1(
                     dniInspector: FFAppState().username
                   );
@@ -600,7 +721,9 @@ class _DropWidgetState extends State<DropWidget> {
                     "fichasModulares": fichasModularesObj,
                     "fichasPreguntasRespuestas" : respuestasColaObj,
                     "fichasFirmas": fichasFichasObj,
-                    "fichasArchivos": fichasArchivosObj
+                    "fichasArchivos": fichasArchivosObj,
+                    "fichasPreguntasArchivos": fichaarchivosObj,
+                    "fichasPreguntasComentarios": fichacomentarioObj
                   };
                   var jsonString = jsonEncode(json);
                   var jsonn = jsonDecode(jsonString);
@@ -1177,6 +1300,140 @@ class _DropWidgetState extends State<DropWidget> {
                       }
                     }
 
+                    var fichaComentarios = ApiProniedCall.fichasPreguntasComentarios(_model.apiResponseDatos?.jsonBody);
+                    if (fichaComentarios != null){
+                      for (var i = 0; i<fichaComentarios.length; i++){
+                        var rpta = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioNotNUll(
+                          idFicha: ApiProniedCall.idFichacomen(_model.apiResponseDatos?.jsonBody, i),
+                          idPlantillaSeccion: ApiProniedCall.idPlantillaSeccioncomen(_model.apiResponseDatos?.jsonBody, i),
+                          numeroRepeticion: ApiProniedCall.numeroRepeticioncomen(_model.apiResponseDatos?.jsonBody, i),
+                          idPregunta: ApiProniedCall.idPreguntacomen(_model.apiResponseDatos?.jsonBody, i),
+                        );
+                        if(rpta.length > 0){
+                          await SQLiteManager.instance.actualizarComentarioAPI(
+                              idFichaPreguntaComentarioLocal: ApiProniedCall.idFichaPreguntaComentarioMovilcomen(_model.apiResponseDatos?.jsonBody, i),
+                              idFichaPreguntaComentario: ApiProniedCall.idFichaPreguntaComentariocomen(_model.apiResponseDatos?.jsonBody, i),
+                              idFicha: ApiProniedCall.idFichacomen(_model.apiResponseDatos?.jsonBody, i),
+                              idPregunta: ApiProniedCall.idPreguntacomen(_model.apiResponseDatos?.jsonBody, i),
+                              idPlantillaSeccion: ApiProniedCall.idPlantillaSeccioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              observacion: ApiProniedCall.observacioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              numeroRepeticion: ApiProniedCall.numeroRepeticioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              estadoAuditoria: ApiProniedCall.estadoAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              modificadoMovil: 0
+                          );
+                        } else{
+                          await SQLiteManager.instance.crearComentario(
+                              idFichaPreguntaComentario: ApiProniedCall.idFichaPreguntaComentariocomen(_model.apiResponseDatos?.jsonBody, i),
+                              idFicha: ApiProniedCall.idFichacomen(_model.apiResponseDatos?.jsonBody, i),
+                              idPregunta: ApiProniedCall.idPreguntacomen(_model.apiResponseDatos?.jsonBody, i),
+                              idPlantillaSeccion: ApiProniedCall.idPlantillaSeccioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              observacion: ApiProniedCall.observacioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              numeroRepeticion: ApiProniedCall.numeroRepeticioncomen(_model.apiResponseDatos?.jsonBody, i),
+                              estadoAuditoria: ApiProniedCall.estadoAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriacomen(_model.apiResponseDatos?.jsonBody, i),
+                              modificadoMovil: 0
+                          );
+                        }
+                      }
+                    }
+
+                    var fichapreguntaAr = ApiProniedCall.fichasPreguntasArchivos(_model.apiResponseDatos?.jsonBody);
+                    if (fichapreguntaAr != null){
+                      for (var i= 0; i<fichapreguntaAr.length; i++){
+                        var rpta = await SQLiteManager.instance.VerificarSiExistePreguntaArchivoNotNUll(
+                          idFicha: ApiProniedCall.idFichaprear(_model.apiResponseDatos?.jsonBody, i),
+                          IdFichaPreguntaArchivo: ApiProniedCall.idFichaPreguntaArchivo(_model.apiResponseDatos?.jsonBody, i),
+                          IdFichaPreguntaArchivoLocal: ApiProniedCall.idFichaPreguntaArchivoMovil(_model.apiResponseDatos?.jsonBody, i),
+                        );
+                        if(rpta.length > 0){
+                          await SQLiteManager.instance.actualizarPreguntaarchivoAPI(
+                            idFichaPreguntaArchivo: ApiProniedCall.idFichaPreguntaArchivo(_model.apiResponseDatos?.jsonBody, i),
+                            idFichaPreguntaArchivoLocal: ApiProniedCall.idFichaPreguntaArchivoMovil(_model.apiResponseDatos?.jsonBody, i),
+                            idFicha: ApiProniedCall.idFichaprear(_model.apiResponseDatos?.jsonBody, i),
+                            idPregunta: ApiProniedCall.idPreguntaprear(_model.apiResponseDatos?.jsonBody, i),
+                            idPlantillaSeccion: ApiProniedCall.idPlantillaSeccionprear(_model.apiResponseDatos?.jsonBody, i),
+                            nombre: ApiProniedCall.nombreprear(_model.apiResponseDatos?.jsonBody, i),
+                            ruta: ApiProniedCall.rutaprear(_model.apiResponseDatos?.jsonBody, i),
+                            peso: ApiProniedCall.pesoprear(_model.apiResponseDatos?.jsonBody, i),
+                            extension: ApiProniedCall.extensionprear(_model.apiResponseDatos?.jsonBody, i),
+                            estadoAuditoria: ApiProniedCall.estadoAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            modificadoMovil: 0,
+                            numeroRepeticion: ApiProniedCall.numeroRepeticionprear(_model.apiResponseDatos?.jsonBody, i),
+                            uploadDocumento: 1
+                          );
+                        } else {
+                          var imageUrl = ApiProniedCall.rutaprear(_model.apiResponseDatos?.jsonBody, i);
+                          var filePath = '';
+                          try {
+                            // Obtener el directorio de almacenamiento local
+                            final appDir = await getApplicationDocumentsDirectory();
+                            // Extraer el nombre del archivo de la URL
+                            final fileName = imageUrl!.split('/').last;
+                            // Construir la ruta completa del archivo
+                            filePath = '${appDir.path}/$fileName';
+                            // Realizar la solicitud HTTP para descargar la imagen
+                            final response = await http.get(Uri.parse(imageUrl!));
+                            if (response.statusCode == 200) {
+                              // Convertir los bytes de la respuesta a Uint8List
+                              Uint8List bytes = response.bodyBytes;
+                              // Guardar los bytes de la imagen en el archivo
+                              await File(filePath).writeAsBytes(bytes);
+                              print('Imagen guardada en: $filePath');
+                            } else {
+                              print('Error al descargar la imagen. Código de estado: ${response.statusCode}');
+                            }
+                          } catch (e) {
+                            print('Error al guardar la imagen: $e');
+                          }
+                          await SQLiteManager.instance.CrearPreguntaArchivoAPI(
+                            idFichaPreguntaArchivo: ApiProniedCall.idFichaPreguntaArchivoMovil(_model.apiResponseDatos?.jsonBody, i),
+                            idFicha: ApiProniedCall.idFichaprear(_model.apiResponseDatos?.jsonBody, i),
+                            idPregunta: ApiProniedCall.idPreguntaprear(_model.apiResponseDatos?.jsonBody, i),
+                            idPlantillaSeccion: ApiProniedCall.idPlantillaSeccionprear(_model.apiResponseDatos?.jsonBody, i),
+                            nombre: ApiProniedCall.nombreprear(_model.apiResponseDatos?.jsonBody, i),
+                            ruta: ApiProniedCall.rutaprear(_model.apiResponseDatos?.jsonBody, i),
+                            peso: ApiProniedCall.pesoprear(_model.apiResponseDatos?.jsonBody, i),
+                            extension: ApiProniedCall.extensionprear(_model.apiResponseDatos?.jsonBody, i),
+                            estadoAuditoria: ApiProniedCall.estadoAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriaprear(_model.apiResponseDatos?.jsonBody, i),
+                            modificadoMovil: 0,
+                            rutaLocal: filePath,
+                            uploadDocumento: 1,
+                            numeroRepeticion: ApiProniedCall.numeroRepeticionprear(_model.apiResponseDatos?.jsonBody, i),
+                          );
+                        }
+                      }
+                    }
                     ///CAMBIANDO ESTADO 3
 
                     List<dynamic> resultado = [];

@@ -158,11 +158,35 @@ class SQLiteManager {
           _database
       );
 
+  Future<List<ListarFichasPreguntaArchivos>>
+  listarFichasPreguntaArchivos1() =>
+      performListarFichaPreguntaArchivos(
+          _database
+      );
+
   Future<List<FichaPreguntaRespuestas>>
   listarRespuestasModificas({
     String? dniInspector,
 }) =>
       performListarFichaPreguntaRespuestas(
+          _database,
+          dniInspector: dniInspector
+      );
+
+  Future<List<ListarFichasComentarioModificacion>>
+  listarComentariosModificas({
+    String? dniInspector,
+  }) =>
+      performListarComentariosMod(
+          _database,
+          dniInspector: dniInspector
+      );
+
+  Future<List<ListarFichasFichaArchivoModificacion>>
+  listarFichaArchivModificas({
+    String? dniInspector,
+  }) =>
+      performListarFichaArchivoMod(
           _database,
           dniInspector: dniInspector
       );
@@ -463,6 +487,22 @@ class SQLiteManager {
         fechaModificacionAuditoria: fechaModificacionAuditoria,
         equipoModificacionAuditoria: equipoModificacionAuditoria,
         programaModificacionAuditoria: programaModificacionAuditoria
+      );
+
+  Future deletePreARCHIVO({
+    int? idFoto,
+    String? usuarioModificacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaModificacionAuditoria
+  }) =>
+      performDeleteArchivo(
+          _database,
+          idFoto: idFoto,
+          usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+          fechaModificacionAuditoria: fechaModificacionAuditoria,
+          equipoModificacionAuditoria: equipoModificacionAuditoria,
+          programaModificacionAuditoria: programaModificacionAuditoria
       );
 
   Future cargarData({
@@ -824,6 +864,25 @@ class SQLiteManager {
           uploadDocumento: uploadDocumento
       );
 
+  Future actualizarFichaPreguntaArchivosUpload({
+    int? idFicha,
+    String? rutalocal,
+    String? nombreArchivo,
+    String? extension,
+    String? ruta,
+    double? peso,
+    int? uploadDocumento
+  }) =>
+      performPreguntaArchivosUpload(
+          _database,
+          idFicha: idFicha,
+          rutalocal: rutalocal,
+          nombreArchivo: nombreArchivo,
+          extension: extension,
+          ruta: ruta,
+          peso: peso,
+          uploadDocumento: uploadDocumento
+      );
 
   Future actualizarFichaAPI({
     int? idFicha,
@@ -1276,6 +1335,46 @@ class SQLiteManager {
           idFichaArchivoMovil: idFichaArchivoMovil
       );
 
+  Future<List<ExistPreguntaArchivoNullForId>> VerificarSiExistePreguntaArchivoNotNUll({
+    int? idFicha,
+    int? IdFichaPreguntaArchivo,
+    int? IdFichaPreguntaArchivoLocal
+  }) =>
+      performListarPreguntaArchivoExistNull(
+          _database,
+          idFicha: idFicha,
+          IdFichaPreguntaArchivo: IdFichaPreguntaArchivo,
+          IdFichaPreguntaArchivoLocal: IdFichaPreguntaArchivoLocal
+      );
+
+  Future<List<ExistPreguntaComentarioNullForId>> VerificarSiExistePreguntaComentarioNotNUll({
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? numeroRepeticion,
+  }) =>
+      performListarPreguntaComentarioExistNull(
+          _database,
+          idFicha: idFicha,
+          idPregunta: idPregunta,
+          idPlantillaSeccion: idPlantillaSeccion,
+          numeroRepeticion: numeroRepeticion
+      );
+
+  Future<List<ExistPreguntaComentarioARCEForId>> VerificarSiExistePreguntaComentarioARCENUll({
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? numeroRepeticion,
+  }) =>
+      performListarPreguntaComentarioARCExistNull(
+          _database,
+          idFicha: idFicha,
+          idPregunta: idPregunta,
+          idPlantillaSeccion: idPlantillaSeccion,
+          numeroRepeticion: numeroRepeticion
+      );
+
 
   ///INSPECCION
   Future<List<ExistInspeciconForId>> VerificarSiExisteInspeccion({
@@ -1719,6 +1818,45 @@ class SQLiteManager {
       modificadoMovil: modificadoMovil
   );
 
+  Future actualizarComentarioAPI({
+    int? idFichaPreguntaComentarioLocal,
+    int? idFichaPreguntaComentario,
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? observacion,
+    String? numeroRepeticion,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil
+  }) => performActualizarPreguntaComentarioAPI(
+      _database,
+      idFichaPreguntaComentarioLocal: idFichaPreguntaComentarioLocal,
+      idFichaPreguntaComentario: idFichaPreguntaComentario,
+      idFicha: idFicha,
+      idPregunta: idPregunta,
+      idPlantillaSeccion: idPlantillaSeccion,
+      observacion: observacion,
+      numeroRepeticion: numeroRepeticion,
+      estadoAuditoria: estadoAuditoria,
+      usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+      usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+      fechaCreacionAuditoria: fechaCreacionAuditoria,
+      fechaModificacionAuditoria: fechaModificacionAuditoria,
+      equipoCreacionAuditoria: equipoCreacionAuditoria,
+      equipoModificacionAuditoria: equipoModificacionAuditoria,
+      programaCreacionAuditoria: programaCreacionAuditoria,
+      programaModificacionAuditoria: programaModificacionAuditoria,
+      modificadoMovil: modificadoMovil
+  );
+
   Future CrearPreguntaArchivoAPI({
     int? idFichaPreguntaArchivo,
     int? idFicha,
@@ -1739,7 +1877,8 @@ class SQLiteManager {
     String? equipoModificacionAuditoria,
     String? programaCreacionAuditoria,
     String? programaModificacionAuditoria,
-    int? modificadoMovil
+    int? modificadoMovil,
+    int? uploadDocumento
   }) => performCrearPreguntaArchivoAPI(
       _database,
       idFichaPreguntaArchivo: idFichaPreguntaArchivo,
@@ -1761,7 +1900,55 @@ class SQLiteManager {
       equipoModificacionAuditoria: equipoModificacionAuditoria,
       programaCreacionAuditoria: programaCreacionAuditoria,
       programaModificacionAuditoria: programaModificacionAuditoria,
-      modificadoMovil: modificadoMovil
+      modificadoMovil: modificadoMovil,
+      uploadDocumento: uploadDocumento
+  );
+
+  Future actualizarPreguntaarchivoAPI({
+    int? idFichaPreguntaArchivoLocal,
+    int? idFichaPreguntaArchivo,
+    int? idFicha,
+    int? idPregunta,
+    int? idPlantillaSeccion,
+    String? numeroRepeticion,
+    String? nombre,
+    String? extension,
+    String? ruta,
+    String? peso,
+    String? estadoAuditoria,
+    String? usuarioCreacionAuditoria,
+    String? usuarioModificacionAuditoria,
+    String? fechaCreacionAuditoria,
+    String? fechaModificacionAuditoria,
+    String? equipoCreacionAuditoria,
+    String? equipoModificacionAuditoria,
+    String? programaCreacionAuditoria,
+    String? programaModificacionAuditoria,
+    int? modificadoMovil,
+    int? uploadDocumento
+  }) => performActualizarPreguntaArchivoAPI(
+      _database,
+    idFichaPreguntaArchivo: idFichaPreguntaArchivo,
+    idFichaPreguntaArchivoLocal: idFichaPreguntaArchivoLocal,
+    idFicha: idFicha,
+    idPregunta: idPregunta,
+    idPlantillaSeccion: idPlantillaSeccion,
+    numeroRepeticion: numeroRepeticion,
+    nombre: nombre,
+    extension: extension,
+    ruta: ruta,
+    peso: peso,
+    estadoAuditoria: estadoAuditoria,
+    usuarioCreacionAuditoria: usuarioCreacionAuditoria,
+    usuarioModificacionAuditoria: usuarioModificacionAuditoria,
+    fechaCreacionAuditoria: fechaCreacionAuditoria,
+    fechaModificacionAuditoria: fechaModificacionAuditoria,
+    equipoCreacionAuditoria: equipoCreacionAuditoria,
+    modificadoMovil: modificadoMovil,
+    uploadDocumento: uploadDocumento,
+    equipoModificacionAuditoria: equipoModificacionAuditoria,
+    programaCreacionAuditoria: programaCreacionAuditoria,
+    programaModificacionAuditoria: programaModificacionAuditoria
   );
   
 }

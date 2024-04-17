@@ -1,20 +1,17 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_delete_archivo_widget.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
-import '/components/alert_delete_foto_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:file_selector/file_selector.dart';
 
 
 import 'galeria_archivos_model.dart';
@@ -45,6 +42,23 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
     super.dispose();
   }
 
+  String? savedImagePath;
+
+  Future<String> saveImageToDevice(FFUploadedFile imageFile) async {
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final ext = imageFile.name!.split('.').last;
+      final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.${ext}';
+      final filePath = '${appDir.path}/$fileName';
+      await File(filePath).writeAsBytes(imageFile.bytes!);
+      return filePath;
+    } catch (e) {
+      // En caso de cualquier error, imprime el error y retorna una cadena vacía
+      print('Error al guardar la imagen: $e');
+      return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -68,104 +82,383 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
         floatingActionButton:
         Visibility(
           visible: FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO',
-          child: FloatingActionButton(
-            onPressed: () async{
-              try {
-                FilePickerResult? result = await FilePicker.platform.pickFiles(
-                  allowMultiple: true,
-                );
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatingActionButton(
+                onPressed: () async {
+                  final selectedMedia =
+                  await selectMediaWithSourceBottomSheet(
+                    context: context,
+                    allowPhoto: true,
+                  );
+                  if (selectedMedia != null &&
+                      selectedMedia.every((m) =>
+                          validateFileFormat(
+                              m.storagePath,
+                              context))) {
+                    setState(() =>
+                    _model.isDataUploading = true);
+                    var selectedUploadedFiles =
+                    <FFUploadedFile>[];
 
-                if (result != null) {
-                  // El usuario seleccionó archivo(s)
-                  for (var file in result.files) {
-                    print('Archivo seleccionado: ${file.name}');
+                    try {
+                      selectedUploadedFiles =
+                          selectedMedia
+                              .map(
+                                  (m) => FFUploadedFile(
+                                name: m
+                                    .storagePath
+                                    .split('/')
+                                    .last,
+                                bytes: m.bytes,
+                                height: m
+                                    .dimensions
+                                    ?.height,
+                                width: m
+                                    .dimensions
+                                    ?.width,
+                                blurHash:
+                                m.blurHash,
+                              ))
+                              .toList();
+                    } finally {
+                      _model.isDataUploading = false;
+                    }
+                    if (selectedUploadedFiles.length ==
+                        selectedMedia.length) {
+                      setState(() {
+                        _model.uploadedLocalFile =
+                            selectedUploadedFiles.first;
+                      });
+                    } else {
+                      setState(() {});
+                      return;
+                    }
                   }
-                } else {
-                  // El usuario canceló la selección de archivos
-                  print('El usuario canceló la selección de archivos');
-                }
-              } catch (e) {
-                print('Error al seleccionar archivos: $e');
-              }
-            },
-            backgroundColor: Color(0xFF086D82),
-            elevation: 8,
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async{
-                var pathdirc;
-                try {
-                  final typeGroup = XTypeGroup(
-                    label: 'Archivos',
-                    extensions: ['*'], // Permitir cualquier tipo de archivo
+                  if (_model.uploadedLocalFile == null ||
+                      (_model.uploadedLocalFile.bytes ?? [])
+                          .isEmpty) {
+                    return;
+                  }
+                  savedImagePath  = await saveImageToDevice(_model.uploadedLocalFile);
+                  final ultima = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioARCENUll(
+                    idFicha: FFAppState().IdFicha,
+                    numeroRepeticion: FFAppState().nrmRepeticion,
+                    idPregunta: FFAppState().idPregunta,
+                    idPlantillaSeccion: FFAppState().idPlantillaSeccion,
                   );
-                  final files = await openFiles(
-                    acceptedTypeGroups: [typeGroup],
+                  int indexer = 1;
+                  if(ultima.isNotEmpty) {
+                    indexer = ultima[0].idFichaPreguntaArchivoLocal! + 1;
+                  }
+                  await SQLiteManager.instance.CrearPreguntaArchivoAPI(
+                    idPregunta: FFAppState().idPregunta,
+                    idFicha: FFAppState().IdFicha,
+                    idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                    nombre: "Archivo N° $indexer",
+                    extension: _model.uploadedLocalFile.name!.split('.').last,
+                    rutaLocal: savedImagePath,
+                    modificadoMovil: 1,
+                    estadoAuditoria: '1',
+                    uploadDocumento: 0,
+                    numeroRepeticion: FFAppState().nrmRepeticion,
+                    usuarioCreacionAuditoria: FFAppState().username,
+                    fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                    equipoCreacionAuditoria: FFAppState().cummovil,
+                    programaCreacionAuditoria: FFAppState().programacreacion,
                   );
+                  setState(() {
+                    SQLiteManager.instance.inspeccion1(
+                      idFicha: FFAppState().IdFicha,
+                      usuarioModificacionAuditoria: FFAppState().username,
+                      fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                      equipoModificacionAuditoria: FFAppState().cummovil,
+                      programaModificacionAuditoria: FFAppState().programacreacion,
+                    );
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Archivo guardado correctamente',
+                        style: TextStyle(
+                          color:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                      ),
+                      duration: Duration(milliseconds: 4000),
+                      backgroundColor: FlutterFlowTheme.of(context).primary,
+                    ),
+                  );
+                  Navigator.of(context);
+                  //context.pushNamed('GaleriaArchivos');
+                },
+                backgroundColor: Color(0xFF086D82),
+                elevation: 8,
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    final selectedMedia =
+                    await selectMediaWithSourceBottomSheet(
+                      context: context,
+                      allowPhoto: true,
+                    );
+                    if (selectedMedia != null &&
+                        selectedMedia.every((m) =>
+                            validateFileFormat(
+                                m.storagePath,
+                                context))) {
+                      setState(() =>
+                      _model.isDataUploading = true);
+                      var selectedUploadedFiles =
+                      <FFUploadedFile>[];
 
-                  if (files != null && files.isNotEmpty) {
-                    for (var file in files) {
-                      print('Archivo seleccionado: ${file.path}');
-                      final tens = file.mimeType!.split('/').last;
-                      final appDir = await getApplicationDocumentsDirectory();
-                      final savedFile = File('${appDir.path}/${file.name}');
-                      await savedFile.writeAsBytes(await file.readAsBytes());
-                      print('Archivo guardado en: ${savedFile.path}');
-                      await SQLiteManager.instance.CrearPreguntaArchivoAPI(
-                        idPregunta: FFAppState().idPregunta,
+                      try {
+                        selectedUploadedFiles =
+                            selectedMedia
+                                .map(
+                                    (m) => FFUploadedFile(
+                                  name: m
+                                      .storagePath
+                                      .split('/')
+                                      .last,
+                                  bytes: m.bytes,
+                                  height: m
+                                      .dimensions
+                                      ?.height,
+                                  width: m
+                                      .dimensions
+                                      ?.width,
+                                  blurHash:
+                                  m.blurHash,
+                                ))
+                                .toList();
+                      } finally {
+                        _model.isDataUploading = false;
+                      }
+                      if (selectedUploadedFiles.length ==
+                          selectedMedia.length) {
+                        setState(() {
+                          _model.uploadedLocalFile =
+                              selectedUploadedFiles.first;
+                        });
+                      } else {
+                        setState(() {});
+                        return;
+                      }
+                    }
+                    if (_model.uploadedLocalFile == null ||
+                        (_model.uploadedLocalFile.bytes ?? [])
+                            .isEmpty) {
+                      return;
+                    }
+                    savedImagePath  = await saveImageToDevice(_model.uploadedLocalFile);
+                    final ultima = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioARCENUll(
+                      idFicha: FFAppState().IdFicha,
+                      numeroRepeticion: FFAppState().nrmRepeticion,
+                      idPregunta: FFAppState().idPregunta,
+                      idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                    );
+                    int indexer = 1;
+                    if(ultima.isNotEmpty) {
+                      indexer = ultima[0].idFichaPreguntaArchivoLocal! + 1;
+                    }
+                    await SQLiteManager.instance.CrearPreguntaArchivoAPI(
+                      idPregunta: FFAppState().idPregunta,
+                      idFicha: FFAppState().IdFicha,
+                      idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                      nombre: "Archivo N° $indexer",
+                      extension: _model.uploadedLocalFile.name!.split('.').last,
+                      rutaLocal: savedImagePath,
+                      modificadoMovil: 1,
+                      estadoAuditoria: '1',
+                      uploadDocumento: 0,
+                      numeroRepeticion: FFAppState().nrmRepeticion,
+                      usuarioCreacionAuditoria: FFAppState().username,
+                      fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                      equipoCreacionAuditoria: FFAppState().cummovil,
+                      programaCreacionAuditoria: FFAppState().programacreacion,
+                    );
+                    setState(() {
+                      SQLiteManager.instance.inspeccion1(
                         idFicha: FFAppState().IdFicha,
-                        idPlantillaSeccion: FFAppState().idPlantillaSeccion,
-                        nombre: file.name,
-                        extension: tens,
-                        rutaLocal: savedFile.path,
-                        modificadoMovil: 1,
-                        estadoAuditoria: '1',
-                        numeroRepeticion: FFAppState().nrmRepeticion,
-                        usuarioCreacionAuditoria: FFAppState().username,
-                        fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                        equipoCreacionAuditoria: FFAppState().cummovil,
-                        programaCreacionAuditoria: FFAppState().programacreacion,
+                        usuarioModificacionAuditoria: FFAppState().username,
+                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                        equipoModificacionAuditoria: FFAppState().cummovil,
+                        programaModificacionAuditoria: FFAppState().programacreacion,
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Comentario guardado correctamente',
-                            style: TextStyle(
-                              color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                            ),
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Archivo guardado correctamente',
+                          style: TextStyle(
+                            color:
+                            FlutterFlowTheme.of(context).secondaryBackground,
                           ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).primary,
+                        ),
+                        duration: Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                      ),
+                    );
+                    Navigator.of(context);
+                    //context.pushNamed('GaleriaArchivos');
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    size: 24,
+                  ),
+                ),
+              ),
+              /*SizedBox(height: 20),
+              FloatingActionButton(
+                onPressed: () async {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SafeArea(
+                        child: Wrap(
+                          children: <Widget>[
+                            /*ListTile(
+                                leading: Icon(Icons.photo_library),
+                                title: Text('Escoger de la galería'),
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                  XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                  if (image != null) {
+                                    final appDir = await getApplicationDocumentsDirectory();
+                                    final savedFile = File('${appDir.path}/${image.name}');
+                                    await savedFile.writeAsBytes(await image.readAsBytes());
+
+                                    final ultima = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioARCENUll(
+                                      idFicha: FFAppState().IdFicha,
+                                      numeroRepeticion: FFAppState().nrmRepeticion,
+                                      idPregunta: FFAppState().idPregunta,
+                                      idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                                    );
+
+                                    final tens = 'jpg';
+
+                                    await SQLiteManager.instance.CrearPreguntaArchivoAPI(
+                                      idPregunta: FFAppState().idPregunta,
+                                      idFicha: FFAppState().IdFicha,
+                                      idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                                      nombre: "Archivo Pregunta ${ultima[0].idFichaPreguntaArchivoLocal! + 1}",
+                                      extension: tens,
+                                      rutaLocal: savedFile.path,
+                                      modificadoMovil: 1,
+                                      estadoAuditoria: '1',
+                                      uploadDocumento: 0,
+                                      numeroRepeticion: FFAppState().nrmRepeticion,
+                                      usuarioCreacionAuditoria: FFAppState().username,
+                                      fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                      equipoCreacionAuditoria: FFAppState().cummovil,
+                                      programaCreacionAuditoria: FFAppState().programacreacion,
+                                    );
+                                    setState(() {
+                                      SQLiteManager.instance.inspeccion1(
+                                        idFicha: FFAppState().IdFicha,
+                                        usuarioModificacionAuditoria: FFAppState().username,
+                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                        programaModificacionAuditoria: FFAppState().programacreacion,
+                                      );
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Comentario guardado correctamente', style: TextStyle(color: FlutterFlowTheme.of(context).secondaryBackground)),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    );
+                                    context.pushNamed('GaleriaArchivos');
+                                  } else {
+                                    print('No image selected.');
+                                  }
+                                }),*/
+                            ListTile(
+                              leading: Icon(Icons.photo_camera),
+                              title: Text('Tomar una foto'),
+                              onTap: () async {
+                                Navigator.pop(context);
+                                XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+                                if (image != null) {
+                                  final appDir = await getApplicationDocumentsDirectory();
+                                  final savedFile = File('${appDir.path}/${image.name}');
+                                  await savedFile.writeAsBytes(await image.readAsBytes());
+
+                                  final ultima = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioARCENUll(
+                                    idFicha: FFAppState().IdFicha,
+                                    numeroRepeticion: FFAppState().nrmRepeticion,
+                                    idPregunta: FFAppState().idPregunta,
+                                    idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                                  );
+
+                                  final tens = 'jpg';
+
+                                  await SQLiteManager.instance.CrearPreguntaArchivoAPI(
+                                    idPregunta: FFAppState().idPregunta,
+                                    idFicha: FFAppState().IdFicha,
+                                    idPlantillaSeccion: FFAppState().idPlantillaSeccion,
+                                    nombre: "Archivo Pregunta ${ultima[0].idFichaPreguntaArchivoLocal! + 1}",
+                                    extension: tens,
+                                    rutaLocal: savedFile.path,
+                                    modificadoMovil: 1,
+                                    estadoAuditoria: '1',
+                                    uploadDocumento: 0,
+                                    numeroRepeticion: FFAppState().nrmRepeticion,
+                                    usuarioCreacionAuditoria: FFAppState().username,
+                                    fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                    equipoCreacionAuditoria: FFAppState().cummovil,
+                                    programaCreacionAuditoria: FFAppState().programacreacion,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Archivo guardado correctamente',
+                                        style: TextStyle(
+                                          color:
+                                          FlutterFlowTheme.of(context).secondaryBackground,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor: FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  );
+                                  setState(() {
+                                    SQLiteManager.instance.inspeccion1(
+                                      idFicha: FFAppState().IdFicha,
+                                      usuarioModificacionAuditoria: FFAppState().username,
+                                      fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                      equipoModificacionAuditoria: FFAppState().cummovil,
+                                      programaModificacionAuditoria: FFAppState().programacreacion,
+                                    );
+                                  });
+                                  context.pushNamed('GaleriaArchivos');
+                                } else {
+                                  print('No image selected.');
+                                }
+                              },
+                            ),
+                          ],
                         ),
                       );
-                      setState(() {
-                        SQLiteManager.instance.inspeccion1(
-                          idFicha: FFAppState().IdFicha,
-                          usuarioModificacionAuditoria: FFAppState().username,
-                          fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                          equipoModificacionAuditoria: FFAppState().cummovil,
-                          programaModificacionAuditoria: FFAppState().programacreacion,
-                        );
-                      });
-                      context.pushNamed('GaleriaArchivos');
-                    }
-                  } else {
-                    print('El usuario canceló la selección de archivos');
-                  }
-                } catch (e) {
-                  print('Error al seleccionar archivos: $e');
-                }
-              },
-              child: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                size: 24,
-              ),
-            ),
+                    },
+                  );
+                },
+                backgroundColor: Color(0xFF086D82),
+                elevation: 8,
+                child: Icon(
+                  Icons.camera_alt,
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  size: 24,
+                ),
+              )*/
+            ],
           ),
         ),
         body: SafeArea(
@@ -553,6 +846,49 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                       },
                     ),
                   ),
+                  Align(
+                    alignment: AlignmentDirectional(-1, -1),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey[100], // Light background color for contrast
+                            borderRadius: BorderRadius.circular(8), // Rounded corners for the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5), // Shadow for 3D effect
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: Offset(0, 3), // Position of shadow
+                              ),
+                            ],
+                          ),
+                          margin: EdgeInsets.all(10), // Space around the container
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding inside the container
+                          child: Align(
+                            alignment: AlignmentDirectional.center, // Correctly align text to center
+                            child: Text(
+                              valueOrDefault<String>(
+                                FFAppState().descPregunta,
+                                'Pregunta',
+                              ),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600, // Slightly bolder weight
+                                color: Colors.black, // Text color
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ),
                   Flexible(
                     child: Align(
                       alignment: AlignmentDirectional(-1, -1),
@@ -810,7 +1146,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                               Container(
                                                                                 height: 200,
                                                                                 child:
-                                                                                AlertDeleteFotoWidget(),
+                                                                                AlertDeleteArchivoWidget(),
                                                                               ),
                                                                             ),
                                                                           );
@@ -1019,7 +1355,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                               Container(
                                               height: 200,
                                               child:
-                                              AlertDeleteFotoWidget(),
+                                              AlertDeleteArchivoWidget(),
                                               ),
                                               ),
                                               );
@@ -1227,7 +1563,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                                   Container(
                                                                                     height: 200,
                                                                                     child:
-                                                                                    AlertDeleteFotoWidget(),
+                                                                                    AlertDeleteArchivoWidget(),
                                                                                   ),
                                                                                 ),
                                                                               );
@@ -1440,7 +1776,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                               Container(
                                                                                 height: 200,
                                                                                 child:
-                                                                                AlertDeleteFotoWidget(),
+                                                                                AlertDeleteArchivoWidget(),
                                                                               ),
                                                                             ),
                                                                           );

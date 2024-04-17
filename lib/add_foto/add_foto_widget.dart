@@ -672,6 +672,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
+                                          print("tocando mause");
                                           final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
                                             context: context,

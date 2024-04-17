@@ -181,6 +181,12 @@ class FFAppState extends ChangeNotifier {
     _estadoInspeccion = _value;
   }
 
+  String _descPregunta= '';
+  String get descPregunta => _descPregunta;
+  set descPregunta(String _value) {
+    _descPregunta = _value;
+  }
+
   int _idestadoInspeccion = 0;
   int get idestadoInspeccion => _idestadoInspeccion;
   set idestadoInspeccion(int _value) {

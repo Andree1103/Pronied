@@ -88,7 +88,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                 child: ListTile(
                   title: Text(
-                    'Choose Source',
+                    'Seleccionar',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       pickerFontFamily,
@@ -115,17 +115,17 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
               ),
             ] else if (allowPhoto)
               createUploadMediaListTile(
-                'Gallery',
+                'Galería',
                 MediaSource.photoGallery,
               )
             else
               createUploadMediaListTile(
-                'Gallery',
+                'Galería',
                 MediaSource.videoGallery,
               ),
             if (!kIsWeb) ...[
               const Divider(),
-              createUploadMediaListTile('Camera', MediaSource.camera),
+              createUploadMediaListTile('Camara', MediaSource.camera),
               const Divider(),
             ],
             const SizedBox(height: 10),

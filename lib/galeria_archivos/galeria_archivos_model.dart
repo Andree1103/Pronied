@@ -15,7 +15,12 @@ class GaleriaArchivosModel extends FlutterFlowModel<GaleriaArchivosWidget> {
   final unfocusNode = FocusNode();
 
   /// Initialization and disposal methods.
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+  FFUploadedFile(bytes: Uint8List.fromList([]));
 
+  // Stores action output result for [Custom Action - guardarFoto] action in IconButton widget.
+  String? imagensubida;
   @override
   void initState(BuildContext context) {}
 

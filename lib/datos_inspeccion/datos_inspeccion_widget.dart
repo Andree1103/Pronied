@@ -716,6 +716,15 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                 (columnIndex) {
                                                                                               final columnListarPreguntasRow =
                                                                                               columnListarPreguntasRowList[columnIndex];
+
+                                                                                              int pregs= columnListarPreguntasRow.idPregunta!;
+                                                                                              int secs= columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                              String nums= nrm.toString();
+                                                                                              int fichac= FFAppState().IdFicha;
+
+                                                                                              Future<int> numberColor = buscarcomentario(pregs, secs, nums, fichac);
+
+
                                                                                               return Padding(
                                                                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                                                                                 child: Container(
@@ -769,40 +778,74 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                                                                       mainAxisSize: MainAxisSize.min,
                                                                                                                       mainAxisAlignment: MainAxisAlignment.end,
                                                                                                                       children: [
-                                                                                                                        IconButton(
-                                                                                                                          icon: Icon(Icons.comment),
-                                                                                                                          onPressed: () async {
-                                                                                                                            FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
-                                                                                                                            FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
-                                                                                                                            FFAppState().nrmRepeticion = nrm.toString();
-                                                                                                                            await showModalBottomSheet(
-                                                                                                                              isScrollControlled: true,
-                                                                                                                              backgroundColor: Colors.transparent,
-                                                                                                                              enableDrag: false,
-                                                                                                                              context: context,
-                                                                                                                              builder: (context) {
-                                                                                                                                return GestureDetector(
-                                                                                                                                  onTap: () => _model.unfocusNode.canRequestFocus
-                                                                                                                                      ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                                                                                                                                      : FocusScope.of(context).unfocus(),
-                                                                                                                                  child: Padding(
-                                                                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                    child: AgregarComentarioWidget(),
-                                                                                                                                  ),
-                                                                                                                                );
-                                                                                                                              },
-                                                                                                                            ).then((value) => safeSetState(() {}));
+                                                                                                                        FutureBuilder(
+                                                                                                                          future: buscarcomentario(pregs, secs, nums, fichac),
+                                                                                                                          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                                                                                                                            if (snapshot
+                                                                                                                                .hasData) {
+                                                                                                                              return IconButton(
+                                                                                                                                icon: Icon(
+                                                                                                                                    Icons
+                                                                                                                                        .comment),
+                                                                                                                                color: snapshot
+                                                                                                                                    .data ==
+                                                                                                                                    1
+                                                                                                                                    ? Color(0xFF086D82)
+                                                                                                                                    : Color(0xFF000000),
+                                                                                                                                onPressed: () async {
+                                                                                                                                  FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                                                                  FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
+                                                                                                                                  FFAppState().nrmRepeticion = nrm.toString();
+                                                                                                                                  await showModalBottomSheet(
+                                                                                                                                    isScrollControlled: true,
+                                                                                                                                    backgroundColor: Colors.transparent,
+                                                                                                                                    enableDrag: false,
+                                                                                                                                    context: context,
+                                                                                                                                    builder: (context) {
+                                                                                                                                      return GestureDetector(
+                                                                                                                                        onTap: () => _model.unfocusNode.canRequestFocus
+                                                                                                                                            ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                                                                                                                                            : FocusScope.of(context).unfocus(),
+                                                                                                                                        child: Padding(
+                                                                                                                                          padding: MediaQuery.viewInsetsOf(context),
+                                                                                                                                          child: AgregarComentarioWidget(),
+                                                                                                                                        ),
+                                                                                                                                      );
+                                                                                                                                    },
+                                                                                                                                  ).then((value) => safeSetState(() {}));
+                                                                                                                                },
+                                                                                                                              );
+                                                                                                                            } else {
+                                                                                                                              return CircularProgressIndicator();
+                                                                                                                            }
                                                                                                                           },
                                                                                                                         ),
-                                                                                                                        IconButton(
-                                                                                                                          icon: Icon(Icons.insert_drive_file),
-                                                                                                                          onPressed: () {
-                                                                                                                            FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
-                                                                                                                            FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
-                                                                                                                            FFAppState().nrmRepeticion = nrm.toString();
-                                                                                                                            context.pushNamed('GaleriaArchivos');
+                                                                                                                        FutureBuilder(
+                                                                                                                          future: buscararchivo(pregs, secs, nums, fichac),
+                                                                                                                          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                                                                                                                            if (snapshot
+                                                                                                                                .hasData) {
+                                                                                                                              return IconButton(
+                                                                                                                                icon: Icon(Icons.insert_drive_file),
+                                                                                                                                color: snapshot
+                                                                                                                                    .data! >
+                                                                                                                                    0
+                                                                                                                                    ? Color(0xFF086D82)
+                                                                                                                                    : Color(0xFF000000),
+                                                                                                                                onPressed: () {
+                                                                                                                                  FFAppState().descPregunta = columnListarPreguntasRow.descripcionPregunta!;
+                                                                                                                                  FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                                                                  FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
+                                                                                                                                  FFAppState().nrmRepeticion = nrm.toString();
+                                                                                                                                  context.pushNamed('GaleriaArchivos');
+                                                                                                                                },
+                                                                                                                              );
+                                                                                                                            } else {
+                                                                                                                              return CircularProgressIndicator();
+                                                                                                                            }
                                                                                                                           },
                                                                                                                         ),
+
                                                                                                                       ],
                                                                                                                     )
                                                                                                                   )
@@ -3196,4 +3239,25 @@ String generarCadenaFormatoSN(int posicionSeleccionada, List<String> opciones) {
   listaSN[posicionSeleccionada] = 'S';
   return listaSN.join(';');
 }
+Future<int> buscarcomentario(int pregunta, int seccion, String num, int ficha) async {
+  var cnt = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioNotNUll(
+    idPregunta: pregunta,
+    idPlantillaSeccion: seccion,
+    numeroRepeticion: num,
+    idFicha: ficha,
+  );
+  return cnt.length;
+}
+
+Future<int> buscararchivo(int pregunta, int seccion, String num, int ficha) async {
+  var cnt = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioARCENUll(
+    idPregunta: pregunta,
+    idPlantillaSeccion: seccion,
+    numeroRepeticion: num,
+    idFicha: ficha,
+  );
+  return cnt.length;
+}
+
+
 

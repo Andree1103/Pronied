@@ -1017,6 +1017,197 @@ ${corche}''';
         r'''$.dato.sincro.idSincroMovil''',
       ));
 
+  ///PREGUNTAARCHIVOS
+  static List? fichasPreguntasArchivos(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.fichasPreguntasArchivos''',
+    true,
+  ) as List?;
+
+  static int? idFichaPreguntaArchivo(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].idFichaPreguntaArchivo',
+      ));
+  static int? idFichaPreguntaArchivoMovil(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].idFichaPreguntaArchivoMovil',
+      ));
+  static int? idFichaprear(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].idFicha',
+      ));
+  static int? idPreguntaprear(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].idPregunta',
+      ));
+  static int? idPlantillaSeccionprear(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].idPlantillaSeccion',
+      ));
+  static String? numeroRepeticionprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].numeroRepeticion',
+      ));
+  static String? nombreprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].nombre',
+      ));
+  static String? extensionprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].extension',
+      ));
+  static String? rutaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].ruta',
+      ));
+  static String? pesoprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].peso',
+      ));
+  static String? estadoAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].estadoAuditoria',
+      ));
+  static String? usuarioCreacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].usuarioCreacionAuditoria',
+      ));
+  static String? usuarioModificacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].usuarioModificacionAuditoria',
+      ));
+  static String? fechaCreacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].fechaCreacionAuditoria',
+      ));
+  static String? fechaModificacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].fechaModificacionAuditoria',
+      ));
+  static String? equipoCreacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].equipoCreacionAuditoria',
+      ));
+  static String? equipoModificacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].equipoModificacionAuditoria',
+      ));
+  static String? programaCreacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].programaCreacionAuditoria',
+      ));
+  static String? programaModificacionAuditoriaprear(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasArchivos[$index].programaModificacionAuditoria',
+      ));
+
+  ///PREGUNTA COMENTARIOS
+
+  static List? fichasPreguntasComentarios(dynamic response) => getJsonField(
+    response,
+    r'''$.dato.fichasPreguntasComentarios''',
+    true,
+  ) as List?;
+  static int? idFichaPreguntaComentariocomen(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].idFichaPreguntaComentario',
+      ));
+  static int? idFichaPreguntaComentarioMovilcomen(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].idFichaPreguntaComentarioMovil',
+      ));
+  static int? idFichacomen(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].idFicha',
+      ));
+  static int? idPreguntacomen(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].idPregunta',
+      ));
+  static int? idPlantillaSeccioncomen(dynamic response, int index) =>
+      castToType<int>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].idPlantillaSeccion',
+      ));
+  static String? observacioncomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].observacion',
+      ));
+  static String? numeroRepeticioncomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].numeroRepeticion',
+      ));
+  static String? estadoAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].estadoAuditoria',
+      ));
+  static String? usuarioCreacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].usuarioCreacionAuditoria',
+      ));
+  static String? usuarioModificacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].usuarioModificacionAuditoria',
+      ));
+  static String? fechaCreacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].fechaCreacionAuditoria',
+      ));
+  static String? fechaModificacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].fechaModificacionAuditoria',
+      ));
+  static String? equipoCreacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].equipoCreacionAuditoria',
+      ));
+  static String? equipoModificacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].equipoModificacionAuditoria',
+      ));
+  static String? programaCreacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].programaCreacionAuditoria',
+      ));
+  static String? programaModificacionAuditoriacomen(dynamic response, int index) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.dato.fichasPreguntasComentarios[$index].programaModificacionAuditoria',
+      ));
+
 }
 
 class APIObtenerTOKENCall {

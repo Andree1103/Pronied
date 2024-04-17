@@ -814,6 +814,42 @@ class ListarFichasArchivos extends SqliteRow {
 }
 
 
+
+Future<List<ListarFichasPreguntaArchivos>> performListarFichaPreguntaArchivos(Database database) {
+  final query = '''
+    SELECT *
+    FROM FichaPreguntaArchivo 
+    WHERE uploadDocumento = 0;
+  ''';
+  return _readQuery(database, query, (data) => ListarFichasPreguntaArchivos(data));
+}
+
+class ListarFichasPreguntaArchivos extends SqliteRow {
+  ListarFichasPreguntaArchivos(Map<String, dynamic> data) : super(data);
+  int? get idFichaPreguntaArchivoLocal => data['IdFichaPreguntaArchivoLocal'] as int?;
+  int? get idFichaPreguntaArchivo => data['IdFichaPreguntaArchivo'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['idPlantillaSeccion'] as int?;
+  String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get nombre => data['Nombre'] as String?;
+  String? get extension => data['Extension'] as String?;
+  String? get ruta => data['Ruta'] as String?;
+  String? get rutalocal => data['rutaLocal'] as String?;
+  String? get peso => data['Peso'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+  int? get uploadDocumento => data ['uploadDocumento'] as int?;
+}
+
 ///END LISTARFICHASSINUPLOAD
 
 
@@ -1500,6 +1536,7 @@ class ListarPreguntaComentarioRow extends SqliteRow {
   String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
   String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
   int? get modificadoMovil => data['modificadoMovil'] as int?;
+  int? get uploadDocumento => data ['uploadDocumento'] as int?;
 }
 
 
@@ -1515,6 +1552,7 @@ Future<List<ListarPreguntaArchivosRow>> performListarPreguntaArchivos(
 SELECT *
 FROM FichaPreguntaArchivo where idPlantillaSeccion =  '${idPlantillaSeccion}' 
 and IdPregunta = '${idPregunta}' and IdFicha = '${idFicha}' and EstadoAuditoria = '1' and numeroRepeticion = '${numeroRepeticion}';
+
 
 ''';
   return _readQuery(database, query, (d) => ListarPreguntaArchivosRow(d));
@@ -1544,6 +1582,147 @@ class ListarPreguntaArchivosRow extends SqliteRow {
   String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
   String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
   int? get modificadoMovil => data['modificadoMovil'] as int?;
+  int? get uploadDocumento => data ['uploadDocumento'] as int?;
+}
+
+Future<List<ListarFichasComentarioModificacion>> performListarComentariosMod(Database database, {
+  String? dniInspector,
+}) {
+  final query = '''
+    SELECT *
+    FROM FichaPreguntaComentario 
+    WHERE modificadoMovil = 1 and IdFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}')
+  ''';
+  return _readQuery(database, query, (data) => ListarFichasComentarioModificacion(data));
+}
+
+class ListarFichasComentarioModificacion extends SqliteRow {
+  ListarFichasComentarioModificacion(Map<String, dynamic> data) : super(data);
+
+  int? get idFichaPreguntaComentarioLocal => data['IdFichaPreguntaComentarioLocal'] as int?;
+  int? get idFichaPreguntaComentario => data['IdFichaPreguntaComentario'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  String? get observacion => data['Observacion'] as String?;
+  String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
 }
 
 
+Future<List<ListarFichasFichaArchivoModificacion>> performListarFichaArchivoMod(Database database, {
+  String? dniInspector,
+}) {
+  final query = '''
+    SELECT *
+    FROM FichaPreguntaArchivo 
+    WHERE modificadoMovil = 1 and IdFicha in (Select idFicha from Fichas where dniInspector = '${dniInspector}') and( (EstadoAuditoria = '0' and IdFichaPreguntaArchivo is  not null) or (EstadoAuditoria = '1' and IdFichaPreguntaArchivo is  null))
+  ''';
+  return _readQuery(database, query, (data) => ListarFichasFichaArchivoModificacion(data));
+}
+
+class ListarFichasFichaArchivoModificacion extends SqliteRow {
+  ListarFichasFichaArchivoModificacion(Map<String, dynamic> data) : super(data);
+
+  int? get idFichaPreguntaArchivoLocal => data['IdFichaPreguntaArchivoLocal'] as int?;
+  int? get idFichaPreguntaArchivo => data['IdFichaPreguntaArchivo'] as int?;
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get idPlantillaSeccion => data['idPlantillaSeccion'] as int?;
+  String? get numeroRepeticion => data['numeroRepeticion'] as String?;
+  String? get nombre => data['Nombre'] as String?;
+  String? get extension => data['Extension'] as String?;
+  String? get ruta => data['Ruta'] as String?;
+  String? get rutalocal => data['rutaLocal'] as String?;
+  String? get peso => data['Peso'] as String?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get usuarioCreacionAuditoria => data['UsuarioCreacionAuditoria'] as String?;
+  String? get usuarioModificacionAuditoria => data['UsuarioModificacionAuditoria'] as String?;
+  String? get fechaCreacionAuditoria => data['FechaCreacionAuditoria'] as String?;
+  String? get fechaModificacionAuditoria => data['FechaModificacionAuditoria'] as String?;
+  String? get equipoCreacionAuditoria => data['EquipoCreacionAuditoria'] as String?;
+  String? get equipoModificacionAuditoria => data['EquipoModificacionAuditoria'] as String?;
+  String? get programaCreacionAuditoria => data['ProgramaCreacionAuditoria'] as String?;
+  String? get programaModificacionAuditoria => data['ProgramaModificacionAuditoria'] as String?;
+  int? get modificadoMovil => data['modificadoMovil'] as int?;
+  int? get uploadDocumento => data ['uploadDocumento'] as int?;
+}
+
+Future<List<ExistPreguntaArchivoNullForId>>
+performListarPreguntaArchivoExistNull(
+    Database database, {
+      int? idFicha,
+      int? IdFichaPreguntaArchivo,
+      int? IdFichaPreguntaArchivoLocal,
+    }) {
+  final query = '''
+SELECT IdFicha
+FROM FichaPreguntaArchivo where (IdFicha = ${idFicha} and IdFichaPreguntaArchivo = ${IdFichaPreguntaArchivo} and
+    ruta is not null and IdFichaPreguntaArchivoLocal is not null) 
+    or (idFicha = ${idFicha} and IdFichaPreguntaArchivoLocal = ${IdFichaPreguntaArchivoLocal} and
+    ruta is not null and IdFichaPreguntaArchivo is null);
+''';
+  return _readQuery(
+      database, query, (d) => ExistPreguntaArchivoNullForId(d));
+}
+class ExistPreguntaArchivoNullForId extends SqliteRow {
+  ExistPreguntaArchivoNullForId(Map<String, dynamic> data) : super(data);
+  int? get idFicha => data['IdFicha'] as int?;
+}
+
+Future<List<ExistPreguntaComentarioNullForId>>
+performListarPreguntaComentarioExistNull(
+    Database database, {
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
+    }) {
+  final query = '''
+SELECT IdFicha
+FROM FichaPreguntaComentario where IdFicha = ${idFicha} and
+    IdPregunta = ${idPregunta} and
+    IdPlantillaSeccion = ${idPlantillaSeccion} and
+    numeroRepeticion = '${numeroRepeticion}'
+''';
+  return _readQuery(
+      database, query, (d) => ExistPreguntaComentarioNullForId(d));
+}
+class ExistPreguntaComentarioNullForId extends SqliteRow {
+  ExistPreguntaComentarioNullForId(Map<String, dynamic> data) : super(data);
+  int? get idFicha => data['IdFicha'] as int?;
+}
+
+Future<List<ExistPreguntaComentarioARCEForId>>
+performListarPreguntaComentarioARCExistNull(
+    Database database, {
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
+    }) {
+  final query = '''
+SELECT IdFicha, IdFichaPreguntaArchivoLocal
+FROM FichaPreguntaArchivo where IdFicha = ${idFicha} and
+    IdPregunta = ${idPregunta} and
+    idPlantillaSeccion = ${idPlantillaSeccion} and
+    numeroRepeticion = '${numeroRepeticion}' ORDER BY IdFichaPreguntaArchivoLocal DESC
+    LIMIT 1
+''';
+  return _readQuery(
+      database, query, (d) => ExistPreguntaComentarioARCEForId(d));
+}
+class ExistPreguntaComentarioARCEForId extends SqliteRow {
+  ExistPreguntaComentarioARCEForId(Map<String, dynamic> data) : super(data);
+  int? get idFicha => data['IdFicha'] as int?;
+  int? get idFichaPreguntaArchivoLocal => data['IdFichaPreguntaArchivoLocal'] as int?;
+}

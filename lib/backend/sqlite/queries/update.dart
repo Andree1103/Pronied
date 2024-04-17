@@ -642,6 +642,33 @@ WHERE
   return database.rawQuery(query);
 }
 
+/// BEGIN ACTUALIZARFICHA
+Future performPreguntaArchivosUpload(
+    Database database, {
+      int? idFicha,
+      String? rutalocal,
+      String? nombreArchivo,
+      String? extension,
+      String? ruta,
+      double? peso,
+      //Nombre = '${nombreArchivo}',
+      int? uploadDocumento
+    }) {
+  final query = '''
+UPDATE FichaPreguntaArchivo
+SET
+    Extension = '${extension}',
+    Ruta = '${ruta}',
+    Peso = ${peso},
+    uploadDocumento = ${uploadDocumento}
+WHERE 
+    IdFicha = ${idFicha} and rutaLocal = '${rutalocal}';
+
+
+''';
+  return database.rawQuery(query);
+}
+
 Future performActualizarFichaMod(
     Database database, {
       String? codigoModular,
@@ -1755,7 +1782,7 @@ Future performActualizarPreguntaComentarioAPI(
       int? modificadoMovil
     }) {
   final query = '''
-UPDATE FichaPreguntaRespuestas
+UPDATE FichaPreguntaComentario
 SET
     IdFichaPreguntaComentario = ${idFichaPreguntaComentario},
     IdFicha = ${idFicha},
@@ -1774,7 +1801,7 @@ SET
     ProgramaModificacionAuditoria = '${programaModificacionAuditoria}',
     modificadoMovil = ${modificadoMovil}
 WHERE 
-    (IdFichaPreguntaComentarioLocal = ${idFichaPreguntaComentario} or IdFichaPreguntaComentario = ${idFichaPreguntaComentarioLocal}) and IdFicha = ${idFicha};
+    (IdFichaPreguntaComentarioLocal = ${idFichaPreguntaComentarioLocal} or IdFichaPreguntaComentario = ${idFichaPreguntaComentario}) and IdFicha = ${idFicha};
 ''';
   return database.rawQuery(query);
 }
@@ -1804,7 +1831,8 @@ Future performCrearPreguntaArchivoAPI(
       String? equipoModificacionAuditoria,
       String? programaCreacionAuditoria,
       String? programaModificacionAuditoria,
-      int? modificadoMovil
+      int? modificadoMovil,
+      int? uploadDocumento
     }) {
   final query = '''
 INSERT INTO FichaPreguntaArchivo (
@@ -1827,7 +1855,8 @@ INSERT INTO FichaPreguntaArchivo (
   ProgramaCreacionAuditoria,
   ProgramaModificacionAuditoria,
   modificadoMovil,
-  rutaLocal
+  rutaLocal,
+  uploadDocumento
 ) VALUES (
   ${idFichaPreguntaArchivo},
   ${idFicha},
@@ -1848,11 +1877,84 @@ INSERT INTO FichaPreguntaArchivo (
   '${programaCreacionAuditoria}',
   '${programaModificacionAuditoria}',
   ${modificadoMovil},
-  '${rutaLocal}'
+  '${rutaLocal}',
+  ${uploadDocumento}
 )
 ''';
   return database.rawQuery(query);
 }
 
+Future performActualizarPreguntaArchivoAPI(
+    Database database, {
+      int? idFichaPreguntaArchivoLocal,
+      int? idFichaPreguntaArchivo,
+      int? idFicha,
+      int? idPregunta,
+      int? idPlantillaSeccion,
+      String? numeroRepeticion,
+      String? nombre,
+      String? extension,
+      String? ruta,
+      String? peso,
+      String? estadoAuditoria,
+      String? usuarioCreacionAuditoria,
+      String? usuarioModificacionAuditoria,
+      String? fechaCreacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoCreacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaCreacionAuditoria,
+      String? programaModificacionAuditoria,
+      int? modificadoMovil,
+      int? uploadDocumento
+    }) {
+  final query = '''
+UPDATE FichaPreguntaArchivo
+SET
+    IdFichaPreguntaArchivo = ${idFichaPreguntaArchivo},
+    IdFicha = ${idFicha},
+    IdPregunta = ${idPregunta},
+    IdPlantillaSeccion = ${idPlantillaSeccion},
+    numeroRepeticion = '${numeroRepeticion}',
+    Nombre = '${nombre}',
+    Extension = '${extension}',
+    Ruta = '${ruta}',
+    Peso = '${peso}',
+    EstadoAuditoria = '${estadoAuditoria}',
+    UsuarioCreacionAuditoria = '${usuarioCreacionAuditoria}',
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaCreacionAuditoria = '${fechaCreacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoCreacionAuditoria = '${equipoCreacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}',
+    modificadoMovil = ${modificadoMovil},
+    uploadDocumento = ${uploadDocumento}
+WHERE 
+    (IdFichaPreguntaArchivoLocal = ${idFichaPreguntaArchivoLocal} or IdFichaPreguntaArchivo = ${idFichaPreguntaArchivo}) and IdFicha = ${idFicha};
+''';
+  return database.rawQuery(query);
+}
+
+Future performDeleteArchivo(
+    Database database, {
+      int? idFoto,
+      String? usuarioModificacionAuditoria,
+      String? fechaModificacionAuditoria,
+      String? equipoModificacionAuditoria,
+      String? programaModificacionAuditoria
+    }) {
+  final query = '''
+UPDATE FichaPreguntaArchivo
+SET EstadoAuditoria = '0', modificadoMovil = 1,
+    UsuarioModificacionAuditoria = '${usuarioModificacionAuditoria}',
+    FechaModificacionAuditoria = '${fechaModificacionAuditoria}',
+    EquipoModificacionAuditoria = '${equipoModificacionAuditoria}',
+    ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
+WHERE IdFichaPreguntaArchivoLocal = ${idFoto};
+''';
+  return database.rawQuery(query);
+}
 
 
