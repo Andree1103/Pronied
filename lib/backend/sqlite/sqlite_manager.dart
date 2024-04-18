@@ -1375,6 +1375,14 @@ class SQLiteManager {
           numeroRepeticion: numeroRepeticion
       );
 
+  Future<List<ExistBuscarUsuario>> VerificarSiExisteUser({
+    String? usuario
+  }) =>
+      performListarBuscarUsuario(
+          _database,
+        usuario: usuario
+      );
+
 
   ///INSPECCION
   Future<List<ExistInspeciconForId>> VerificarSiExisteInspeccion({
@@ -1950,5 +1958,41 @@ class SQLiteManager {
     programaCreacionAuditoria: programaCreacionAuditoria,
     programaModificacionAuditoria: programaModificacionAuditoria
   );
+
+  Future createUser({
+    String? usuario,
+    String? contra,
+    String? username,
+    String? nombrecompleto,
+    String? rol,
+    String? ubicacion
+  }) =>
+      performCrearUsuario(
+          _database,
+          contra: contra,
+          usuario: usuario,
+          nombrecompleto: nombrecompleto,
+          rol: rol,
+          username: username,
+          ubicacion: ubicacion
+      );
+
+  Future actualizarUser({
+    String? usuario,
+    String? contra,
+    String? username,
+    String? nombrecompleto,
+    String? rol,
+    String? ubicacion
+  }) =>
+      performActualizarUsuario(
+          _database,
+          contra: contra,
+          usuario: usuario,
+          nombrecompleto: nombrecompleto,
+          rol: rol,
+          username: username,
+          ubicacion: username
+      );
   
 }

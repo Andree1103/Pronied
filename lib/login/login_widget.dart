@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/sqlite_manager.dart';
 
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -433,48 +438,33 @@ class _LoginWidgetState extends State<LoginWidget>
                                               0, 0, 0, 16),
                                           child: FFButtonWidget(
                                             onPressed: () async {
-                                              var _shouldSetState = false;
-                                              _model.obtenerTok =
-                                              await APIObtenerTOKENCall
-                                                  .call(
-                                                usuario: _model
-                                                    .emailAddressController
-                                                    .text,
-                                                clave: _model
-                                                    .passwordController.text,
-                                                appId: 'SISMON',
-                                              );
-                                              _shouldSetState = true;
-                                              if ((APIObtenerTOKENCall.response(
-                                                (_model.obtenerTok
-                                                    ?.jsonBody ??
-                                                    ''),
-                                              ) ==
-                                                  'OK') &&
-                                                  ((_model.obtenerTok
-                                                      ?.succeeded ??
-                                                      true) ==
-                                                      true)) {
-                                                _model.apiResultjyh =
-                                                await ApiTokenFinalCall
+                                              bool hasInternet = await isConnected();
+                                              if (hasInternet) {
+                                                print("Estás conectado a Internet.");
+                                                var _shouldSetState = false;
+                                                _model.obtenerTok =
+                                                await APIObtenerTOKENCall
                                                     .call(
-                                                  applicationId: 'SISMON',
-                                                  tokenSesion:
-                                                  APIObtenerTOKENCall.code(
-                                                    (_model.obtenerTok
-                                                        ?.jsonBody ??
-                                                        ''),
-                                                  ),
+                                                  usuario: _model
+                                                      .emailAddressController
+                                                      .text,
+                                                  clave: _model
+                                                      .passwordController.text,
+                                                  appId: 'SISMON',
                                                 );
                                                 _shouldSetState = true;
-                                                if (ApiTokenFinalCall.mensaje(
-                                                  (_model.apiResultjyh
+                                                if ((APIObtenerTOKENCall.response(
+                                                  (_model.obtenerTok
                                                       ?.jsonBody ??
                                                       ''),
                                                 ) ==
-                                                    'OK') {
-                                                  _model.apiResult2ws =
-                                                  await ApiAutorizacionCall
+                                                    'OK') &&
+                                                    ((_model.obtenerTok
+                                                        ?.succeeded ??
+                                                        true) ==
+                                                        true)) {
+                                                  _model.apiResultjyh =
+                                                  await ApiTokenFinalCall
                                                       .call(
                                                     applicationId: 'SISMON',
                                                     tokenSesion:
@@ -485,106 +475,186 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     ),
                                                   );
                                                   _shouldSetState = true;
-                                                  if (ApiAutorizacionCall
-                                                      .mensaje(
-                                                    (_model.apiResult2ws
+                                                  if (ApiTokenFinalCall.mensaje(
+                                                    (_model.apiResultjyh
                                                         ?.jsonBody ??
                                                         ''),
                                                   ) ==
                                                       'OK') {
-                                                    ScaffoldMessenger.of(
-                                                        context)
-                                                        .clearSnackBars();
-                                                    ScaffoldMessenger.of(
-                                                        context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          'Acceso satisfactorio',
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                .of(context)
-                                                                .secondaryBackground,
-                                                          ),
-                                                        ),
-                                                        duration: Duration(
-                                                            milliseconds: 2000),
-                                                        backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                            context)
-                                                            .primaryText,
+                                                    _model.apiResult2ws =
+                                                    await ApiAutorizacionCall
+                                                        .call(
+                                                      applicationId: 'SISMON',
+                                                      tokenSesion:
+                                                      APIObtenerTOKENCall.code(
+                                                        (_model.obtenerTok
+                                                            ?.jsonBody ??
+                                                            ''),
                                                       ),
                                                     );
-
-                                                    ///TODO
-                                                    FFAppState().rol = ApiAutorizacionCall.roles(
+                                                    _shouldSetState = true;
+                                                    if (ApiAutorizacionCall
+                                                        .mensaje(
                                                       (_model.apiResult2ws
                                                           ?.jsonBody ??
                                                           ''),
-                                                    )!;
-
-                                                    FFAppState().nombrecompletouser = ApiAutorizacionCall.nombre(
-                                                      (_model.apiResult2ws
-                                                          ?.jsonBody ??
-                                                          ''),
-                                                    )! + ' ' + ApiAutorizacionCall.apepaterno(
-                                                      (_model.apiResult2ws
-                                                          ?.jsonBody ??
-                                                          ''),
-                                                    )! + ' ' + ApiAutorizacionCall.apematerno(
-                                                      (_model.apiResult2ws
-                                                          ?.jsonBody ??
-                                                          ''),
-                                                    )!;
-
-                                                    FFAppState().ubicacionuse = ApiAutorizacionCall.nombrearea(
-                                                      (_model.apiResult2ws
-                                                          ?.jsonBody ??
-                                                          ''),
-                                                    )!;
-
-                                                    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-                                                    AndroidDeviceInfo androidInfo;
-                                                    androidInfo = await deviceInfo.androidInfo;
-                                                    FFAppState().cummovil = androidInfo.androidId;
-                                                    // Actualiza el estado de tu aplicación aquí utilizando el valor del controlador
-                                                    FFAppState().username = ApiAutorizacionCall.numerodocidad(
-                                                      (_model.apiResult2ws
-                                                          ?.jsonBody ??
-                                                          ''),
-                                                    )!;
-                                                    FFAppState().programacreacion= 'Inspeccion Movil';
-
-                                                    context.pushNamed(
-                                                      'ListaInspecciones',
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                        TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                          PageTransitionType
-                                                              .rightToLeft,
+                                                    ) ==
+                                                        'OK') {
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .clearSnackBars();
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Acceso satisfactorio',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds: 2000),
+                                                          backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .primaryText,
                                                         ),
-                                                      },
-                                                    );
+                                                      );
 
-                                                    if (_shouldSetState)
-                                                      setState(() {});
-                                                    return;
+                                                      ///TODO
+                                                      FFAppState().rol = ApiAutorizacionCall.roles(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )!;
+
+                                                      FFAppState().nombrecompletouser = ApiAutorizacionCall.nombre(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )! + ' ' + ApiAutorizacionCall.apepaterno(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )! + ' ' + ApiAutorizacionCall.apematerno(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )!;
+
+                                                      FFAppState().ubicacionuse = ApiAutorizacionCall.nombrearea(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )!;
+
+                                                      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+                                                      AndroidDeviceInfo androidInfo;
+                                                      androidInfo = await deviceInfo.androidInfo;
+                                                      FFAppState().cummovil = androidInfo.androidId;
+                                                      // Actualiza el estado de tu aplicación aquí utilizando el valor del controlador
+                                                      FFAppState().username = ApiAutorizacionCall.numerodocidad(
+                                                        (_model.apiResult2ws
+                                                            ?.jsonBody ??
+                                                            ''),
+                                                      )!;
+                                                      FFAppState().programacreacion= 'Inspeccion Movil';
+
+                                                      ///TODO INSERT O UPDATE TABLA USER
+                                                      final password = _model.passwordController.text;
+                                                      var bytes = utf8.encode(password); // data being hashed
+                                                      var digest = sha256.convert(bytes).toString();
+
+                                                      final userbd = await SQLiteManager.instance.VerificarSiExisteUser(
+                                                          usuario: _model.emailAddressController.text
+                                                      );
+                                                      if(userbd.length >= 1){
+                                                        SQLiteManager.instance.actualizarUser(
+                                                            usuario: _model.emailAddressController.text,
+                                                            contra: digest,
+                                                            username: FFAppState().username,
+                                                            nombrecompleto: FFAppState().nombrecompletouser,
+                                                            rol: FFAppState().rol,
+                                                            ubicacion: FFAppState().ubicacionuse
+                                                        );
+                                                      } else {
+                                                        SQLiteManager.instance.createUser(
+                                                            usuario: _model.emailAddressController.text,
+                                                            contra: digest,
+                                                            username: FFAppState().username,
+                                                            nombrecompleto: FFAppState().nombrecompletouser,
+                                                            rol: FFAppState().rol,
+                                                            ubicacion: FFAppState().ubicacionuse
+                                                        );
+                                                      }
+
+                                                      context.pushNamed(
+                                                        'ListaInspecciones',
+                                                        extra: <String, dynamic>{
+                                                          kTransitionInfoKey:
+                                                          TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                            PageTransitionType
+                                                                .rightToLeft,
+                                                          ),
+                                                        },
+                                                      );
+
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
+                                                    } else {
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .clearSnackBars();
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              ApiAutorizacionCall
+                                                                  .mensaje(
+                                                                (_model.apiResult2ws
+                                                                    ?.jsonBody ??
+                                                                    ''),
+                                                              ),
+                                                              'Error',
+                                                            ),
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds: 2000),
+                                                          backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .primaryText,
+                                                        ),
+                                                      );
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
+                                                    }
                                                   } else {
-                                                    ScaffoldMessenger.of(
-                                                        context)
+                                                    ScaffoldMessenger.of(context)
                                                         .clearSnackBars();
-                                                    ScaffoldMessenger.of(
-                                                        context)
+                                                    ScaffoldMessenger.of(context)
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            ApiAutorizacionCall
+                                                          valueOrDefault<String>(
+                                                            ApiTokenFinalCall
                                                                 .mensaje(
-                                                              (_model.apiResult2ws
+                                                              (_model.apiResultjyh
                                                                   ?.jsonBody ??
                                                                   ''),
                                                             ),
@@ -615,15 +685,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       .showSnackBar(
                                                     SnackBar(
                                                       content: Text(
-                                                        valueOrDefault<String>(
-                                                          ApiTokenFinalCall
-                                                              .mensaje(
-                                                            (_model.apiResultjyh
-                                                                ?.jsonBody ??
-                                                                ''),
-                                                          ),
-                                                          'Error',
-                                                        ),
+                                                        APIObtenerTOKENCall
+                                                            .response(
+                                                          (_model.obtenerTok
+                                                              ?.jsonBody ??
+                                                              ''),
+                                                        )!,
                                                         style: TextStyle(
                                                           color: FlutterFlowTheme
                                                               .of(context)
@@ -643,39 +710,111 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   return;
                                                 }
                                               } else {
-                                                ScaffoldMessenger.of(context)
-                                                    .clearSnackBars();
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      APIObtenerTOKENCall
-                                                          .response(
-                                                        (_model.obtenerTok
-                                                            ?.jsonBody ??
-                                                            ''),
-                                                      )!,
-                                                      style: TextStyle(
-                                                        color: FlutterFlowTheme
-                                                            .of(context)
-                                                            .secondaryBackground,
-                                                      ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 2000),
-                                                    backgroundColor:
-                                                    FlutterFlowTheme.of(
-                                                        context)
-                                                        .primaryText,
-                                                  ),
+                                                print("No hay conexión a Internet.");
+                                                final userlg = await SQLiteManager.instance.VerificarSiExisteUser(
+                                                  usuario: _model.emailAddressController.text
                                                 );
-                                                if (_shouldSetState)
-                                                  setState(() {});
-                                                return;
+                                                if(userlg.isEmpty){
+                                                  ScaffoldMessenger.of(
+                                                      context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Usuario no registrado',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                              .of(context)
+                                                              .secondaryBackground,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 2000),
+                                                      backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                          context)
+                                                          .primaryText,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  final passwordoff = _model.passwordController.text;
+                                                  var bytesoff = utf8.encode(passwordoff); // data being hashed
+                                                  var digestoff = sha256.convert(bytesoff).toString();
+
+                                                  if(userlg.first.usuario == _model.emailAddressController.text && userlg.first.contrase == digestoff){
+                                                    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();        AndroidDeviceInfo androidInfo;
+                                                    androidInfo = await deviceInfo.androidInfo;
+                                                    FFAppState().cummovil = androidInfo.androidId;
+                                                    FFAppState().programacreacion= 'Inspeccion Movil';
+                                                    FFAppState().username = userlg.first.username!;
+                                                    FFAppState().ubicacionuse = userlg.first.ubicacion!;
+                                                    FFAppState().nombrecompletouser = userlg.first.nomcomple!;
+                                                    FFAppState().rol = userlg.first.rol!;
+                                                    context.pushNamed(
+                                                      'ListaInspecciones',
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                        TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                          PageTransitionType
+                                                              .rightToLeft,
+                                                        ),
+                                                      },
+                                                    );
+                                                    ScaffoldMessenger.of(
+                                                        context)
+                                                        .clearSnackBars();
+                                                    ScaffoldMessenger.of(
+                                                        context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Acceso satisfactorio',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                .of(context)
+                                                                .secondaryBackground,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primaryText,
+                                                      ),
+
+
+                                                    );
+                                                  }
+                                                  else {
+                                                    ScaffoldMessenger.of(
+                                                        context)
+                                                        .clearSnackBars();
+                                                    ScaffoldMessenger.of(
+                                                        context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Usuario o Contraseña incorrectos',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                .of(context)
+                                                                .secondaryBackground,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .primaryText,
+                                                      ),
+                                                    );
+                                                  }
+                                                }
                                               }
 
-                                              if (_shouldSetState)
-                                                setState(() {});
                                             },
                                             text: 'Iniciar Sesión',
                                             options: FFButtonOptions(
@@ -725,3 +864,13 @@ class _LoginWidgetState extends State<LoginWidget>
     );
   }
 }
+
+Future<bool> isConnected() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+    return true;
+  } else {
+    return false;
+  }
+}
+

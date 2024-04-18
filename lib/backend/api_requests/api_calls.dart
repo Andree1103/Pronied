@@ -103,7 +103,6 @@ class UploaddocCall {
   ));
 }
 
-
 class ApiProniedCall {
   static Future<ApiCallResponse> call({
     dynamic? corcheJson,

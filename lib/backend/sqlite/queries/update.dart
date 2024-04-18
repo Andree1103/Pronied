@@ -1957,4 +1957,54 @@ WHERE IdFichaPreguntaArchivoLocal = ${idFoto};
   return database.rawQuery(query);
 }
 
+Future performCrearUsuario(
+    Database database, {
+      String? usuario,
+      String? contra,
+      String? username,
+      String? nombrecompleto,
+      String? rol,
+      String? ubicacion
+    }) {
+  final query = '''
+INSERT INTO User (
+  Usuario,
+  Contraseña,
+  Username,
+  NombreCompleto,
+  Rol,
+  UbicacionUser
+) VALUES (
+  '${usuario}',
+  '${contra}',
+  '${username}',
+  '${nombrecompleto}',
+  '${rol}',
+  '${ubicacion}'
+)
+''';
+  return database.rawQuery(query);
+}
+
+Future performActualizarUsuario(
+    Database database, {
+      String? usuario,
+      String? contra,
+      String? username,
+      String? nombrecompleto,
+      String? rol,
+      String? ubicacion
+    }) {
+  final query = '''
+UPDATE User
+SET Usuario = '${usuario}',
+    Contraseña = '${contra}',
+    Username = '${username}',
+    NombreCompleto = '${nombrecompleto}',
+    Rol = '${rol}',
+    UbicacionUser = '${ubicacion}'
+WHERE Usuario = '${usuario}';
+''';
+  return database.rawQuery(query);
+}
 

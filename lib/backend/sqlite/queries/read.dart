@@ -1726,3 +1726,25 @@ class ExistPreguntaComentarioARCEForId extends SqliteRow {
   int? get idFicha => data['IdFicha'] as int?;
   int? get idFichaPreguntaArchivoLocal => data['IdFichaPreguntaArchivoLocal'] as int?;
 }
+
+Future<List<ExistBuscarUsuario>>
+performListarBuscarUsuario(
+    Database database, {
+      String? usuario,
+    }) {
+  final query = '''
+SELECT Usuario, Contraseña, Username, NombreCompleto, Rol, UbicacionUser
+FROM User where Usuario = '${usuario}'
+''';
+  return _readQuery(
+      database, query, (d) => ExistBuscarUsuario(d));
+}
+class ExistBuscarUsuario extends SqliteRow {
+  ExistBuscarUsuario(Map<String, dynamic> data) : super(data);
+  String? get usuario => data['Usuario'] as String?;
+  String? get contrase => data['Contraseña'] as String?;
+  String? get username => data['Username'] as String?;
+  String? get nomcomple => data['NombreCompleto'] as String?;
+  String? get rol => data['Rol'] as String?;
+  String? get ubicacion => data['UbicacionUser'] as String?;
+}
