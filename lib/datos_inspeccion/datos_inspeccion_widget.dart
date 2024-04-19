@@ -641,7 +641,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                   onTap: () {
                                                                     FFAppState().nomSeccion = listViewListarPlantillaSeccionRow.descripcion!;
                                                                     FFAppState().IdSecUtil = columnListarSubseccionesRow.idPlantillaSeccion!;
-                                                                    Navigator.of(context).pushNamed('GaleriaPreguntas');
+                                                                    context.pushNamed('GaleriaPreguntas');
                                                                   },
                                                                   child: Container(
                                                                     decoration: BoxDecoration(
