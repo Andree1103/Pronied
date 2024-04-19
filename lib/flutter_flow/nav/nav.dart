@@ -107,6 +107,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => GaleriaArchivosWidget(),
             ),
             FFRoute(
+              name: 'GaleriaPreguntas',
+              path: 'galeriaPreguntas',
+              builder: (context, params) => GaleriaPreguntasWidget(),
+            ),
+            FFRoute(
               name: 'DatosInspeccion',
               path: 'datosInspeccion',
               builder: (context, params) => params.isEmpty

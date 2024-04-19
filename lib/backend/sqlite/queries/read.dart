@@ -528,6 +528,34 @@ class ListarSubseccionesRow extends SqliteRow {
   String? get modoRepeticion => data['ModoRepeticion'] as String?;
 }
 
+Future<List<ListarSubseccionRow>> performListarSubseccion(
+    Database database, {
+      int? idPlantillaSeccion,
+    }) {
+  final query = '''
+SELECT 
+    IdPlantillaSeccion, 
+    IdPlantillaSeccionPadre, 
+    IdPlantilla, 
+    Descripcion, 
+    ModoRepeticion
+FROM PlantillaSeccion 
+WHERE IdPlantillaSeccion = ${idPlantillaSeccion};
+
+''';
+  return _readQuery(database, query, (d) => ListarSubseccionRow(d));
+}
+
+class ListarSubseccionRow extends SqliteRow {
+  ListarSubseccionRow(Map<String, dynamic> data) : super(data);
+
+  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  int? get idPlantillaSeccionPadre => data['IdPlantillaSeccionPadre'] as int?;
+  int? get idPlantilla => data['IdPlantilla'] as int?;
+  String? get descripcion => data['Descripcion'] as String?;
+  String? get modoRepeticion => data['ModoRepeticion'] as String?;
+}
+
 /// END LISTARSUBSECCIONES
 ///
 

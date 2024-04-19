@@ -221,6 +221,14 @@ class SQLiteManager {
         idPlantillaSeccionPadre: idPlantillaSeccionPadre,
       );
 
+  Future<List<ListarSubseccionRow>> listarSubseccion({
+    int? idPlantillaSeccion,
+  }) =>
+      performListarSubseccion(
+        _database,
+        idPlantillaSeccion: idPlantillaSeccion,
+      );
+
   Future<List<ListarAulas>> listarAulas({
     int? idFicha
   }) =>

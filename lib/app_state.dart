@@ -94,6 +94,12 @@ class FFAppState extends ChangeNotifier {
     _IdSincro = _value;
   }
 
+  int _IdSecUtil = 0;
+  int get IdSecUtil => _IdSecUtil;
+  set IdSecUtil(int _value) {
+    _IdSecUtil = _value;
+  }
+
   int _CantA = 0;
   int get CantA => _CantA;
   set CantA(int _value) {
@@ -138,6 +144,12 @@ class FFAppState extends ChangeNotifier {
   String get nrmRepeticion => _nrmRepeticion;
   set nrmRepeticion(String _value) {
     _nrmRepeticion = _value;
+  }
+
+  String _nomSeccion= '';
+  String get nomSeccion => _nomSeccion;
+  set nomSeccion(String _value) {
+    _nomSeccion = _value;
   }
 
   String _username= '';
