@@ -698,7 +698,7 @@ class ListarPreguntasRow extends SqliteRow {
   int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
   int? get idPregunta => data['IdPregunta'] as int?;
   String? get descripcionPregunta => data['DescripcionPregunta'] as String?;
-  int? get flagMandatorio => data['FlagMandatorio'] as int?;
+  String? get flagMandatorio => data['FlagMandatorio'] as String?;
   int? get idPlantilla => data['IdPlantilla'] as int?;
 }
 

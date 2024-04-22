@@ -1,5 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -53,6 +56,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
 
     super.dispose();
   }
+
+  var readon = false;
 
   @override
   Widget build(BuildContext context) {
@@ -593,73 +598,99 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   0.0, 0.0, 0.0, 15.0),
                               child: Container(
                                 width: double.infinity,
-                                child: TextFormField(
-                                  controller: _model.dat1Controller1,
-                                  focusNode: _model.dat1FocusNode1,
-                                  autofocus: true,
-                                  autofillHints: [AutofillHints.birthday],
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Número de documento',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .labelLarge
+                                child: Focus(
+                                  onFocusChange: (hasfocus) async{
+                                    bool hasInternet = await isConnected();
+                                    if (hasInternet){
+                                      print("Estás conectado a Internet.");
+                                      if(_model.dat1Controller1.text != "" && _model.dat1Controller1.text.length > 7){
+                                        final user = await APIRENIEC.call(
+                                            dni: _model.dat1Controller1.text
+                                        );
+                                        if(APIRENIEC.estado(user?.jsonBody) == 1){
+                                          setState(() {
+                                            readon = true;
+                                            _model.dat1Controller2.text = APIRENIEC.nombres(user?.jsonBody)!;
+                                            _model.dat1Controller3.text = APIRENIEC.apellidopaterno(user?.jsonBody)!;
+                                            _model.dat1Controller4.text = APIRENIEC.apellidomaterno(user?.jsonBody)!;
+                                          });
+                                        }
+                                        log("Error en el servicio");
+                                      } else {
+                                        log("Input Vacio");
+                                      }
+                                    } else {
+                                      print("No hay conexión a Internet.");
+                                    }
+                                  },
+                                  child: TextFormField(
+                                    controller: _model.dat1Controller1,
+                                    focusNode: _model.dat1FocusNode1,
+                                    autofocus: true,
+                                    autofillHints: [AutofillHints.birthday],
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Número de documento',
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelLarge
+                                          .override(
+                                        fontFamily: 'Outfit',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                        BorderRadius.circular(12.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
                                         .override(
                                       fontFamily: 'Outfit',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w300,
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius:
-                                      BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius:
-                                      BorderRadius.circular(12.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius:
-                                      BorderRadius.circular(12.0),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius:
-                                      BorderRadius.circular(12.0),
-                                    ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                    keyboardType: TextInputType.datetime,
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+                                    validator: _model.dat1Controller1Validator
+                                        .asValidator(context),
                                   ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                    fontFamily: 'Outfit',
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  keyboardType: TextInputType.datetime,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
-                                  validator: _model.dat1Controller1Validator
-                                      .asValidator(context),
-                                ),
+                                )
                               ),
                             ),
                             Padding(
@@ -670,6 +701,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 child: TextFormField(
                                   controller: _model.dat1Controller2,
                                   focusNode: _model.dat1FocusNode2,
+                                  readOnly: readon,
                                   autofocus: true,
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
@@ -719,8 +751,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       BorderRadius.circular(12.0),
                                     ),
                                     filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                    fillColor: readon? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
@@ -743,6 +774,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 child: TextFormField(
                                   controller: _model.dat1Controller3,
                                   focusNode: _model.dat1FocusNode3,
+                                  readOnly: readon,
                                   autofocus: true,
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
@@ -792,8 +824,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       BorderRadius.circular(12.0),
                                     ),
                                     filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                    fillColor: readon? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
@@ -817,6 +848,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   controller: _model.dat1Controller4,
                                   focusNode: _model.dat1FocusNode4,
                                   autofocus: true,
+                                  readOnly: readon,
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -865,8 +897,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       BorderRadius.circular(12.0),
                                     ),
                                     filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                                    fillColor: readon? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
@@ -1061,8 +1092,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                             .primary,
                                       ),
                                     );
-
-                                    context.pushNamed('Firmas');
+                                    Navigator.of(context);
+                                    //context.pushNamed('Firmas');
                                   },
                                   text: 'Guardar firma',
                                   options: FFButtonOptions(
@@ -1135,5 +1166,13 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
         ),
       ),
     );
+  }
+}
+Future<bool> isConnected() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+    return true;
+  } else {
+    return false;
   }
 }

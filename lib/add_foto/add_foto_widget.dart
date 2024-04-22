@@ -855,8 +855,8 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                               .primary,
                                         ),
                                       );
-
-                                      context.pushNamed('GaleriaFotos');
+                                      Navigator.of(context);
+                                      //context.pushNamed('GaleriaFotos');
                                     },
                                     text: 'Guardar foto',
                                     options: FFButtonOptions(

@@ -846,7 +846,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                       },
                     ),
                   ),
-                  Align(
+                  /*Align(
                     alignment: AlignmentDirectional(-1, -1),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
@@ -888,6 +888,57 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                         ),
                       ),
                     )
+                  ),*/
+                  Align(
+                      alignment: AlignmentDirectional(-1, -1),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFF086D82), // Light background color for contrast
+                              borderRadius: BorderRadius.circular(8), // Rounded corners for the container
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5), // Shadow for 3D effect
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(0, 3), // Position of shadow
+                                ),
+                              ],
+                            ),
+                            margin: EdgeInsets.all(10), // Space around the container
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding inside the container
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns children to start and end of Row
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional.center, // Correctly align text to center
+                                  child:Text(
+                                    valueOrDefault<String>(
+                                      FFAppState().descPregunta,
+                                      'Pregunta',
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600, // Slightly bolder weight
+                                      color: Colors.white, // Text color
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.close, color: Colors.white), // X icon for closing
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Navigate back on tap
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                      )
+
                   ),
                   Flexible(
                     child: Align(

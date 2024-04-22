@@ -44,6 +44,64 @@ class APIDatosCall {
       );
 }
 
+class APIRENIEC {
+  static Future<ApiCallResponse> call({
+    String? dni = '',
+}) async {
+    final ffApiRequestBody = '''
+{
+  "dato": {
+    "tipodocumento": 0,
+    "numerodocumento": "$dni",
+    "appid": "SISMON"
+  }
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'API Reniec',
+      apiUrl: 'https://calidad.ngrok.io/maestroback/api/persona/v1/consulta-tipo-documento',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? mensaje(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.mensaje''',
+  ));
+  static String? tipodocumento(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.tipodocumento''',
+  ));
+  static String? numerodocumento(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.numerodocumento''',
+  ));
+  static String? nombres(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.nombres''',
+  ));
+  static String? apellidopaterno(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.apellidopaterno''',
+  ));
+  static String? apellidomaterno(dynamic response) => castToType<String>(getJsonField(
+    response,
+    r'''$.dato.apellidomaterno''',
+  ));
+  static int? estado(dynamic response) => castToType<int>(getJsonField(
+    response,
+    r'''$.estado''',
+  ));
+}
+
 class UploaddocCall {
   static Future<ApiCallResponse> call({
     FFUploadedFile? archivos,
@@ -52,8 +110,8 @@ class UploaddocCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'uploaddoc',
-      //apiUrl: 'https://calidad.ngrok.io/segedo/api/genimagen/uploaddocumentos',
-      apiUrl: 'https://calidad.pronied.gob.pe/segedo/api/genimagen/uploaddocumentos',
+      apiUrl: 'https://calidad.ngrok.io/segedo/api/genimagen/uploaddocumentos',
+      //apiUrl: 'https://calidad.pronied.gob.pe/segedo/api/genimagen/uploaddocumentos',
       callType: ApiCallType.POST,
       headers: {},
       params: {
@@ -113,8 +171,8 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-          'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
-      //'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
+      //'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
+      'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1225,8 +1283,8 @@ class APIObtenerTOKENCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Obtener TOKEN',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1276,8 +1334,8 @@ class ApiAutorizacionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API AUTORIZACION',
-      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
-      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1398,8 +1456,8 @@ class ApiTokenFinalCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API TOKEN FINAL',
-      apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
-      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      //apiUrl: 'https://calidad.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1440,7 +1498,6 @@ class ApiTokenFinalCall {
     r'''$.estado''',
   ));
 }
-
 
 class ApiPagingParams {
   int nextPageNumber = 0;

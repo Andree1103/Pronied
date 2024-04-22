@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_change_estado_widget.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -112,8 +116,14 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
   List<TextEditingController> tipoDocenteControllers = [];
   List<TextEditingController> numeroAlumnosControllers = [];
 
+  var readon = false;
+  String nombreDi = "";
+  String apellidopaternoDi = "";
+  String apellidomaternoDi = "";
 
-
+  String nombreAl = "";
+  String apellidopaternoAl = "";
+  String apellidomaternoAl = "";
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -2114,7 +2124,33 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   child:
-                                                                  TextFormField(
+                                                                  Focus(
+                                                                    onFocusChange: (hasfocus) async{
+                                                                      bool hasInternet = await isConnected();
+                                                                      if (hasInternet){
+                                                                        print("Estás conectado a Internet.");
+                                                                        if(_model.dat1Controller14.text != "" && _model.dat1Controller14.text.length > 7){
+                                                                          final user = await APIRENIEC.call(
+                                                                              dni: _model.dat1Controller14.text
+                                                                          );
+                                                                          if(APIRENIEC.estado(user?.jsonBody) == 1){
+                                                                            nombreDi = APIRENIEC.nombres(user?.jsonBody)!;
+                                                                            apellidopaternoDi = APIRENIEC.apellidopaterno(user?.jsonBody)!;
+                                                                            apellidomaternoDi = APIRENIEC.apellidomaterno(user?.jsonBody)!;
+                                                                            setState(() {
+                                                                              readon = true;
+                                                                              _model.dat1Controller15.text = "${nombreDi} ${apellidopaternoDi} ${apellidomaternoDi}";
+                                                                            });
+                                                                          }
+                                                                          log("Error en el servicio");
+                                                                        } else {
+                                                                          log("Input Vacio");
+                                                                        }
+                                                                      } else {
+                                                                        print("No hay conexión a Internet.");
+                                                                      }
+                                                                    },
+                                                                    child :TextFormField(
                                                                     controller:
                                                                     _model.dat1Controller14 ??=
                                                                         TextEditingController(
@@ -2220,6 +2256,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         .asValidator(
                                                                         context),
                                                                     inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+                                                                  ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -2617,111 +2654,138 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   child:
-                                                                  TextFormField(
-                                                                    controller:
-                                                                    _model.dat1Controller18 ??=
-                                                                        TextEditingController(
-                                                                          text: datosGeneralesListarFichaPorIdFichaRowList
-                                                                              .first
-                                                                              .dniAlterno != 'null'
-                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.dniAlterno
-                                                                              : '',
+                                                                  Focus(
+                                                                      onFocusChange: (hasfocus) async{
+                                                                        bool hasInternet = await isConnected();
+                                                                        if (hasInternet){
+                                                                          print("Estás conectado a Internet.");
+                                                                          if(_model.dat1Controller18.text != "" && _model.dat1Controller18.text.length > 7){
+                                                                            final user = await APIRENIEC.call(
+                                                                                dni: _model.dat1Controller18.text
+                                                                            );
+                                                                            if(APIRENIEC.estado(user?.jsonBody) == 1){
+                                                                              nombreAl = APIRENIEC.nombres(user?.jsonBody)!;
+                                                                              apellidopaternoAl = APIRENIEC.apellidopaterno(user?.jsonBody)!;
+                                                                              apellidomaternoAl = APIRENIEC.apellidomaterno(user?.jsonBody)!;
+                                                                              setState(() {
+                                                                                readon = true;
+                                                                                _model.dat1Controller19.text = "${nombreAl} ${apellidopaternoAl} ${apellidomaternoAl}";
+                                                                              });
+                                                                            }
+                                                                            log("Error en el servicio");
+                                                                          } else {
+                                                                            log("Input Vacio");
+                                                                          }
+                                                                        } else {
+                                                                          print("No hay conexión a Internet.");
+                                                                        }
+                                                                      },
+                                                                    child : TextFormField(
+                                                                        controller:
+                                                                        _model.dat1Controller18 ??=
+                                                                            TextEditingController(
+                                                                              text: datosGeneralesListarFichaPorIdFichaRowList
+                                                                                  .first
+                                                                                  .dniAlterno != 'null'
+                                                                                  ? datosGeneralesListarFichaPorIdFichaRowList.first.dniAlterno
+                                                                                  : '',
+                                                                            ),
+                                                                        focusNode:
+                                                                        _model
+                                                                            .dat1FocusNode18,
+                                                                        autofocus:
+                                                                        true,
+                                                                        readOnly: edit,
+                                                                        autofillHints: [
+                                                                          AutofillHints
+                                                                              .birthday
+                                                                        ],
+                                                                        obscureText:
+                                                                        false,
+                                                                        decoration:
+                                                                        InputDecoration(
+                                                                          labelText:
+                                                                          'DNI',
+                                                                          labelStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                              .labelLarge
+                                                                              .override(
+                                                                            fontFamily:
+                                                                            'Outfit',
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).secondaryText,
+                                                                          ),
+                                                                          enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                            borderSide:
+                                                                            BorderSide(
+                                                                              color:
+                                                                              Color(0xFF2C313E),
+                                                                              width:
+                                                                              0.5,
+                                                                            ),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(12),
+                                                                          ),
+                                                                          focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                            borderSide:
+                                                                            BorderSide(
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                              width:
+                                                                              0.5,
+                                                                            ),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(12),
+                                                                          ),
+                                                                          errorBorder:
+                                                                          OutlineInputBorder(
+                                                                            borderSide:
+                                                                            BorderSide(
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              width:
+                                                                              0.5,
+                                                                            ),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(12),
+                                                                          ),
+                                                                          focusedErrorBorder:
+                                                                          OutlineInputBorder(
+                                                                            borderSide:
+                                                                            BorderSide(
+                                                                              color:
+                                                                              FlutterFlowTheme.of(context).alternate,
+                                                                              width:
+                                                                              0.5,
+                                                                            ),
+                                                                            borderRadius:
+                                                                            BorderRadius.circular(12),
+                                                                          ),
+                                                                          filled:
+                                                                          true,
+                                                                          fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                         ),
-                                                                    focusNode:
-                                                                    _model
-                                                                        .dat1FocusNode18,
-                                                                    autofocus:
-                                                                    true,
-                                                                    readOnly: edit,
-                                                                    autofillHints: [
-                                                                      AutofillHints
-                                                                          .birthday
-                                                                    ],
-                                                                    obscureText:
-                                                                    false,
-                                                                    decoration:
-                                                                    InputDecoration(
-                                                                      labelText:
-                                                                      'DNI',
-                                                                      labelStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                          .labelLarge
-                                                                          .override(
-                                                                        fontFamily:
-                                                                        'Outfit',
-                                                                        color:
-                                                                        FlutterFlowTheme.of(context).secondaryText,
-                                                                      ),
-                                                                      enabledBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          Color(0xFF2C313E),
-                                                                          width:
-                                                                          0.5,
+                                                                        style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                            .bodyLarge
+                                                                            .override(
+                                                                          fontFamily:
+                                                                          'Outfit',
+                                                                          fontSize:
+                                                                          13,
+                                                                          fontWeight:
+                                                                          FontWeight.w300,
                                                                         ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).primary,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      errorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedErrorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      filled:
-                                                                      true,
-                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                      fontFamily:
-                                                                      'Outfit',
-                                                                      fontSize:
-                                                                      13,
-                                                                      fontWeight:
-                                                                      FontWeight.w300,
-                                                                    ),
-                                                                    minLines: null,
-                                                                    keyboardType: TextInputType.number,
-                                                                    validator: _model
-                                                                        .dat1Controller18Validator
-                                                                        .asValidator(
-                                                                        context),
-                                                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+                                                                        minLines: null,
+                                                                        keyboardType: TextInputType.number,
+                                                                        validator: _model
+                                                                            .dat1Controller18Validator
+                                                                            .asValidator(
+                                                                            context),
+                                                                        inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+                                                                      )
                                                                   ),
                                                                 ),
                                                               ),
@@ -4251,5 +4315,12 @@ void actualizarFichaMod({
     programaModificacionAuditoria: FFAppState().programacreacion,
   );
 }
-
+Future<bool> isConnected() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
