@@ -629,7 +629,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                             color: FlutterFlowTheme.of(context).secondaryBackground,
                                                           ),
                                                           child: Container(
-                                                            height: 400,
+                                                            height: MediaQuery.of(context).size.width * 1,
                                                             child: Column(
                                                               children: [
                                                                 SingleChildScrollView(
@@ -694,6 +694,8 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
 
                                                                                     Future<int> numberColor = buscarcomentario(pregs, secs, nums, fichac);
 
+                                                                                    var mostarred = columnListarPreguntasRow.flagMandatorio == "1" ? true : false;
+
 
                                                                                     return Padding(
                                                                                       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -717,25 +719,43 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                                                                   children: [
                                                                                                     Expanded(
+                                                                                                      flex: 7,
                                                                                                       child: Container(
                                                                                                         width: MediaQuery.sizeOf(context).width * 0.65,
                                                                                                         decoration: BoxDecoration(
                                                                                                           color: FlutterFlowTheme.of(context)
                                                                                                               .secondaryBackground,
                                                                                                         ),
-                                                                                                        child: Text(
-                                                                                                          valueOrDefault<String>(
-                                                                                                            columnListarPreguntasRow.descripcionPregunta,
-                                                                                                            'Pregunta',
-                                                                                                          ),
-                                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Outfit',
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
+                                                                                                        child: Row(
+                                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                                          children: [
+                                                                                                            Expanded(
+                                                                                                                child: Text(
+                                                                                                                  valueOrDefault<String>(
+                                                                                                                    columnListarPreguntasRow.descripcionPregunta,
+                                                                                                                    'Pregunta',
+                                                                                                                  ),
+                                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                    fontFamily: 'Outfit',
+                                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                                  ),
+                                                                                                                )
+                                                                                                            ),
+                                                                                                            if (mostarred == true)
+                                                                                                              Text(
+                                                                                                                "(*)",
+                                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                    fontFamily: 'Outfit',
+                                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                                    color: Colors.red
+                                                                                                                ),
+                                                                                                              )
+                                                                                                          ],
                                                                                                         ),
                                                                                                       ),
                                                                                                     ),
                                                                                                     Expanded(
+                                                                                                        flex: 3,
                                                                                                         child: Container(
                                                                                                             width: MediaQuery.sizeOf(context).width * 0.20,
                                                                                                             decoration: BoxDecoration(

@@ -1092,8 +1092,9 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                             .primary,
                                       ),
                                     );
-                                    Navigator.of(context);
+                                    //Navigator.of(context);
                                     //context.pushNamed('Firmas');
+                                    Navigator.pop(context);
                                   },
                                   text: 'Guardar firma',
                                   options: FFButtonOptions(
