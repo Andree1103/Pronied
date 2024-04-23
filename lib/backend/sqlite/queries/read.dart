@@ -758,6 +758,69 @@ class ListarOpcionesRow extends SqliteRow {
 
 /// END LISTAROPCIONES
 ///
+
+
+Future<List<ListarPreguntasObligatoriasRow>> performListarObligatorias(
+    Database database, {
+      int? idFicha,
+      int? numero,
+      String? modorepeticion
+    }) {
+  final query = '''
+SELECT 
+		po.IdPlantillaOpcion, 
+		po.IdPlantillaSeccion, 
+		po.IdPlantilla, 
+		po.IdPregunta, 
+		po.Descripcion, 
+		po.ClasificacionOpcion,
+		po.IdTipoOpcion,
+		po.tipoOpcion,
+		po.matIcon,
+		fpr.respuesta as respuesta,
+	   pp.FlagMandatorio as mandatorio,
+	   ps.ModoRepeticion as modorepeticion
+	FROM PlantillaOpcion po
+	LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
+		AND po.IdPregunta = fpr.IdPregunta
+		AND po.IdPlantillaSeccion = fpr.IdPlantillaSeccion
+		AND fpr.IdFicha =  ${idFicha}
+		AND fpr.numerorepeticion =${numero}
+	LEFT JOIN plantillapregunta pp ON  po.IdPregunta = pp.IdPregunta and po.IdPlantillaSeccion = pp.IdPlantillaSeccion and po.IdPlantilla = pp.IdPlantilla
+	LEFT JOIN PlantillaSeccion ps ON PP.IdPlantillaSeccion = ps.IdPlantillaSeccion
+	WHERE modorepeticion = '${modorepeticion}'
+	and pp.FlagMandatorio='1'
+	and fpr.respuesta is null 
+    
+''';
+  return _readQuery(database, query, (d) => ListarPreguntasObligatoriasRow(d));
+}
+
+class ListarPreguntasObligatoriasRow extends SqliteRow {
+  ListarPreguntasObligatoriasRow(Map<String, dynamic> data) : super(data);
+
+  int? get idPlantillaOpcion => data['IdPlantillaOpcion'] as int?;
+  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  int? get idPlantilla => data['IdPlantilla'] as int?;
+  int? get idPregunta => data['IdPregunta'] as int?;
+  String? get descripcion => data['Descripcion'] as String?;
+  String? get clasificacionOpcion => data['ClasificacionOpcion'] as String?;
+  int? get idTipoOpcion => data['IdTipoOpcion'] as int?;
+  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
+  String? get tipoOpcion => data['tipoOpcion'] as String?;
+  String? get matIcon => data['matIcon'] as String?;
+  String? get respuesta => data['respuesta'] as String?;
+  String? get mandatorio => data['mandatorio'] as String?;
+  String? get modorepeticion => data['modorepeticion'] as String?;
+}
+
+/// END LISTAROPCIONES
+
+
+
+
+
+
 /// BEGIN LISTARFICHASSINUPLOAD =1
 
 Future<List<ListarFichasFirmas>> performListarFichaFirmas(Database database) {

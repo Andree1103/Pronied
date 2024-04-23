@@ -323,6 +323,18 @@ class SQLiteManager {
         numero: numero
       );
 
+  Future<List<ListarPreguntasObligatoriasRow>> listarPreguntasObligatorias({
+    int? idFicha,
+    int? numero,
+    String? modorepeticion
+  }) =>
+      performListarObligatorias(
+          _database,
+          idFicha: idFicha,
+          numero: numero,
+          modorepeticion: modorepeticion
+      );
+
   /// END READ QUERY CALLS
 
   /// START UPDATE QUERY CALLS

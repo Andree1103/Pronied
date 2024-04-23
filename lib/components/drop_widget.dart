@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/api_requests/api_calls.dart';
@@ -741,67 +742,7 @@ class _DropWidgetState extends State<DropWidget> {
                     _model.apiResponseDatos = await ApiProniedCall.call(
                       corcheJson: jsonn,
                     );
-                    if ((_model.apiResponseDatos?.succeeded ?? true)) {
-
-                      var inspecciones = ApiProniedCall.listName(_model.apiResponseDatos?.jsonBody);
-                      if (inspecciones != null) {
-                        for (var i = 0; i < inspecciones.length; i++) {
-                          var existe = await SQLiteManager.instance.VerificarSiExisteInspeccion(
-                            idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                          );
-                          if (existe.length > 0) {
-                            await SQLiteManager.instance.actualizarInspeccionesApi(
-                              dniInspector: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              nombreEvento: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
-                              idPlantilla: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),
-                              codigoLocalColegio: ApiProniedCall.codigoLocalIns(_model.apiResponseDatos?.jsonBody, i),
-                              nombreLocalColegio: ApiProniedCall.nombreLocalIns(_model.apiResponseDatos?.jsonBody, i),
-                              departamentoColegio: ApiProniedCall.departamentoInst(_model.apiResponseDatos?.jsonBody, i),
-                              provinciaColegio: ApiProniedCall.provinciaIns(_model.apiResponseDatos?.jsonBody, i),
-                              distritoColegio: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
-                              idEstado: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
-                              estado: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
-                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-
-                            );
-                            await SQLiteManager.instance.inspeccion0(
-                                idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i)
-                            );
-                          } else {
-                            await SQLiteManager.instance.cargarData(
-                              idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              dniIns: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              nombreIns: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
-                              idFichaIns: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
-                              idPlantillaIns: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),
-                              codigolocalIns: ApiProniedCall.codigoLocalIns(_model.apiResponseDatos?.jsonBody, i),
-                              nombreLocalIns: ApiProniedCall.nombreLocalIns(_model.apiResponseDatos?.jsonBody, i),
-                              departamentoIns: ApiProniedCall.departamentoInst(_model.apiResponseDatos?.jsonBody, i),
-                              provinciaIns: ApiProniedCall.provinciaIns(_model.apiResponseDatos?.jsonBody, i),
-                              distritoIns: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
-                              idEstadoIns: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
-                              estadoIns: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
-                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
-                            );
-                          }
-                        }
-                      }
+                    if ((_model.apiResponseDatos?.succeeded ?? true && ApiProniedCall.idEstadoSincronizacion(_model.apiResponseDatos?.jsonBody) == Sincronizacion.COMPLETO)) {
 
                       var fichas = ApiProniedCall.fichas(_model.apiResponseDatos?.jsonBody);
                       if(fichas != null){
@@ -1436,6 +1377,66 @@ class _DropWidgetState extends State<DropWidget> {
                           }
                         }
                       }
+
+                      var inspecciones = ApiProniedCall.listName(_model.apiResponseDatos?.jsonBody);
+                      if (inspecciones != null) {
+                        for (var i = 0; i < inspecciones.length; i++) {
+                          var existe = await SQLiteManager.instance.VerificarSiExisteInspeccion(
+                            idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                          );
+                          if (existe.length > 0) {
+                            await SQLiteManager.instance.actualizarInspeccionesApi(
+                              dniInspector: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              nombreEvento: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
+                              idPlantilla: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),
+                              codigoLocalColegio: ApiProniedCall.codigoLocalIns(_model.apiResponseDatos?.jsonBody, i),
+                              nombreLocalColegio: ApiProniedCall.nombreLocalIns(_model.apiResponseDatos?.jsonBody, i),
+                              departamentoColegio: ApiProniedCall.departamentoInst(_model.apiResponseDatos?.jsonBody, i),
+                              provinciaColegio: ApiProniedCall.provinciaIns(_model.apiResponseDatos?.jsonBody, i),
+                              distritoColegio: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
+                              idEstado: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
+                              estado: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+
+                            );
+                            await SQLiteManager.instance.inspeccion0(
+                                idFicha: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i)
+                            );
+                          } else {
+                            await SQLiteManager.instance.cargarData(
+                              idInspeccion: ApiProniedCall.idInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              dniIns: ApiProniedCall.dniInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              nombreIns: ApiProniedCall.nombreInspeccion(_model.apiResponseDatos?.jsonBody, i),
+                              idFichaIns: ApiProniedCall.idFichaIns(_model.apiResponseDatos?.jsonBody, i),
+                              idPlantillaIns: ApiProniedCall.idPlantillaId(_model.apiResponseDatos?.jsonBody, i),
+                              codigolocalIns: ApiProniedCall.codigoLocalIns(_model.apiResponseDatos?.jsonBody, i),
+                              nombreLocalIns: ApiProniedCall.nombreLocalIns(_model.apiResponseDatos?.jsonBody, i),
+                              departamentoIns: ApiProniedCall.departamentoInst(_model.apiResponseDatos?.jsonBody, i),
+                              provinciaIns: ApiProniedCall.provinciaIns(_model.apiResponseDatos?.jsonBody, i),
+                              distritoIns: ApiProniedCall.destritoIns(_model.apiResponseDatos?.jsonBody, i),
+                              idEstadoIns: ApiProniedCall.idEstadoIns(_model.apiResponseDatos?.jsonBody, i),
+                              estadoIns: ApiProniedCall.estadoIns(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              usuarioModificacionAuditoria: ApiProniedCall.usuarioModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              fechaCreacionAuditoria: ApiProniedCall.fechaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              fechaModificacionAuditoria: ApiProniedCall.fechaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              equipoCreacionAuditoria: ApiProniedCall.equipoCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              equipoModificacionAuditoria: ApiProniedCall.equipoModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              programaCreacionAuditoria: ApiProniedCall.programaCreacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                              programaModificacionAuditoria: ApiProniedCall.programaModificacionAuditoriains(_model.apiResponseDatos?.jsonBody, i),
+                            );
+                          }
+                        }
+                      }
                       ///CAMBIANDO ESTADO 3
 
                       List<dynamic> resultado = [];
@@ -1512,7 +1513,7 @@ class _DropWidgetState extends State<DropWidget> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Por favor Conectese a un red',
+                          'Se requiere conexión a Internet. Por favor, verifique.',
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,

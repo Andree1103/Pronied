@@ -1781,11 +1781,11 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
 
                                                                                                         case 6:
                                                                                                           TextEditingController _dateTimeController = TextEditingController();
-                                                                                                          final respuesta = columnListarOpcionesRow.respuesta ?? ""; // Obtener la respuesta o cadena vacía
+                                                                                                          final respuesta = columnListarOpcionesRow.respuesta ?? ""; //
 
                                                                                                           // Variable para almacenar la fecha y hora seleccionada
                                                                                                           DateTime selectedDateTime = respuesta.isNotEmpty
-                                                                                                              ? DateTime.parse(respuesta) // Analizar la respuesta existente a DateTime
+                                                                                                              ? fecharpta(respuesta) // Analizar la respuesta existente a DateTime
                                                                                                               : DateTime.now(); // Usar la hora actual como predeterminada
 
                                                                                                           Future<void> _selectDateTime(BuildContext context) async {
@@ -1803,7 +1803,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                               if (pickedTime != null) {
                                                                                                                 setState(() {
                                                                                                                   selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
-                                                                                                                  _dateTimeController.text = DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime);
+                                                                                                                  _dateTimeController.text = '${picked.day}/${picked.month}/${picked.year} ${pickedTime.hour}:${pickedTime.minute}';
                                                                                                                   print(_dateTimeController.text);
                                                                                                                   //print(_dateTimeController.text);
                                                                                                                   if(respuesta == ""){
@@ -1895,7 +1895,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                           hintText: 'Seleccionar fecha y hora',
                                                                                                                                           border: OutlineInputBorder(),
                                                                                                                                         ),
-                                                                                                                                        keyboardType: TextInputType.text,
+                                                                                                                                        keyboardType: TextInputType.datetime,
                                                                                                                                       ),
                                                                                                                                     ),
                                                                                                                                     onTap: () {
@@ -3171,6 +3171,26 @@ String generarCadenaFormatoSN(int posicionSeleccionada, List<String> opciones) {
   List<String> listaSN = List.filled(opciones.length, 'N');
   listaSN[posicionSeleccionada] = 'S';
   return listaSN.join(';');
+}
+
+DateTime fecharpta (String respuesta){
+  List<String> parts = respuesta.split(' ');
+  String fechaPart = parts[0];
+  String horaPart = parts.length > 1 ? parts[1] : "00:00";
+  // Dividir la fecha en día, mes y año
+  List<String> dateParts = fechaPart.split('/');
+  int day = int.parse(dateParts[0]);
+  int month = int.parse(dateParts[1]);
+  int year = int.parse(dateParts[2]);
+
+  // Dividir la hora en horas y minutos
+  List<String> timeParts = horaPart.split(':');
+  int hour = int.parse(timeParts[0]);
+  int minute = int.parse(timeParts[1]);
+
+  // Crear el objeto DateTime
+  DateTime fechahoy = DateTime(year, month, day, hour, minute);
+  return fechahoy;
 }
 Future<int> buscarcomentario(int pregunta, int seccion, String num, int ficha) async {
   var cnt = await SQLiteManager.instance.VerificarSiExistePreguntaComentarioNotNUll(

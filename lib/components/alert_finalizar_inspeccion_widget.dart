@@ -38,6 +38,9 @@ class _AlertFinalizarInspeccionWidgetState
     super.dispose();
   }
 
+  int CantObligatoria = 0;
+  int retornoConsulta = 0;
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -83,36 +86,71 @@ class _AlertFinalizarInspeccionWidgetState
               padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  await SQLiteManager.instance.actualizarFinalizarInspeccion(
-                    idInspeccion: FFAppState().idInspeccion,
-                    programaModificacionAuditoria:  FFAppState().programacreacion,
-                    equipoModificacionAuditoria: FFAppState().cummovil,
-                    fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                    usuarioModificacionAuditoria: FFAppState().username,
-                  );
-                  setState(() {
-                    FFAppState().estadoInspeccion = 'REALIZADA';
-                    FFAppState().idestadoInspeccion = 3;
-                    SQLiteManager.instance.inspeccion1(
-                      idFicha: FFAppState().IdFicha,
-                    );
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Inspección finalizada correctamente',
-                        style: TextStyle(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                        ),
-                      ),
-                      duration: const Duration(milliseconds: 4000),
-                      backgroundColor: FlutterFlowTheme.of(context).primary,
-                    ),
-                  );
-                  Navigator.pop(context);
+                  final cantidadP = FFAppState().CantP;
+                  final cantidadS = FFAppState().CantS;
+                  final cantidadA = FFAppState().CantA;
+                  for(int i = 0; i<cantidadP; i++){
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'P');
+                    CantObligatoria += retornoConsulta;
+                  }
+                  for(int i = 0; i<cantidadS; i++){
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'S');
+                    CantObligatoria += retornoConsulta;
+                  }
+                  for(int i = 0; i<cantidadA; i++){
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'A');
+                    CantObligatoria += retornoConsulta;
+                  }
+                  retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, 1, 'X');
+                  CantObligatoria += retornoConsulta;
 
-                  context.pushNamed('DatosInspeccion');
+                  if(retornoConsulta > 0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Existen preguntas obligatorias',
+                          style: TextStyle(
+                            color:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
+                        ),
+                        duration: const Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                      ),
+                    );
+                    Navigator.pop(context);
+                  } else {
+                    await SQLiteManager.instance.actualizarFinalizarInspeccion(
+                      idInspeccion: FFAppState().idInspeccion,
+                      programaModificacionAuditoria:  FFAppState().programacreacion,
+                      equipoModificacionAuditoria: FFAppState().cummovil,
+                      fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                      usuarioModificacionAuditoria: FFAppState().username,
+                    );
+                    setState(() {
+                      FFAppState().estadoInspeccion = 'REALIZADA';
+                      FFAppState().idestadoInspeccion = 3;
+                      SQLiteManager.instance.inspeccion1(
+                        idFicha: FFAppState().IdFicha,
+                      );
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Inspección finalizada correctamente',
+                          style: TextStyle(
+                            color:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                          ),
+                        ),
+                        duration: const Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).primary,
+                      ),
+                    );
+                    Navigator.pop(context);
+
+                    context.pushNamed('DatosInspeccion');
+                  }
                 },
                 text: 'Aceptar',
                 options: FFButtonOptions(
@@ -171,4 +209,13 @@ class _AlertFinalizarInspeccionWidgetState
       ),
     );
   }
+}
+
+Future<int> preguntasrestantes  ( int idficha, int numero, String repeticion) async {
+  final preguntas = await SQLiteManager.instance.listarPreguntasObligatorias(
+    modorepeticion: repeticion,
+    idFicha: idficha,
+    numero: numero
+  );
+  return preguntas.length;
 }
