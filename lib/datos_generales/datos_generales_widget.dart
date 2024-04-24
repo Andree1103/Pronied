@@ -108,6 +108,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
     super.dispose();
   }
 
+
   var edit = FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion== 'EN REGISTRO' ? false : true;
   List<FichaModularData> fichasModularesData = [];
 
@@ -150,6 +151,18 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
           );
         }
         final datosGeneralesListarFichaPorIdFichaRowList = snapshot.data!;
+
+        void _validateEmail(String email) {
+          if (!RegExp(r'^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email)) {
+            // Mostrar mensaje de error
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Por favor ingrese un correo válido.'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        }
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -1440,6 +1453,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     tipoDocenteControllers.add(tipoDocenteController);
                                                                     numeroAlumnosControllers.add(numeroAlumnosController);
 
+
                                                                     return Align(
                                                                       alignment: AlignmentDirectional(-1, 0),
                                                                       child: Container(
@@ -2392,106 +2406,113 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   child:
-                                                                  TextFormField(
-                                                                    controller: _model.dat1Controller16 ??= TextEditingController(
-                                                                      text: datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector != 'null'
-                                                                          ? datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector
-                                                                          : '',
-                                                                    ),
-                                                                    focusNode:
-                                                                    _model
-                                                                        .dat1FocusNode16,
-                                                                    autofocus:
-                                                                    true,
-                                                                    readOnly: edit,
-                                                                    autofillHints: [
-                                                                      AutofillHints
-                                                                          .birthday
-                                                                    ],
-                                                                    obscureText:
-                                                                    false,
-                                                                    decoration:
-                                                                    InputDecoration(
-                                                                      labelText:
-                                                                      'Correo',
-                                                                      labelStyle: FlutterFlowTheme.of(
+                                                                  Focus(
+                                                                    onFocusChange:(hasFocus){
+                                                                      if (!hasFocus) { // Cuando el widget pierde el foco
+                                                                        _validateEmail(_model.dat1Controller16.text);
+                                                                      }
+                                                                    },
+                                                                    child: TextFormField(
+                                                                      controller: _model.dat1Controller16 ??= TextEditingController(
+                                                                        text: datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector != 'null'
+                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.correoDirector
+                                                                            : '',
+                                                                      ),
+                                                                      focusNode:
+                                                                      _model
+                                                                          .dat1FocusNode16,
+                                                                      autofocus:
+                                                                      true,
+                                                                      readOnly: edit,
+                                                                      autofillHints: [
+                                                                        AutofillHints
+                                                                            .birthday
+                                                                      ],
+                                                                      obscureText:
+                                                                      false,
+                                                                      decoration:
+                                                                      InputDecoration(
+                                                                        labelText:
+                                                                        'Correo',
+                                                                        labelStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                            .labelLarge
+                                                                            .override(
+                                                                          fontFamily:
+                                                                          'Outfit',
+                                                                          color:
+                                                                          FlutterFlowTheme.of(context).secondaryText,
+                                                                        ),
+                                                                        enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            Color(0xFF2C313E),
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        focusedBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).primary,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        errorBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        focusedErrorBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        filled:
+                                                                        true,
+                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
+                                                                      ),
+                                                                      style: FlutterFlowTheme.of(
                                                                           context)
-                                                                          .labelLarge
+                                                                          .bodyLarge
                                                                           .override(
                                                                         fontFamily:
                                                                         'Outfit',
-                                                                        color:
-                                                                        FlutterFlowTheme.of(context).secondaryText,
+                                                                        fontSize:
+                                                                        13,
+                                                                        fontWeight:
+                                                                        FontWeight.w300,
                                                                       ),
-                                                                      enabledBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          Color(0xFF2C313E),
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).primary,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      errorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedErrorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      filled:
-                                                                      true,
-                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                      fontFamily:
-                                                                      'Outfit',
-                                                                      fontSize:
-                                                                      13,
-                                                                      fontWeight:
-                                                                      FontWeight.w300,
-                                                                    ),
-                                                                    validator: _model
-                                                                        .dat1Controller16Validator
-                                                                        .asValidator(
-                                                                        context),
+                                                                      validator: _model
+                                                                          .dat1Controller16Validator
+                                                                          .asValidator(
+                                                                          context),
                                                                       inputFormatters: [LengthLimitingTextInputFormatter(100)],
-                                                                  ),
+                                                                    ),
+                                                                  )
                                                                 ),
                                                               ),
                                                               Padding(
@@ -2921,111 +2942,118 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   child:
-                                                                  TextFormField(
-                                                                    controller:
-                                                                    _model.dat1Controller20 ??=
-                                                                        TextEditingController(
-                                                                          text: datosGeneralesListarFichaPorIdFichaRowList
-                                                                              .first
-                                                                              .correoAlterno != 'null'
-                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.correoAlterno
-                                                                              : '',
+                                                                  Focus(
+                                                                    onFocusChange: (hasFocus) {
+                                                                      if (!hasFocus) { // Cuando el widget pierde el foco
+                                                                        _validateEmail(_model.dat1Controller20.text);
+                                                                      }
+                                                                    },
+                                                                    child: TextFormField(
+                                                                      controller:
+                                                                      _model.dat1Controller20 ??=
+                                                                          TextEditingController(
+                                                                            text: datosGeneralesListarFichaPorIdFichaRowList
+                                                                                .first
+                                                                                .correoAlterno != 'null'
+                                                                                ? datosGeneralesListarFichaPorIdFichaRowList.first.correoAlterno
+                                                                                : '',
+                                                                          ),
+                                                                      focusNode:
+                                                                      _model
+                                                                          .dat1FocusNode20,
+                                                                      autofocus:
+                                                                      true,
+                                                                      readOnly: edit,
+                                                                      autofillHints: [
+                                                                        AutofillHints
+                                                                            .birthday
+                                                                      ],
+                                                                      obscureText:
+                                                                      false,
+                                                                      decoration:
+                                                                      InputDecoration(
+                                                                        labelText:
+                                                                        'Correo',
+                                                                        labelStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                            .labelLarge
+                                                                            .override(
+                                                                          fontFamily:
+                                                                          'Outfit',
+                                                                          color:
+                                                                          FlutterFlowTheme.of(context).secondaryText,
                                                                         ),
-                                                                    focusNode:
-                                                                    _model
-                                                                        .dat1FocusNode20,
-                                                                    autofocus:
-                                                                    true,
-                                                                    readOnly: edit,
-                                                                    autofillHints: [
-                                                                      AutofillHints
-                                                                          .birthday
-                                                                    ],
-                                                                    obscureText:
-                                                                    false,
-                                                                    decoration:
-                                                                    InputDecoration(
-                                                                      labelText:
-                                                                      'Correo',
-                                                                      labelStyle: FlutterFlowTheme.of(
+                                                                        enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            Color(0xFF2C313E),
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        focusedBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).primary,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        errorBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        focusedErrorBorder:
+                                                                        OutlineInputBorder(
+                                                                          borderSide:
+                                                                          BorderSide(
+                                                                            color:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                            width:
+                                                                            0.5,
+                                                                          ),
+                                                                          borderRadius:
+                                                                          BorderRadius.circular(12),
+                                                                        ),
+                                                                        filled:
+                                                                        true,
+                                                                        fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
+                                                                      ),
+                                                                      style: FlutterFlowTheme.of(
                                                                           context)
-                                                                          .labelLarge
+                                                                          .bodyLarge
                                                                           .override(
                                                                         fontFamily:
                                                                         'Outfit',
-                                                                        color:
-                                                                        FlutterFlowTheme.of(context).secondaryText,
+                                                                        fontSize:
+                                                                        13,
+                                                                        fontWeight:
+                                                                        FontWeight.w300,
                                                                       ),
-                                                                      enabledBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          Color(0xFF2C313E),
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).primary,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      errorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      focusedErrorBorder:
-                                                                      OutlineInputBorder(
-                                                                        borderSide:
-                                                                        BorderSide(
-                                                                          color:
-                                                                          FlutterFlowTheme.of(context).alternate,
-                                                                          width:
-                                                                          0.5,
-                                                                        ),
-                                                                        borderRadius:
-                                                                        BorderRadius.circular(12),
-                                                                      ),
-                                                                      filled:
-                                                                      true,
-                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
+                                                                      validator: _model
+                                                                          .dat1Controller20Validator
+                                                                          .asValidator(
+                                                                          context),
+                                                                      inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                     ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                      fontFamily:
-                                                                      'Outfit',
-                                                                      fontSize:
-                                                                      13,
-                                                                      fontWeight:
-                                                                      FontWeight.w300,
-                                                                    ),
-                                                                    validator: _model
-                                                                        .dat1Controller20Validator
-                                                                        .asValidator(
-                                                                        context),
-                                                                    inputFormatters: [LengthLimitingTextInputFormatter(100)],
-                                                                  ),
-                                                                ),
+                                                                  )
+                                                                )
                                                               ),
                                                               Padding(
                                                                 padding:
@@ -3433,117 +3461,125 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                 width: double
                                                                     .infinity,
                                                                 child:
-                                                                TextFormField(
-                                                                  controller: _model
-                                                                      .dat1Controller24 ??=
-                                                                      TextEditingController(
-                                                                        text: datosGeneralesListarFichaPorIdFichaRowList
-                                                                            .first
-                                                                            .correoInspector != 'null'
-                                                                            ? datosGeneralesListarFichaPorIdFichaRowList.first.correoInspector
-                                                                            : '',
+                                                                Focus(
+                                                                  onFocusChange: (hasFocus) {
+                                                                    if (!hasFocus) { // Cuando el widget pierde el foco
+                                                                      _validateEmail(_model
+                                                                          .dat1Controller24.text);
+                                                                    }
+                                                                  },
+                                                                  child: TextFormField(
+                                                                    controller: _model
+                                                                        .dat1Controller24 ??=
+                                                                        TextEditingController(
+                                                                          text: datosGeneralesListarFichaPorIdFichaRowList
+                                                                              .first
+                                                                              .correoInspector != 'null'
+                                                                              ? datosGeneralesListarFichaPorIdFichaRowList.first.correoInspector
+                                                                              : '',
+                                                                        ),
+                                                                    focusNode: _model
+                                                                        .dat1FocusNode24,
+                                                                    autofocus:
+                                                                    true,
+                                                                    readOnly: edit,
+                                                                    autofillHints: [
+                                                                      AutofillHints
+                                                                          .birthday
+                                                                    ],
+                                                                    obscureText:
+                                                                    false,
+                                                                    decoration:
+                                                                    InputDecoration(
+                                                                      labelText:
+                                                                      'Correo',
+                                                                      labelStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                          .labelLarge
+                                                                          .override(
+                                                                        fontFamily:
+                                                                        'Outfit',
+                                                                        color:
+                                                                        FlutterFlowTheme.of(context).secondaryText,
+                                                                        fontSize:
+                                                                        14,
+                                                                        fontWeight:
+                                                                        FontWeight.w500,
                                                                       ),
-                                                                  focusNode: _model
-                                                                      .dat1FocusNode24,
-                                                                  autofocus:
-                                                                  true,
-                                                                  readOnly: edit,
-                                                                  autofillHints: [
-                                                                    AutofillHints
-                                                                        .birthday
-                                                                  ],
-                                                                  obscureText:
-                                                                  false,
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    labelText:
-                                                                    'Correo',
-                                                                    labelStyle: FlutterFlowTheme.of(
+                                                                      enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                        borderSide:
+                                                                        BorderSide(
+                                                                          color: Color(
+                                                                              0xFF2C313E),
+                                                                          width:
+                                                                          0.5,
+                                                                        ),
+                                                                        borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
+                                                                      ),
+                                                                      focusedBorder:
+                                                                      OutlineInputBorder(
+                                                                        borderSide:
+                                                                        BorderSide(
+                                                                          color: FlutterFlowTheme.of(context)
+                                                                              .primary,
+                                                                          width:
+                                                                          0.5,
+                                                                        ),
+                                                                        borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
+                                                                      ),
+                                                                      errorBorder:
+                                                                      OutlineInputBorder(
+                                                                        borderSide:
+                                                                        BorderSide(
+                                                                          color: FlutterFlowTheme.of(context)
+                                                                              .alternate,
+                                                                          width:
+                                                                          0.5,
+                                                                        ),
+                                                                        borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
+                                                                      ),
+                                                                      focusedErrorBorder:
+                                                                      OutlineInputBorder(
+                                                                        borderSide:
+                                                                        BorderSide(
+                                                                          color: FlutterFlowTheme.of(context)
+                                                                              .alternate,
+                                                                          width:
+                                                                          0.5,
+                                                                        ),
+                                                                        borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12),
+                                                                      ),
+                                                                      filled:
+                                                                      true,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
                                                                         context)
-                                                                        .labelLarge
+                                                                        .bodyLarge
                                                                         .override(
                                                                       fontFamily:
                                                                       'Outfit',
-                                                                      color:
-                                                                      FlutterFlowTheme.of(context).secondaryText,
                                                                       fontSize:
-                                                                      14,
+                                                                      13,
                                                                       fontWeight:
-                                                                      FontWeight.w500,
+                                                                      FontWeight.w300,
                                                                     ),
-                                                                    enabledBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide:
-                                                                      BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
-                                                                        width:
-                                                                        0.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          12),
-                                                                    ),
-                                                                    focusedBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide:
-                                                                      BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primary,
-                                                                        width:
-                                                                        0.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          12),
-                                                                    ),
-                                                                    errorBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide:
-                                                                      BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                        0.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          12),
-                                                                    ),
-                                                                    focusedErrorBorder:
-                                                                    OutlineInputBorder(
-                                                                      borderSide:
-                                                                      BorderSide(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .alternate,
-                                                                        width:
-                                                                        0.5,
-                                                                      ),
-                                                                      borderRadius:
-                                                                      BorderRadius.circular(
-                                                                          12),
-                                                                    ),
-                                                                    filled:
-                                                                    true,
-                                                                    fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
+                                                                    validator: _model
+                                                                        .dat1Controller24Validator
+                                                                        .asValidator(
+                                                                        context),
+                                                                    inputFormatters: [LengthLimitingTextInputFormatter(100)],
                                                                   ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                      context)
-                                                                      .bodyLarge
-                                                                      .override(
-                                                                    fontFamily:
-                                                                    'Outfit',
-                                                                    fontSize:
-                                                                    13,
-                                                                    fontWeight:
-                                                                    FontWeight.w300,
-                                                                  ),
-                                                                  validator: _model
-                                                                      .dat1Controller24Validator
-                                                                      .asValidator(
-                                                                      context),
-                                                                  inputFormatters: [LengthLimitingTextInputFormatter(100)],
-                                                                ),
+                                                                )
                                                               ),
                                                             ),
                                                             Padding(

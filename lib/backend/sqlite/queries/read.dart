@@ -768,29 +768,25 @@ Future<List<ListarPreguntasObligatoriasRow>> performListarObligatorias(
     }) {
   final query = '''
 SELECT 
-		po.IdPlantillaOpcion, 
+		count(fpr.Respuesta) as rpta,
+		count(pp.FlagMandatorio),
 		po.IdPlantillaSeccion, 
 		po.IdPlantilla, 
-		po.IdPregunta, 
-		po.Descripcion, 
-		po.ClasificacionOpcion,
-		po.IdTipoOpcion,
-		po.tipoOpcion,
-		po.matIcon,
-		fpr.respuesta as respuesta,
-	   pp.FlagMandatorio as mandatorio,
-	   ps.ModoRepeticion as modorepeticion
+		po.IdPregunta
 	FROM PlantillaOpcion po
 	LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
 		AND po.IdPregunta = fpr.IdPregunta
 		AND po.IdPlantillaSeccion = fpr.IdPlantillaSeccion
-		AND fpr.IdFicha =  ${idFicha}
-		AND fpr.numerorepeticion =${numero}
-	LEFT JOIN plantillapregunta pp ON  po.IdPregunta = pp.IdPregunta and po.IdPlantillaSeccion = pp.IdPlantillaSeccion and po.IdPlantilla = pp.IdPlantilla
+		AND fpr.IdFicha = ${idFicha}
+		AND fpr.numerorepeticion = ${numero}
+	LEFT JOIN plantillapregunta pp ON  po.IdPregunta = pp.IdPregunta and po.IdPlantillaSeccion = pp.IdPlantillaSeccion 
 	LEFT JOIN PlantillaSeccion ps ON PP.IdPlantillaSeccion = ps.IdPlantillaSeccion
 	WHERE modorepeticion = '${modorepeticion}'
-	and pp.FlagMandatorio='1'
-	and fpr.respuesta is null 
+	and pp.FlagMandatorio ='1'
+	and po.IdPlantilla = (select IdPlantilla from Fichas where idFicha = ${idFicha})
+ group by po.IdPlantillaSeccion, 
+  po.IdPlantilla, 
+  po.IdPregunta having count(fpr.Respuesta) = 0
     
 ''';
   return _readQuery(database, query, (d) => ListarPreguntasObligatoriasRow(d));
@@ -1838,4 +1834,21 @@ class ExistBuscarUsuario extends SqliteRow {
   String? get nomcomple => data['NombreCompleto'] as String?;
   String? get rol => data['Rol'] as String?;
   String? get ubicacion => data['UbicacionUser'] as String?;
+}
+
+Future<List<UltimaSincronizacion>>
+performListarBuscarUltimaSincro(
+    Database database, {
+      String? usuario,
+    }) {
+  final query = '''
+SELECT Fecha
+FROM Sincronizacion where Usuario = '${usuario}'
+''';
+  return _readQuery(
+      database, query, (d) => UltimaSincronizacion(d));
+}
+class UltimaSincronizacion extends SqliteRow {
+  UltimaSincronizacion(Map<String, dynamic> data) : super(data);
+  String? get fecha => data['Fecha'] as String?;
 }

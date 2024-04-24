@@ -152,6 +152,12 @@ class FFAppState extends ChangeNotifier {
     _nomSeccion = _value;
   }
 
+  String _nombresubSeccion= '';
+  String get nombresubSeccion => _nombresubSeccion;
+  set nombresubSeccion(String _value) {
+    _nombresubSeccion = _value;
+  }
+
   String _username= '';
   String get username => _username;
   set username(String _value) {

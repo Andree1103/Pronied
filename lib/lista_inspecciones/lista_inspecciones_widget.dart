@@ -140,7 +140,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                         padding:
                                         MediaQuery.viewInsetsOf(context),
                                         child: Container(
-                                          height: 200,
+                                          height: MediaQuery.of(context).size.height * 0.5,
                                           child: DropWidget(),
                                         ),
                                       ),

@@ -90,25 +90,25 @@ class _AlertFinalizarInspeccionWidgetState
                   final cantidadS = FFAppState().CantS;
                   final cantidadA = FFAppState().CantA;
                   for(int i = 0; i<cantidadP; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'P');
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'P');
                     CantObligatoria += retornoConsulta;
                   }
                   for(int i = 0; i<cantidadS; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'S');
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'S');
                     CantObligatoria += retornoConsulta;
                   }
                   for(int i = 0; i<cantidadA; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i, 'A');
+                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'A');
                     CantObligatoria += retornoConsulta;
                   }
                   retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, 1, 'X');
                   CantObligatoria += retornoConsulta;
 
-                  if(retornoConsulta > 0) {
+                  if(CantObligatoria > 0) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Existen preguntas obligatorias',
+                          'Pendientes ${CantObligatoria} preguntas obligatorias por responder',
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -149,7 +149,7 @@ class _AlertFinalizarInspeccionWidgetState
                     );
                     Navigator.pop(context);
 
-                    context.pushNamed('DatosInspeccion');
+                    //context.pushNamed('DatosInspeccion');
                   }
                 },
                 text: 'Aceptar',

@@ -540,6 +540,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: Color(0xFF086D82),
+                                                borderRadius: BorderRadius.circular(8),
                                               ),
                                               child: Align(
                                                 alignment:
@@ -645,38 +646,53 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                   },
                                                                   child: Container(
                                                                     decoration: BoxDecoration(
-                                                                      color: FlutterFlowTheme.of(context).success,
-                                                                      borderRadius: BorderRadius.circular(10), // Esquinas redondeadas para un look suavizado
+                                                                      color: Color(0xFF1CA8B5),
+                                                                      borderRadius: BorderRadius.circular(10),
                                                                       boxShadow: [
                                                                         BoxShadow(
-                                                                          color: Colors.black.withOpacity(0.1), // Sombra más suave
+                                                                          color: Colors.black.withOpacity(0.1),
                                                                           spreadRadius: 0,
                                                                           blurRadius: 10,
-                                                                          offset: Offset(0, 5), // Posición de la sombra
+                                                                          offset: Offset(0, 5),
                                                                         ),
                                                                       ],
                                                                     ),
-                                                                    margin: EdgeInsets.all(12), // Añade más espacio alrededor del contenedor
-                                                                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16), // Ajusta el padding para dar más espacio al texto
-                                                                    child: Align(
-                                                                      alignment: AlignmentDirectional.centerStart, // Alinea el texto al inicio (izquierda)
-                                                                      child: Text(
-                                                                        valueOrDefault<String>(
-                                                                          columnListarSubseccionesRow.descripcion,
-                                                                          'Subsección',
+                                                                    margin: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
+                                                                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Asegura el espacio entre el texto y el botón
+                                                                      children: [
+                                                                        Text(
+                                                                          valueOrDefault<String>(
+                                                                            columnListarSubseccionesRow.descripcion,
+                                                                            'Subsección',
+                                                                          ),
+                                                                          style: TextStyle(
+                                                                            color: Colors.white,
+                                                                            fontSize: 16,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontFamily: 'Outfit',
+                                                                          ),
                                                                         ),
-                                                                        style: TextStyle(
-                                                                          color: Colors.white, // Color de texto que contraste bien con el fondo
-                                                                          fontSize: 20,
-                                                                          fontWeight: FontWeight.bold,
-                                                                          fontFamily: 'Outfit', // Asegúrate de que la familia de fuentes está disponible
+                                                                        FloatingActionButton(
+                                                                          onPressed: () {
+                                                                            FFAppState().nomSeccion = listViewListarPlantillaSeccionRow.descripcion!;
+                                                                            FFAppState().IdSecUtil = columnListarSubseccionesRow.idPlantillaSeccion!;
+                                                                            context.pushNamed('GaleriaPreguntas');
+                                                                          },
+                                                                          backgroundColor: Colors.white,
+                                                                          elevation: 3,
+                                                                          shape: CircleBorder(),
+                                                                          child: Icon(
+                                                                            Icons.arrow_forward_ios_outlined, // Icono de ejemplo, puedes cambiarlo según la funcionalidad
+                                                                            color: Colors.black,
+                                                                            size: 20,
+                                                                          ),
                                                                         ),
-                                                                      ),
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 )
-
-
                                                               ],
                                                             ),
                                                           ),

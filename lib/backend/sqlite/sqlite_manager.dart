@@ -1403,6 +1403,14 @@ class SQLiteManager {
         usuario: usuario
       );
 
+  Future<List<UltimaSincronizacion>> UltimaSincronizacionUser({
+    String? usuario
+  }) =>
+      performListarBuscarUltimaSincro(
+          _database,
+          usuario: usuario
+      );
+
 
   ///INSPECCION
   Future<List<ExistInspeciconForId>> VerificarSiExisteInspeccion({

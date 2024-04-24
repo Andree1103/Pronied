@@ -96,6 +96,35 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Color(0xFF0E1C27),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton:
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              backgroundColor: Color(0xFF086D82),
+              elevation: 8,
+              shape: CircleBorder(),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  Navigator.of(context).pop();
+                },
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  size: 24,
+                ),
+              ),
+            ),
+          ],
+        ),
         body: SafeArea(
           top: true,
           child: Stack(
@@ -500,33 +529,22 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                             ),
                           ],
                         ),
-                        margin: EdgeInsets.all(10), // Space around the container
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Padding inside the container
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns children to start and end of Row
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional.center, // Correctly align text to center
-                              child: Text(
-                                valueOrDefault<String>(
-                                  FFAppState().nomSeccion,
-                                  'Sección',
-                                ),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600, // Slightly bolder weight
-                                  color: Colors.white, // Text color
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
+                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10), // Space around the container
+                        padding: EdgeInsets.all(15), // Padding inside the container
+                        child: Align(
+                          alignment: AlignmentDirectional.center, // Correctly align text to center
+                          child: Text(
+                            valueOrDefault<String>(
+                              FFAppState().nomSeccion,
+                              'Sección',
                             ),
-                            IconButton(
-                              icon: Icon(Icons.close, color: Colors.white), // X icon for closing
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Navigate back on tap
-                              },
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600, // Slightly bolder weight
+                              color: Colors.white, // Text color
                             ),
-                          ],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       )
                     )
@@ -542,7 +560,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                           color: FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(20, 15, 20, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -596,7 +614,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                           return Align(
                                             alignment: AlignmentDirectional(-1, 0),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                               child: Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
@@ -607,17 +625,33 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.max,
                                                     children: [
-                                                      Align(
-                                                        alignment: AlignmentDirectional(-1, 0),
-                                                        child: Text(
-                                                          valueOrDefault<String>(
-                                                            columnListarSubseccionesRow.descripcion,
-                                                            'Subseccion',
-                                                          ),
-                                                          style: FlutterFlowTheme.of(context).titleMedium.override(
-                                                            fontFamily: 'Outfit',
-                                                            fontSize: 20,
-                                                            fontWeight: FontWeight.bold,
+                                                      Container(
+                                                        padding: EdgeInsets.all(16.0), // Añade un padding interno de 16 píxeles por todos los lados.
+                                                        decoration: BoxDecoration(
+                                                          color: Color(0xFF1CA8B5), // Color de fondo del container.
+                                                          borderRadius: BorderRadius.circular(8.0), // Redondea las esquinas del container.
+                                                          boxShadow: [ // Añade sombra alrededor del container para un efecto elevado.
+                                                            BoxShadow(
+                                                              color: Colors.black.withOpacity(0.1), // Color de la sombra.
+                                                              spreadRadius: 1, // Alcance de la extensión de la sombra.
+                                                              blurRadius: 5, // Difuminado de la sombra.
+                                                              offset: Offset(0, 2), // Desplazamiento vertical de la sombra.
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        child: Align(
+                                                          alignment: AlignmentDirectional(-1, 0), // Alineación del texto dentro del container.
+                                                          child: Text(
+                                                            valueOrDefault<String>(
+                                                              columnListarSubseccionesRow.descripcion, // Obtiene la descripción desde una fila de datos.
+                                                              'Subsección', // Valor por defecto si la descripción es nula.
+                                                            ),
+                                                            style: FlutterFlowTheme.of(context).titleMedium.override(
+                                                              fontFamily: 'Outfit', // Establece la familia de fuente.
+                                                              fontSize: 15, // Tamaño de la fuente.
+                                                              fontWeight: FontWeight.bold, // Grosor de la fuente.
+                                                              color: Colors.white, // Color del texto para contraste con el fondo.
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -730,6 +764,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                                           children: [
                                                                                                             Expanded(
+                                                                                                                flex:9,
                                                                                                                 child: Text(
                                                                                                                   valueOrDefault<String>(
                                                                                                                     columnListarPreguntasRow.descripcionPregunta,
@@ -742,15 +777,17 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                 )
                                                                                                             ),
                                                                                                             if (mostarred == true)
-                                                                                                              Text(
+                                                                                                              Expanded(
+                                                                                                                flex:1,
+                                                                                                                  child: Text(
                                                                                                                 "(*)",
                                                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                                     fontFamily: 'Outfit',
                                                                                                                     fontWeight: FontWeight.w600,
                                                                                                                     color: Colors.red
                                                                                                                 ),
-                                                                                                              )
-                                                                                                          ],
+                                                                                                              ))
+                                                                                                          ].divide(SizedBox(width: 5)),
                                                                                                         ),
                                                                                                       ),
                                                                                                     ),
@@ -783,6 +820,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                 ? Color(0xFF086D82)
                                                                                                                                 : Color(0xFF000000),
                                                                                                                             onPressed: () async {
+                                                                                                                              FFAppState().nombresubSeccion = columnListarSubseccionesRow.descripcion!;
                                                                                                                               FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
                                                                                                                               FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
                                                                                                                               FFAppState().nrmRepeticion = nrm.toString();
@@ -823,6 +861,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                 ? Color(0xFF086D82)
                                                                                                                                 : Color(0xFF000000),
                                                                                                                             onPressed: () {
+                                                                                                                              FFAppState().nombresubSeccion = columnListarSubseccionesRow.descripcion!;
                                                                                                                               FFAppState().descPregunta = columnListarPreguntasRow.descripcionPregunta!;
                                                                                                                               FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
                                                                                                                               FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
@@ -1260,26 +1299,6 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                     ),
                                                                                                                                     controller: _textController,
                                                                                                                                     readOnly: readon,
-                                                                                                                                    /*onSubmitted: (value) {
-                                                                                                                                                if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
-                                                                                                                                                  SQLiteManager.instance.actualizarRpta(
-                                                                                                                                                      rpta: value,
-                                                                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                                      idficha: FFAppState().IdFicha,
-                                                                                                                                                      usuarioModificacion: FFAppState().username,
-                                                                                                                                                      fechaModificacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                                      equipoModificacion: FFAppState().cummovil,
-                                                                                                                                                      programaModificacion: FFAppState().programacreacion,
-                                                                                                                                                      numero: nrm
-                                                                                                                                                    // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                                  );
-                                                                                                                                                  SQLiteManager.instance.inspeccion1(
-                                                                                                                                                    idFicha: FFAppState().IdFicha,
-                                                                                                                                                  );
-                                                                                                                                                }
-                                                                                                                                              },*/
                                                                                                                                   ),
                                                                                                                                 )
                                                                                                                             ),
@@ -1315,26 +1334,42 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                   onFocusChange: (hasFocus){
                                                                                                                                     if(!hasFocus){
                                                                                                                                       if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
-                                                                                                                                        SQLiteManager.instance.crearRpta(
-                                                                                                                                            rpta: _textController.text,
-                                                                                                                                            idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                            idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                            idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                            idficha: FFAppState().IdFicha,
-                                                                                                                                            fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                            equipoCreacion: FFAppState().cummovil,
-                                                                                                                                            programaCreacion: FFAppState().programacreacion,
-                                                                                                                                            usuarioCreacion: FFAppState().username,
-                                                                                                                                            numero: nrm
-                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                        );
-                                                                                                                                        SQLiteManager.instance.inspeccion1(
-                                                                                                                                          idFicha: FFAppState().IdFicha,
-                                                                                                                                          usuarioModificacionAuditoria: FFAppState().username,
-                                                                                                                                          fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                          equipoModificacionAuditoria: FFAppState().cummovil,
-                                                                                                                                          programaModificacionAuditoria: FFAppState().programacreacion,
-                                                                                                                                        );
+                                                                                                                                        if(_textController.text != ""){
+                                                                                                                                          SQLiteManager.instance.crearRpta(
+                                                                                                                                              rpta: _textController.text,
+                                                                                                                                              idpregunta: columnListarOpcionesRow.idPregunta!,
+                                                                                                                                              idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
+                                                                                                                                              idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
+                                                                                                                                              idficha: FFAppState().IdFicha,
+                                                                                                                                              fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                              equipoCreacion: FFAppState().cummovil,
+                                                                                                                                              programaCreacion: FFAppState().programacreacion,
+                                                                                                                                              usuarioCreacion: FFAppState().username,
+                                                                                                                                              numero: nrm
+                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
+                                                                                                                                          );
+                                                                                                                                          SQLiteManager.instance.inspeccion1(
+                                                                                                                                            idFicha: FFAppState().IdFicha,
+                                                                                                                                            usuarioModificacionAuditoria: FFAppState().username,
+                                                                                                                                            fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                                                                                                                            equipoModificacionAuditoria: FFAppState().cummovil,
+                                                                                                                                            programaModificacionAuditoria: FFAppState().programacreacion,
+                                                                                                                                          );
+                                                                                                                                        } else {
+                                                                                                                                          ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                                            SnackBar(
+                                                                                                                                              content: Text(
+                                                                                                                                                'No se pueden guardar valores nulos',
+                                                                                                                                                style: TextStyle(
+                                                                                                                                                  color:
+                                                                                                                                                  FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                                                                                ),
+                                                                                                                                              ),
+                                                                                                                                              duration: Duration(milliseconds: 2000),
+                                                                                                                                              backgroundColor: FlutterFlowTheme.of(context).primary,
+                                                                                                                                            ),
+                                                                                                                                          );
+                                                                                                                                        }
                                                                                                                                       }
                                                                                                                                     }
                                                                                                                                   },
