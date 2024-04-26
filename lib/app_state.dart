@@ -199,6 +199,12 @@ class FFAppState extends ChangeNotifier {
     _estadoInspeccion = _value;
   }
 
+  String _tokenFinal= '';
+  String get tokenFinal => _tokenFinal;
+  set tokenFinal(String _value) {
+    _tokenFinal = _value;
+  }
+
   String _descPregunta= '';
   String get descPregunta => _descPregunta;
   set descPregunta(String _value) {
@@ -221,6 +227,12 @@ class FFAppState extends ChangeNotifier {
   int get idPregunta => _idPregunta;
   set idPregunta(int _value) {
     _idPregunta = _value;
+  }
+
+  int _countArchivo = 0;
+  int get countArchivo => _countArchivo;
+  set countArchivo(int _value) {
+    _countArchivo = _value;
   }
 
   double _Latitud = 0;

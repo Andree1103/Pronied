@@ -923,7 +923,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                             ),
                             Container(
                               width: double.infinity,
-                              height: 145.0,
+                              height: 230,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -986,7 +986,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                               alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 10.0, 0.0, 25.0),
+                                    0.0, 10.0, 0.0, 10.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     if (_model.formKey.currentState == null ||

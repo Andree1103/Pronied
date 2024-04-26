@@ -552,7 +552,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   children: [
                                                     Padding(
                                                       padding: EdgeInsetsDirectional
-                                                          .fromSTEB(5, 15, 0, 15),
+                                                          .fromSTEB(5, 10, 0, 10),
                                                       child: Text(
                                                         valueOrDefault<String>(
                                                           listViewListarPlantillaSeccionRow
@@ -658,11 +658,13 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                       ],
                                                                     ),
                                                                     margin: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 2),
-                                                                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                                                                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 4),
                                                                     child: Row(
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween, // Asegura el espacio entre el texto y el botón
                                                                       children: [
-                                                                        Text(
+                                                                        Expanded(
+                                                                          flex:8,
+                                                                          child: Text(
                                                                           valueOrDefault<String>(
                                                                             columnListarSubseccionesRow.descripcion,
                                                                             'Subsección',
@@ -673,22 +675,28 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                             fontWeight: FontWeight.bold,
                                                                             fontFamily: 'Outfit',
                                                                           ),
-                                                                        ),
-                                                                        FloatingActionButton(
-                                                                          onPressed: () {
-                                                                            FFAppState().nomSeccion = listViewListarPlantillaSeccionRow.descripcion!;
-                                                                            FFAppState().IdSecUtil = columnListarSubseccionesRow.idPlantillaSeccion!;
-                                                                            context.pushNamed('GaleriaPreguntas');
-                                                                          },
-                                                                          backgroundColor: Colors.white,
-                                                                          elevation: 3,
-                                                                          shape: CircleBorder(),
-                                                                          child: Icon(
-                                                                            Icons.arrow_forward_ios_outlined, // Icono de ejemplo, puedes cambiarlo según la funcionalidad
-                                                                            color: Colors.black,
-                                                                            size: 20,
-                                                                          ),
-                                                                        ),
+                                                                        ),),
+                                                                        Expanded(
+                                                                          flex: 2,
+                                                                          child: Container(
+                                                                            height: 45,
+                                                                            width: 45,
+                                                                            child: FloatingActionButton(
+                                                                              onPressed: () {
+                                                                                FFAppState().nomSeccion = listViewListarPlantillaSeccionRow.descripcion!;
+                                                                                FFAppState().IdSecUtil = columnListarSubseccionesRow.idPlantillaSeccion!;
+                                                                                context.pushNamed('GaleriaPreguntas');
+                                                                              },
+                                                                              backgroundColor: Colors.white,
+                                                                              elevation: 3,
+                                                                              shape: CircleBorder(),
+                                                                              child: Icon(
+                                                                                Icons.arrow_forward_ios_outlined, // Icono de ejemplo, puedes cambiarlo según la funcionalidad
+                                                                                color: Colors.black,
+                                                                                size: 20,
+                                                                              ),
+                                                                            ),
+                                                                          ))
                                                                       ],
                                                                     ),
                                                                   ),

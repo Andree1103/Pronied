@@ -3,17 +3,16 @@ import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'drop_widget.dart' show DropWidget;
+import 'sincronizar_widget.dart' show SincronizarWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class DropModel extends FlutterFlowModel<DropWidget> {
+class SincronizarModel extends FlutterFlowModel<SincronizarWidget> {
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - API (API PRONIED)] action in Button widget.
   ApiCallResponse? apiResponseDatos;
-  final unfocusNode = FocusNode();
 
   /// Initialization and disposal methods.
 

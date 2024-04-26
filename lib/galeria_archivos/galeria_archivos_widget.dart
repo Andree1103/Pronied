@@ -72,6 +72,13 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
 
     context.watch<FFAppState>();
 
+    String descripcionpgt = "";
+    if(FFAppState().nrmRepeticion == "1") {
+      descripcionpgt = "${FFAppState().descPregunta}";
+    } else {
+      descripcionpgt = "${FFAppState().descPregunta} x(${FFAppState().nrmRepeticion})";
+    }
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -492,8 +499,8 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                       ),
                                     ],
                                   ),
-                                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10), // Space around the container
-                                  padding: EdgeInsets.all(15), // Padding inside the container
+                                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 5), // Space around the container
+                                  padding: EdgeInsets.symmetric(horizontal: 16, vertical : 10), // Padding inside the container
                                   child: Align(
                                     alignment: AlignmentDirectional.center, // Correctly align text to center
                                     child: Text(
@@ -521,7 +528,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20, vertical : 5),
-                                padding: EdgeInsets.all(16.0), // Añade un padding interno de 16 píxeles por todos los lados.
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical : 8), // Añade un padding interno de 16 píxeles por todos los lados.
                                 decoration: BoxDecoration(
                                   color: Color(0xFF1CA8B5), // Color de fondo del container.
                                   borderRadius: BorderRadius.circular(8.0), // Redondea las esquinas del container.
@@ -561,7 +568,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                               ),
                               child: Container(
                                 margin: EdgeInsets.symmetric(horizontal: 20, vertical : 5),
-                                padding: EdgeInsets.all(16.0), // Añade un padding interno de 16 píxeles por todos los lados.
+                                padding: EdgeInsets.symmetric(horizontal: 16, vertical : 8), // Añade un padding interno de 16 píxeles por todos los lados.
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black, width: 1),// Color de fondo del container.
                                   borderRadius: BorderRadius.circular(8.0), // Redondea las esquinas del container.
@@ -571,7 +578,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                   alignment: AlignmentDirectional(-1, 0), // Alineación del texto dentro del container.
                                   child: Text(
                                     valueOrDefault<String>(
-                                      FFAppState().descPregunta, // Obtiene la descripción desde una fila de datos.
+                                      descripcionpgt , // Obtiene la descripción desde una fila de datos.
                                       'Subsección', // Valor por defecto si la descripción es nula.
                                     ),
                                     style: FlutterFlowTheme.of(context).titleMedium.override(
@@ -631,15 +638,10 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                     }
                                     final columnListarPreguntaArchivosRowList =
                                     snapshot.data!;
+                                    FFAppState().countArchivo = columnListarPreguntaArchivosRowList.length + 1;
                                     if(columnListarPreguntaArchivosRowList.length == 0){
                                       return Text(
-                                        "No se han encontrado archivos",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        textAlign: TextAlign.center, // Centra el texto
-                                      );
+                                        "No se han encontrado archivos");
                                     }else {
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -1613,7 +1615,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                             idPregunta: FFAppState().idPregunta,
                             idFicha: FFAppState().IdFicha,
                             idPlantillaSeccion: FFAppState().idPlantillaSeccion,
-                            nombre: "Archivo N° $indexer",
+                            nombre: "Archivo N° ${FFAppState().countArchivo}",
                             extension: _model.uploadedLocalFile.name!.split('.').last,
                             rutaLocal: savedImagePath,
                             modificadoMovil: 1,
@@ -1728,7 +1730,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                               idPregunta: FFAppState().idPregunta,
                               idFicha: FFAppState().IdFicha,
                               idPlantillaSeccion: FFAppState().idPlantillaSeccion,
-                              nombre: "Archivo N° $indexer",
+                              nombre: "Archivo N° ${FFAppState().countArchivo}",
                               extension: _model.uploadedLocalFile.name!.split('.').last,
                               rutaLocal: savedImagePath,
                               modificadoMovil: 1,

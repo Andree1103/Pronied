@@ -563,7 +563,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                           child: Text(
                                                             valueOrDefault<String>(
                                                                 columnListarFirmasRow
-                                                                    .persona == 1 ? 'Director' : 'Persona', 'a'// Conditionally set text
+                                                                    .persona == 1 ? 'Director' : 'Profesor', 'a'// Conditionally set text
                                                             ),
                                                             style:
                                                             FlutterFlowTheme.of(
@@ -855,11 +855,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                             } else {
                                 return Text(
                                   "No se han encontrado Firmas",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textAlign: TextAlign.center, // Centra el texto
+                                  textAlign: TextAlign.center,
                                 );
                             }
                           },

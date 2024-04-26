@@ -512,13 +512,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                   snapshot.data!;
                                   if(columnListarFotosRowList.length == 0){
                                     return Text(
-                                      "No se han encontrado fotos",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      textAlign: TextAlign.center, // Centra el texto
-                                    );
+                                      "No se han encontrado fotos");
                                   }else {
                                     return Column(
                                       mainAxisSize: MainAxisSize.min,
