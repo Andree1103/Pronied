@@ -1269,6 +1269,11 @@ ${corche}''';
         '\$.dato.fichasPreguntasComentarios[$index].programaModificacionAuditoria',
       ));
 
+  static String? mensajeApiCall (dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        '\$.mensaje',
+      ));
 }
 
 class APIObtenerTOKENCall {

@@ -764,7 +764,6 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                           mainAxisSize: MainAxisSize.max,
                                                                                                           children: [
                                                                                                             Expanded(
-                                                                                                                flex:9,
                                                                                                                 child: Text(
                                                                                                                   valueOrDefault<String>(
                                                                                                                     columnListarPreguntasRow.descripcionPregunta,
@@ -778,14 +777,14 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                             ),
                                                                                                             if (mostarred == true)
                                                                                                               Expanded(
-                                                                                                                flex:1,
                                                                                                                   child: Text(
                                                                                                                 "(*)",
                                                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                                     fontFamily: 'Outfit',
                                                                                                                     fontWeight: FontWeight.w600,
-                                                                                                                    color: Colors.red
+                                                                                                                    color: Colors.red,
                                                                                                                 ),
+                                                                                                                    textAlign: TextAlign.left,
                                                                                                               ))
                                                                                                           ].divide(SizedBox(width: 5)),
                                                                                                         ),
@@ -1280,7 +1279,6 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                             equipoModificacion: FFAppState().cummovil,
                                                                                                                                             programaModificacion: FFAppState().programacreacion,
                                                                                                                                             numero: nrm
-                                                                                                                                          // Proporciona los otros parámetros según sea necesario...
                                                                                                                                         );
                                                                                                                                         SQLiteManager.instance.inspeccion1(
                                                                                                                                           idFicha: FFAppState().IdFicha,
@@ -1346,7 +1344,6 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                               programaCreacion: FFAppState().programacreacion,
                                                                                                                                               usuarioCreacion: FFAppState().username,
                                                                                                                                               numero: nrm
-                                                                                                                                            // Proporciona los otros parámetros según sea necesario...
                                                                                                                                           );
                                                                                                                                           SQLiteManager.instance.inspeccion1(
                                                                                                                                             idFicha: FFAppState().IdFicha,
@@ -1380,26 +1377,6 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                                     ),
                                                                                                                                     controller: _textController,
                                                                                                                                     readOnly: readon,
-                                                                                                                                    /*onSubmitted: (value){
-                                                                                                                                                if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
-                                                                                                                                                  SQLiteManager.instance.crearRpta(
-                                                                                                                                                      rpta: value,
-                                                                                                                                                      idpregunta: columnListarOpcionesRow.idPregunta!,
-                                                                                                                                                      idplantillaopcion: columnListarOpcionesRow.idPlantillaOpcion!,
-                                                                                                                                                      idplanitllaseccion: columnListarOpcionesRow.idPlantillaSeccion!,
-                                                                                                                                                      idficha: FFAppState().IdFicha,
-                                                                                                                                                      fechaCreacion: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                                                                                                                                      equipoCreacion: FFAppState().cummovil,
-                                                                                                                                                      programaCreacion: FFAppState().programacreacion,
-                                                                                                                                                      usuarioCreacion: FFAppState().username,
-                                                                                                                                                      numero: nrm
-                                                                                                                                                    // Proporciona los otros parámetros según sea necesario...
-                                                                                                                                                  );
-                                                                                                                                                  SQLiteManager.instance.inspeccion1(
-                                                                                                                                                    idFicha: FFAppState().IdFicha,
-                                                                                                                                                  );
-                                                                                                                                                }
-                                                                                                                                              },*/
                                                                                                                                   ),
                                                                                                                                 )
                                                                                                                             ),
