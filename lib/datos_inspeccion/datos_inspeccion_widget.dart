@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/agregar_comentario_widget.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_edit_inspeccion_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_finalizar_inspeccion_widget.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -729,7 +731,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ],
               ),
-              if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+              if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == 'EN REGISTRO')
                 Align(
                   alignment: AlignmentDirectional(1, 1),
                   child: Padding(
@@ -780,6 +782,58 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                     ),
                   ),
                 ),
+              Visibility(
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == 'REALIZADA',
+                child: Align(
+                alignment: AlignmentDirectional(1, 1),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 25, 25),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap: () => _model.unfocusNode.canRequestFocus
+                                ? FocusScope.of(context)
+                                .requestFocus(_model.unfocusNode)
+                                : FocusScope.of(context).unfocus(),
+                            child: Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: Container(
+                                height: 200,
+                                child: AlertEditInspeccionWidget(),
+                              ),
+                            ),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+                    },
+                    text: 'Editar Inspección',
+                    options: FFButtonOptions(
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      color: Color(0xFF086D82),
+                      textStyle:
+                      FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Outfit',
+                        color: Colors.white,
+                        letterSpacing: 0,
+                      ),
+                      elevation: 3,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),)
             ],
           )
         ),
