@@ -769,10 +769,11 @@ Future<List<ListarPreguntasObligatoriasRow>> performListarObligatorias(
   final query = '''
 SELECT 
 		count(fpr.Respuesta) as rpta,
-		count(pp.FlagMandatorio),
+		count(pp.FlagMandatorio) as flagMandatorio,
 		po.IdPlantillaSeccion, 
 		po.IdPlantilla, 
-		po.IdPregunta
+		po.IdPregunta,
+		pp.DescripcionPregunta as Descripcion
 	FROM PlantillaOpcion po
 	LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
 		AND po.IdPregunta = fpr.IdPregunta
@@ -795,19 +796,12 @@ SELECT
 class ListarPreguntasObligatoriasRow extends SqliteRow {
   ListarPreguntasObligatoriasRow(Map<String, dynamic> data) : super(data);
 
-  int? get idPlantillaOpcion => data['IdPlantillaOpcion'] as int?;
-  int? get idPlantillaSeccion => data['IdPlantillaSeccion'] as int?;
+  int? get rpta => data['rpta'] as int?;
+  int? get flagMandatorio => data['flagMandatorio'] as int?;
+  int? get idPlantillaseccion => data['IdPlantillaSeccion'] as int?;
   int? get idPlantilla => data['IdPlantilla'] as int?;
   int? get idPregunta => data['IdPregunta'] as int?;
   String? get descripcion => data['Descripcion'] as String?;
-  String? get clasificacionOpcion => data['ClasificacionOpcion'] as String?;
-  int? get idTipoOpcion => data['IdTipoOpcion'] as int?;
-  String? get estadoAuditoria => data['EstadoAuditoria'] as String?;
-  String? get tipoOpcion => data['tipoOpcion'] as String?;
-  String? get matIcon => data['matIcon'] as String?;
-  String? get respuesta => data['respuesta'] as String?;
-  String? get mandatorio => data['mandatorio'] as String?;
-  String? get modorepeticion => data['modorepeticion'] as String?;
 }
 
 /// END LISTAROPCIONES

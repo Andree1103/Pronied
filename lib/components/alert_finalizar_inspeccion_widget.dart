@@ -39,7 +39,15 @@ class _AlertFinalizarInspeccionWidgetState
   }
 
   int CantObligatoria = 0;
-  int retornoConsulta = 0;
+  int retornoConsultaA = 0;
+  int retornoConsultaS = 0;
+  int retornoConsultaP = 0;
+  int retornoConsultaX = 0;
+  List<String> preguntaDesc = [];
+  List<ListarPreguntasObligatoriasRow> preguntasFaltanteA = [];
+  List<ListarPreguntasObligatoriasRow> preguntasFaltanteS = [];
+  List<ListarPreguntasObligatoriasRow> preguntasFaltanteP = [];
+  List<ListarPreguntasObligatoriasRow> preguntasFaltanteX = [];
 
   @override
   Widget build(BuildContext context) {
@@ -90,25 +98,105 @@ class _AlertFinalizarInspeccionWidgetState
                   final cantidadS = FFAppState().CantS;
                   final cantidadA = FFAppState().CantA;
                   for(int i = 0; i<cantidadP; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'P');
-                    CantObligatoria += retornoConsulta;
+                    preguntasFaltanteP = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'P');
+                    retornoConsultaP = preguntasFaltanteP.length;
+                    CantObligatoria += retornoConsultaP;
+                    if(retornoConsultaP > 0){
+                      for(var p in preguntasFaltanteP){
+                        preguntaDesc.add(p.descripcion!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Pendientes ${retornoConsultaP} preguntas obligatorias por responder. "${p.descripcion}"',
+                              style: TextStyle(
+                                color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                        );
+                      }
+                    }
+
                   }
                   for(int i = 0; i<cantidadS; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'S');
-                    CantObligatoria += retornoConsulta;
+                    preguntasFaltanteS = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'S');
+                    retornoConsultaS = preguntasFaltanteS.length;
+                    CantObligatoria += retornoConsultaS;
+                    if(retornoConsultaS > 0){
+                      for(var p in preguntasFaltanteS){
+                        preguntaDesc.add(p.descripcion!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Pendientes ${retornoConsultaS} preguntas obligatorias por responder. "${p.descripcion}"',
+                              style: TextStyle(
+                                color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                        );
+                      }
+                    }
                   }
                   for(int i = 0; i<cantidadA; i++){
-                    retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, i+1, 'A');
-                    CantObligatoria += retornoConsulta;
+                    preguntasFaltanteA = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'A');
+                    retornoConsultaA = preguntasFaltanteA.length;
+                    CantObligatoria += retornoConsultaA;
+                    if(retornoConsultaA > 0){
+                      for(var p in preguntasFaltanteA){
+                        preguntaDesc.add(p.descripcion!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Pendientes ${retornoConsultaA} preguntas obligatorias por responder. "${p.descripcion}"',
+                              style: TextStyle(
+                                color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                        );
+                      }
+                    }
                   }
-                  retornoConsulta = await preguntasrestantes(FFAppState().IdFicha, 1, 'X');
-                  CantObligatoria += retornoConsulta;
+                  for(int i = 0; i<1 ; i++){
+                    preguntasFaltanteX = await preguntasrestantes2(FFAppState().IdFicha, 1, 'X');
+                    retornoConsultaX = preguntasFaltanteX.length;
+                    CantObligatoria += retornoConsultaX;
+                    if(retornoConsultaX > 0){
+                      for(var p in preguntasFaltanteX){
+                        preguntaDesc.add(p.descripcion!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Pendientes ${retornoConsultaX} preguntas obligatorias por responder. "${p.descripcion}"',
+                              style: TextStyle(
+                                color:
+                                FlutterFlowTheme.of(context).secondaryBackground,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).primary,
+                          ),
+                        );
+                      }
+                    }
+                  }
+
 
                   if(CantObligatoria > 0) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Pendientes ${CantObligatoria} preguntas obligatorias por responder',
+                          'Pendientes ${CantObligatoria} preguntas obligatorias por responder.',
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -147,6 +235,7 @@ class _AlertFinalizarInspeccionWidgetState
                         backgroundColor: FlutterFlowTheme.of(context).primary,
                       ),
                     );
+                    CantObligatoria = 0;
                     Navigator.pop(context);
 
                     //context.pushNamed('DatosInspeccion');
@@ -218,4 +307,13 @@ Future<int> preguntasrestantes  ( int idficha, int numero, String repeticion) as
     numero: numero
   );
   return preguntas.length;
+}
+
+Future<List<ListarPreguntasObligatoriasRow>> preguntasrestantes2  ( int idficha, int numero, String repeticion) async {
+  final preguntas = await SQLiteManager.instance.listarPreguntasObligatorias(
+      modorepeticion: repeticion,
+      idFicha: idficha,
+      numero: numero
+  );
+  return preguntas;
 }
