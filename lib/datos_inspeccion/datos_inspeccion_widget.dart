@@ -624,6 +624,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                       NameSub = '';
                                                       break;
                                                   }
+                                                  String subsecciontext = "";
+                                                  if(cantidadRepeticiones == 1){
+                                                    subsecciontext = "${columnListarSubseccionesRow.descripcion!}";
+                                                  } else {
+                                                    subsecciontext = "${columnListarSubseccionesRow.descripcion!} (${cantidadRepeticiones})";
+                                                  }
                                                   _addTabController(listViewIndex, columnIndex, cantidadRepeticiones);
                                                   if (cantidadRepeticiones != 0){
                                                     return Align(
@@ -668,7 +674,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                           flex:8,
                                                                           child: Text(
                                                                           valueOrDefault<String>(
-                                                                            columnListarSubseccionesRow.descripcion,
+                                                                            subsecciontext,
                                                                             'Subsección',
                                                                           ),
                                                                           style: TextStyle(
