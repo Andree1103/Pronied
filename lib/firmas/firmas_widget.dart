@@ -501,6 +501,8 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                             }
                             final columnListarFirmasRowList = snapshot.data!;
                             if(columnListarFirmasRowList.length >= 1){
+
+
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
@@ -511,6 +513,23 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                           (columnIndex) {
                                         final columnListarFirmasRow =
                                         columnListarFirmasRowList[columnIndex];
+
+                                        var tipopersona = '';
+                                        switch (columnListarFirmasRow.persona){
+                                          case 1:
+                                            tipopersona = 'Director';
+                                            break;
+                                          case 2:
+                                            tipopersona = 'Presidente de Apafa';
+                                            break;
+                                          case 3:
+                                            tipopersona = 'Profesor';
+                                            break;
+                                          case 4:
+                                            tipopersona = 'Secretario General';
+                                            break;
+                                        }
+
                                         return Card(
                                           clipBehavior: Clip.antiAliasWithSaveLayer,
                                           color: FlutterFlowTheme.of(context)
@@ -562,8 +581,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                               25, 10, 0, 0),
                                                           child: Text(
                                                             valueOrDefault<String>(
-                                                                columnListarFirmasRow
-                                                                    .persona == 1 ? 'Director' : 'Profesor', 'a'// Conditionally set text
+                                                                tipopersona, 'a'// Conditionally set text
                                                             ),
                                                             style:
                                                             FlutterFlowTheme.of(

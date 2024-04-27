@@ -235,6 +235,12 @@ class FFAppState extends ChangeNotifier {
     _countArchivo = _value;
   }
 
+  int _modificadoMovil = 0;
+  int get modificadoMovil => _modificadoMovil;
+  set modificadoMovil(int _value) {
+    _modificadoMovil = _value;
+  }
+
   double _Latitud = 0;
   double get latitud => _Latitud;
   set latitud(double _value) {

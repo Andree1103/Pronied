@@ -554,11 +554,15 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               ''),
                                                         )!;
 
-                                                        FFAppState().ubicacionuse = ApiAutorizacionCall.nombrearea(
-                                                          (_model.apiResult2ws
-                                                              ?.jsonBody ??
-                                                              ''),
-                                                        )!;
+                                                        var area = ApiAutorizacionCall.nombrearea(
+                                                            _model.apiResult2ws?.jsonBody ?? 'No tiene área asignada'
+                                                        );
+                                                        if (area != null) {
+                                                          FFAppState().ubicacionuse = area;
+                                                        } else {
+                                                          // Maneja el caso cuando 'area' es null, por ejemplo:
+                                                          FFAppState().ubicacionuse = 'No tiene área asignada';
+                                                        }
 
                                                         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
                                                         AndroidDeviceInfo androidInfo;

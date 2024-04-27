@@ -789,7 +789,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ),
               Visibility(
-                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == 'REALIZADA',
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == 'REALIZADA' && FFAppState().modificadoMovil == 1,
                 child: Align(
                 alignment: AlignmentDirectional(1, 1),
                 child: Padding(

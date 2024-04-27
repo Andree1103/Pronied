@@ -43,7 +43,6 @@ class _AlertFinalizarInspeccionWidgetState
   int retornoConsultaS = 0;
   int retornoConsultaP = 0;
   int retornoConsultaX = 0;
-  List<String> preguntaDesc = [];
   List<ListarPreguntasObligatoriasRow> preguntasFaltanteA = [];
   List<ListarPreguntasObligatoriasRow> preguntasFaltanteS = [];
   List<ListarPreguntasObligatoriasRow> preguntasFaltanteP = [];
@@ -103,17 +102,16 @@ class _AlertFinalizarInspeccionWidgetState
                     CantObligatoria += retornoConsultaP;
                     if(retornoConsultaP > 0){
                       for(var p in preguntasFaltanteP){
-                        preguntaDesc.add(p.descripcion!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Pendientes ${retornoConsultaP} preguntas obligatorias por responder. "${p.descripcion}"',
+                              'Subsección ${p.descripcion}(P ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).',
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 2000),
                             backgroundColor: FlutterFlowTheme.of(context).primary,
                           ),
                         );
@@ -127,17 +125,16 @@ class _AlertFinalizarInspeccionWidgetState
                     CantObligatoria += retornoConsultaS;
                     if(retornoConsultaS > 0){
                       for(var p in preguntasFaltanteS){
-                        preguntaDesc.add(p.descripcion!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Pendientes ${retornoConsultaS} preguntas obligatorias por responder. "${p.descripcion}"',
+                              'Subsección ${p.descripcion}(S ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).',
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 2000),
                             backgroundColor: FlutterFlowTheme.of(context).primary,
                           ),
                         );
@@ -150,17 +147,16 @@ class _AlertFinalizarInspeccionWidgetState
                     CantObligatoria += retornoConsultaA;
                     if(retornoConsultaA > 0){
                       for(var p in preguntasFaltanteA){
-                        preguntaDesc.add(p.descripcion!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Pendientes ${retornoConsultaA} preguntas obligatorias por responder. "${p.descripcion}"',
+                              'Subsección ${p.descripcion}(A ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).',
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 2000),
                             backgroundColor: FlutterFlowTheme.of(context).primary,
                           ),
                         );
@@ -173,17 +169,16 @@ class _AlertFinalizarInspeccionWidgetState
                     CantObligatoria += retornoConsultaX;
                     if(retornoConsultaX > 0){
                       for(var p in preguntasFaltanteX){
-                        preguntaDesc.add(p.descripcion!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Pendientes ${retornoConsultaX} preguntas obligatorias por responder. "${p.descripcion}"',
+                              'Subsección ${p.descripcion}: ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).',
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 2000),
                             backgroundColor: FlutterFlowTheme.of(context).primary,
                           ),
                         );
@@ -191,12 +186,21 @@ class _AlertFinalizarInspeccionWidgetState
                     }
                   }
 
+                  retornoConsultaA = 0;
+                  retornoConsultaS = 0;
+                  retornoConsultaP = 0;
+                  retornoConsultaX = 0;
+                  preguntasFaltanteA = [];
+                  preguntasFaltanteS = [];
+                  preguntasFaltanteP = [];
+                  preguntasFaltanteX = [];
+
 
                   if(CantObligatoria > 0) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Pendientes ${CantObligatoria} preguntas obligatorias por responder.',
+                          'Total de ${CantObligatoria} subsecciones con pregunta(s) obligatoria(s) pendiente(s).',
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -206,6 +210,7 @@ class _AlertFinalizarInspeccionWidgetState
                         backgroundColor: FlutterFlowTheme.of(context).primary,
                       ),
                     );
+                    CantObligatoria = 0;
                     Navigator.pop(context);
                   } else {
                     await SQLiteManager.instance.actualizarFinalizarInspeccion(

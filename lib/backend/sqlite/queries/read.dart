@@ -767,13 +767,14 @@ Future<List<ListarPreguntasObligatoriasRow>> performListarObligatorias(
       String? modorepeticion
     }) {
   final query = '''
-SELECT 
+SELECT  descripcion, count(descripcion) as preguntasfaltantes from  ( select
 		count(fpr.Respuesta) as rpta,
 		count(pp.FlagMandatorio) as flagMandatorio,
+		count(po.IdPregunta) as cantpreguntas,
 		po.IdPlantillaSeccion, 
 		po.IdPlantilla, 
 		po.IdPregunta,
-		pp.DescripcionPregunta as Descripcion
+		ps.Descripcion as Descripcion
 	FROM PlantillaOpcion po
 	LEFT JOIN FichaPreguntaRespuestas fpr ON po.IdPlantillaOpcion = fpr.IdPlantillaOpcion
 		AND po.IdPregunta = fpr.IdPregunta
@@ -786,9 +787,10 @@ SELECT
 	and pp.FlagMandatorio ='1'
 	and po.IdPlantilla = (select IdPlantilla from Fichas where idFicha = ${idFicha})
  group by po.IdPlantillaSeccion, 
-  po.IdPlantilla, 
-  po.IdPregunta having count(fpr.Respuesta) = 0
-    
+  po.IdPlantilla,
+  ps.Descripcion,
+   po.IdPregunta having count(fpr.Respuesta) = 0)
+   a group by descripcion    
 ''';
   return _readQuery(database, query, (d) => ListarPreguntasObligatoriasRow(d));
 }
@@ -796,11 +798,7 @@ SELECT
 class ListarPreguntasObligatoriasRow extends SqliteRow {
   ListarPreguntasObligatoriasRow(Map<String, dynamic> data) : super(data);
 
-  int? get rpta => data['rpta'] as int?;
-  int? get flagMandatorio => data['flagMandatorio'] as int?;
-  int? get idPlantillaseccion => data['IdPlantillaSeccion'] as int?;
-  int? get idPlantilla => data['IdPlantilla'] as int?;
-  int? get idPregunta => data['IdPregunta'] as int?;
+  int? get preguntasfaltantes => data['preguntasfaltantes'] as int?;
   String? get descripcion => data['Descripcion'] as String?;
 }
 

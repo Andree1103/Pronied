@@ -497,6 +497,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                       .idInspeccion =
                                                                   columnListarInspeccionesRow
                                                                       .idInspeccion!;
+                                                                  FFAppState()
+                                                                      .modificadoMovil =
+                                                                  columnListarInspeccionesRow
+                                                                      .modificadoMovil!;
                                                                 });
 
                                                                 var ssh = await SQLiteManager.instance.listarSSHH(
@@ -970,6 +974,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                       .idInspeccion =
                                                                   columnListarInspeccionesProcessRow
                                                                       .idInspeccion!;
+                                                                  FFAppState()
+                                                                      .modificadoMovil =
+                                                                  columnListarInspeccionesProcessRow
+                                                                      .modificadoMovil!;
                                                                 });
 
                                                                 var ssh = await SQLiteManager.instance.listarSSHH(
@@ -1442,6 +1450,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                       .idInspeccion =
                                                                   columnListarInspeccionesRealizadaRow
                                                                       .idInspeccion!;
+                                                                  FFAppState()
+                                                                      .modificadoMovil =
+                                                                  columnListarInspeccionesRealizadaRow
+                                                                      .modificadoMovil!;
                                                                 });
                                                                 var ssh = await SQLiteManager.instance.listarSSHH(
                                                                     idFicha: FFAppState().IdFicha
@@ -1913,6 +1925,10 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                       .idInspeccion =
                                                                   columnListarInspeccionesProgramadaRow
                                                                       .idInspeccion!;
+                                                                  FFAppState()
+                                                                      .modificadoMovil =
+                                                                  columnListarInspeccionesProgramadaRow
+                                                                      .modificadoMovil!;
                                                                 });
 
                                                                 var ssh = await SQLiteManager.instance.listarSSHH(

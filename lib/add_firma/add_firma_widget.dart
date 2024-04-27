@@ -528,7 +528,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 controller:
                                 _model.dropDownValueController1 ??=
                                     FormFieldController<String>(null),
-                                options: ['Director', 'Profesor'],
+                                options: ['Director','Presidente de Apafa', 'Profesor', 'Secretario General'],
                                 onChanged: (val) => setState(
                                         () => _model.dropDownValue1 = val),
                                 width: double.infinity,
@@ -1038,27 +1038,24 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     }
                                     exportedImge = await _model.signatureController?.toPngBytes();
                                     savedImagePath = await saveImageToDevice(exportedImge!);
-                                    setState(() {
-                                      SQLiteManager.instance.inspeccion1(
-                                        idFicha: FFAppState().IdFicha,
-                                        usuarioModificacionAuditoria: FFAppState().username,
-                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                        equipoModificacionAuditoria: FFAppState().cummovil,
-                                        programaModificacionAuditoria: FFAppState().programacreacion,
-                                      );
-                                    });
-                                    /*await SQLiteManager.instance.crearFirma(
-                                      persona: _model.dropDownValue1,
-                                      documento: _model.dropDownValue2,
-                                      numeroDoc: _model.dat1Controller1.text,
-                                      apePaterno: _model.dat1Controller3.text,
-                                      apeMaterno: _model.dat1Controller4.text,
-                                      image: savedImagePath,
-                                      nombre: _model.dat1Controller2.text,
-                                    );*/
+                                    int tipopersona = 0;
+                                    switch (_model.dropDownValue1){
+                                      case 'Director':
+                                        tipopersona = 1;
+                                        break;
+                                      case 'Presidente de Apafa':
+                                        tipopersona = 2;
+                                        break;
+                                      case 'Profesor':
+                                        tipopersona = 3;
+                                        break;
+                                      case 'Secretario General':
+                                        tipopersona = 4;
+                                        break;
+                                    }
                                     await SQLiteManager.instance.crearFichaFirma(
                                       idFicha: FFAppState().IdFicha,
-                                      idTipoPersona: _model.dropDownValue1 == 'Director' ? 1 : 2,
+                                      idTipoPersona: tipopersona,
                                       idTipoDocumento: _model.dropDownValue2 == 'DNI' ? 1 : 2,
                                       numDocumento: _model.dat1Controller1.text,
                                       nombres: _model.dat1Controller2.text,
@@ -1074,6 +1071,15 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       programaCreacionAuditoria: FFAppState().programacreacion,
                                       usuarioCreacionAuditoria: FFAppState().username,
                                     );
+                                    setState(() {
+                                      SQLiteManager.instance.inspeccion1(
+                                        idFicha: FFAppState().IdFicha,
+                                        usuarioModificacionAuditoria: FFAppState().username,
+                                        fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                                        equipoModificacionAuditoria: FFAppState().cummovil,
+                                        programaModificacionAuditoria: FFAppState().programacreacion,
+                                      );
+                                    });
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(
                                       SnackBar(
