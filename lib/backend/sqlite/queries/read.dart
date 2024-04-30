@@ -41,7 +41,7 @@ Future<List<ListarFirmasRow>> performListarFirmas(
   final query = '''
 SELECT 
     idFichaFirmaMovil, 
-    idTipoPersona, 
+    tp.Descripcion ,
     idTipoDocumento, 
     numDocumento, 
     apellidoPaterno, 
@@ -49,7 +49,9 @@ SELECT
     rutalocal,
     nombres,
     nombres || ' ' || apellidoPaterno || ' ' || apellidoMaterno AS NombresCompletos
-FROM FichasFirmas WHERE idFicha = ${idFicha} and estadoAuditoria = '1'
+FROM FichasFirmas
+INNER JOIN TipoPersona as tp on idTipoPersona = tp.Id
+WHERE idFicha = ${idFicha} and estadoAuditoria = '1'
 
 ''';
   return _readQuery(database, query, (d) => ListarFirmasRow(d));
@@ -59,7 +61,7 @@ class ListarFirmasRow extends SqliteRow {
   ListarFirmasRow(Map<String, dynamic> data) : super(data);
 
   int? get id => data['idFichaFirmaMovil'] as int?;
-  int? get persona => data['idTipoPersona'] as int?;
+  String? get persona => data['Descripcion'] as String?;
   int? get documento => data['idTipoDocumento'] as int?;
   String? get numeroDoc => data['numDocumento'] as String?;
   String? get apePaterno => data['apellidoPaterno'] as String?;
@@ -1843,4 +1845,36 @@ FROM Sincronizacion where Usuario = '${usuario}'
 class UltimaSincronizacion extends SqliteRow {
   UltimaSincronizacion(Map<String, dynamic> data) : super(data);
   String? get fecha => data['Fecha'] as String?;
+}
+
+Future<List<ListarPersonas>>
+performListarPersonas(
+    Database database,) {
+  final query = '''
+SELECT  * 
+FROM TipoPersona
+''';
+  return _readQuery(
+      database, query, (d) => ListarPersonas(d));
+}
+class ListarPersonas extends SqliteRow {
+  ListarPersonas(Map<String, dynamic> data) : super(data);
+  int? get id => data['Id'] as int?;
+  String? get descripcion => data['Descripcion'] as String?;
+}
+
+Future<List<ListarZonas>>
+performListarZonas(
+    Database database,) {
+  final query = '''
+SELECT  * 
+FROM Zona
+''';
+  return _readQuery(
+      database, query, (d) => ListarZonas(d));
+}
+class ListarZonas extends SqliteRow {
+  ListarZonas(Map<String, dynamic> data) : super(data);
+  String? get id => data['Id'] as String?;
+  String? get descripcion => data['Descipcion'] as String?;
 }

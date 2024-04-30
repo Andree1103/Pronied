@@ -1,0 +1,31 @@
+class ConstansTetx {
+  static const SINCRONIZADO = 'Sincronizado';
+  static const NOSINCRONIZADO = 'No Sincronizado';
+  static const INFORMACIONGENERAL = 'Informacion General';
+  static const NIVELES = 'Niveles';
+  static const DIRECTOR = 'Director';
+  static const INSPECCION = 'Inspección';
+  static const CENTROPOBLADO = 'Centro Poblado';
+  static const DIRECCION = 'Dirección';
+  static const ZONA = 'Zona';
+  static const PABELLONES = 'Pabellones';
+  static const AULAS = 'Aulas';
+  static const SSHH = 'SS.HH';
+  static const NIVEL = 'nivel';
+  static const turno = 'Turno';
+  static const tipo_Docente = 'Tipo Docente';
+  static const tipo_Sexo = 'Tipo Sexo';
+  static const numeroalumnos = 'Número de Alumnos';
+  static const numerohombres = 'Número de Hombres';
+  static const numeromujeres = 'Número de Mujeres';
+  static const numerodocentes = 'Número de Docentes';
+  static const numerosecciones = 'Número de Secciones';
+  static const dni = 'DNI';
+  static const nombres = 'Nombres';
+  static const correo = 'Correo';
+  static const telefono = 'Teléfono';
+  static const contacto_alterno = 'Contacto Alterno';
+  static const nombre_inspector = 'Nombre Del Inspector';
+  static const tipo_inspeccion = 'Tipo Inspección';
+  static const iniciar_inspeccion = 'Iniciar Inspección';
+}

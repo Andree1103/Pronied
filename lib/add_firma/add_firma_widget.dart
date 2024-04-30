@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -464,8 +465,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                     ),
                                                     Text(
                                                         containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                            ? 'Sincronizado'
-                                                            : 'No Sincronizado', // Conditionally set text
+                                                            ? ConstansTetx.SINCRONIZADO
+                                                            : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                         style: FlutterFlowTheme.of(context).bodyMedium
                                                     ),
                                                   ],
@@ -524,37 +525,57 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 15.0),
-                              child: FlutterFlowDropDown<String>(
-                                controller:
-                                _model.dropDownValueController1 ??=
-                                    FormFieldController<String>(null),
-                                options: ['Director','Presidente de Apafa', 'Profesor', 'Secretario General'],
-                                onChanged: (val) => setState(
-                                        () => _model.dropDownValue1 = val),
-                                width: double.infinity,
-                                height: 50.0,
-                                textStyle:
-                                FlutterFlowTheme.of(context).bodyMedium,
-                                hintText: 'Tipo de Persona',
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24.0,
-                                ),
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                elevation: 2.0,
-                                borderColor:
-                                FlutterFlowTheme.of(context).alternate,
-                                borderWidth: 2.0,
-                                borderRadius: 8.0,
-                                margin: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 4.0, 16.0, 4.0),
-                                hidesUnderline: true,
-                                isOverButton: true,
-                                isSearchable: false,
-                                isMultiSelect: false,
+                              child: FutureBuilder<List<ListarPersonas>>(
+                                future: SQLiteManager.instance.ListarPersonasDrop(),
+                                builder: (context, snapshot){
+                                  if(!snapshot.hasData){
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context).primary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  final dropDownListarPersonasRowList = snapshot.data!;
+                                  return FlutterFlowDropDown<int>(
+                                    controller: _model.dropDownValueController1 ??= FormFieldController<int>(null),
+                                    options: dropDownListarPersonasRowList.map((e) => e.id).whereType<int>().toList(),
+                                    optionLabels: dropDownListarPersonasRowList.map((e) => e.descripcion).whereType<String>().toList(),
+                                    width: double.infinity,
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        _model.dropDownValue1 = newValue;
+                                      });
+                                    },
+                                    height: 50,
+                                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                                      fontFamily: 'Outfit',
+                                      letterSpacing: 0,
+                                    ),
+                                    hintText: 'Tipo de Persona',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                      size: 24,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                    elevation: 2,
+                                    borderColor: FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 2,
+                                    borderRadius: 8,
+                                    margin: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+                                    hidesUnderline: true,
+                                    isOverButton: true,
+                                    isSearchable: false,
+                                    isMultiSelect: false,
+                                  );
+
+                                }
                               ),
                             ),
                             Padding(
@@ -1038,24 +1059,10 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     }
                                     exportedImge = await _model.signatureController?.toPngBytes();
                                     savedImagePath = await saveImageToDevice(exportedImge!);
-                                    int tipopersona = 0;
-                                    switch (_model.dropDownValue1){
-                                      case 'Director':
-                                        tipopersona = 1;
-                                        break;
-                                      case 'Presidente de Apafa':
-                                        tipopersona = 2;
-                                        break;
-                                      case 'Profesor':
-                                        tipopersona = 3;
-                                        break;
-                                      case 'Secretario General':
-                                        tipopersona = 4;
-                                        break;
-                                    }
+
                                     await SQLiteManager.instance.crearFichaFirma(
                                       idFicha: FFAppState().IdFicha,
-                                      idTipoPersona: tipopersona,
+                                      idTipoPersona: _model.dropDownValue1,
                                       idTipoDocumento: _model.dropDownValue2 == 'DNI' ? 1 : 2,
                                       numDocumento: _model.dat1Controller1.text,
                                       nombres: _model.dat1Controller2.text,

@@ -17,8 +17,8 @@ class AddFirmaModel extends FlutterFlowModel<AddFirmaWidget> {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for DropDown widget.
-  String? dropDownValue1;
-  FormFieldController<String>? dropDownValueController1;
+  int? dropDownValue1;
+  FormFieldController<int>? dropDownValueController1;
   // State field(s) for DropDown widget.
   String? dropDownValue2;
   FormFieldController<String>? dropDownValueController2;

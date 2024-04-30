@@ -2022,5 +2022,16 @@ class SQLiteManager {
           username: username,
           ubicacion: username
       );
+
+
+  Future<List<ListarPersonas>> ListarPersonasDrop() =>
+      performListarPersonas(
+          _database
+      );
+
+  Future<List<ListarZonas>> ListarZonasDrop() =>
+      performListarZonas(
+          _database
+      );
   
 }

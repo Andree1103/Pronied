@@ -513,23 +513,6 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                           (columnIndex) {
                                         final columnListarFirmasRow =
                                         columnListarFirmasRowList[columnIndex];
-
-                                        var tipopersona = '';
-                                        switch (columnListarFirmasRow.persona){
-                                          case 1:
-                                            tipopersona = 'Director';
-                                            break;
-                                          case 2:
-                                            tipopersona = 'Presidente de Apafa';
-                                            break;
-                                          case 3:
-                                            tipopersona = 'Profesor';
-                                            break;
-                                          case 4:
-                                            tipopersona = 'Secretario General';
-                                            break;
-                                        }
-
                                         return Card(
                                           clipBehavior: Clip.antiAliasWithSaveLayer,
                                           color: FlutterFlowTheme.of(context)
@@ -580,8 +563,11 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                               .fromSTEB(
                                                               25, 10, 0, 0),
                                                           child: Text(
-                                                            valueOrDefault<String>(
-                                                                tipopersona, 'a'// Conditionally set text
+                                                            valueOrDefault<
+                                                                String>(
+                                                              columnListarFirmasRow
+                                                                  .persona,
+                                                              'Documento',
                                                             ),
                                                             style:
                                                             FlutterFlowTheme.of(
