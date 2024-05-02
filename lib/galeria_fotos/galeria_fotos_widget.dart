@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/FullScreenImage.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -61,15 +65,15 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF0E1C27),
+        backgroundColor: ConstansColors.bluedark,
         floatingActionButton:
         Visibility(
-          visible: FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO',
+          visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
           child: FloatingActionButton(
             onPressed: () {
               context.pushNamed('AddFoto');
             },
-            backgroundColor: Color(0xFF086D82),
+            backgroundColor: ConstansColors.cyan,
             elevation: 8,
             child: InkWell(
               splashColor: Colors.transparent,
@@ -120,7 +124,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -132,7 +136,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -194,7 +198,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -215,7 +219,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -245,7 +249,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.departamentoColegio,
-                                                          'de',
+                                                          ConstansTetx.departamento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -272,7 +276,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.provinciaColegio,
-                                                          'pro',
+                                                          ConstansTetx.provincia,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -299,7 +303,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.distritoColegio,
-                                                          'dist',
+                                                          ConstansTetx.distrito,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -316,7 +320,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -325,7 +329,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreEvento,
-                                                          'envet',
+                                                          ConstansTetx.evento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -413,7 +417,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'es',
+                                                          ConstansTetx.estado,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -450,8 +454,8 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -513,7 +517,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                   snapshot.data!;
                                   if(columnListarFotosRowList.length == 0){
                                     return Text(
-                                      "No se han encontrado fotos");
+                                    ConstAlerts.fotosnull);
                                   }else {
                                     return Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -568,7 +572,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                               child: ClipRRect(
                                                                 borderRadius: BorderRadius.circular(8),
                                                                 child: Image.asset(
-                                                                  'assets/images/pdflogo.png',
+                                                                  Sincronizacion.url_pdf,
                                                                   width: 300,
                                                                   height: 200,
                                                                   fit: BoxFit.contain,
@@ -658,7 +662,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                           ),
                                                         ],
                                                       ),
-                                                      if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                      if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                         Align(
                                                           alignment:
                                                           AlignmentDirectional(
@@ -678,7 +682,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                               borderWidth: 2,
                                                               buttonSize: 50,
                                                               fillColor:
-                                                              Color(0xFFAF2D3F),
+                                                              ConstansColors.reddark,
                                                               icon: Icon(
                                                                 Icons.delete,
                                                                 color: FlutterFlowTheme
@@ -818,7 +822,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                           ),
                                                         ],
                                                       ),
-                                                      if (FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                      if (FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                         Align(
                                                           alignment: AlignmentDirectional(1, 1),
                                                           child: Padding(
@@ -828,7 +832,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                               borderRadius: 20,
                                                               borderWidth: 2,
                                                               buttonSize: 50,
-                                                              fillColor: Color(0xFFAF2D3F),
+                                                              fillColor: ConstansColors.reddark,
                                                               icon: Icon(
                                                                 Icons.delete,
                                                                 color: FlutterFlowTheme.of(context).primaryBackground,

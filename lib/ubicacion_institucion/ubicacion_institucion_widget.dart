@@ -1,3 +1,5 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/queries/read.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/sqlite_manager.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
@@ -54,7 +56,7 @@ class _UbicacionInstitucionWidgetState
       child: Scaffold(
         key: scaffoldKey,
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFF0E1C27),
+        backgroundColor: ConstansColors.bluedark,
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton:
         Column(
@@ -64,7 +66,7 @@ class _UbicacionInstitucionWidgetState
               onPressed: () async {
                 Navigator.of(context).pop();
               },
-              backgroundColor: Color(0xFF086D82),
+              backgroundColor: ConstansColors.cyan,
               elevation: 8,
               child: InkWell(
                 splashColor: Colors.transparent,
@@ -115,7 +117,7 @@ class _UbicacionInstitucionWidgetState
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -127,7 +129,7 @@ class _UbicacionInstitucionWidgetState
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -189,7 +191,7 @@ class _UbicacionInstitucionWidgetState
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -210,7 +212,7 @@ class _UbicacionInstitucionWidgetState
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -219,7 +221,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreLocalColegio,
-                                                          'ss',
+                                                          ConstansTetx.nombre,
                                                         ),
                                                         textAlign: TextAlign.start,
                                                         style: FlutterFlowTheme.of(context)
@@ -240,7 +242,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.departamentoColegio,
-                                                          'de',
+                                                          ConstansTetx.departamento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -267,7 +269,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.provinciaColegio,
-                                                          'pro',
+                                                          ConstansTetx.provincia,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -294,7 +296,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.distritoColegio,
-                                                          'dist',
+                                                          ConstansTetx.distrito,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -311,7 +313,7 @@ class _UbicacionInstitucionWidgetState
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -320,7 +322,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreEvento,
-                                                          'envet',
+                                                          ConstansTetx.evento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -408,7 +410,7 @@ class _UbicacionInstitucionWidgetState
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'es',
+                                                          ConstansTetx.estado,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -445,8 +447,8 @@ class _UbicacionInstitucionWidgetState
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -484,7 +486,7 @@ class _UbicacionInstitucionWidgetState
                                 controller: _model.googleMapsController,
                                 onCameraIdle: (latLng) => _model.googleMapsCenter = latLng,
                                 initialLocation: _model.googleMapsCenter ??= LatLng(FFAppState().latitud, FFAppState().longitud), // Use variables for latitude and longitude
-                                markerColor: GoogleMarkerColor.violet,
+                                markerColor: GoogleMarkerColor.cyan,
                                 mapType: MapType.normal,
                                 style: GoogleMapStyle.standard,
                                 initialZoom: 14.0,

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/agregar_comentario_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_delete_archivo_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
@@ -64,9 +66,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
       final controller = TabController(length: length, vsync: this);
       controller.addListener(() {
         setState(() {
-          currentTabIndex = controller.index; // Asigna el valor a la variable
-          print('Se cambió a la pestaña $currentTabIndex');
-          print('Controller iNDEX ${controller.index}');
+          currentTabIndex = controller.index;
           _currentTabIndicesList[subSectionIndex] = currentTabIndex;
         });
       });
@@ -158,7 +158,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -170,7 +170,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -232,7 +232,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -253,7 +253,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -283,7 +283,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.departamentoColegio,
-                                                          'de',
+                                                          ConstansTetx.departamento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -310,7 +310,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.provinciaColegio,
-                                                          'pro',
+                                                          ConstansTetx.provincia,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -337,7 +337,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.distritoColegio,
-                                                          'dist',
+                                                          ConstansTetx.distrito,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -354,7 +354,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -363,7 +363,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreEvento,
-                                                          'envet',
+                                                          ConstansTetx.evento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -451,7 +451,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'es',
+                                                          ConstansTetx.estado,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -488,8 +488,8 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -518,7 +518,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                         ),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xFF086D82), // Light background color for contrast
+                          color: ConstansColors.cyan, // Light background color for contrast
                           borderRadius: BorderRadius.circular(8), // Rounded corners for the container
                           boxShadow: [
                             BoxShadow(
@@ -592,17 +592,17 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                         int cantidadRepeticiones;
                                         String? NameSub;
                                         switch (columnListarSubseccionesRow.modoRepeticion) {
-                                          case 'P':
+                                          case ConstansTetx.repeP :
                                             cantidadRepeticiones =  FFAppState().CantP;
-                                            NameSub = 'Pabellón';
+                                            NameSub = ConstansTetx.pabellon;
                                             break;
-                                          case 'A':
+                                          case ConstansTetx.repeA:
                                             cantidadRepeticiones = FFAppState().CantA;
-                                            NameSub = 'Aula';
+                                            NameSub = ConstansTetx.aula;
                                             break;
-                                          case 'S':
+                                          case ConstansTetx.repeS:
                                             cantidadRepeticiones = FFAppState().CantS;
-                                            NameSub = 'SSHH';
+                                            NameSub = ConstansTetx.sshhname;
                                             break;
                                           default:
                                             cantidadRepeticiones = 1;
@@ -628,7 +628,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                       Container(
                                                         padding: EdgeInsets.all(16.0), // Añade un padding interno de 16 píxeles por todos los lados.
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFF1CA8B5), // Color de fondo del container.
+                                                          color: ConstansColors.cyan, // Color de fondo del container.
                                                           borderRadius: BorderRadius.circular(8.0), // Redondea las esquinas del container.
                                                           boxShadow: [ // Añade sombra alrededor del container para un efecto elevado.
                                                             BoxShadow(
@@ -644,7 +644,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                           child: Text(
                                                             valueOrDefault<String>(
                                                               columnListarSubseccionesRow.descripcion, // Obtiene la descripción desde una fila de datos.
-                                                              'Subsección', // Valor por defecto si la descripción es nula.
+                                                              ConstansTetx.subseccion, // Valor por defecto si la descripción es nula.
                                                             ),
                                                             style: FlutterFlowTheme.of(context).titleMedium.override(
                                                               fontFamily: 'Outfit', // Establece la familia de fuente.
@@ -767,7 +767,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                 child: Text(
                                                                                                                   valueOrDefault<String>(
                                                                                                                     columnListarPreguntasRow.descripcionPregunta,
-                                                                                                                    'Pregunta',
+                                                                                                                    ConstansTetx.pregunta,
                                                                                                                   ),
                                                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                                     fontFamily: 'Outfit',
@@ -816,31 +816,61 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                             color: snapshot
                                                                                                                                 .data ==
                                                                                                                                 1
-                                                                                                                                ? Color(0xFF086D82)
-                                                                                                                                : Color(0xFF000000),
+                                                                                                                                ? ConstansColors.cyan
+                                                                                                                                : Colors.black,
                                                                                                                             onPressed: () async {
-                                                                                                                              FFAppState().nombresubSeccion = columnListarSubseccionesRow.descripcion!;
-                                                                                                                              FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
-                                                                                                                              FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
-                                                                                                                              FFAppState().nrmRepeticion = nrm.toString();
-                                                                                                                              await showModalBottomSheet(
-                                                                                                                                isScrollControlled: true,
-                                                                                                                                backgroundColor: Colors.transparent,
-                                                                                                                                enableDrag: false,
-                                                                                                                                context: context,
-                                                                                                                                builder: (context) {
-                                                                                                                                  return GestureDetector(
-                                                                                                                                    onTap: () => _model.unfocusNode.canRequestFocus
-                                                                                                                                        ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                                                                                                                                        : FocusScope.of(context).unfocus(),
-                                                                                                                                    child: Padding(
-                                                                                                                                      padding: MediaQuery.viewInsetsOf(context),
-                                                                                                                                      child: AgregarComentarioWidget(),
-                                                                                                                                    ),
-                                                                                                                                  );
-                                                                                                                                },
-                                                                                                                              ).then((value) => safeSetState(() {}));
-                                                                                                                            },
+                                                                                                                                FFAppState()
+                                                                                                                                    .nombresubSeccion =
+                                                                                                                                columnListarSubseccionesRow
+                                                                                                                                    .descripcion!;
+                                                                                                                                FFAppState()
+                                                                                                                                    .idPlantillaSeccion =
+                                                                                                                                columnListarPreguntasRow
+                                                                                                                                    .idPlantillaSeccion!;
+                                                                                                                                FFAppState()
+                                                                                                                                    .idPregunta =
+                                                                                                                                columnListarPreguntasRow
+                                                                                                                                    .idPregunta!;
+                                                                                                                                FFAppState()
+                                                                                                                                    .nrmRepeticion =
+                                                                                                                                    nrm
+                                                                                                                                        .toString();
+                                                                                                                                await showModalBottomSheet(
+                                                                                                                                  isScrollControlled: true,
+                                                                                                                                  backgroundColor: Colors
+                                                                                                                                      .transparent,
+                                                                                                                                  enableDrag: false,
+                                                                                                                                  context: context,
+                                                                                                                                  builder: (
+                                                                                                                                      context) {
+                                                                                                                                    return GestureDetector(
+                                                                                                                                      onTap: () =>
+                                                                                                                                      _model
+                                                                                                                                          .unfocusNode
+                                                                                                                                          .canRequestFocus
+                                                                                                                                          ? FocusScope
+                                                                                                                                          .of(
+                                                                                                                                          context)
+                                                                                                                                          .requestFocus(
+                                                                                                                                          _model
+                                                                                                                                              .unfocusNode)
+                                                                                                                                          : FocusScope
+                                                                                                                                          .of(
+                                                                                                                                          context)
+                                                                                                                                          .unfocus(),
+                                                                                                                                      child: Padding(
+                                                                                                                                        padding: MediaQuery
+                                                                                                                                            .viewInsetsOf(
+                                                                                                                                            context),
+                                                                                                                                        child: AgregarComentarioWidget(),
+                                                                                                                                      ),
+                                                                                                                                    );
+                                                                                                                                  },
+                                                                                                                                )
+                                                                                                                                    .then((
+                                                                                                                                    value) =>
+                                                                                                                                    safeSetState(() {}));
+                                                                                                                              },
                                                                                                                           );
                                                                                                                         } else {
                                                                                                                           return CircularProgressIndicator();
@@ -857,15 +887,15 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                                             color: snapshot
                                                                                                                                 .data! >
                                                                                                                                 0
-                                                                                                                                ? Color(0xFF086D82)
-                                                                                                                                : Color(0xFF000000),
+                                                                                                                                ? ConstansColors.cyan
+                                                                                                                                : Colors.black,
                                                                                                                             onPressed: () {
-                                                                                                                              FFAppState().nombresubSeccion = columnListarSubseccionesRow.descripcion!;
-                                                                                                                              FFAppState().descPregunta = columnListarPreguntasRow.descripcionPregunta!;
-                                                                                                                              FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
-                                                                                                                              FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
-                                                                                                                              FFAppState().nrmRepeticion = nrm.toString();
-                                                                                                                              context.pushNamed('GaleriaArchivos');
+                                                                                                                                FFAppState().nombresubSeccion = columnListarSubseccionesRow.descripcion!;
+                                                                                                                                FFAppState().descPregunta = columnListarPreguntasRow.descripcionPregunta!;
+                                                                                                                                FFAppState().idPlantillaSeccion = columnListarPreguntasRow.idPlantillaSeccion!;
+                                                                                                                                FFAppState().idPregunta = columnListarPreguntasRow.idPregunta!;
+                                                                                                                                FFAppState().nrmRepeticion = nrm.toString();
+                                                                                                                                context.pushNamed('GaleriaArchivos');
                                                                                                                             },
                                                                                                                           );
                                                                                                                         } else {
@@ -1815,7 +1845,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                               if (pickedTime != null) {
                                                                                                                 setState(() {
                                                                                                                   selectedDateTime = DateTime(picked.year, picked.month, picked.day, pickedTime.hour, pickedTime.minute);
-                                                                                                                  _dateTimeController.text = '${picked.day}/${picked.month}/${picked.year} ${pickedTime.hour}:${pickedTime.minute}';
+                                                                                                                  _dateTimeController.text = '${picked.year}/${picked.month}/${picked.day} ${pickedTime.hour}:${pickedTime.minute}';
                                                                                                                   print(_dateTimeController.text);
                                                                                                                   //print(_dateTimeController.text);
                                                                                                                   if(respuesta == ""){
@@ -1962,7 +1992,7 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                                                                               setState(() {
                                                                                                                 selectedDate = picked;
 
-                                                                                                                Rptadate = '${picked.day}/${picked.month}/${picked.year}';
+                                                                                                                Rptadate = '${picked.year}/${picked.month}/${picked.day}';
                                                                                                                 if(respuesta == ""){
                                                                                                                   if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO'){
                                                                                                                     SQLiteManager.instance.crearRpta(
@@ -3201,7 +3231,7 @@ DateTime fecharpta (String respuesta){
   int minute = int.parse(timeParts[1]);
 
   // Crear el objeto DateTime
-  DateTime fechahoy = DateTime(year, month, day, hour, minute);
+  DateTime fechahoy = DateTime(day, month, year, hour, minute);
   return fechahoy;
 }
 Future<int> buscarcomentario(int pregunta, int seccion, String num, int ficha) async {

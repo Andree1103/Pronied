@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/agregar_comentario_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_edit_inspeccion_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_finalizar_inspeccion_widget.dart';
@@ -64,24 +66,20 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
   int currentTabIndex = 0; // Declaración de la variable fuera del método _addTabController
 
   void _addTabController(int sectionIndex, int subSectionIndex, int length) {
-    // Verifica si la lista de controladores de la sección ya existe
     if (_tabControllersList.length <= sectionIndex) {
       _tabControllersList.add([]);
       _currentTabIndicesList.add([]);
     }
-    // Verifica si la lista de controladores de la subsección ya existe
     if (_tabControllersList[sectionIndex].length <= subSectionIndex) {
       final controller = TabController(length: length, vsync: this);
       controller.addListener(() {
         setState(() {
-          currentTabIndex = controller.index; // Asigna el valor a la variable
-          print('Se cambió a la pestaña $currentTabIndex');
-          print('Controller iNDEX ${controller.index}');
+          currentTabIndex = controller.index;
           _currentTabIndicesList[sectionIndex][subSectionIndex] = currentTabIndex;
         });
       });
       _tabControllersList[sectionIndex].add(controller);
-      _currentTabIndicesList[sectionIndex].add(0); // Establece el índice inicial en 0
+      _currentTabIndicesList[sectionIndex].add(0);
     }
   }
 
@@ -98,7 +96,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF0E1C27),
+        backgroundColor: ConstansColors.bluedark,
         body: SafeArea(
           top: true,
           child: Stack(
@@ -131,7 +129,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -143,7 +141,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -205,7 +203,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -226,7 +224,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -327,7 +325,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -461,8 +459,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -541,7 +539,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                             alignment: AlignmentDirectional(-1, 0),
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: Color(0xFF086D82),
+                                                color: ConstansColors.cyan,
                                                 borderRadius: BorderRadius.circular(8),
                                               ),
                                               child: Align(
@@ -607,17 +605,17 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   int cantidadRepeticiones;
                                                   String? NameSub;
                                                   switch (columnListarSubseccionesRow.modoRepeticion) {
-                                                    case 'P':
+                                                    case ConstansTetx.repeP :
                                                       cantidadRepeticiones =  FFAppState().CantP;
-                                                      NameSub = 'Pabellón';
+                                                      NameSub = ConstansTetx.pabellon;
                                                       break;
-                                                    case 'A':
+                                                    case ConstansTetx.repeA:
                                                       cantidadRepeticiones = FFAppState().CantA;
-                                                      NameSub = 'Aula';
+                                                      NameSub = ConstansTetx.aula;
                                                       break;
-                                                    case 'S':
+                                                    case ConstansTetx.repeS:
                                                       cantidadRepeticiones = FFAppState().CantS;
-                                                      NameSub = 'SSHH';
+                                                      NameSub = ConstansTetx.sshhname;
                                                       break;
                                                     default:
                                                       cantidadRepeticiones = 1;
@@ -654,7 +652,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                   },
                                                                   child: Container(
                                                                     decoration: BoxDecoration(
-                                                                      color: Color(0xFF1CA8B5),
+                                                                      color: ConstansColors.cyan,
                                                                       borderRadius: BorderRadius.circular(10),
                                                                       boxShadow: [
                                                                         BoxShadow(
@@ -675,7 +673,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                                           child: Text(
                                                                           valueOrDefault<String>(
                                                                             subsecciontext,
-                                                                            'Subsección',
+                                                                            ConstansTetx.subseccion,
                                                                           ),
                                                                           style: TextStyle(
                                                                             color: Colors.white,
@@ -737,7 +735,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ],
               ),
-              if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == 'EN REGISTRO')
+              if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                 Align(
                   alignment: AlignmentDirectional(1, 1),
                   child: Padding(
@@ -766,12 +764,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                           },
                         ).then((value) => safeSetState(() {}));
                       },
-                      text: 'Finalizar Inspección',
+                      text: ConstansTetx.finalizar_inspeccion,
                       options: FFButtonOptions(
                         height: 40,
                         padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                         iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        color: Color(0xFF086D82),
+                        color: ConstansColors.cyan,
                         textStyle:
                         FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Outfit',
@@ -789,7 +787,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ),
               Visibility(
-                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == 'REALIZADA' && FFAppState().modificadoMovil == 1,
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == Sincronizacion.realizada && FFAppState().modificadoMovil == Sincronizacion.modificadotrue,
                 child: Align(
                 alignment: AlignmentDirectional(1, 1),
                 child: Padding(
@@ -818,12 +816,12 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                         },
                       ).then((value) => safeSetState(() {}));
                     },
-                    text: 'Editar Inspección',
+                    text: ConstansTetx.editar_inspeccion,
                     options: FFButtonOptions(
                       height: 40,
                       padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                       iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      color: Color(0xFF086D82),
+                      color: ConstansColors.cyan,
                       textStyle:
                       FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Outfit',

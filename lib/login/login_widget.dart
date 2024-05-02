@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/sqlite/sqlite_manager.dart';
 
 import '/backend/api_requests/api_calls.dart';
@@ -115,7 +120,7 @@ class _LoginWidgetState extends State<LoginWidget>
                   height: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF0E1C27), Color(0xFF0E1C27)],
+                      colors: [ConstansColors.bluedark, ConstansColors.bluedark],
                       stops: [0, 1],
                       begin: AlignmentDirectional(0, -1),
                       end: AlignmentDirectional(0, 1),
@@ -142,7 +147,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    'PRONIED',
+                                    ConstansTetx.pronied,
                                     style: FlutterFlowTheme.of(context)
                                         .displaySmall
                                         .override(
@@ -155,7 +160,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 5, 0, 5),
                                     child: Text(
-                                      'Programa Nacional de Infraestructura Educativa',
+                                      ConstansTetx.title,
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .labelLarge
@@ -213,8 +218,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                           ClipRRect(
                                             borderRadius:
                                             BorderRadius.circular(8),
-                                            child: Image.network(
-                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA.svg/2560px-Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA.svg.png',
+                                            child: Image.asset(
+                                              Sincronizacion.url_title,
                                               width: MediaQuery.sizeOf(context)
                                                   .width,
                                               height: MediaQuery.sizeOf(context)
@@ -228,7 +233,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0, 15, 0, 15),
                                             child: Text(
-                                              'SISTEMA DE INSPECCIONES',
+                                              ConstansTetx.sistema_inspecciones,
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(context)
                                                   .titleMedium
@@ -257,7 +262,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 ],
                                                 obscureText: false,
                                                 decoration: InputDecoration(
-                                                  labelText: 'Usuario',
+                                                  labelText: ConstansTetx.usuario,
                                                   labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -347,7 +352,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 obscureText:
                                                 !_model.passwordVisibility,
                                                 decoration: InputDecoration(
-                                                  labelText: 'Contraseña',
+                                                  labelText: ConstansTetx.contrasena,
                                                   labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -446,7 +451,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                               onPressed: () async {
                                                 bool hasInternet = await isConnected();
                                                 if (hasInternet) {
-                                                  print("Estás conectado a Internet.");
+                                                  log("Estás conectado a Internet.");
                                                   var _shouldSetState = false;
                                                   _model.obtenerTok =
                                                   await APIObtenerTOKENCall
@@ -456,7 +461,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .text,
                                                     clave: _model
                                                         .passwordController.text,
-                                                    appId: 'SISMON',
+                                                    appId: Sincronizacion.sismon,
                                                   );
                                                   _shouldSetState = true;
                                                   if ((APIObtenerTOKENCall.response(
@@ -472,7 +477,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     _model.apiResultjyh =
                                                     await ApiTokenFinalCall
                                                         .call(
-                                                      applicationId: 'SISMON',
+                                                      applicationId: Sincronizacion.sismon,
                                                       tokenSesion:
                                                       APIObtenerTOKENCall.code(
                                                         (_model.obtenerTok
@@ -490,7 +495,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       _model.apiResult2ws =
                                                       await ApiAutorizacionCall
                                                           .call(
-                                                        applicationId: 'SISMON',
+                                                        applicationId: Sincronizacion.sismon,
                                                         tokenSesion:
                                                         APIObtenerTOKENCall.code(
                                                           (_model.obtenerTok
@@ -514,7 +519,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              'Acceso satisfactorio',
+                                                              ConstAlerts.loginsuccess,
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme
                                                                     .of(context)
@@ -574,7 +579,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               ?.jsonBody ??
                                                               ''),
                                                         )!;
-                                                        FFAppState().programacreacion= 'Inspeccion Movil';
+                                                        FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
 
                                                         ///TODO INSERT O UPDATE TABLA USER
                                                         final password = _model.passwordController.text;
@@ -723,7 +728,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     return;
                                                   }
                                                 } else {
-                                                  print("No hay conexión a Internet.");
+                                                  log("No hay conexión a Internet.");
                                                   final userlg = await SQLiteManager.instance.VerificarSiExisteUser(
                                                       usuario: _model.emailAddressController.text
                                                   );
@@ -733,7 +738,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          'Usuario no registrado',
+                                                          ConstAlerts.usernot,
                                                           style: TextStyle(
                                                             color: FlutterFlowTheme
                                                                 .of(context)
@@ -757,7 +762,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();        AndroidDeviceInfo androidInfo;
                                                       androidInfo = await deviceInfo.androidInfo;
                                                       FFAppState().cummovil = androidInfo.androidId;
-                                                      FFAppState().programacreacion= 'Inspeccion Movil';
+                                                      FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
                                                       FFAppState().username = userlg.first.username!;
                                                       FFAppState().ubicacionuse = userlg.first.ubicacion!;
                                                       FFAppState().nombrecompletouser = userlg.first.nomcomple!;
@@ -782,7 +787,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           .showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            'Acceso satisfactorio',
+                                                            ConstAlerts.loginsuccess,
                                                             style: TextStyle(
                                                               color: FlutterFlowTheme
                                                                   .of(context)
@@ -809,7 +814,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           .showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            'Usuario o Contraseña incorrectos',
+                                                            ConstAlerts.userincorrect,
                                                             style: TextStyle(
                                                               color: FlutterFlowTheme
                                                                   .of(context)
@@ -829,7 +834,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 }
 
                                               },
-                                              text: 'Iniciar Sesión',
+                                              text: ConstansTetx.iniciar_sesion,
                                               options: FFButtonOptions(
                                                 width: double.infinity,
                                                 height: 44,
@@ -837,7 +842,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     .fromSTEB(0, 0, 0, 0),
                                                 iconPadding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 0, 0, 0),
-                                                color: Color(0xFF086D82),
+                                                color: ConstansColors.cyan,
                                                 textStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall

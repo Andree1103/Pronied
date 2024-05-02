@@ -1,3 +1,6 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -93,7 +96,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                       child: Text(
-                        'Agregar Comentario',
+                        ConstansTetx.agregar_comentario,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Outfit',
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -119,7 +122,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                         autofillHints: [AutofillHints.name],
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Comentario',
+                          labelText: ConstansTetx.comentario,
                           labelStyle: FlutterFlowTheme.of(context)
                               .labelLarge
                               .override(
@@ -180,87 +183,121 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
-                          if(dropdown8OptionsListarFotosRowList.isEmpty) {
-                            SQLiteManager.instance.crearComentario(
-                                idPregunta: FFAppState().idPregunta,
-                                idFicha: FFAppState().IdFicha,
-                                idPlantillaSeccion: FFAppState().idPlantillaSeccion,
-                                observacion: _model.dat1Controller?.text ?? '',
-                                estadoAuditoria: '1',
-                                numeroRepeticion: FFAppState().nrmRepeticion,
-                                usuarioCreacionAuditoria: FFAppState().username,
-                                fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                equipoCreacionAuditoria: FFAppState().cummovil,
-                                programaCreacionAuditoria: FFAppState().programacreacion,
-                                modificadoMovil: 1
-                            );
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Comentario guardado correctamente',
-                                  style: TextStyle(
-                                    color:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
-                                  ),
-                                ),
-                                duration: Duration(milliseconds: 4000),
-                                backgroundColor: FlutterFlowTheme.of(context).primary,
-                              ),
-                            );
-                            setState(() {
-                              SQLiteManager.instance.inspeccion1(
-                                idFicha: FFAppState().IdFicha,
-                                usuarioModificacionAuditoria: FFAppState().username,
-                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                equipoModificacionAuditoria: FFAppState().cummovil,
-                                programaModificacionAuditoria: FFAppState().programacreacion,
+                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO') {
+                            if (dropdown8OptionsListarFotosRowList.isEmpty) {
+                              SQLiteManager.instance.crearComentario(
+                                  idPregunta: FFAppState().idPregunta,
+                                  idFicha: FFAppState().IdFicha,
+                                  idPlantillaSeccion: FFAppState()
+                                      .idPlantillaSeccion,
+                                  observacion: _model.dat1Controller?.text ??
+                                      '',
+                                  estadoAuditoria: '1',
+                                  numeroRepeticion: FFAppState().nrmRepeticion,
+                                  usuarioCreacionAuditoria: FFAppState()
+                                      .username,
+                                  fechaCreacionAuditoria: DateFormat(
+                                      'yyyy-MM-dd HH:mm:ss').format(
+                                      DateTime.now()),
+                                  equipoCreacionAuditoria: FFAppState()
+                                      .cummovil,
+                                  programaCreacionAuditoria: FFAppState()
+                                      .programacreacion,
+                                  modificadoMovil: 1
                               );
-                            });
-                          } else {
-                            SQLiteManager.instance.actualizarComentario(
-                              idPlantillaSeccion: FFAppState().idPlantillaSeccion,
-                              idFicha: FFAppState().IdFicha,
-                              idPregunta: FFAppState().idPregunta,
-                              observacion: _model.dat1Controller?.text ?? '',
-                              estadoAuditoria: '1',
-                              numeroRepeticion: FFAppState().nrmRepeticion,
-                              usuarioModificacionAuditoria: FFAppState().username,
-                              fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                              equipoModificacionAuditoria: FFAppState().cummovil,
-                              programaModificacionAuditoria: FFAppState().programacreacion,
-                              idFichaPreguntaComentario: dropdown8OptionsListarFotosRowList[0].idFichaPreguntaComentario,
-                              idFichaPreguntaComentarioLocal: dropdown8OptionsListarFotosRowList[0].idFichaPreguntaComentarioLocal,
-                              modificadoMovil: 1
-                            );
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Comentario actualizado correctamente',
-                                  style: TextStyle(
-                                    color:
-                                    FlutterFlowTheme.of(context).secondaryBackground,
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    ConstAlerts.comentariosuccess,
+                                    style: TextStyle(
+                                      color:
+                                      FlutterFlowTheme
+                                          .of(context)
+                                          .secondaryBackground,
+                                    ),
                                   ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: FlutterFlowTheme
+                                      .of(context)
+                                      .primary,
                                 ),
-                                duration: Duration(milliseconds: 4000),
-                                backgroundColor: FlutterFlowTheme.of(context).primary,
-                              ),
-                            );
-                            setState(() {
-                              SQLiteManager.instance.inspeccion1(
-                                idFicha: FFAppState().IdFicha,
-                                usuarioModificacionAuditoria: FFAppState().username,
-                                fechaModificacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
-                                equipoModificacionAuditoria: FFAppState().cummovil,
-                                programaModificacionAuditoria: FFAppState().programacreacion,
                               );
-                            });
+                              setState(() {
+                                SQLiteManager.instance.inspeccion1(
+                                  idFicha: FFAppState().IdFicha,
+                                  usuarioModificacionAuditoria: FFAppState()
+                                      .username,
+                                  fechaModificacionAuditoria: DateFormat(
+                                      'yyyy-MM-dd HH:mm:ss').format(
+                                      DateTime.now()),
+                                  equipoModificacionAuditoria: FFAppState()
+                                      .cummovil,
+                                  programaModificacionAuditoria: FFAppState()
+                                      .programacreacion,
+                                );
+                              });
+                            } else {
+                              SQLiteManager.instance.actualizarComentario(
+                                  idPlantillaSeccion: FFAppState()
+                                      .idPlantillaSeccion,
+                                  idFicha: FFAppState().IdFicha,
+                                  idPregunta: FFAppState().idPregunta,
+                                  observacion: _model.dat1Controller?.text ??
+                                      '',
+                                  estadoAuditoria: '1',
+                                  numeroRepeticion: FFAppState().nrmRepeticion,
+                                  usuarioModificacionAuditoria: FFAppState()
+                                      .username,
+                                  fechaModificacionAuditoria: DateFormat(
+                                      'yyyy-MM-dd HH:mm:ss').format(
+                                      DateTime.now()),
+                                  equipoModificacionAuditoria: FFAppState()
+                                      .cummovil,
+                                  programaModificacionAuditoria: FFAppState()
+                                      .programacreacion,
+                                  idFichaPreguntaComentario: dropdown8OptionsListarFotosRowList[0]
+                                      .idFichaPreguntaComentario,
+                                  idFichaPreguntaComentarioLocal: dropdown8OptionsListarFotosRowList[0]
+                                      .idFichaPreguntaComentarioLocal,
+                                  modificadoMovil: 1
+                              );
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    ConstAlerts.comentarioeditsucces,
+                                    style: TextStyle(
+                                      color:
+                                      FlutterFlowTheme
+                                          .of(context)
+                                          .secondaryBackground,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: FlutterFlowTheme
+                                      .of(context)
+                                      .primary,
+                                ),
+                              );
+                              setState(() {
+                                SQLiteManager.instance.inspeccion1(
+                                  idFicha: FFAppState().IdFicha,
+                                  usuarioModificacionAuditoria: FFAppState()
+                                      .username,
+                                  fechaModificacionAuditoria: DateFormat(
+                                      'yyyy-MM-dd HH:mm:ss').format(
+                                      DateTime.now()),
+                                  equipoModificacionAuditoria: FFAppState()
+                                      .cummovil,
+                                  programaModificacionAuditoria: FFAppState()
+                                      .programacreacion,
+                                );
+                              });
+                            }
                           }
-
                         },
-                        text: 'Guardar Comentario',
+                        text: ConstansTetx.guardar_comentario,
                         options: FFButtonOptions(
                           height: 40,
                           padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),

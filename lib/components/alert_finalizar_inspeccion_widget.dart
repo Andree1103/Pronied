@@ -1,3 +1,7 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -79,7 +83,7 @@ class _AlertFinalizarInspeccionWidgetState
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Está usted seguro de finalizar la inspección?',
+                  ConstansTetx.finalizar_inspeccion2,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 15.0,
@@ -221,8 +225,8 @@ class _AlertFinalizarInspeccionWidgetState
                       usuarioModificacionAuditoria: FFAppState().username,
                     );
                     setState(() {
-                      FFAppState().estadoInspeccion = 'REALIZADA';
-                      FFAppState().idestadoInspeccion = 3;
+                      FFAppState().estadoInspeccion = Sincronizacion.realizada;
+                      FFAppState().idestadoInspeccion = Sincronizacion.COMPLETO;
                       SQLiteManager.instance.inspeccion1(
                         idFicha: FFAppState().IdFicha,
                       );
@@ -230,7 +234,7 @@ class _AlertFinalizarInspeccionWidgetState
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Inspección finalizada correctamente',
+                          ConstAlerts.inspeccion_finalizada,
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -246,7 +250,7 @@ class _AlertFinalizarInspeccionWidgetState
                     //context.pushNamed('DatosInspeccion');
                   }
                 },
-                text: 'Aceptar',
+                text: ConstansTetx.aceptar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
@@ -275,7 +279,7 @@ class _AlertFinalizarInspeccionWidgetState
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: 'Cancelar',
+                text: ConstansTetx.cancelar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,

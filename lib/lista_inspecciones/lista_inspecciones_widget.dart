@@ -1,3 +1,7 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/drop_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -89,7 +93,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                             child: Text(
-                              '¿Está usted seguro que desea cerrar sesión?',
+                              ConstAlerts.cerrar_Sesion,
                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                 fontFamily: 'Outfit',
                                 fontSize: 15.0,
@@ -108,7 +112,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Sesión cerrada correctamente.',
+                                    ConstAlerts.logoutsucess,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -119,7 +123,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                 ),
                               );
                             },
-                            text: 'Aceptar',
+                            text: ConstansTetx.aceptar,
                             options: FFButtonOptions(
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               height: 40.0,
@@ -148,7 +152,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                             onPressed: () async {
                               Navigator.of(context).pop(false);
                             },
-                            text: 'Cancelar',
+                            text: ConstansTetx.cancelar,
                             options: FFButtonOptions(
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               height: 40.0,
@@ -192,7 +196,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100),
             child: AppBar(
-              backgroundColor: Color(0xFF0E1C27),
+              backgroundColor: ConstansColors.bluedark,
               automaticallyImplyLeading: false,
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
@@ -211,7 +215,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                               padding:
                               EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                               child: Text(
-                                'Inspecciones',
+                                ConstansTetx.inspecciones,
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
@@ -290,7 +294,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height * 1,
                     decoration: BoxDecoration(
-                      color: Color(0xFF0E1C27),
+                      color: ConstansColors.bluedark,
                       border: Border.all(
                         color: Colors.transparent,
                         width: 0,
@@ -354,18 +358,18 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                             ),
                                           ),
                                           Tab(
-                                            text: 'Todos',
+                                            text: ConstansTetx.todos,
                                           ),
                                         ],
                                       ),
                                       Tab(
-                                        text: 'En Proceso',
+                                        text: ConstansTetx.en_proceso1,
                                       ),
                                       Tab(
-                                        text: 'Realizada',
+                                        text: ConstansTetx.realizada1,
                                       ),
                                       Tab(
-                                        text: 'Programadas',
+                                        text: ConstansTetx.programadas1,
                                       ),
                                     ],
                                     controller: _model.tabBarController,
@@ -432,7 +436,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesRowList.isEmpty
                                                         ? [
-                                                      Text("No se han encontrado inspecciones"),
+                                                      Text(ConstAlerts.inspeccionesnull),
                                                     ]
                                                         : List.generate(
                                                         columnListarInspeccionesRowList
@@ -613,11 +617,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                               child: Text(
                                                                                                 valueOrDefault<String>(
                                                                                                   columnListarInspeccionesRow.codigoLocalColegio,
-                                                                                                  's',
+                                                                                                  'cod',
                                                                                                 ),
                                                                                                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: 'Outfit',
-                                                                                                  color: Color(0xFF086D82),
+                                                                                                  color: ConstansColors.cyan,
                                                                                                   fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                               ),
@@ -629,7 +633,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                 fontFamily: 'Outfit',
-                                                                                                color: Color(0xFF086D82),
+                                                                                                color: ConstansColors.cyan,
                                                                                                 fontWeight: FontWeight.bold,
                                                                                               ),
                                                                                             ),
@@ -644,7 +648,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRow.departamentoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.departamento,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -659,7 +663,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRow.provinciaColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.provincia,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -674,7 +678,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRow.distritoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.distrito,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -718,7 +722,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 String>(
                                                                               columnListarInspeccionesRow
                                                                                   .nombreEvento,
-                                                                              'ssss',
+                                                                              ConstansTetx.nombre,
                                                                             ),
                                                                             style: FlutterFlowTheme.of(
                                                                                 context)
@@ -794,7 +798,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         Text(
                                                                                           valueOrDefault<String>(
                                                                                             columnListarInspeccionesRow.estado,
-                                                                                            'estado',
+                                                                                            ConstansTetx.estado,
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium,
                                                                                         ),
@@ -834,8 +838,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesRow.modificadoMovil == 0
-                                                                                                ? 'Sincronizado'
-                                                                                                : 'No Sincronizado', // Conditionally set text
+                                                                                                ? ConstansTetx.SINCRONIZADO
+                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -910,7 +914,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesProcessRowList.isEmpty
                                                         ? [
-                                                      Text("No se han encontrado inspecciones"),
+                                                      Text(ConstAlerts.inspeccionesnull),
                                                     ] : List.generate(
                                                         columnListarInspeccionesProcessRowList
                                                             .length,
@@ -1053,8 +1057,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Icon(
                                                                             Icons
                                                                                 .school,
-                                                                            color: Color(
-                                                                                0xFF086D82),
+                                                                            color: ConstansColors.cyan,
                                                                             size: 35,
                                                                           ),
                                                                           Expanded(
@@ -1093,7 +1096,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                                 ),
                                                                                                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: 'Outfit',
-                                                                                                  color: Color(0xFF086D82),
+                                                                                                  color: ConstansColors.cyan,
                                                                                                   fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                               ),
@@ -1105,7 +1108,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                 fontFamily: 'Outfit',
-                                                                                                color: Color(0xFF086D82),
+                                                                                                color: ConstansColors.cyan,
                                                                                                 fontWeight: FontWeight.bold,
                                                                                               ),
                                                                                             ),
@@ -1120,7 +1123,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProcessRow.departamentoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.departamento,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1135,7 +1138,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProcessRow.provinciaColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.provincia,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1150,7 +1153,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProcessRow.distritoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.distrito,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1194,7 +1197,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 String>(
                                                                               columnListarInspeccionesProcessRow
                                                                                   .nombreEvento,
-                                                                              'ssss',
+                                                                              ConstansTetx.nombre,
                                                                             ),
                                                                             style: FlutterFlowTheme.of(
                                                                                 context)
@@ -1270,7 +1273,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         Text(
                                                                                           valueOrDefault<String>(
                                                                                             columnListarInspeccionesProcessRow.estado,
-                                                                                            'estado',
+                                                                                            ConstansTetx.estado,
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium,
                                                                                         ),
@@ -1310,8 +1313,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesProcessRow.modificadoMovil == 0
-                                                                                                ? 'Sincronizado'
-                                                                                                : 'No Sincronizado', // Conditionally set text
+                                                                                                ? ConstansTetx.SINCRONIZADO
+                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -1386,7 +1389,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesRealizadaRowList.isEmpty
                                                         ? [
-                                                      Text("No se han encontrado inspecciones"),
+                                                      Text(ConstAlerts.inspeccionesnull),
                                                     ] : List.generate(
                                                         columnListarInspeccionesRealizadaRowList
                                                             .length,
@@ -1528,8 +1531,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Icon(
                                                                             Icons
                                                                                 .school,
-                                                                            color: Color(
-                                                                                0xFF086D82),
+                                                                            color: ConstansColors.cyan,
                                                                             size: 35,
                                                                           ),
                                                                           Expanded(
@@ -1568,7 +1570,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                                 ),
                                                                                                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: 'Outfit',
-                                                                                                  color: Color(0xFF086D82),
+                                                                                                  color: ConstansColors.cyan,
                                                                                                   fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                               ),
@@ -1580,7 +1582,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                 fontFamily: 'Outfit',
-                                                                                                color: Color(0xFF086D82),
+                                                                                                color: ConstansColors.cyan,
                                                                                                 fontWeight: FontWeight.bold,
                                                                                               ),
                                                                                             ),
@@ -1595,7 +1597,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRealizadaRow.departamentoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.departamento,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1610,7 +1612,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRealizadaRow.provinciaColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.provincia,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1625,7 +1627,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesRealizadaRow.distritoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.distrito,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -1669,7 +1671,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 String>(
                                                                               columnListarInspeccionesRealizadaRow
                                                                                   .nombreEvento,
-                                                                              'ssss',
+                                                                              ConstansTetx.nombre,
                                                                             ),
                                                                             style: FlutterFlowTheme.of(
                                                                                 context)
@@ -1745,7 +1747,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         Text(
                                                                                           valueOrDefault<String>(
                                                                                             columnListarInspeccionesRealizadaRow.estado,
-                                                                                            'estado',
+                                                                                            ConstansTetx.estado,
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium,
                                                                                         ),
@@ -1785,8 +1787,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesRealizadaRow.modificadoMovil == 0
-                                                                                                ? 'Sincronizado'
-                                                                                                : 'No Sincronizado', // Conditionally set text
+                                                                                                ? ConstansTetx.SINCRONIZADO
+                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -1861,7 +1863,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesProgramadaRowList.isEmpty
                                                         ? [
-                                                      Text("No se han encontrado inspecciones"),
+                                                      Text(ConstAlerts.inspeccionesnull),
                                                     ] : List.generate(
                                                         columnListarInspeccionesProgramadaRowList
                                                             .length,
@@ -2005,8 +2007,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                           Icon(
                                                                             Icons
                                                                                 .school,
-                                                                            color: Color(
-                                                                                0xFF086D82),
+                                                                            color: ConstansColors.cyan,
                                                                             size: 35,
                                                                           ),
                                                                           Expanded(
@@ -2045,7 +2046,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                                 ),
                                                                                                 style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: 'Outfit',
-                                                                                                  color: Color(0xFF086D82),
+                                                                                                  color: ConstansColors.cyan,
                                                                                                   fontWeight: FontWeight.bold,
                                                                                                 ),
                                                                                               ),
@@ -2053,11 +2054,11 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                             Text(
                                                                                               valueOrDefault<String>(
                                                                                                 columnListarInspeccionesProgramadaRow.nombreLocalColegio,
-                                                                                                's',
+                                                                                                ConstansTetx.nombre,
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                 fontFamily: 'Outfit',
-                                                                                                color: Color(0xFF086D82),
+                                                                                                color: ConstansColors.cyan,
                                                                                                 fontWeight: FontWeight.bold,
                                                                                               ),
                                                                                             ),
@@ -2072,7 +2073,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProgramadaRow.departamentoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.departamento,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -2087,7 +2088,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProgramadaRow.provinciaColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.provincia,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -2102,7 +2103,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                       Text(
                                                                                         valueOrDefault<String>(
                                                                                           columnListarInspeccionesProgramadaRow.distritoColegio,
-                                                                                          's',
+                                                                                          ConstansTetx.distrito,
                                                                                         ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Outfit',
@@ -2146,7 +2147,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                 String>(
                                                                               columnListarInspeccionesProgramadaRow
                                                                                   .nombreEvento,
-                                                                              'ssss',
+                                                                              ConstansTetx.nombre,
                                                                             ),
                                                                             style: FlutterFlowTheme.of(
                                                                                 context)
@@ -2222,7 +2223,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         Text(
                                                                                           valueOrDefault<String>(
                                                                                             columnListarInspeccionesProgramadaRow.estado,
-                                                                                            'estado',
+                                                                                            ConstansTetx.estado,
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium,
                                                                                         ),
@@ -2262,8 +2263,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesProgramadaRow.modificadoMovil == 0
-                                                                                                ? 'Sincronizado'
-                                                                                                : 'No Sincronizado', // Conditionally set text
+                                                                                                ? ConstansTetx.SINCRONIZADO
+                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],

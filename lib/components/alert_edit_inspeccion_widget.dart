@@ -1,3 +1,7 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -68,7 +72,7 @@ class _AlertEditInspeccionWidgetState extends State<AlertEditInspeccionWidget> {
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Está usted seguro de editar la inspección?',
+                  ConstansTetx.editar_inspeccion2,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 15.0,
@@ -90,8 +94,8 @@ class _AlertEditInspeccionWidgetState extends State<AlertEditInspeccionWidget> {
                     programaModificacionAuditoria: FFAppState().programacreacion,
                   );
                   setState(() {
-                    FFAppState().estadoInspeccion = 'EN REGISTRO';
-                    FFAppState().idestadoInspeccion = 4;
+                    FFAppState().estadoInspeccion = Sincronizacion.en_registro;
+                    FFAppState().idestadoInspeccion = Sincronizacion.INCOMPLETO;
                     SQLiteManager.instance.inspeccion1(
                       idFicha: FFAppState().IdFicha,
                       usuarioModificacionAuditoria: FFAppState().username,
@@ -103,7 +107,7 @@ class _AlertEditInspeccionWidgetState extends State<AlertEditInspeccionWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Inspección actualizada correctamente.',
+                        ConstAlerts.inspeccion_Actualizada,
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -117,7 +121,7 @@ class _AlertEditInspeccionWidgetState extends State<AlertEditInspeccionWidget> {
 
                   //context.pushNamed('DatosGenerales');
                 },
-                text: 'Aceptar',
+                text: ConstansTetx.aceptar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
@@ -146,7 +150,7 @@ class _AlertEditInspeccionWidgetState extends State<AlertEditInspeccionWidget> {
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: 'Cancelar',
+                text: ConstansTetx.cancelar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,

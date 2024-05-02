@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/api_requests/api_calls.dart';
@@ -78,7 +80,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Está usted seguro que desea sincronizar?',
+                  ConstansTetx.sincronizarprgunta,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Outfit',
                     fontSize: 16.0,
@@ -119,8 +121,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: '48',
-                              tag: '1049',
+                              codigoapp: Sincronizacion.codigoapp,
+                              tag: Sincronizacion.tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -134,12 +136,12 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                                 uploadDocumento: 1,
                               );
                             } else {
-                              print('La llamada ficha firmas falló con el código de estado: ${response.statusCode}');
+                              log('La llamada ficha firmas falló con el código de estado: ${response.statusCode}');
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Error en el servicio de carga de archivos',
+                                    ConstAlerts.error_carga_archivo,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -153,10 +155,10 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             }
                           } catch (e) {
                             // Manejar excepciones si la llamada falla
-                            print('Se produjo un error al realizar la llamada: $e');
+                            log('Se produjo un error al realizar la llamada: $e');
                           }
                         } else {
-                          print('El archivo no existe en la ruta especificada.');
+                          log('El archivo no existe en la ruta especificada.');
                         }
                       }
                     }
@@ -173,8 +175,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: '48',
-                              tag: '1049',
+                              codigoapp: Sincronizacion.codigoapp,
+                              tag: Sincronizacion.tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -193,7 +195,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Error en el servicio de carga de archivos',
+                                    ConstAlerts.error_carga_archivo,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -207,10 +209,10 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             }
                           } catch (e) {
                             // Manejar excepciones si la llamada falla
-                            print('Se produjo un error al realizar la llamada: $e');
+                            log('Se produjo un error al realizar la llamada: $e');
                           }
                         } else {
-                          print('El archivo no existe en la ruta especificada.');
+                          log('El archivo no existe en la ruta especificada.');
                         }
                       }
                     }
@@ -227,8 +229,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: '48',
-                              tag: '1049',
+                              codigoapp: Sincronizacion.codigoapp,
+                              tag: Sincronizacion.tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -242,12 +244,12 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                                 uploadDocumento: 1,
                               );
                             } else {
-                              print('La llamada falló con el código de estado: ${response.statusCode}');
+                              log('La llamada falló con el código de estado: ${response.statusCode}');
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    'Error en el servicio de carga de archivos',
+                                    ConstAlerts.error_carga_archivo,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -261,10 +263,10 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             }
                           } catch (e) {
                             // Manejar excepciones si la llamada falla
-                            print('Se produjo un error al realizar la llamada: $e');
+                            log('Se produjo un error al realizar la llamada: $e');
                           }
                         } else {
-                          print('El archivo no existe en la ruta especificada.');
+                          log('El archivo no existe en la ruta especificada.');
                         }
                       }
                     }
@@ -1456,13 +1458,13 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                           );
                         }
 
-                        log("Proceso de Sincronizacion Finalizado");
+                        log(ConstansTetx.sincfinalizado);
 
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Sincronización Exitosa.',
+                              ConstAlerts.sincronizacion_exitosa,
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
@@ -1477,7 +1479,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Error al Sincronizar.',
+                              ConstAlerts.error_sincronizar,
                               style: TextStyle(
                                 color:
                                 FlutterFlowTheme.of(context).secondaryBackground,
@@ -1494,7 +1496,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Se requiere conexión a Internet. Por favor, verifique.',
+                          ConstAlerts.no_internet,
                           style: TextStyle(
                             color:
                             FlutterFlowTheme.of(context).secondaryBackground,
@@ -1511,7 +1513,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                   'ListaInspecciones');
                   setState(() {});
                 },
-                text: 'Aceptar',
+                text: ConstansTetx.aceptar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
@@ -1539,7 +1541,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: 'Cancelar',
+                text: ConstansTetx.cancelar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,

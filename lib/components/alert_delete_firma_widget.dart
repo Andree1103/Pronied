@@ -1,3 +1,6 @@
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -65,7 +68,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Está usted seguro de eliminar la firma?',
+                  ConstansTetx.eliminar_firma,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Outfit',
                         fontSize: 16.0,
@@ -97,7 +100,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'La firma ha sido eliminada satisfactoriamente',
+                        ConstAlerts.firma_eliminada,
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -111,7 +114,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
 
                   context.pushNamed('Firmas');
                 },
-                text: 'Aceptar',
+                text: ConstansTetx.aceptar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
@@ -139,7 +142,7 @@ class _AlertDeleteFirmaWidgetState extends State<AlertDeleteFirmaWidget> {
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: 'Cancelar',
+                text: ConstansTetx.cancelar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,

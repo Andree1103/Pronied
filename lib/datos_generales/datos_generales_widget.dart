@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_change_estado_widget.dart';
@@ -139,7 +140,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xFF0E1C27),
+            backgroundColor: ConstansColors.bluedark,
             body: Center(
               child: SizedBox(
                 width: 50,
@@ -157,10 +158,9 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
 
         void _validateEmail(String email) {
           if (!RegExp(r'^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email)) {
-            // Mostrar mensaje de error
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Por favor ingrese un correo válido.'),
+                content: Text(ConstAlerts.correo_denied),
                 duration: Duration(seconds: 2),
               ),
             );
@@ -172,7 +172,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
               : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: Color(0xFF0E1C27),
+            backgroundColor: ConstansColors.bluedark,
             body: SafeArea(
               top: true,
               child: Stack(
@@ -205,7 +205,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             return Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: Color(0xFF0E1C27),
+                                color: ConstansColors.bluedark,
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -217,7 +217,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF0E1C27),
+                                          color: ConstansColors.bluedark,
                                           border: Border.all(
                                             color: Colors.transparent,
                                             width: 0,
@@ -279,7 +279,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                         },
                                                         child: Icon(
                                                           Icons.add_location_rounded,
-                                                          color: Color(0xFF086D82),
+                                                          color: ConstansColors.cyan,
                                                           size: 35,
                                                         ),
                                                       ),
@@ -300,7 +300,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                       Container(
                                                         width: 278,
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFF0E1C27),
+                                                          color: ConstansColors.bluedark,
                                                         ),
                                                         child: Padding(
                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -401,7 +401,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                       Container(
                                                         width: 278,
                                                         decoration: BoxDecoration(
-                                                          color: Color(0xFF0E1C27),
+                                                          color: ConstansColors.bluedark,
                                                         ),
                                                         child: Padding(
                                                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -594,12 +594,12 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                               FlutterFlowTheme.of(context)
                                                   .primaryBtnText,
                                               backgroundColor:
-                                              Color(0xFF086D82),
+                                              ConstansColors.cyan,
                                               unselectedBackgroundColor:
-                                              Color(0xFF0E1C27),
-                                              borderColor: Color(0xFF0E1C27),
+                                              ConstansColors.bluedark,
+                                              borderColor: ConstansColors.bluedark,
                                               unselectedBorderColor:
-                                              Color(0xFF0E1C27),
+                                              ConstansColors.bluedark,
                                               borderWidth: 0,
                                               borderRadius: 8,
                                               elevation: 1,
@@ -709,8 +709,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -831,8 +830,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -1024,8 +1022,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -1154,8 +1151,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -1284,8 +1280,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -1459,7 +1454,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                   alignment: AlignmentDirectional(-1, 0),
                                                                                   child: Container(
                                                                                     decoration: BoxDecoration(
-                                                                                      color: Color(0xFF086D82),
+                                                                                      color: ConstansColors.cyan,
                                                                                     ),
                                                                                     child: Align(
                                                                                       alignment: AlignmentDirectional(-1, -1),
@@ -1519,7 +1514,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1578,7 +1573,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1637,7 +1632,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1707,7 +1702,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1779,7 +1774,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1851,7 +1846,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1923,7 +1918,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -1995,7 +1990,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                         ),
                                                                                         enabledBorder: OutlineInputBorder(
                                                                                           borderSide: BorderSide(
-                                                                                            color: Color(0xFF2C313E),
+                                                                                            color: ConstansColors.border,
                                                                                             width: 0.5,
                                                                                           ),
                                                                                           borderRadius: BorderRadius.circular(12),
@@ -2192,7 +2187,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         borderSide:
                                                                         BorderSide(
                                                                           color:
-                                                                          Color(0xFF2C313E),
+                                                                          ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -2315,7 +2310,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         borderSide:
                                                                         BorderSide(
                                                                           color:
-                                                                          Color(0xFF2C313E),
+                                                                          ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -2436,7 +2431,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                           borderSide:
                                                                           BorderSide(
                                                                             color:
-                                                                            Color(0xFF2C313E),
+                                                                            ConstansColors.border,
                                                                             width:
                                                                             0.5,
                                                                           ),
@@ -2556,7 +2551,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         borderSide:
                                                                         BorderSide(
                                                                           color:
-                                                                          Color(0xFF2C313E),
+                                                                          ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -2729,7 +2724,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                             borderSide:
                                                                             BorderSide(
                                                                               color:
-                                                                              Color(0xFF2C313E),
+                                                                              ConstansColors.border,
                                                                               width:
                                                                               0.5,
                                                                             ),
@@ -2851,7 +2846,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         borderSide:
                                                                         BorderSide(
                                                                           color:
-                                                                          Color(0xFF2C313E),
+                                                                          ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -2976,7 +2971,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                           borderSide:
                                                                           BorderSide(
                                                                             color:
-                                                                            Color(0xFF2C313E),
+                                                                            ConstansColors.border,
                                                                             width:
                                                                             0.5,
                                                                           ),
@@ -3096,7 +3091,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         borderSide:
                                                                         BorderSide(
                                                                           color:
-                                                                          Color(0xFF2C313E),
+                                                                          ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -3243,8 +3238,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -3367,8 +3361,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -3498,8 +3491,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                       OutlineInputBorder(
                                                                         borderSide:
                                                                         BorderSide(
-                                                                          color: Color(
-                                                                              0xFF2C313E),
+                                                                          color: ConstansColors.border,
                                                                           width:
                                                                           0.5,
                                                                         ),
@@ -3624,8 +3616,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -3749,8 +3740,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                     OutlineInputBorder(
                                                                       borderSide:
                                                                       BorderSide(
-                                                                        color: Color(
-                                                                            0xFF2C313E),
+                                                                        color: ConstansColors.border,
                                                                         width:
                                                                         0.5,
                                                                       ),
@@ -4104,7 +4094,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                         borderRadius: 25,
                         borderWidth: 1,
                         buttonSize: 50,
-                        fillColor: Color(0xFF086D82),
+                        fillColor: ConstansColors.cyan,
                         icon: Icon(
                           Icons.save,
                           color:
@@ -4264,7 +4254,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             height: 40,
                             padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            color: Color(0xFF086D82),
+                            color: ConstansColors.cyan,
                             textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                               fontFamily: 'Outfit',
                               color: Colors.white,

@@ -1,6 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/FullScreenImage.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_delete_archivo_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
@@ -55,7 +60,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
       return filePath;
     } catch (e) {
       // En caso de cualquier error, imprime el error y retorna una cadena vacía
-      print('Error al guardar la imagen: $e');
+      log('Error al guardar la imagen: $e');
       return '';
     }
   }
@@ -86,7 +91,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF0E1C27),
+        backgroundColor: ConstansColors.bluedark,
         //backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
 
 
@@ -123,7 +128,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -135,7 +140,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -197,7 +202,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -218,7 +223,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -248,7 +253,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.departamentoColegio,
-                                                          'de',
+                                                          ConstansTetx.departamento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -275,7 +280,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.provinciaColegio,
-                                                          'pro',
+                                                          ConstansTetx.provincia,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -302,7 +307,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.distritoColegio,
-                                                          'dist',
+                                                          ConstansTetx.distrito,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -319,7 +324,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -328,7 +333,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreEvento,
-                                                          'envet',
+                                                          ConstansTetx.evento,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -416,7 +421,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'es',
+                                                          ConstansTetx.estado,
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -453,8 +458,8 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -489,7 +494,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF086D82), // Light background color for contrast
+                                    color: ConstansColors.cyan, // Light background color for contrast
                                     borderRadius: BorderRadius.circular(8), // Rounded corners for the container
                                     boxShadow: [
                                       BoxShadow(
@@ -531,7 +536,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                 margin: EdgeInsets.symmetric(horizontal: 20, vertical : 5),
                                 padding: EdgeInsets.symmetric(horizontal: 16, vertical : 8), // Añade un padding interno de 16 píxeles por todos los lados.
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF1CA8B5), // Color de fondo del container.
+                                  color: ConstansColors.cyan, // Color de fondo del container.
                                   borderRadius: BorderRadius.circular(8.0), // Redondea las esquinas del container.
                                   boxShadow: [ // Añade sombra alrededor del container para un efecto elevado.
                                     BoxShadow(
@@ -642,7 +647,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                     FFAppState().countArchivo = columnListarPreguntaArchivosRowList.length + 1;
                                     if(columnListarPreguntaArchivosRowList.length == 0){
                                       return Text(
-                                        "No se han encontrado archivos");
+                                          ConstAlerts.archivosnull);
                                     }else {
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -698,7 +703,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     child: ClipRRect(
                                                                       borderRadius: BorderRadius.circular(8),
                                                                       child: Image.asset(
-                                                                        'assets/images/pdflogo.png',
+                                                                        Sincronizacion.url_pdf,
                                                                         width: 300,
                                                                         height: 200,
                                                                         fit: BoxFit.contain,
@@ -786,7 +791,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                            if(FFAppState().idestadoInspeccion ==Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                               Align(
                                                                 alignment:
                                                                 AlignmentDirectional(
@@ -806,7 +811,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     borderWidth: 2,
                                                                     buttonSize: 50,
                                                                     fillColor:
-                                                                    Color(0xFFAF2D3F),
+                                                                    ConstansColors.reddark,
                                                                     icon: Icon(
                                                                       Icons.delete,
                                                                       color: FlutterFlowTheme
@@ -1007,7 +1012,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
@@ -1027,7 +1032,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                         borderWidth: 2,
                                                                         buttonSize: 50,
                                                                         fillColor:
-                                                                        Color(0xFFAF2D3F),
+                                                                        ConstansColors.reddark,
                                                                         icon: Icon(
                                                                           Icons.delete,
                                                                           color: FlutterFlowTheme
@@ -1227,7 +1232,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
@@ -1247,7 +1252,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                         borderWidth: 2,
                                                                         buttonSize: 50,
                                                                         fillColor:
-                                                                        Color(0xFFAF2D3F),
+                                                                        ConstansColors.reddark,
                                                                         icon: Icon(
                                                                           Icons.delete,
                                                                           color: FlutterFlowTheme
@@ -1352,7 +1357,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     child: ClipRRect(
                                                                       borderRadius: BorderRadius.circular(8),
                                                                       child: Image.asset(
-                                                                        'assets/images/images.png',
+                                                                        Sincronizacion.urls_png,
                                                                         width: 300,
                                                                         height: 200,
                                                                         fit: BoxFit.contain,
@@ -1440,7 +1445,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                            if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                               Align(
                                                                 alignment:
                                                                 AlignmentDirectional(
@@ -1460,7 +1465,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     borderWidth: 2,
                                                                     buttonSize: 50,
                                                                     fillColor:
-                                                                    Color(0xFFAF2D3F),
+                                                                    ConstansColors.reddark,
                                                                     icon: Icon(
                                                                       Icons.delete,
                                                                       color: FlutterFlowTheme
@@ -1543,7 +1548,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                     onPressed: () async {
                       Navigator.of(context).pop();
                     },
-                    backgroundColor: Color(0xFF086D82),
+                    backgroundColor: ConstansColors.cyan,
                     elevation: 8,
                     shape: CircleBorder(),
                     child: InkWell(
@@ -1564,7 +1569,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                 ),
               ),
               Visibility(
-                visible: FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO',
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
                 child:Align(
                   alignment: AlignmentDirectional(1,1),
                   child: Padding(
@@ -1664,7 +1669,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Archivo guardado correctamente',
+                                ConstAlerts.archivo_success,
                                 style: TextStyle(
                                   color:
                                   FlutterFlowTheme.of(context).secondaryBackground,
@@ -1677,7 +1682,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                           Navigator.of(context);
                           //context.pushNamed('GaleriaArchivos');
                         },
-                        backgroundColor: Color(0xFF086D82),
+                        backgroundColor: ConstansColors.cyan,
                         elevation: 8,
                         shape: CircleBorder(),
                         child: InkWell(
@@ -1779,7 +1784,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Archivo guardado correctamente',
+                                  ConstAlerts.archivo_success,
                                   style: TextStyle(
                                     color:
                                     FlutterFlowTheme.of(context).secondaryBackground,

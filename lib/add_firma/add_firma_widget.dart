@@ -2,6 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
 import 'package:path_provider/path_provider.dart';
@@ -76,22 +79,13 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
 
     Future<String> saveImageToDevice(Uint8List imageBytes) async {
       try {
-        // Obtener el directorio de almacenamiento local
         final appDir = await getApplicationDocumentsDirectory();
-        // Generar un nombre de archivo único
         final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.png';
-        // Construir la ruta del archivo
         final filePath = '${appDir.path}/$fileName';
-        // Escribir los bytes de la imagen en el archivo
         await File(filePath).writeAsBytes(imageBytes);
-        // Guardar la imagen en la galería (opcional)
-        // final result = await ImageGallerySaver.saveFile(filePath);
-        // return result['isSuccess'] ? filePath : '';
-        // Retorna la ruta del archivo guardado en el directorio de documentos
         return filePath;
       } catch (e) {
-        // En caso de cualquier error, imprime el error y retorna una cadena vacía
-        print('Error al guardar la imagen: $e');
+        log('Error al guardar la imagen: $e');
         return '';
       }
     }
@@ -135,7 +129,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                       return Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Color(0xFF0E1C27),
+                          color: ConstansColors.bluedark,
                         ),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -147,7 +141,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF0E1C27),
+                                    color: ConstansColors.bluedark,
                                     border: Border.all(
                                       color: Colors.transparent,
                                       width: 0,
@@ -209,7 +203,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                   },
                                                   child: Icon(
                                                     Icons.add_location_rounded,
-                                                    color: Color(0xFF086D82),
+                                                    color: ConstansColors.cyan,
                                                     size: 35,
                                                   ),
                                                 ),
@@ -230,7 +224,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                 Container(
                                                   width: 278,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFF0E1C27),
+                                                    color: ConstansColors.bluedark,
                                                   ),
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -331,7 +325,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                 Container(
                                                   width: 278,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFF0E1C27),
+                                                    color: ConstansColors.bluedark,
                                                   ),
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -510,7 +504,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 15.0),
                                 child: Text(
-                                  'Agregar Firma',
+                                  ConstansTetx.agregar_firma,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -557,7 +551,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       fontFamily: 'Outfit',
                                       letterSpacing: 0,
                                     ),
-                                    hintText: 'Tipo de Persona',
+                                    hintText: ConstansTetx.tipo_persona,
                                     icon: Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: FlutterFlowTheme.of(context).secondaryText,
@@ -592,7 +586,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                 height: 50.0,
                                 textStyle:
                                 FlutterFlowTheme.of(context).bodyMedium,
-                                hintText: 'Tipo de documento',
+                                hintText: ConstansTetx.tipo_documento,
                                 icon: Icon(
                                   Icons.keyboard_arrow_down_rounded,
                                   color: FlutterFlowTheme.of(context)
@@ -623,7 +617,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   onFocusChange: (hasfocus) async{
                                     bool hasInternet = await isConnected();
                                     if (hasInternet){
-                                      print("Estás conectado a Internet.");
+                                      print(ConstAlerts.conectado_internet);
                                       if(_model.dat1Controller1.text != "" && _model.dat1Controller1.text.length > 7){
                                         final user = await APIRENIEC.call(
                                             dni: _model.dat1Controller1.text
@@ -636,12 +630,12 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                             _model.dat1Controller4.text = APIRENIEC.apellidomaterno(user?.jsonBody)!;
                                           });
                                         }
-                                        log("Error en el servicio");
+                                        log(ConstAlerts.error_servicio);
                                       } else {
                                         log("Input Vacio");
                                       }
                                     } else {
-                                      print("No hay conexión a Internet.");
+                                      print(ConstAlerts.noconectado_internet);
                                     }
                                   },
                                   child: TextFormField(
@@ -651,7 +645,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     autofillHints: [AutofillHints.birthday],
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Número de documento',
+                                      labelText: ConstansTetx.numero_documento,
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelLarge
                                           .override(
@@ -727,7 +721,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Nombres',
+                                    labelText: ConstansTetx.nombres,
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelLarge
                                         .override(
@@ -800,7 +794,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Primer Apellido',
+                                    labelText: ConstansTetx.primer_apellido,
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelLarge
                                         .override(
@@ -873,7 +867,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   autofillHints: [AutofillHints.birthday],
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Segundo Apellido',
+                                    labelText: ConstansTetx.segundo_apellido,
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelLarge
                                         .override(
@@ -937,7 +931,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 10.0),
                               child: Text(
-                                'Firma',
+                                ConstansTetx.firma,
                                 style:
                                 FlutterFlowTheme.of(context).bodyMedium,
                               ),
@@ -977,7 +971,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   onPressed: () async {
                                     _model.signatureController?.clear();
                                   },
-                                  text: 'Limpiar firma',
+                                  text: ConstansTetx.limpiar_firma,
                                   options: FFButtonOptions(
                                     height: 40.0,
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -1020,7 +1014,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Seleccionar tipo de persona',
+                                            ConstAlerts.selec_tip_persona,
                                             style: TextStyle(
                                               color:
                                               FlutterFlowTheme.of(context)
@@ -1041,7 +1035,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Seleccionar tipo de documento',
+                                            ConstAlerts.selec_tip_document,
                                             style: TextStyle(
                                               color:
                                               FlutterFlowTheme.of(context)
@@ -1068,8 +1062,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       nombres: _model.dat1Controller2.text,
                                       apellidoPaterno: _model.dat1Controller3.text,
                                       apellidoMaterno: _model.dat1Controller4.text,
-                                      estadoAuditoria: '1',
-                                      tipoArchivo: 'F',
+                                      estadoAuditoria: Sincronizacion.stado_adutoria,
+                                      tipoArchivo: Sincronizacion.tip_archivo_f,
                                       rutalocal: savedImagePath,
                                       modificacionMovil: 1,
                                       uploadDocumento: 0,
@@ -1091,7 +1085,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                         .showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'La firma ha sido agregada satisfactoriamente',
+                                          ConstAlerts.firma_success,
                                           style: TextStyle(
                                             color:
                                             FlutterFlowTheme.of(context)
@@ -1109,7 +1103,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     //context.pushNamed('Firmas');
                                     Navigator.pop(context);
                                   },
-                                  text: 'Guardar firma',
+                                  text: ConstansTetx.guardar_firma,
                                   options: FFButtonOptions(
                                     height: 40.0,
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -1143,7 +1137,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   onPressed: () async {
                                     context.pushNamed('Firmas');
                                   },
-                                  text: 'Cancelar',
+                                  text: ConstansTetx.cancelar,
                                   options: FFButtonOptions(
                                     height: 40.0,
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -1151,7 +1145,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     iconPadding:
                                     EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                    color: Color(0xFFDE1B1B),
+                                    color: ConstansColors.red,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(

@@ -1,5 +1,10 @@
 import 'dart:io';
 
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/alert_delete_firma_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -58,14 +63,14 @@ class _FirmasWidgetState extends State<FirmasWidget> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFF0E1C27),
+        backgroundColor: ConstansColors.bluedark,
         floatingActionButton: Visibility(
-          visible: FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO',
+          visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
           child: FloatingActionButton(
             onPressed: () {
-              print('FloatingActionButton pressed ...');
+              context.pushNamed('AddFirma');
             },
-            backgroundColor: Color(0xFF086D82),
+            backgroundColor: ConstansColors.cyan,
             elevation: 8,
             child: InkWell(
               splashColor: Colors.transparent,
@@ -117,7 +122,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Color(0xFF0E1C27),
+                            color: ConstansColors.bluedark,
                           ),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -129,7 +134,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0E1C27),
+                                      color: ConstansColors.bluedark,
                                       border: Border.all(
                                         color: Colors.transparent,
                                         width: 0,
@@ -191,7 +196,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                     },
                                                     child: Icon(
                                                       Icons.add_location_rounded,
-                                                      color: Color(0xFF086D82),
+                                                      color: ConstansColors.cyan,
                                                       size: 35,
                                                     ),
                                                   ),
@@ -212,7 +217,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -221,7 +226,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreLocalColegio,
-                                                          'ss',
+                                                          'nombre',
                                                         ),
                                                         textAlign: TextAlign.start,
                                                         style: FlutterFlowTheme.of(context)
@@ -242,7 +247,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.departamentoColegio,
-                                                          'de',
+                                                          'departamento',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -269,7 +274,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.provinciaColegio,
-                                                          'pro',
+                                                          'provincia',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -296,7 +301,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.distritoColegio,
-                                                          'dist',
+                                                          'distrito',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -313,7 +318,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                   Container(
                                                     width: 278,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF0E1C27),
+                                                      color: ConstansColors.bluedark,
                                                     ),
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -322,7 +327,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.nombreEvento,
-                                                          'envet',
+                                                          'evento',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium
@@ -410,7 +415,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                         valueOrDefault<String>(
                                                           containerListarInspeccionesPorIdFichaRowList
                                                               .first.estado,
-                                                          'es',
+                                                          'estado',
                                                         ),
                                                         style: FlutterFlowTheme.of(context)
                                                             .bodyMedium,
@@ -447,8 +452,8 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? 'Sincronizado'
-                                                              : 'No Sincronizado', // Conditionally set text
+                                                              ? ConstansTetx.SINCRONIZADO
+                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -621,8 +626,8 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                                           valueOrDefault<
                                                                               String>(
                                                                             columnListarFirmasRow
-                                                                                .documento == 1 ? 'DNI' : 'Carnet de Extranjeria',
-                                                                            'Documento',
+                                                                                .documento == 1 ? ConstansTetx.dni : ConstansTetx.carnet,
+                                                                            ConstansTetx.documento,
                                                                           ),
                                                                           style: FlutterFlowTheme.of(
                                                                               context)
@@ -672,7 +677,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                                                   String>(
                                                                                 columnListarFirmasRow
                                                                                     .numeroDoc,
-                                                                                '123',
+                                                                                ConstansTetx.num_doc,
                                                                               ),
                                                                               style: FlutterFlowTheme.of(
                                                                                   context)
@@ -708,7 +713,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                                             -1,
                                                                             0),
                                                                         child: Text(
-                                                                          'Nombre',
+                                                                          ConstansTetx.nombre,
                                                                           style: FlutterFlowTheme.of(
                                                                               context)
                                                                               .bodyMedium
@@ -758,7 +763,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                                                   String>(
                                                                                 columnListarFirmasRow
                                                                                     .nombresCompletos,
-                                                                                '123',
+                                                                                ConstansTetx.nombre,
                                                                               ),
                                                                               style: FlutterFlowTheme.of(context)
                                                                                   .bodyMedium
@@ -780,7 +785,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                       ),
                                                     ],
                                                   ),
-                                                  if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO')
+                                                  if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
                                                     Align(
                                                       alignment:
                                                       AlignmentDirectional(1, 1),
@@ -795,7 +800,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                           borderRadius: 20,
                                                           borderWidth: 2,
                                                           buttonSize: 50,
-                                                          fillColor: Color(0xFFAF2D3F),
+                                                          fillColor: ConstansColors.reddark,
                                                           icon: Icon(
                                                             Icons.delete,
                                                             color: FlutterFlowTheme.of(
@@ -858,7 +863,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                               );
                             } else {
                                 return Text(
-                                  "No se han encontrado Firmas",
+                                  ConstAlerts.firmasnull,
                                   textAlign: TextAlign.center,
                                 );
                             }

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/close_widget.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/sincronizar_widget.dart';
 import 'package:path_provider/path_provider.dart';
@@ -177,7 +178,7 @@ class _DropWidgetState extends State<DropWidget> {
                       },
                     ).then((value) => safeSetState(() {}));
                   },
-                  text: 'Sincronizar Datos',
+                  text: ConstansTetx.sincronizar_datos,
                   options: FFButtonOptions(
                     width: MediaQuery.sizeOf(context).width * 0.6,
                     height: 40.0,
@@ -226,7 +227,7 @@ class _DropWidgetState extends State<DropWidget> {
                   if(textListarPreguntasRowList.isNotEmpty){
                     var lastsin = textListarPreguntasRowList.last.fecha;
                     if(lastsin!.isEmpty){
-                      mensjafinal = 'No se ha completado ninguna sincronización.';
+                      mensjafinal = ConstansTetx.sincronull;
                     }
                     var Mensaje = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.parse(textListarPreguntasRowList.last.fecha!));
                     mensjafinal = 'Última sincronización: ${Mensaje}';
@@ -235,7 +236,7 @@ class _DropWidgetState extends State<DropWidget> {
                   return Text(
                     valueOrDefault<String>(
                       mensjafinal,
-                      'No se ha completado ninguna sincronización.',
+                      ConstansTetx.sincronull,
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Outfit',
@@ -281,7 +282,7 @@ class _DropWidgetState extends State<DropWidget> {
                           },
                         ).then((value) => safeSetState(() {}));
                       },
-                      text: 'Cerrar Sesión',
+                      text: ConstansTetx.close_sesion,
                       options: FFButtonOptions(
                         width: MediaQuery.sizeOf(context).width * 0.30,
                         height: 40.0,

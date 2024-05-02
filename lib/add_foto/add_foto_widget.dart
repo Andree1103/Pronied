@@ -1,5 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -29,19 +34,13 @@ String? savedImagePath;
 
 Future<String> saveImageToDevice(FFUploadedFile imageFile) async {
   try {
-    // Obtener el directorio de almacenamiento local
     final appDir = await getApplicationDocumentsDirectory();
-    // Generar un nombre de archivo único
     final fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.png';
-    // Construir la ruta del archivo
     final filePath = '${appDir.path}/$fileName';
-    // Escribir los bytes de la imagen en el archivo
     await File(filePath).writeAsBytes(imageFile.bytes!);
-    // Retorna la ruta del archivo guardado en el directorio de documentos
     return filePath;
   } catch (e) {
-    // En caso de cualquier error, imprime el error y retorna una cadena vacía
-    print('Error al guardar la imagen: $e');
+    log('Error al guardar la imagen: $e');
     return '';
   }
 }
@@ -121,7 +120,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                       return Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Color(0xFF0E1C27),
+                          color: ConstansColors.bluedark,
                         ),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -133,7 +132,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF0E1C27),
+                                    color: ConstansColors.bluedark,
                                     border: Border.all(
                                       color: Colors.transparent,
                                       width: 0,
@@ -195,7 +194,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                   },
                                                   child: Icon(
                                                     Icons.add_location_rounded,
-                                                    color: Color(0xFF086D82),
+                                                    color: ConstansColors.cyan,
                                                     size: 35,
                                                   ),
                                                 ),
@@ -216,7 +215,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                 Container(
                                                   width: 278,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFF0E1C27),
+                                                    color: ConstansColors.bluedark,
                                                   ),
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -317,7 +316,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                 Container(
                                                   width: 278,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFF0E1C27),
+                                                    color: ConstansColors.bluedark,
                                                   ),
                                                   child: Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -451,8 +450,8 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                     ),
                                                     Text(
                                                         containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                            ? 'Sincronizado'
-                                                            : 'No Sincronizado', // Conditionally set text
+                                                            ? ConstansTetx.SINCRONIZADO
+                                                            : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
                                                         style: FlutterFlowTheme.of(context).bodyMedium
                                                     ),
                                                   ],
@@ -498,7 +497,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
                                   child: Text(
-                                    'Agregar Foto',
+                                    ConstansTetx.agregar_foto,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -522,7 +521,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                     autofillHints: [AutofillHints.birthday],
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Título de foto',
+                                      labelText: ConstansTetx.titulo_foto,
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelLarge
                                           .override(
@@ -594,7 +593,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                     autofillHints: [AutofillHints.name],
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Comentario',
+                                      labelText: ConstansTetx.comentario,
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelLarge
                                           .override(
@@ -672,7 +671,6 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          print("tocando mause");
                                           final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
                                             context: context,
@@ -729,7 +727,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         },
                                         child: Icon(
                                           Icons.camera_alt_outlined,
-                                          color: Color(0xFF086D82),
+                                          color: ConstansColors.cyan,
                                           size: 35.0,
                                         ),
 
@@ -814,18 +812,13 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                           programaModificacionAuditoria: FFAppState().programacreacion,
                                         );
                                       });
-                                      /*await SQLiteManager.instance.crearFoto(
-                                        titulo: _model.dat1Controller1.text,
-                                        comentario: _model.dat1Controller2.text,
-                                        imagen: savedImagePath,
-                                      );*/
 
                                       await SQLiteManager.instance.crearFichaArchivo(
                                         idFicha: FFAppState().IdFicha,
                                         titulo: _model.dat1Controller1.text,
                                         comentario: _model.dat1Controller2.text,
                                         rutalocal: savedImagePath,
-                                        estadoAuditoria: '1',
+                                        estadoAuditoria: Sincronizacion.stado_adutoria,
                                         modificadoMovil: 1,
                                         uploadDocumento: 0,
                                         fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
@@ -834,14 +827,11 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         usuarioCreacionAuditoria: FFAppState().username,
                                       );
 
-
-
-
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'La foto ha sido agregada satisfactoriamente',
+                                            ConstAlerts.foto_success,
                                             style: TextStyle(
                                               color:
                                               FlutterFlowTheme.of(context)
@@ -849,17 +839,15 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                             ),
                                           ),
                                           duration:
-                                          Duration(milliseconds: 4000),
+                                          Duration(milliseconds: 2000),
                                           backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .primary,
                                         ),
                                       );
-                                      //Navigator.of(context);
-                                      //context.pushNamed('GaleriaFotos');
                                       Navigator.pop(context);
                                     },
-                                    text: 'Guardar foto',
+                                    text: ConstansTetx.guardar_foto,
                                     options: FFButtonOptions(
                                       height: 40.0,
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -867,7 +855,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                       iconPadding:
                                       EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFF086D82),
+                                      color: ConstansColors.cyan,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
@@ -893,7 +881,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                     onPressed: () async {
                                       context.pushNamed('GaleriaFotos');
                                     },
-                                    text: 'Cancelar',
+                                    text: ConstansTetx.cancelar,
                                     options: FFButtonOptions(
                                       height: 40.0,
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -901,7 +889,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                       iconPadding:
                                       EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFFDE1B1B),
+                                      color: Colors.red,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(

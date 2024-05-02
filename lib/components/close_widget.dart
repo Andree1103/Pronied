@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/api_requests/api_calls.dart';
@@ -78,7 +80,7 @@ class _CloseWidgetState extends State<CloseWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  '¿Está usted seguro que desea cerrar sesión?',
+                  ConstansTetx.cerrar_sesion,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Outfit',
                     fontSize: 16.0,
@@ -96,7 +98,7 @@ class _CloseWidgetState extends State<CloseWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Sesión cerrada correctamente.',
+                        ConstAlerts.cerrar_sesion,
                         style: TextStyle(
                           color:
                           FlutterFlowTheme.of(context).secondaryBackground,
@@ -107,7 +109,7 @@ class _CloseWidgetState extends State<CloseWidget> {
                     ),
                   );
                 },
-                text: 'Aceptar',
+                text: ConstansTetx.aceptar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
@@ -135,7 +137,7 @@ class _CloseWidgetState extends State<CloseWidget> {
                 onPressed: () async {
                   Navigator.pop(context);
                 },
-                text: 'Cancelar',
+                text: ConstansTetx.cancelar,
                 options: FFButtonOptions(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: 40.0,
