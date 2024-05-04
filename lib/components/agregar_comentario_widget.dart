@@ -1,4 +1,5 @@
-import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -43,6 +44,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
 
     super.dispose();
   }
+  var edit = FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro ? false : true;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +121,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                             ),
                         focusNode: _model.dat1FocusNode,
                         autofocus: true,
+                        readOnly: edit,
                         autofillHints: [AutofillHints.name],
                         obscureText: false,
                         decoration: InputDecoration(
@@ -162,7 +165,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                           ),
                           filled: true,
                           fillColor:
-                          FlutterFlowTheme.of(context).primaryBtnText,
+                          edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                         ),
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Outfit',
@@ -181,9 +184,11 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                     alignment: AlignmentDirectional(0, 0),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
-                      child: FFButtonWidget(
+                      child: Visibility(
+                        visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro,
+                          child: FFButtonWidget(
                         onPressed: () {
-                          if(FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO') {
+                          if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro) {
                             if (dropdown8OptionsListarFotosRowList.isEmpty) {
                               SQLiteManager.instance.crearComentario(
                                   idPregunta: FFAppState().idPregunta,
@@ -317,7 +322,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                      ),
+                      )),
                     ),
                   ),
                 ],

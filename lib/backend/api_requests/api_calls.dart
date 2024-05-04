@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:typed_data';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansEnpoints.dart';
+
 import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,41 +12,8 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-class APIDatosCall {
-  static Future<ApiCallResponse> call() async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'API Datos',
-      apiUrl: 'https://jsonplaceholder.typicode.com/todos/1',
-      callType: ApiCallType.GET,
-      headers: {},
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
-    );
-  }
 
-  static int? userId(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.userId''',
-      ));
-  static int? id(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.id''',
-      ));
-  static String? nombre(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.title''',
-      ));
-  static dynamic datos(dynamic response) => getJsonField(
-        response,
-        r'''$.datos''',
-      );
-}
-
-class APIRENIEC {
+class APIRENIEC1 {
   static Future<ApiCallResponse> call({
     String? dni = '',
 }) async {
@@ -58,8 +27,7 @@ class APIRENIEC {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Reniec',
-      //apiUrl: 'https://calidad.ngrok.io/maestroback/api/persona/v1/consulta-tipo-documento',
-      apiUrl: 'https://calidad.pronied.gob.pe/maestroback/api/persona/v1/consulta-tipo-documento',
+      apiUrl: ConstEnpoints.api_reniec,
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -111,8 +79,7 @@ class UploaddocCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'uploaddoc',
-      apiUrl: 'https://cargaarchivos.ngrok.io/segedo/api/genimagen/uploaddocumentos',
-      //apiUrl: 'https://calidad.pronied.gob.pe/segedo/api/genimagen/uploaddocumentos',
+      apiUrl: ConstEnpoints.api_upload,
       callType: ApiCallType.POST,
       headers: {},
       params: {
@@ -173,8 +140,7 @@ ${corche}''';
     return ApiManager.instance.makeApiCall(
       callName: 'API PRONIED',
       apiUrl:
-      //'https://calidad.pronied.gob.pe/monitoreoback/api/sincronizacion/sincronizar',
-      'https://inspeccionesback.ngrok.io/monitoreoback/api/sincronizacion/sincronizar',
+      ConstEnpoints.api_proniedcall,
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1292,8 +1258,7 @@ class APIObtenerTOKENCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Obtener TOKEN',
-      apiUrl: 'https://autenticacion.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
-      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autenticacion-app',
+      apiUrl: ConstEnpoints.api_obtenertoken,
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1343,8 +1308,7 @@ class ApiAutorizacionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API AUTORIZACION',
-      apiUrl: 'https://autenticacion.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
-      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/autorizacion',
+      apiUrl: ConstEnpoints.api_autorizacion,
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1465,8 +1429,7 @@ class ApiTokenFinalCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API TOKEN FINAL',
-      apiUrl: 'https://autenticacion.ngrok.io/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
-      //apiUrl: 'https://calidad.pronied.gob.pe/pronied-servicio-seguridad/api/oauth/v1/access_token-app',
+      apiUrl: ConstEnpoints.api_tokenfinal,
       callType: ApiCallType.POST,
       headers: {},
       params: {},

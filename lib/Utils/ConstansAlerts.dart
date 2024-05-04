@@ -33,4 +33,6 @@ class ConstAlerts {
   static const sincronizacion_exitosa = 'Sincronización Exitosa.';
   static const error_sincronizar = 'Error al Sincronizar.';
   static const no_internet = 'Se requiere conexión a Internet. Por favor, verifique.';
+  static const iniciarsesion_error = 'Error al iniciar sesión con el servicio.';
+  static const iniciarsesion_local = 'Error en el servicio; iniciando sesión en modo local.';
 }

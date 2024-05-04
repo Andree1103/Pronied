@@ -5,7 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
-import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
@@ -473,7 +473,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       ((_model.obtenerTok
                                                           ?.succeeded ??
                                                           true) ==
-                                                          true)) {
+                                                          true) && _model.obtenerTok?.statusCode == 200) {
                                                     _model.apiResultjyh =
                                                     await ApiTokenFinalCall
                                                         .call(
@@ -491,7 +491,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           ?.jsonBody ??
                                                           ''),
                                                     ) ==
-                                                        'OK') {
+                                                        'OK' && _model.apiResultjyh?.statusCode == 200) {
                                                       _model.apiResult2ws =
                                                       await ApiAutorizacionCall
                                                           .call(
@@ -510,7 +510,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             ?.jsonBody ??
                                                             ''),
                                                       ) ==
-                                                          'OK') {
+                                                          'OK' && _model.apiResult2ws
+                                                          ?.statusCode == 200) {
                                                         ScaffoldMessenger.of(
                                                             context)
                                                             .clearSnackBars();
@@ -697,18 +698,13 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       return;
                                                     }
                                                   } else {
+
                                                     ScaffoldMessenger.of(context)
                                                         .clearSnackBars();
                                                     ScaffoldMessenger.of(context)
                                                         .showSnackBar(
                                                       SnackBar(
-                                                        content: Text(
-                                                          APIObtenerTOKENCall
-                                                              .response(
-                                                            (_model.obtenerTok
-                                                                ?.jsonBody ??
-                                                                ''),
-                                                          )!,
+                                                        content: Text(ConstAlerts.iniciarsesion_local,
                                                           style: TextStyle(
                                                             color: FlutterFlowTheme
                                                                 .of(context)
@@ -723,6 +719,112 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .primaryText,
                                                       ),
                                                     );
+
+                                                    log("No hay conexión a Internet.");
+                                                    final userlg = await SQLiteManager.instance.VerificarSiExisteUser(
+                                                        usuario: _model.emailAddressController.text
+                                                    );
+                                                    if(userlg.isEmpty){
+                                                      ScaffoldMessenger.of(
+                                                          context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            ConstAlerts.usernot,
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds: 2000),
+                                                          backgroundColor:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .primaryText,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      final passwordoff = _model.passwordController.text;
+                                                      var bytesoff = utf8.encode(passwordoff); // data being hashed
+                                                      var digestoff = sha256.convert(bytesoff).toString();
+
+                                                      if(userlg.first.usuario == _model.emailAddressController.text && userlg.first.contrase == digestoff){
+                                                        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+                                                        AndroidDeviceInfo androidInfo;
+                                                        androidInfo = await deviceInfo.androidInfo;
+                                                        FFAppState().cummovil = androidInfo.androidId;
+                                                        FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
+                                                        FFAppState().username = userlg.first.username!;
+                                                        FFAppState().ubicacionuse = userlg.first.ubicacion!;
+                                                        FFAppState().nombrecompletouser = userlg.first.nomcomple!;
+                                                        FFAppState().rol = userlg.first.rol!;
+                                                        context.pushNamed(
+                                                          'ListaInspecciones',
+                                                          extra: <String, dynamic>{
+                                                            kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                              hasTransition: true,
+                                                              transitionType:
+                                                              PageTransitionType
+                                                                  .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                            context)
+                                                            .clearSnackBars();
+                                                        ScaffoldMessenger.of(
+                                                            context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              ConstAlerts.loginsuccess,
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds: 2000),
+                                                            backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                context)
+                                                                .primaryText,
+                                                          ),
+
+
+                                                        );
+                                                      }
+                                                      else {
+                                                        ScaffoldMessenger.of(
+                                                            context)
+                                                            .clearSnackBars();
+                                                        ScaffoldMessenger.of(
+                                                            context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              ConstAlerts.userincorrect,
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds: 2000),
+                                                            backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                context)
+                                                                .primaryText,
+                                                          ),
+                                                        );
+                                                      }
+                                                    }
+
                                                     if (_shouldSetState)
                                                       setState(() {});
                                                     return;

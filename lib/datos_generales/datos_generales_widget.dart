@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
-import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstAlerts.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_calls.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_maestro.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_change_estado_widget.dart';
 
 import '../Utils/Constans.dart';
