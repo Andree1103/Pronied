@@ -641,6 +641,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                           "idInspeccion": ins.idInspeccion,
                           "idFicha": ins.idFicha,
                           "idEstado": ins.idEstado,
+                          "modificadoMovil": ins.modificadoMovil,
                           "usuarioCreacionAuditoria": ins.usuarioCreacionAuditoria == "null" ? null : ins.usuarioCreacionAuditoria,
                           "usuarioModificacionAuditoria": ins.usuarioModificacionAuditoria == "null" ? null : ins.usuarioModificacionAuditoria,
                           "fechaCreacionAuditoria": ins.fechaCreacionAuditoria == "null" ? null : ins.fechaCreacionAuditoria,
@@ -703,6 +704,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                       corcheJson: jsonn,
                       token: FFAppState().tokenFinal
                     );
+                    //var jsonstring2 = jsonEncode(_model.apiResponseDatos);
                     if(_model.apiResponseDatos?.statusCode == 401)
                     {
                       context.pushNamed(

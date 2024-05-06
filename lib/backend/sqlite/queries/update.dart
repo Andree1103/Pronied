@@ -288,6 +288,7 @@ INSERT INTO Fichas (
     FechaModificacionAuditoria,
     EquipoCreacionAuditoria,
     EquipoModificacionAuditoria,
+    ProgramaCreacionAuditoria,
     ProgramaModificacionAuditoria,
     modificadoMovil
     ) VALUES ('${idFicha}','${idPlantilla}',
@@ -327,7 +328,8 @@ INSERT INTO Fichas (
 '${equipoCreacion}',
 '${equipoModificacion}',
 '${programaCreacion}',
-'${programaModificacion}'
+'${programaModificacion}',
+0
 );
 ''';
   return database.rawQuery(query);
@@ -763,7 +765,7 @@ SET
     ProgramaCreacionAuditoria = '${programaCreacionAuditoria}',
     ProgramaModificacionAuditoria = '${programaModificacionAuditoria}'
 WHERE 
-    CodigoModular = '${idFichaModular}';
+    IdFichaModular = '${idFichaModular}';
 
 
 ''';
