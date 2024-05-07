@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:typed_data';
+import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansEnpoints.dart';
+
 import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,8 +27,7 @@ class APIRENIEC {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'API Reniec',
-      //apiUrl: 'https://calidad.ngrok.io/maestroback/api/persona/v1/consulta-tipo-documento',
-      apiUrl: 'https://calidad.pronied.gob.pe/maestroback/api/persona/v1/consulta-tipo-documento',
+      apiUrl: ConstEnpoints.api_reniec,
       callType: ApiCallType.POST,
       headers: {},
       params: {},
