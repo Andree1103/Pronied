@@ -33,6 +33,7 @@ class SincronizarWidget extends StatefulWidget {
 class _SincronizarWidgetState extends State<SincronizarWidget> {
   late SincronizarModel _model;
 
+
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
@@ -828,6 +829,23 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                                 idFichaModular: ApiProniedCall.idFichaModular(_model.apiResponseDatos?.jsonBody, i)
                             );
                             if (exist.length > 0 ) {
+                              // Función para manejar valores nulos y el string 'null'
+                              int validarValor(dynamic valor) {
+                                if (valor == null || valor == 'null') {
+                                  return 0;
+                                }
+                                return valor as int; // Asegúrate de que el valor es del tipo correcto.
+                              }
+                              int? numeroHombre = ApiProniedCall.numeroHombreMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroMujere =  ApiProniedCall.numeroMujeresMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroAlumno =  ApiProniedCall.numeroAlumnoMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroDocent =  ApiProniedCall.numeroDocenteMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroSeccio =   ApiProniedCall.numeroSeccinMod(_model.apiResponseDatos?.jsonBody, i);
+                              numeroHombre = validarValor(numeroHombre);
+                              numeroMujere = validarValor(numeroMujere);
+                              numeroAlumno = validarValor(numeroAlumno);
+                              numeroDocent = validarValor(numeroDocent);
+                              numeroSeccio = validarValor(numeroSeccio);
                               await SQLiteManager.instance.actualizarFichaModAPI(
                                 idFichaModular:  ApiProniedCall.idFichaModular(_model.apiResponseDatos?.jsonBody, i),
                                 idFicha:  ApiProniedCall.idFichaModularFicha(_model.apiResponseDatos?.jsonBody, i),
@@ -841,11 +859,11 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                                 tipoSexo:  ApiProniedCall.tipoSexoMod(_model.apiResponseDatos?.jsonBody, i),
                                 codigoTurno:  ApiProniedCall.codigoTurnoMod(_model.apiResponseDatos?.jsonBody, i),
                                 turno:   ApiProniedCall.turnoMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroHombres:  ApiProniedCall.numeroHombreMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroMujeres:  ApiProniedCall.numeroMujeresMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroAlumnos:  ApiProniedCall.numeroAlumnoMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroDocente:  ApiProniedCall.numeroDocenteMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroSeccion:  ApiProniedCall.numeroSeccinMod(_model.apiResponseDatos?.jsonBody, i),
+                                numeroHombres:  numeroHombre,
+                                numeroMujeres:  numeroMujere,
+                                numeroAlumnos:  numeroAlumno,
+                                numeroDocente:  numeroDocent,
+                                numeroSeccion:  numeroSeccio,
                                 estadoAuditoria:  ApiProniedCall.estadoAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
                                 usuacrioCreacionAudi:  ApiProniedCall.usuarioCreacionAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
                                 usuarioModificacionAudi:  ApiProniedCall.usuarioModificacionAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
@@ -858,6 +876,22 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
 
                               );
                             } else {
+                              int validarValor(dynamic valor) {
+                                if (valor == null || valor == 'null') {
+                                  return 0;
+                                }
+                                return valor as int; // Asegúrate de que el valor es del tipo correcto.
+                              }
+                              int? numeroHombre = ApiProniedCall.numeroHombreMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroMujere =  ApiProniedCall.numeroMujeresMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroAlumno =  ApiProniedCall.numeroAlumnoMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroDocent =  ApiProniedCall.numeroDocenteMod(_model.apiResponseDatos?.jsonBody, i);
+                              int? numeroSeccio =   ApiProniedCall.numeroSeccinMod(_model.apiResponseDatos?.jsonBody, i);
+                              numeroHombre = validarValor(numeroHombre);
+                              numeroMujere = validarValor(numeroMujere);
+                              numeroAlumno = validarValor(numeroAlumno);
+                              numeroDocent = validarValor(numeroDocent);
+                              numeroSeccio = validarValor(numeroSeccio);
                               await SQLiteManager.instance.cargarFichaModular(
                                 idFichaModular: ApiProniedCall.idFichaModular(_model.apiResponseDatos?.jsonBody, i),
                                 idFicha: ApiProniedCall.idFichaModularFicha(_model.apiResponseDatos?.jsonBody, i),
@@ -871,11 +905,11 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                                 tipoSexo: ApiProniedCall.tipoSexoMod(_model.apiResponseDatos?.jsonBody, i),
                                 codigoTurno: ApiProniedCall.codigoTurnoMod(_model.apiResponseDatos?.jsonBody, i),
                                 turno: ApiProniedCall.turnoMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroHombres: ApiProniedCall.numeroHombreMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroMujeres: ApiProniedCall.numeroMujeresMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroAlumnos: ApiProniedCall.numeroAlumnoMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroDocente: ApiProniedCall.numeroDocenteMod(_model.apiResponseDatos?.jsonBody, i),
-                                numeroSeccion: ApiProniedCall.numeroSeccinMod(_model.apiResponseDatos?.jsonBody, i),
+                                numeroHombres:  numeroHombre,
+                                numeroMujeres:  numeroMujere,
+                                numeroAlumnos:  numeroAlumno,
+                                numeroDocente:  numeroDocent,
+                                numeroSeccion:  numeroSeccio,
                                 estadoAuditoria: ApiProniedCall.estadoAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
                                 usuarioCreacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
                                 usuarioModificacionAuditoria: ApiProniedCall.usuarioCreacionAuditoriaModular(_model.apiResponseDatos?.jsonBody, i),
