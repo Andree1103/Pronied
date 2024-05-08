@@ -44,7 +44,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
 
     super.dispose();
   }
-  var edit = FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro ? false : true;
+  var edit = FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion== Sincronizacion.estado_inspeccion_enregistro ? false : true;
 
   @override
   Widget build(BuildContext context) {
@@ -185,10 +185,10 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 25),
                       child: Visibility(
-                        visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro,
+                        visible: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion== Sincronizacion.estado_inspeccion_enregistro,
                           child: FFButtonWidget(
                         onPressed: () {
-                          if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion== Sincronizacion.en_registro) {
+                          if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion== Sincronizacion.estado_inspeccion_enregistro) {
                             if (dropdown8OptionsListarFotosRowList.isEmpty) {
                               SQLiteManager.instance.crearComentario(
                                   idPregunta: FFAppState().idPregunta,
@@ -214,7 +214,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    ConstAlerts.comentariosuccess,
+                                    ConstAlerts.comentario_guardado,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme
@@ -271,7 +271,7 @@ class _AgregarComentarioWidgetState extends State<AgregarComentarioWidget> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    ConstAlerts.comentarioeditsucces,
+                                    ConstAlerts.comentario_editado,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme

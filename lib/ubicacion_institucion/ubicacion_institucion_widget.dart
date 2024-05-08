@@ -447,8 +447,8 @@ class _UbicacionInstitucionWidgetState
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],

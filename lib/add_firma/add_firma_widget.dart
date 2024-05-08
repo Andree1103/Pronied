@@ -459,8 +459,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                     ),
                                                     Text(
                                                         containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                            ? ConstansTetx.SINCRONIZADO
-                                                            : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                            ? ConstansTetx.inspeccion_sicronizada
+                                                            : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                         style: FlutterFlowTheme.of(context).bodyMedium
                                                     ),
                                                   ],
@@ -635,7 +635,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                         log("Input Vacio");
                                       }
                                     } else {
-                                      print(ConstAlerts.noconectado_internet);
+                                      print(ConstAlerts.no_conectado_internet);
                                     }
                                   },
                                   child: TextFormField(
@@ -1062,8 +1062,8 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       nombres: _model.dat1Controller2.text,
                                       apellidoPaterno: _model.dat1Controller3.text,
                                       apellidoMaterno: _model.dat1Controller4.text,
-                                      estadoAuditoria: Sincronizacion.stado_adutoria,
-                                      tipoArchivo: Sincronizacion.tip_archivo_f,
+                                      estadoAuditoria: Sincronizacion.estado_adutoria_true,
+                                      tipoArchivo: Sincronizacion.tipo_archivo_firma,
                                       rutalocal: savedImagePath,
                                       modificacionMovil: 1,
                                       uploadDocumento: 0,

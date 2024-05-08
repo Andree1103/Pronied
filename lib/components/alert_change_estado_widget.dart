@@ -94,8 +94,8 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
                     programaModificacionAuditoria: FFAppState().programacreacion,
                   );
                   setState(() {
-                    FFAppState().estadoInspeccion = Sincronizacion.en_registro;
-                    FFAppState().idestadoInspeccion = Sincronizacion.INCOMPLETO;
+                    FFAppState().estadoInspeccion = Sincronizacion.estado_inspeccion_enregistro;
+                    FFAppState().idestadoInspeccion = Sincronizacion.estado_cola_incompleto;
                     SQLiteManager.instance.inspeccion1(
                       idFicha: FFAppState().IdFicha,
                       usuarioModificacionAuditoria: FFAppState().username,
@@ -107,7 +107,7 @@ class _AlertChangeEstadoWidgetState extends State<AlertChangeEstadoWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        ConstAlerts.inspeccion_Actualizada,
+                        ConstAlerts.inspeccion_actualizada,
                         style: TextStyle(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,

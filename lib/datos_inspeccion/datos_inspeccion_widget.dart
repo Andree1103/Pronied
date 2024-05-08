@@ -459,8 +459,8 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -605,17 +605,17 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                                                   int cantidadRepeticiones;
                                                   String? NameSub;
                                                   switch (columnListarSubseccionesRow.modoRepeticion) {
-                                                    case ConstansTetx.repeP :
+                                                    case ConstansTetx.repe_p :
                                                       cantidadRepeticiones =  FFAppState().CantP;
-                                                      NameSub = ConstansTetx.pabellon;
+                                                      NameSub = ConstansTetx.pabellon_name;
                                                       break;
-                                                    case ConstansTetx.repeA:
+                                                    case ConstansTetx.repe_a:
                                                       cantidadRepeticiones = FFAppState().CantA;
-                                                      NameSub = ConstansTetx.aula;
+                                                      NameSub = ConstansTetx.aula_name;
                                                       break;
-                                                    case ConstansTetx.repeS:
+                                                    case ConstansTetx.repe_s:
                                                       cantidadRepeticiones = FFAppState().CantS;
-                                                      NameSub = ConstansTetx.sshhname;
+                                                      NameSub = ConstansTetx.sshh_name;
                                                       break;
                                                     default:
                                                       cantidadRepeticiones = 1;
@@ -735,7 +735,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ],
               ),
-              if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+              if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                 Align(
                   alignment: AlignmentDirectional(1, 1),
                   child: Padding(
@@ -787,7 +787,7 @@ class _DatosInspeccionWidgetState extends State<DatosInspeccionWidget>
                   ),
                 ),
               Visibility(
-                visible: FFAppState().idestadoInspeccion == Sincronizacion.COMPLETO && FFAppState().estadoInspeccion == Sincronizacion.realizada && FFAppState().modificadoMovil == Sincronizacion.modificadotrue,
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_completo && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_realizada && FFAppState().modificadoMovil == Sincronizacion.estado_modificado_true,
                 child: Align(
                 alignment: AlignmentDirectional(1, 1),
                 child: Padding(

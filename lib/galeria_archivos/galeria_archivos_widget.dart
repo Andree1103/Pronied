@@ -458,8 +458,8 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -647,7 +647,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                     FFAppState().countArchivo = columnListarPreguntaArchivosRowList.length + 1;
                                     if(columnListarPreguntaArchivosRowList.length == 0){
                                       return Text(
-                                          ConstAlerts.archivosnull);
+                                          ConstAlerts.archivo_no_encontrado);
                                     }else {
                                       return Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -791,7 +791,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            if(FFAppState().idestadoInspeccion ==Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                            if(FFAppState().idestadoInspeccion ==Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                               Align(
                                                                 alignment:
                                                                 AlignmentDirectional(
@@ -1012,7 +1012,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
@@ -1232,7 +1232,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                                if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                                   Align(
                                                                     alignment:
                                                                     AlignmentDirectional(
@@ -1445,7 +1445,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                            if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                               Align(
                                                                 alignment:
                                                                 AlignmentDirectional(
@@ -1569,7 +1569,7 @@ class _GaleriaArchivosWidgetState extends State<GaleriaArchivosWidget> {
                 ),
               ),
               Visibility(
-                visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
+                visible: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro,
                 child:Align(
                   alignment: AlignmentDirectional(1,1),
                   child: Padding(

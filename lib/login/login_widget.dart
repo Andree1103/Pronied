@@ -219,7 +219,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                             borderRadius:
                                             BorderRadius.circular(8),
                                             child: Image.asset(
-                                              Sincronizacion.url_title,
+                                              Sincronizacion.url_title_login,
                                               width: MediaQuery.sizeOf(context)
                                                   .width,
                                               height: MediaQuery.sizeOf(context)
@@ -461,7 +461,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .text,
                                                     clave: _model
                                                         .passwordController.text,
-                                                    appId: Sincronizacion.sismon,
+                                                    appId: Sincronizacion.aplication_id,
                                                   );
                                                   _shouldSetState = true;
                                                   if ((APIObtenerTOKENCall.response(
@@ -477,7 +477,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     _model.apiResultjyh =
                                                     await ApiTokenFinalCall
                                                         .call(
-                                                      applicationId: Sincronizacion.sismon,
+                                                      applicationId: Sincronizacion.aplication_id,
                                                       tokenSesion:
                                                       APIObtenerTOKENCall.code(
                                                         (_model.obtenerTok
@@ -495,7 +495,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       _model.apiResult2ws =
                                                       await ApiAutorizacionCall
                                                           .call(
-                                                        applicationId: Sincronizacion.sismon,
+                                                        applicationId: Sincronizacion.aplication_id,
                                                         tokenSesion:
                                                         APIObtenerTOKENCall.code(
                                                           (_model.obtenerTok
@@ -520,7 +520,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              ConstAlerts.loginsuccess,
+                                                              ConstAlerts.accesso_satisfactorio,
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme
                                                                     .of(context)
@@ -580,7 +580,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               ?.jsonBody ??
                                                               ''),
                                                         )!;
-                                                        FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
+                                                        FFAppState().programacreacion= Sincronizacion.inspeccion_movil;
 
                                                         ///TODO INSERT O UPDATE TABLA USER
                                                         final password = _model.passwordController.text;
@@ -730,7 +730,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           .showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            ConstAlerts.usernot,
+                                                            ConstAlerts.user_no_encotrado,
                                                             style: TextStyle(
                                                               color: FlutterFlowTheme
                                                                   .of(context)
@@ -755,7 +755,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         AndroidDeviceInfo androidInfo;
                                                         androidInfo = await deviceInfo.androidInfo;
                                                         FFAppState().cummovil = androidInfo.androidId;
-                                                        FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
+                                                        FFAppState().programacreacion= Sincronizacion.inspeccion_movil;
                                                         FFAppState().username = userlg.first.username!;
                                                         FFAppState().ubicacionuse = userlg.first.ubicacion!;
                                                         FFAppState().nombrecompletouser = userlg.first.nomcomple!;
@@ -780,7 +780,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              ConstAlerts.loginsuccess,
+                                                              ConstAlerts.accesso_satisfactorio,
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme
                                                                     .of(context)
@@ -807,7 +807,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              ConstAlerts.userincorrect,
+                                                              ConstAlerts.user_incorrecto,
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme
                                                                     .of(context)
@@ -840,7 +840,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                          ConstAlerts.usernot,
+                                                          ConstAlerts.user_no_encotrado,
                                                           style: TextStyle(
                                                             color: FlutterFlowTheme
                                                                 .of(context)
@@ -864,7 +864,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();        AndroidDeviceInfo androidInfo;
                                                       androidInfo = await deviceInfo.androidInfo;
                                                       FFAppState().cummovil = androidInfo.androidId;
-                                                      FFAppState().programacreacion= Sincronizacion.inspeccionmovil;
+                                                      FFAppState().programacreacion= Sincronizacion.inspeccion_movil;
                                                       FFAppState().username = userlg.first.username!;
                                                       FFAppState().ubicacionuse = userlg.first.ubicacion!;
                                                       FFAppState().nombrecompletouser = userlg.first.nomcomple!;
@@ -889,7 +889,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           .showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            ConstAlerts.loginsuccess,
+                                                            ConstAlerts.accesso_satisfactorio,
                                                             style: TextStyle(
                                                               color: FlutterFlowTheme
                                                                   .of(context)
@@ -916,7 +916,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           .showSnackBar(
                                                         SnackBar(
                                                           content: Text(
-                                                            ConstAlerts.userincorrect,
+                                                            ConstAlerts.user_incorrecto,
                                                             style: TextStyle(
                                                               color: FlutterFlowTheme
                                                                   .of(context)

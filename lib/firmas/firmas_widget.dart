@@ -65,7 +65,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
         key: scaffoldKey,
         backgroundColor: ConstansColors.bluedark,
         floatingActionButton: Visibility(
-          visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
+          visible: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro,
           child: FloatingActionButton(
             onPressed: () {
               context.pushNamed('AddFirma');
@@ -452,8 +452,8 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -785,7 +785,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                       ),
                                                     ],
                                                   ),
-                                                  if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                  if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                     Align(
                                                       alignment:
                                                       AlignmentDirectional(1, 1),
@@ -863,7 +863,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                               );
                             } else {
                                 return Text(
-                                  ConstAlerts.firmasnull,
+                                  ConstAlerts.firma_no_encontrada,
                                   textAlign: TextAlign.center,
                                 );
                             }

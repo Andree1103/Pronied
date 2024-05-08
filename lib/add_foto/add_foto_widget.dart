@@ -450,8 +450,8 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                                     ),
                                                     Text(
                                                         containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                            ? ConstansTetx.SINCRONIZADO
-                                                            : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                            ? ConstansTetx.inspeccion_sicronizada
+                                                            : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                         style: FlutterFlowTheme.of(context).bodyMedium
                                                     ),
                                                   ],
@@ -818,7 +818,7 @@ class _AddFotoWidgetState extends State<AddFotoWidget> {
                                         titulo: _model.dat1Controller1.text,
                                         comentario: _model.dat1Controller2.text,
                                         rutalocal: savedImagePath,
-                                        estadoAuditoria: Sincronizacion.stado_adutoria,
+                                        estadoAuditoria: Sincronizacion.estado_adutoria_true,
                                         modificadoMovil: 1,
                                         uploadDocumento: 0,
                                         fechaCreacionAuditoria: DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),

@@ -68,7 +68,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
         backgroundColor: ConstansColors.bluedark,
         floatingActionButton:
         Visibility(
-          visible: FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro,
+          visible: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro,
           child: FloatingActionButton(
             onPressed: () {
               context.pushNamed('AddFoto');
@@ -454,8 +454,8 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -517,7 +517,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                   snapshot.data!;
                                   if(columnListarFotosRowList.length == 0){
                                     return Text(
-                                    ConstAlerts.fotosnull);
+                                    ConstAlerts.foto_no_encontrada);
                                   }else {
                                     return Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -662,7 +662,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                           ),
                                                         ],
                                                       ),
-                                                      if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                      if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                         Align(
                                                           alignment:
                                                           AlignmentDirectional(
@@ -822,7 +822,7 @@ class _GaleriaFotosWidgetState extends State<GaleriaFotosWidget> {
                                                           ),
                                                         ],
                                                       ),
-                                                      if (FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                                                      if (FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                                                         Align(
                                                           alignment: AlignmentDirectional(1, 1),
                                                           child: Padding(

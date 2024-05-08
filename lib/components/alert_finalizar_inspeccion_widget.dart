@@ -225,8 +225,8 @@ class _AlertFinalizarInspeccionWidgetState
                       usuarioModificacionAuditoria: FFAppState().username,
                     );
                     setState(() {
-                      FFAppState().estadoInspeccion = Sincronizacion.realizada;
-                      FFAppState().idestadoInspeccion = Sincronizacion.COMPLETO;
+                      FFAppState().estadoInspeccion = Sincronizacion.estado_inspeccion_realizada;
+                      FFAppState().idestadoInspeccion = Sincronizacion.estado_cola_completo;
                       SQLiteManager.instance.inspeccion1(
                         idFicha: FFAppState().IdFicha,
                       );

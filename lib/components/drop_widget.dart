@@ -227,7 +227,7 @@ class _DropWidgetState extends State<DropWidget> {
                   if(textListarPreguntasRowList.isNotEmpty){
                     var lastsin = textListarPreguntasRowList.last.fecha;
                     if(lastsin!.isEmpty){
-                      mensjafinal = ConstansTetx.sincronull;
+                      mensjafinal = ConstansTetx.sincro_null;
                     }
                     var Mensaje = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.parse(textListarPreguntasRowList.last.fecha!));
                     mensjafinal = 'Última sincronización: ${Mensaje}';
@@ -236,7 +236,7 @@ class _DropWidgetState extends State<DropWidget> {
                   return Text(
                     valueOrDefault<String>(
                       mensjafinal,
-                      ConstansTetx.sincronull,
+                      ConstansTetx.sincro_null,
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Outfit',

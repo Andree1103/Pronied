@@ -93,7 +93,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                             child: Text(
-                              ConstAlerts.cerrar_Sesion,
+                              ConstAlerts.cerrar_sesion_alert,
                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                 fontFamily: 'Outfit',
                                 fontSize: 15.0,
@@ -112,7 +112,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    ConstAlerts.logoutsucess,
+                                    ConstAlerts.sesion_cerrada_correctamente,
                                     style: TextStyle(
                                       color:
                                       FlutterFlowTheme.of(context).secondaryBackground,
@@ -363,13 +363,13 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                         ],
                                       ),
                                       Tab(
-                                        text: ConstansTetx.en_proceso1,
+                                        text: ConstansTetx.inspeccion_en_proceso,
                                       ),
                                       Tab(
-                                        text: ConstansTetx.realizada1,
+                                        text: ConstansTetx.inspeccio_realizada,
                                       ),
                                       Tab(
-                                        text: ConstansTetx.programadas1,
+                                        text: ConstansTetx.inspeccion_programadas,
                                       ),
                                     ],
                                     controller: _model.tabBarController,
@@ -436,7 +436,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesRowList.isEmpty
                                                         ? [
-                                                      Text(ConstAlerts.inspeccionesnull),
+                                                      Text(ConstAlerts.inspecciones_no_encontradas),
                                                     ]
                                                         : List.generate(
                                                         columnListarInspeccionesRowList
@@ -838,8 +838,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesRow.modificadoMovil == 0
-                                                                                                ? ConstansTetx.SINCRONIZADO
-                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                                                                ? ConstansTetx.inspeccion_sicronizada
+                                                                                                : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -914,7 +914,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesProcessRowList.isEmpty
                                                         ? [
-                                                      Text(ConstAlerts.inspeccionesnull),
+                                                      Text(ConstAlerts.inspecciones_no_encontradas),
                                                     ] : List.generate(
                                                         columnListarInspeccionesProcessRowList
                                                             .length,
@@ -1313,8 +1313,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesProcessRow.modificadoMovil == 0
-                                                                                                ? ConstansTetx.SINCRONIZADO
-                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                                                                ? ConstansTetx.inspeccion_sicronizada
+                                                                                                : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -1389,7 +1389,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesRealizadaRowList.isEmpty
                                                         ? [
-                                                      Text(ConstAlerts.inspeccionesnull),
+                                                      Text(ConstAlerts.inspecciones_no_encontradas),
                                                     ] : List.generate(
                                                         columnListarInspeccionesRealizadaRowList
                                                             .length,
@@ -1787,8 +1787,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesRealizadaRow.modificadoMovil == 0
-                                                                                                ? ConstansTetx.SINCRONIZADO
-                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                                                                ? ConstansTetx.inspeccion_sicronizada
+                                                                                                : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],
@@ -1863,7 +1863,7 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                     MainAxisSize.min,
                                                     children: columnListarInspeccionesProgramadaRowList.isEmpty
                                                         ? [
-                                                      Text(ConstAlerts.inspeccionesnull),
+                                                      Text(ConstAlerts.inspecciones_no_encontradas),
                                                     ] : List.generate(
                                                         columnListarInspeccionesProgramadaRowList
                                                             .length,
@@ -2263,8 +2263,8 @@ class _ListaInspeccionesWidgetState extends State<ListaInspeccionesWidget>
                                                                                         ),
                                                                                         Text(
                                                                                             columnListarInspeccionesProgramadaRow.modificadoMovil == 0
-                                                                                                ? ConstansTetx.SINCRONIZADO
-                                                                                                : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                                                                ? ConstansTetx.inspeccion_sicronizada
+                                                                                                : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium
                                                                                         ),
                                                                                       ],

@@ -81,7 +81,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                 child: Text(
-                  ConstansTetx.sincronizarprgunta,
+                  ConstansTetx.sincronizar_pregunta,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Outfit',
                     fontSize: 16.0,
@@ -122,8 +122,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: Sincronizacion.codigoapp,
-                              tag: Sincronizacion.tag,
+                              codigoapp: Sincronizacion.codigo_app,
+                              tag: Sincronizacion.codigo_tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -176,8 +176,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: Sincronizacion.codigoapp,
-                              tag: Sincronizacion.tag,
+                              codigoapp: Sincronizacion.codigo_app,
+                              tag: Sincronizacion.codigo_tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -230,8 +230,8 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                             FFUploadedFile uploadedFile = FFUploadedFile(bytes: uint8List,name: fileName);
                             var response = await UploaddocCall.call(
                               archivos: uploadedFile,
-                              codigoapp: Sincronizacion.codigoapp,
-                              tag: Sincronizacion.tag,
+                              codigoapp: Sincronizacion.codigo_app,
+                              tag: Sincronizacion.codigo_tag,
                             );
                             // Verificar el código de estado de la respuesta para determinar si la llamada fue exitosa
                             if (response.statusCode == 200) {
@@ -727,7 +727,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                     }
                     ///EL STATUSCODE != 401
                     else {
-                      if ((_model.apiResponseDatos?.succeeded ?? true && ApiProniedCall.idEstadoSincronizacion(_model.apiResponseDatos?.jsonBody) == Sincronizacion.COMPLETO)) {
+                      if ((_model.apiResponseDatos?.succeeded ?? true && ApiProniedCall.idEstadoSincronizacion(_model.apiResponseDatos?.jsonBody) == Sincronizacion.estado_cola_completo)) {
 
                         var fichas = ApiProniedCall.fichas(_model.apiResponseDatos?.jsonBody);
                         if(fichas != null){
@@ -1494,7 +1494,7 @@ class _SincronizarWidgetState extends State<SincronizarWidget> {
                           );
                         }
 
-                        log(ConstansTetx.sincfinalizado);
+                        log(ConstansTetx.sinconizacion_finalizado);
 
 
                         ScaffoldMessenger.of(context).showSnackBar(

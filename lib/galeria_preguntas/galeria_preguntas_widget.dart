@@ -488,8 +488,8 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                                       ),
                                                       Text(
                                                           containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                              ? ConstansTetx.SINCRONIZADO
-                                                              : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                              ? ConstansTetx.inspeccion_sicronizada
+                                                              : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                           style: FlutterFlowTheme.of(context).bodyMedium
                                                       ),
                                                     ],
@@ -592,17 +592,17 @@ class _GaleriaPreguntasWidgetState extends State<GaleriaPreguntasWidget>
                                         int cantidadRepeticiones;
                                         String? NameSub;
                                         switch (columnListarSubseccionesRow.modoRepeticion) {
-                                          case ConstansTetx.repeP :
+                                          case ConstansTetx.repe_p :
                                             cantidadRepeticiones =  FFAppState().CantP;
-                                            NameSub = ConstansTetx.pabellon;
+                                            NameSub = ConstansTetx.pabellon_name;
                                             break;
-                                          case ConstansTetx.repeA:
+                                          case ConstansTetx.repe_a:
                                             cantidadRepeticiones = FFAppState().CantA;
-                                            NameSub = ConstansTetx.aula;
+                                            NameSub = ConstansTetx.aula_name;
                                             break;
-                                          case ConstansTetx.repeS:
+                                          case ConstansTetx.repe_s:
                                             cantidadRepeticiones = FFAppState().CantS;
-                                            NameSub = ConstansTetx.sshhname;
+                                            NameSub = ConstansTetx.sshh_name;
                                             break;
                                           default:
                                             cantidadRepeticiones = 1;

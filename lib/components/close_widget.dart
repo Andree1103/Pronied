@@ -98,7 +98,7 @@ class _CloseWidgetState extends State<CloseWidget> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        ConstAlerts.cerrar_sesion,
+                        ConstAlerts.cerrar_sesion_success,
                         style: TextStyle(
                           color:
                           FlutterFlowTheme.of(context).secondaryBackground,

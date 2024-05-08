@@ -536,8 +536,8 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                           ),
                                                           Text(
                                                               containerListarInspeccionesPorIdFichaRowList.first.modificadoMovil == 0
-                                                                  ? ConstansTetx.SINCRONIZADO
-                                                                  : ConstansTetx.NOSINCRONIZADO, // Conditionally set text
+                                                                  ? ConstansTetx.inspeccion_sicronizada
+                                                                  : ConstansTetx.inspeccion_no_sincronizada, // Conditionally set text
                                                               style: FlutterFlowTheme.of(context).bodyMedium
                                                           ),
                                                         ],
@@ -612,16 +612,16 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                   .fromSTEB(16, 8, 0, 8),
                                               tabs: [
                                                 Tab(
-                                                  text: ConstansTetx.INFORMACIONGENERAL,
+                                                  text: ConstansTetx.informacion_general,
                                                 ),
                                                 Tab(
-                                                  text: ConstansTetx.NIVELES,
+                                                  text: ConstansTetx.niveles,
                                                 ),
                                                 Tab(
-                                                  text: ConstansTetx.DIRECTOR,
+                                                  text: ConstansTetx.director,
                                                 ),
                                                 Tab(
-                                                  text: ConstansTetx.INSPECCION,
+                                                  text: ConstansTetx.inspeccion,
                                                 ),
                                               ],
                                               controller:
@@ -696,7 +696,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    ConstansTetx.CENTROPOBLADO,
+                                                                    ConstansTetx.centro_poblado,
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -813,7 +813,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    ConstansTetx.DIRECCION,
+                                                                    ConstansTetx.direccion,
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -931,14 +931,14 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                   datosGeneralesListarFichaPorIdFichaRowList
                                                                                       .first
                                                                                       .zonaColegio,
-                                                                                  ConstansTetx.ZONA,
+                                                                                  ConstansTetx.zona,
                                                                                 ),
                                                                           ),
                                                                       options: dropDownListarPersonasRowList.map((e) => e.id).whereType<String>().toList(),
                                                                       optionLabels: dropDownListarPersonasRowList.map((e) => e.descripcion).whereType<String>().toList(),
-
+                                                                      disabled: FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro ? false : true,
                                                                       width: double.infinity,
-                                                                      onChanged: (val) => FFAppState().idestadoInspeccion == 4 && FFAppState().estadoInspeccion == 'EN REGISTRO' ? setState(() =>
+                                                                      onChanged: (val) => FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro ? setState(() =>
                                                                       _model.dat1Value =
                                                                           val) : null,
                                                                       height: 50,
@@ -946,13 +946,13 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                         fontFamily: 'Outfit',
                                                                         letterSpacing: 0,
                                                                       ),
-                                                                      hintText: ConstansTetx.ZONA,
+                                                                      hintText: ConstansTetx.zona,
                                                                       icon: Icon(
                                                                         Icons.keyboard_arrow_down_rounded,
                                                                         color: FlutterFlowTheme.of(context).secondaryText,
                                                                         size: 24,
                                                                       ),
-                                                                      fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                      fillColor: edit? FlutterFlowTheme.of(context).primaryBackground : FlutterFlowTheme.of(context).primaryBtnText,
                                                                       elevation: 2,
                                                                       borderColor: FlutterFlowTheme.of(context).alternate,
                                                                       borderWidth: 2,
@@ -1005,7 +1005,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    ConstansTetx.PABELLONES,
+                                                                    ConstansTetx.pabellones,
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -1134,7 +1134,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    ConstansTetx.AULAS,
+                                                                    ConstansTetx.aulas,
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -1263,7 +1263,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                   decoration:
                                                                   InputDecoration(
                                                                     labelText:
-                                                                    ConstansTetx.SSHH,
+                                                                    ConstansTetx.sshh,
                                                                     labelStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                         .labelLarge
@@ -1468,7 +1468,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                             child: Text(
                                                                                               valueOrDefault<String>(
                                                                                                 columnListarFichasModularesPorIdFichaRow.nivel,
-                                                                                                ConstansTetx.NIVEL,
+                                                                                                ConstansTetx.nivel,
                                                                                               ),
                                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: 'Outfit',
@@ -1567,7 +1567,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       readOnly: true,
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.tipo_Docente,
+                                                                                        labelText: ConstansTetx.tipo_docente,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1626,7 +1626,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       readOnly: true,
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.tipo_Sexo,
+                                                                                        labelText: ConstansTetx.tipo_sexo,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1696,7 +1696,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       ],
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.numeroalumnos,
+                                                                                        labelText: ConstansTetx.numero_alumnos,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1768,7 +1768,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       ],
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.numerohombres,
+                                                                                        labelText: ConstansTetx.numero_hombres,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1840,7 +1840,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       ],
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.numeromujeres,
+                                                                                        labelText: ConstansTetx.numero_mujeres,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1912,7 +1912,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       ],
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.numerodocentes,
+                                                                                        labelText: ConstansTetx.numero_docentes,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -1984,7 +1984,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                                       ],
                                                                                       obscureText: false,
                                                                                       decoration: InputDecoration(
-                                                                                        labelText: ConstansTetx.numerosecciones,
+                                                                                        labelText: ConstansTetx.numero_secciones,
                                                                                         labelStyle: FlutterFlowTheme.of(context).labelLarge.override(
                                                                                           fontFamily: 'Outfit',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -2089,7 +2089,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                 AlignmentDirectional(
                                                                     -1, -1),
                                                                 child: Text(
-                                                                  ConstansTetx.DIRECTOR,
+                                                                  ConstansTetx.director,
                                                                   style: FlutterFlowTheme.of(
                                                                       context)
                                                                       .bodyMedium
@@ -2145,7 +2145,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                           log("Input Vacio");
                                                                         }
                                                                       } else {
-                                                                        print(ConstAlerts.noconectado_internet);
+                                                                        print(ConstAlerts.no_conectado_internet);
                                                                       }
                                                                     },
                                                                     child :TextFormField(
@@ -2682,7 +2682,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                                                             log("Input Vacio");
                                                                           }
                                                                         } else {
-                                                                          print(ConstAlerts.noconectado_internet);
+                                                                          print(ConstAlerts.no_conectado_internet);
                                                                         }
                                                                       },
                                                                     child : TextFormField(
@@ -4085,7 +4085,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                       ),
                     ],
                   ),
-                  if(FFAppState().idestadoInspeccion == Sincronizacion.INCOMPLETO && FFAppState().estadoInspeccion == Sincronizacion.en_registro)
+                  if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_incompleto && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_enregistro)
                     Align(
                     alignment: AlignmentDirectional(1, 1),
                     child: Padding(
@@ -4174,7 +4174,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      ConstAlerts.cantSSHH,
+                                      ConstAlerts.cant_sshh_validacion,
                                       style: TextStyle(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
@@ -4190,7 +4190,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    ConstAlerts.cantPabe,
+                                    ConstAlerts.cant_pabe_validacion,
                                     style: TextStyle(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
@@ -4206,7 +4206,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  ConstAlerts.cantAul,
+                                  ConstAlerts.cant_aula_validacion,
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
@@ -4222,7 +4222,7 @@ class _DatosGeneralesWidgetState extends State<DatosGeneralesWidget>
                       ),
                     ),
                   ),
-                  if(FFAppState().idestadoInspeccion == Sincronizacion.ENPROCESO && FFAppState().estadoInspeccion == Sincronizacion.programada)
+                  if(FFAppState().idestadoInspeccion == Sincronizacion.estado_cola_enproceso && FFAppState().estadoInspeccion == Sincronizacion.estado_inspeccion_programada)
                     Align(
                       alignment: AlignmentDirectional(0, 1),
                       child: Padding(
