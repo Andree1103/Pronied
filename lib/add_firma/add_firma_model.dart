@@ -24,6 +24,9 @@ class AddFirmaModel extends FlutterFlowModel<AddFirmaWidget> {
   FormFieldController<String>? dropDownValueController2;
   // State field(s) for Dat1 widget.
   FocusNode? dat1FocusNode1;
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+  FFUploadedFile(bytes: Uint8List.fromList([]));
   TextEditingController? dat1Controller1;
   String? Function(BuildContext, String?)? dat1Controller1Validator;
   String? _dat1Controller1Validator(BuildContext context, String? val) {

@@ -4,6 +4,7 @@ import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/components/FullScreenImage.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/alert_delete_firma_widget.dart';
@@ -540,6 +541,33 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                     mainAxisSize: MainAxisSize.max,
                                                     children: [
                                                       Padding(
+                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(context).push(MaterialPageRoute(
+                                                              builder: (context) => FullScreenImage(
+                                                                imageFile: File(valueOrDefault<String>(
+                                                                  columnListarFirmasRow.image,
+                                                                  'imagen',
+                                                                )),
+                                                              ),
+                                                            ));
+                                                          },
+                                                          child: ClipRRect(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            child: Image.file(
+                                                              File(valueOrDefault<String>(
+                                                                columnListarFirmasRow.image,
+                                                                'imagen',
+                                                              )),
+                                                              width: 300,
+                                                              height: 200,
+                                                              fit: BoxFit.contain,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      /*Padding(
                                                         padding: EdgeInsetsDirectional
                                                             .fromSTEB(0, 10, 0, 0),
                                                         child: ClipRRect(
@@ -557,7 +585,7 @@ class _FirmasWidgetState extends State<FirmasWidget> {
                                                             fit: BoxFit.contain,
                                                           ),
                                                         ),
-                                                      ),
+                                                      ),*/
                                                       Align(
                                                         alignment:
                                                         AlignmentDirectional(

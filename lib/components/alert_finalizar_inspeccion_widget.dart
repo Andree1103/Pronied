@@ -1,6 +1,8 @@
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/components/alert_list_widget.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/datos_inspeccion/ShowCustomDialog.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -52,6 +54,18 @@ class _AlertFinalizarInspeccionWidgetState
   List<ListarPreguntasObligatoriasRow> preguntasFaltanteP = [];
   List<ListarPreguntasObligatoriasRow> preguntasFaltanteX = [];
 
+  void showAlertsPanel(BuildContext context, List<String> messages , String ms) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: AlertListWidget( message: messages , msg: ms, ),
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -97,10 +111,12 @@ class _AlertFinalizarInspeccionWidgetState
               padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
               child: FFButtonWidget(
                 onPressed: () async {
+                  List<String> alertMessages = [];
+                  String alertmsg = '';
                   final cantidadP = FFAppState().CantP;
                   final cantidadS = FFAppState().CantS;
                   final cantidadA = FFAppState().CantA;
-                  for(int i = 0; i<cantidadP; i++){
+                  /*for(int i = 0; i<cantidadP; i++){
                     preguntasFaltanteP = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'P');
                     retornoConsultaP = preguntasFaltanteP.length;
                     CantObligatoria += retornoConsultaP;
@@ -188,6 +204,47 @@ class _AlertFinalizarInspeccionWidgetState
                         );
                       }
                     }
+                  }*/
+
+                  for(int i = 0; i < cantidadP; i++){
+                    var preguntasFaltanteP = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'P');
+                    int retornoConsultaP = preguntasFaltanteP.length;
+                    CantObligatoria += retornoConsultaP;
+                    if(retornoConsultaP > 0){
+                      for(var p in preguntasFaltanteP){
+                        alertMessages.add('Subsección ${p.descripcion}(P ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).');
+                      }
+                    }
+                  }
+                  for(int i = 0; i < cantidadS; i++){
+                    var preguntasFaltanteS = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'S');
+                    int retornoConsultaS = preguntasFaltanteS.length;
+                    CantObligatoria += retornoConsultaS;
+                    if(retornoConsultaS > 0){
+                      for(var p in preguntasFaltanteS){
+                        alertMessages.add('Subsección ${p.descripcion}(S ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).');
+                      }
+                    }
+                  }
+                  for(int i = 0; i < cantidadA; i++){
+                    var preguntasFaltanteA = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'A');
+                    int retornoConsultaA = preguntasFaltanteA.length;
+                    CantObligatoria += retornoConsultaA;
+                    if(retornoConsultaA > 0){
+                      for(var p in preguntasFaltanteA){
+                        alertMessages.add('Subsección ${p.descripcion}(A ${i+1}): ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).');
+                      }
+                    }
+                  }
+                  for(int i = 0; i < 1; i++){
+                    var preguntasFaltanteX = await preguntasrestantes2(FFAppState().IdFicha, i+1, 'X');
+                    int retornoConsultaX = preguntasFaltanteX.length;
+                    CantObligatoria += retornoConsultaX;
+                    if(retornoConsultaX > 0){
+                      for(var p in preguntasFaltanteX){
+                        alertMessages.add('Subsección ${p.descripcion}: ${p.preguntasfaltantes} pregunta(s) pendiente(s) (*).');
+                      }
+                    }
                   }
 
                   retornoConsultaA = 0;
@@ -201,7 +258,7 @@ class _AlertFinalizarInspeccionWidgetState
 
 
                   if(CantObligatoria > 0) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    /*ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
                           'Total de ${CantObligatoria} subsecciones con pregunta(s) obligatoria(s) pendiente(s).',
@@ -213,9 +270,37 @@ class _AlertFinalizarInspeccionWidgetState
                         duration: const Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).primary,
                       ),
-                    );
-                    CantObligatoria = 0;
+                    );*/
+                    alertmsg = 'Total de ${CantObligatoria} subsecciones con pregunta(s) obligatoria(s) pendiente(s).';
                     Navigator.pop(context);
+                    if (alertMessages.isNotEmpty) {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: FlutterFlowTheme.of(context)
+                            .primaryBtnText,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return GestureDetector(
+                            onTap: () => _model
+                                .unfocusNode.canRequestFocus
+                                ? FocusScope.of(context)
+                                .requestFocus(_model.unfocusNode)
+                                : FocusScope.of(context).unfocus(),
+                            child: Padding(
+                              padding:
+                              MediaQuery.viewInsetsOf(context),
+                              child: Container(
+                                height: MediaQuery.sizeOf(context).height * 0.7,
+                                child: AlertListWidget( message: alertMessages , msg: alertmsg, ),
+                              ),
+                            ),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+                    }
+                    CantObligatoria = 0;
+                    alertmsg = '';
                   } else {
                     await SQLiteManager.instance.actualizarFinalizarInspeccion(
                       idInspeccion: FFAppState().idInspeccion,

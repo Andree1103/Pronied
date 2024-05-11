@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:image/image.dart' as img;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_maestro.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
@@ -62,7 +64,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
   }
 
   var readon = false;
-
+  var selectfoto = false;
   @override
   Widget build(BuildContext context) {
     if (isiOS) {
@@ -76,6 +78,26 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
 
     Uint8List? exportedImge;
     String? savedImagePath;
+    Future<Uint8List> combineImageAndSignature(Uint8List backgroundImage, Uint8List signatureImage, double scale) async {
+      // Decode the background and the signature images
+      img.Image bgImg = img.decodeImage(backgroundImage)!;
+      img.Image sigImg = img.decodeImage(signatureImage)!;
+
+      // Redimensionar la firma basado en el parámetro de escala
+      int newWidth = (sigImg.width * scale).toInt();
+      int newHeight = (sigImg.height * scale).toInt();
+      sigImg = img.copyResize(sigImg, width: newWidth, height: newHeight);
+
+      // Calculate the position to center the signature at the bottom
+      int offsetX = (bgImg.width - sigImg.width) ~/ 2;
+      int offsetY = bgImg.height - sigImg.height - 20;  // 20 pixels from the bottom
+
+      // Draw the signature image onto the background image
+      img.compositeImage(bgImg, sigImg, dstX: offsetX, dstY: offsetY);
+
+      // Encode the resulting image back to Uint8List
+      return Uint8List.fromList(img.encodePng(bgImg));
+    }
 
     Future<String> saveImageToDevice(Uint8List imageBytes) async {
       try {
@@ -930,34 +952,121 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 10.0),
-                              child: Text(
-                                ConstansTetx.firma,
-                                style:
-                                FlutterFlowTheme.of(context).bodyMedium,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    ConstansTetx.firma,
+                                    style:
+                                    FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.camera_alt,
+                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                      size: 30,
+                                    ),
+                                    onPressed: () async {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                            context: context,
+                                            allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath,
+                                                  context))) {
+                                        setState(() =>
+                                        _model.isDataUploading = true);
+                                        var selectedUploadedFiles =
+                                        <FFUploadedFile>[];
+
+                                        try {
+                                          selectedUploadedFiles =
+                                              selectedMedia
+                                                  .map(
+                                                      (m) => FFUploadedFile(
+                                                    name: m
+                                                        .storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height: m
+                                                        .dimensions
+                                                        ?.height,
+                                                    width: m
+                                                        .dimensions
+                                                        ?.width,
+                                                    blurHash:
+                                                    m.blurHash,
+                                                  ))
+                                                  .toList();
+                                        } finally {
+                                          _model.isDataUploading = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                            selectedMedia.length) {
+                                          setState(() {
+                                            _model.uploadedLocalFile =
+                                                selectedUploadedFiles.first;
+                                          });
+                                        } else {
+                                          setState(() {});
+                                          return;
+                                        }
+                                        selectfoto = true;
+                                      }
+                                    },
+                                  )
+                                ],
                               ),
                             ),
                             Container(
                               width: double.infinity,
                               height: 230,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                color: FlutterFlowTheme.of(context).secondaryBackground,
                                 border: Border.all(
                                   width: 1.0,
                                 ),
                               ),
-                              child: ClipRect(
-                                child: Signature(
-                                  controller: _model.signatureController ??=
-                                      SignatureController(
+                              child: selectfoto == true ?
+                              ClipRect(
+                                child: _model.uploadedLocalFile == null
+                                    ? Center(child: Text('No image selected.'))
+                                    : Stack(
+                                  children: [
+                                    Image.memory(
+                                      _model.uploadedLocalFile.bytes!,  // Usa los bytes del archivo para crear la imagen
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                    ),
+                                    Signature(
+                                      controller: _model.signatureController ??= SignatureController(
                                         penStrokeWidth: 2.0,
                                         penColor: FlutterFlowTheme.of(context)
                                             .primaryText,
                                         exportBackgroundColor: Color(0x00000000),
                                       ),
+                                      backgroundColor: Colors.transparent,  // Asegúrate de que el fondo sea transparente
+                                      height: double.infinity,
+                                    ),
+                                  ],
+                                ),
+                              ) :
+                              ClipRect(
+                                child: Signature(
+                                  controller: _model.signatureController ??=
+                                      SignatureController(
+                                        penStrokeWidth: 2.0,
+                                        penColor:FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        exportBackgroundColor: Color(0x00000000),
+                                      ),
                                   backgroundColor:
-                                  FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  Colors.transparent,
                                   height: double.infinity,
                                 ),
                               ),
@@ -1051,8 +1160,14 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       );
                                       return;
                                     }
-                                    exportedImge = await _model.signatureController?.toPngBytes();
-                                    savedImagePath = await saveImageToDevice(exportedImge!);
+                                    if (selectfoto == true){
+                                      Uint8List? signatureBytes = await _model.signatureController?.toPngBytes();
+                                      Uint8List combinedImage = await combineImageAndSignature(_model.uploadedLocalFile.bytes!, signatureBytes!, 5.5);
+                                      savedImagePath = await saveImageToDevice(combinedImage!);
+                                    } else {
+                                      exportedImge = await _model.signatureController?.toPngBytes();
+                                      savedImagePath = await saveImageToDevice(exportedImge!);
+                                    }
 
                                     await SQLiteManager.instance.crearFichaFirma(
                                       idFicha: FFAppState().IdFicha,
@@ -1101,6 +1216,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     );
                                     //Navigator.of(context);
                                     //context.pushNamed('Firmas');
+                                    selectfoto = false;
                                     Navigator.pop(context);
                                   },
                                   text: ConstansTetx.guardar_firma,
@@ -1135,7 +1251,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                     0.0, 10.0, 0.0, 25.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('Firmas');
+                                    Navigator.pop(context);
                                   },
                                   text: ConstansTetx.cancelar,
                                   options: FFButtonOptions(

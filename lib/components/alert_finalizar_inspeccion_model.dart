@@ -8,6 +8,8 @@ class AlertFinalizarInspeccionModel
   @override
   void initState(BuildContext context) {}
 
+  final unfocusNode = FocusNode();
+
   @override
   void dispose() {}
 }
