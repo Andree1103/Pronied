@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:image/image.dart' as img;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -7,7 +8,9 @@ import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansAlerts.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/Constans.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansColors.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/Utils/ConstansText.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/add_firma/ImageDrawPage.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/backend/api_requests/api_maestro.dart';
+import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/flutter_flow_google_map.dart';
 import 'package:inspecciones_p_r_o_n_i_e_d/flutter_flow/upload_data.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -110,6 +113,18 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
         log('Error al guardar la imagen: $e');
         return '';
       }
+    }
+
+    Future<ui.Image> loadImage(List<int> imgBytes) async {
+      final Completer<ui.Image> completer = new Completer();
+      ui.decodeImageFromList(Uint8List.fromList(imgBytes), (ui.Image img) {
+        return completer.complete(img);
+      });
+      return completer.future;
+    }
+
+    Future<ImageProvider> loadImageprovider(List<int> imgBytes) async {
+      return MemoryImage(Uint8List.fromList(imgBytes));
     }
     context.watch<FFAppState>();
 
@@ -967,6 +982,53 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                       size: 30,
                                     ),
                                     onPressed: () async {
+                                      if (_model.formKey.currentState == null ||
+                                          !_model.formKey.currentState!
+                                              .validate()) {
+                                        return;
+                                      }
+                                      if (_model.dropDownValue1 == null) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              ConstAlerts.selec_tip_persona,
+                                              style: TextStyle(
+                                                color:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                              ),
+                                            ),
+                                            duration:
+                                            Duration(milliseconds: 2000),
+                                            backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        );
+                                        return;
+                                      }
+                                      if (_model.dropDownValue2 == null) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              ConstAlerts.selec_tip_document,
+                                              style: TextStyle(
+                                                color:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                              ),
+                                            ),
+                                            duration:
+                                            Duration(milliseconds: 2000),
+                                            backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        );
+                                        return;
+                                      }
                                       final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
                                             context: context,
@@ -979,6 +1041,16 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                                   context))) {
                                         setState(() =>
                                         _model.isDataUploading = true);
+                                        try {
+                                          var image = await loadImage(selectedMedia.first.bytes);
+                                          var provider = await loadImageprovider(selectedMedia.first.bytes);
+                                          Navigator.push(context, MaterialPageRoute(
+                                            builder: (context) => DrawingPage(image: provider,tipopersona: _model.dropDownValue1!, tipodocumento: _model.dropDownValue2 == 'DNI' ? 1 : 2,
+                                            apematerno:_model.dat1Controller4.text!,nombres: _model.dat1Controller2.text!,apepaterno: _model.dat1Controller3.text!,numdocumento: _model.dat1Controller1.text!),
+                                          ));
+                                        } finally {
+                                          _model.isDataUploading = false;
+                                        }
                                         var selectedUploadedFiles =
                                         <FFUploadedFile>[];
 
@@ -1031,31 +1103,7 @@ class _AddFirmaWidgetState extends State<AddFirmaWidget> {
                                   width: 1.0,
                                 ),
                               ),
-                              child: selectfoto == true ?
-                              ClipRect(
-                                child: _model.uploadedLocalFile == null
-                                    ? Center(child: Text('No image selected.'))
-                                    : Stack(
-                                  children: [
-                                    Image.memory(
-                                      _model.uploadedLocalFile.bytes!,  // Usa los bytes del archivo para crear la imagen
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                    ),
-                                    Signature(
-                                      controller: _model.signatureController ??= SignatureController(
-                                        penStrokeWidth: 2.0,
-                                        penColor: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        exportBackgroundColor: Color(0x00000000),
-                                      ),
-                                      backgroundColor: Colors.transparent,  // Asegúrate de que el fondo sea transparente
-                                      height: double.infinity,
-                                    ),
-                                  ],
-                                ),
-                              ) :
+                              child:
                               ClipRect(
                                 child: Signature(
                                   controller: _model.signatureController ??=
